@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESSAU.ControlGestion.Web", "DESSAU.ControlGestion.Web\DESSAU.ControlGestion.Web.csproj", "{9871F3CA-50CA-4C9B-A0E4-0E9A953BED9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESSAU.ControlGestion.Core", "DESSAU.ControlGestion.Core\DESSAU.ControlGestion.Core.csproj", "{2CCBB647-B076-47D1-91D8-F77C6E9037A8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9871F3CA-50CA-4C9B-A0E4-0E9A953BED9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9871F3CA-50CA-4C9B-A0E4-0E9A953BED9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9871F3CA-50CA-4C9B-A0E4-0E9A953BED9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9871F3CA-50CA-4C9B-A0E4-0E9A953BED9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCBB647-B076-47D1-91D8-F77C6E9037A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCBB647-B076-47D1-91D8-F77C6E9037A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCBB647-B076-47D1-91D8-F77C6E9037A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCBB647-B076-47D1-91D8-F77C6E9037A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
