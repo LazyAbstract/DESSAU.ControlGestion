@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DESSAU.ControlGestion.Core
+namespace DESSAU.ControlGestion.Web.Configuration
 {
-    public class Class1
+    public interface IConfigurable
     {
-        public int hola = 1;
+        void Configure();
     }
 }

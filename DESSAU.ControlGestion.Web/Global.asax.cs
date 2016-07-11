@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,18 @@ namespace DESSAU.ControlGestion.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.Add(typeof(Rut), new RutModelBinder());
+            ModelBinders.Binders.Add(typeof(DateTime?), new CurrentCultureDateTimeBinder());
+            ModelBinders.Binders.Add(typeof(DateTime), new CurrentCultureDateTimeBinder());
+
+            IList<IConfigurable> configurations = new List<IConfigurable>();
+            configurations.Add(new MapperConfiguration());
+            //configurations.Add(new InitSimpleMembership());
+            foreach (var configuration in configurations)
+            {
+                configuration.Configure();
+            }
         }
     }
 }
