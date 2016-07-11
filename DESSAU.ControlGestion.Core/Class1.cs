@@ -8,5 +8,6 @@ namespace DESSAU.ControlGestion.Core
 {
     public class Class1
     {
+        public int hola = 1;
     }
 }
