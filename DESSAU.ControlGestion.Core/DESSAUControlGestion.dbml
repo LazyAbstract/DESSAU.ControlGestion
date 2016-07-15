@@ -37,7 +37,7 @@
     <Type Name="Cliente">
       <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Cliente_Proyecto" Member="Proyectos" ThisKey="IdCliente" OtherKey="IdCliente" Type="Proyecto" />
+      <Association Name="Cliente_Contrato" Member="Contratos" ThisKey="IdCliente" OtherKey="IdCliente" Type="Contrato" />
     </Type>
   </Table>
   <Table Name="dbo.DiaEspecial" Member="DiaEspecials">
@@ -144,17 +144,6 @@
       <Association Name="TipoPregunta_Pregunta" Member="TipoPregunta" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="TipoPregunta" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Proyecto" Member="Proyectos">
-    <Type Name="Proyecto">
-      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FechaIncio" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="FechaTermino" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="UsuarioCategoriaProyecto" />
-      <Association Name="Cliente_Proyecto" Member="Cliente" ThisKey="IdCliente" OtherKey="IdCliente" Type="Cliente" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.TimeSheet" Member="TimeSheets">
     <Type Name="TimeSheet">
       <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -216,8 +205,28 @@
       <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" Cardinality="One" />
       <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
-      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
       <Association Name="Usuario_UsuarioCategoriaProyecto" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contrato" Member="Contratos">
+    <Type Name="Contrato">
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Contrato_Proyecto" Member="Proyectos" ThisKey="IdContrato" OtherKey="IdContrato" Type="Proyecto" />
+      <Association Name="Cliente_Contrato" Member="Cliente" ThisKey="IdCliente" OtherKey="IdCliente" Type="Cliente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Proyecto" Member="Proyectos">
+    <Type Name="Proyecto">
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaIncio" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaTermino" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="UsuarioCategoriaProyecto" />
+      <Association Name="Contrato_Proyecto" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
