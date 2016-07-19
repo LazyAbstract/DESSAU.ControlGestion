@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DESSAU_ControlGestion" Class="DESSAUControlGestionCorreoDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=DESSAU_ControlGestion;Integrated Security=True" SettingsObjectName="DESSAU.ControlGestion.EmisorCorreo.Properties.Settings" SettingsPropertyName="DESSAU_ControlGestionConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TipoEstadoNotificacion" Member="TipoEstadoNotificacions">
+    <Type Name="TipoEstadoNotificacion">
+      <Column Name="IdTipoEstadoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoEstadoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoEstadoNotificacion" OtherKey="IdTipoEstadoNotificacion" Type="Notificacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Correo" Member="Correos">
+    <Type Name="Correo">
+      <Column Name="IdCorreo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Remitente" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Destinatario" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="BCC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Asunto" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoTexto" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoHTML" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaProgramadaEnvio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEnvio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IntentoFallido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pendiente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Notificacion" Member="Notificacions">
+    <Type Name="Notificacion">
+      <Column Name="IdNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoNotificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdTipoEstadoNotificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPostpuesto" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Mensaje" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Accion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="TipoEstadoNotificacion_Notificacion" Member="TipoEstadoNotificacion" ThisKey="IdTipoEstadoNotificacion" OtherKey="IdTipoEstadoNotificacion" Type="TipoEstadoNotificacion" IsForeignKey="true" />
+      <Association Name="Usuario_Notificacion" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="TipoNotificacion_Notificacion" Member="TipoNotificacion" ThisKey="IdTipoNotificacion" OtherKey="IdTipoNotificacion" Type="TipoNotificacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuarios">
+    <Type Name="Usuario">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rut" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
+      <Column Name="Correo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_Notificacion" Member="Notificacions" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Notificacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoNotificacion" Member="TipoNotificacions">
+    <Type Name="TipoNotificacion">
+      <Column Name="IdTipoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoNotificacion" OtherKey="IdTipoNotificacion" Type="Notificacion" />
+    </Type>
+  </Table>
+</Database>

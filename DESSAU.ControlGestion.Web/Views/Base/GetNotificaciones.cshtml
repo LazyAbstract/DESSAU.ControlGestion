@@ -1,0 +1,23 @@
+﻿@model DESSAU.ControlGestion.Web.Models.NotificacionModels.GetNotificacionViewModel
+<ul>
+    @foreach (var item in Model.Notificaciones)
+    {
+        <div>
+            <p>@item.Mensaje</p>
+            <div class="btn-group" style="display: flex;" role="group">
+                @*<button type="button" onclick="CambiarEstadoNotificacion('@item.IdNotificacion',12)" class="btn btn-danger"><i class="pe-7s-bell" style="font-size: 16px; position: relative;"><span class="label" id="numero_notificaciones" style=""> 12 </span> </i></button>*@
+                @*<button type="button" onclick="CambiarEstadoNotificacion('@item.IdNotificacion',6)" class="btn btn-warning"><i class="pe-7s-bell" style="font-size: 16px; position: relative;"><span class="label" id="numero_notificaciones" style=""> 6 </span> </i></button>*@
+                <button type="button" onclick="CambiarEstadoNotificacion('@item.IdNotificacion',0)" class="btn btn-info"><i class="pe-7s-check" style="font-size: 16px; position: relative;"></i></button>
+                @if (!String.IsNullOrEmpty(item.Accion))
+                {
+                    <a href="@item.Accion" class="btn btn-success"><i class="pe-7s-link" style="font-size: 14px; position: relative;"></i></a>
+                }
+            </div>
+        </div>
+        <hr />
+    }
+    @if (Model.Notificaciones == null || (Model.Notificaciones != null && !Model.Notificaciones.Any()))
+    {
+        <p>No existen notificaciones por el momento</p>
+    }
+</ul>
