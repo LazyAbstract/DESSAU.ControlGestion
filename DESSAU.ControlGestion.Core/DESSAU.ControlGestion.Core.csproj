@@ -55,6 +55,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Rut.cs" />
+    <Compile Include="TipoEstadoUsuarioCategoriaProyecto.cs" />
     <Compile Include="TipoEstadoNotificacion.cs" />
     <Compile Include="TipoNotificacion.cs" />
   </ItemGroup>

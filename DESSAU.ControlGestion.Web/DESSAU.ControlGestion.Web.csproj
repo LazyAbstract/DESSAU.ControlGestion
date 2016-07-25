@@ -198,10 +198,12 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TimeSheetController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateTimeHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="MapperProfiles\DefaultProfileMapper.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\CrearEditarUsuarioFormModelUsuario.cs" />
@@ -209,6 +211,10 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\TimeSheetModels\CrearEditarTimeSheetFormModel.cs" />
+    <Compile Include="Models\TimeSheetModels\CrearEditarTimeSheetViewModel.cs" />
+    <Compile Include="Models\TimeSheetModels\VerTimeSheetFormModel.cs" />
+    <Compile Include="Models\TimeSheetModels\VerTimeSheetViewModel.cs" />
     <Compile Include="Models\NotificacionModels\GetNotificacionViewModel.cs" />
     <Compile Include="Models\UsuarioModels\CrearEditarUsuarioFormModel.cs" />
     <Compile Include="Models\UsuarioModels\CrearEditarUsuarioViewModel.cs" />
@@ -289,6 +295,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\TimeSheet\VerTimeSheet.cshtml" />
     <Content Include="Views\Usuario\CrearEditarUsuario.cshtml" />
     <Content Include="Views\Usuario\ListarUsuario.cshtml" />
     <Content Include="Views\Base\GetNotificaciones.cshtml" />
