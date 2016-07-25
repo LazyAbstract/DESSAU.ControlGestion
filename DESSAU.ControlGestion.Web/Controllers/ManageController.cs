@@ -11,7 +11,7 @@ using DESSAU.ControlGestion.Web.Models;
 namespace DESSAU.ControlGestion.Web.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -223,7 +223,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -238,7 +238,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                Mensaje = "La contraseña fue cambiada exitosamente";
+                return RedirectToAction("Index", "Home");
             }
             AddErrors(result);
             return View(model);
