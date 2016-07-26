@@ -206,13 +206,13 @@
     <Compile Include="Helpers\DateTimeHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="MapperProfiles\DefaultProfileMapper.cs" />
+    <Compile Include="MapperProfiles\TimeSheetModels\TimeSheetTimeSheetDTO.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\CrearEditarUsuarioFormModelUsuario.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\UsuarioCrearEditarUsuarioFormModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\TimeSheetModels\CrearEditarTimeSheetFormModel.cs" />
-    <Compile Include="Models\TimeSheetModels\CrearEditarTimeSheetViewModel.cs" />
     <Compile Include="Models\TimeSheetModels\VerTimeSheetFormModel.cs" />
     <Compile Include="Models\TimeSheetModels\VerTimeSheetViewModel.cs" />
     <Compile Include="Models\NotificacionModels\GetNotificacionViewModel.cs" />

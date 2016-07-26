@@ -13,7 +13,7 @@ using DESSAU.ControlGestion.Web.Models;
 namespace DESSAU.ControlGestion.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -79,6 +79,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session.Add("CurrentUsuario", db.Usuarios.SingleOrDefault(x => x.Correo == model.Email));
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

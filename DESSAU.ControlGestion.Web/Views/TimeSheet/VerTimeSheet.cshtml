@@ -13,10 +13,228 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm(null, null, FormMethod.Get)) {
-
-
+        @using (Html.BeginForm(null, null, FormMethod.Get))
+        {
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Hoja de planificación</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.FORM.Fecha, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.Fecha)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="submit" name="FORM.Accion" value="Buscar" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            foreach (var item in Model.UsuarioCategoriaProyectos.Take(1))
+            {
+                <input type="submit" name="FORM.Accion" class="btn btn-default" value="Guardar" />
 
+                @Html.Raw(String.Format("<h3>{0}</h3><h4>{1}</h4>", item.Categoria.Nombre, item.Proyecto.NombreCompleto))
+                <table class="table table-hover table-striped">
+
+                    <thead>
+                        <tr class="">
+                            <th class="">
+                            </th>
+                            @foreach (var dia in Model.getFechaDesdeHasta)
+                            {
+                                <th class="center">
+                                    @dia.ToString("ddd dd/MM")
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
+                    {
+                            <tr class="">
+                                <th class="left">
+                                    @actividad.Nombre
+                                </th>
+                                @foreach (var dia in Model.getFechaDesdeHasta)
+                                {
+                                    if (!Model.DiaEspecials.Any(x => x.Fecha == dia))
+                                    {
+                                        //var formSheet = Model.TimeSheetFORM.TimeSheetDTOs.SingleOrDefault(x => x.);
+                                        //string valor = formSheet != null ? formSheet.Hora.GetValueOrDefault(0).ToString() : "0";
+                                        <td class="">
+                                            <div class="input-group spinner">
+                                                <input type="text" onchange="suma('@((int)dia.DayOfWeek)')" value="0"  class = "input-timesheet form-control @("numero_"+(int)dia.DayOfWeek)"  />
+                                                <div class="input-group-btn-vertical">
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="success">
+                                            <span class="glyphicon glyphicon-minus"></span>
+
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Total</th>
+                            @foreach (var dia in Model.getFechaDesdeHasta)
+                            {
+                                if (Model.DiaEspecials.Any(x => x.Fecha == dia))
+                                {
+                                    <th class="success">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </th>
+                                
+                                }
+                                else
+                                {
+                                    <th class="center totales">
+                                        <span id="total_dia_@((int)dia.DayOfWeek)"class="center">
+                                            @(Model.TimeSheetFORM.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)))
+                                        </span>
+                                    </th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                </table>
+            }
+        }
+    </div>
+</div>
+@section Scripts {
+    <style>
+        .totales {
+            border: 1px solid black;
+        }
+
+        .spinner {
+            width: 100px;
+        }
+
+            .spinner input {
+                text-align: right;
+            }
+
+        .input-group-btn-vertical {
+            position: relative;
+            white-space: nowrap;
+            width: 1%;
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+            .input-group-btn-vertical > .btn {
+                display: block;
+                float: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 8px;
+                margin-left: -1px;
+                position: relative;
+                border-radius: 0;
+            }
+
+                .input-group-btn-vertical > .btn:first-child {
+                    border-top-right-radius: 4px;
+                }
+
+                .input-group-btn-vertical > .btn:last-child {
+                    margin-top: -2px;
+                    border-bottom-right-radius: 4px;
+                }
+
+            .input-group-btn-vertical i {
+                position: absolute;
+                top: 0;
+                left: 3px;
+            }
+    </style>
+    <script type="text/javascript">
+        (function ($) {
+            $('.spinner .btn:first-of-type').on('click', function () {
+                $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
+                $(this).closest(".spinner").find('input[type="text"]').change();
+            });
+            $('.spinner .btn:last-of-type').on('click', function () {
+                $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
+                $(this).closest(".spinner").find('input[type="text"]').change();
+            });
+        })(jQuery);
+
+        $(document).ready(function () {
+            $('.input-timesheet').each(function () {
+                pinta($(this));
+            });
+            pintaTotales();
+        });
+        function suma(dia) {
+            var sum = 0;
+            $('.numero_' + dia).each(function () {
+                sum += Number($(this).val());
+                pinta($(this));
+            });
+            $('#total_dia_' + dia).html(sum);
+            pintaTotales();
+        }
+
+        function pinta(obj) {
+            if (obj.val() != '0') {
+                obj.css('background-color', '#99FFCC')
+            }
+            else {
+                obj.css('background-color', '#fff')
+            }
+        }
+
+        function pintaTotales() {
+            $('.totales').each(function () {
+                var total = $.trim($(this).children('span').text());
+                if (total != '0' && total != '1' && total != '2' && total != '3' && total != '4' && total != '5' && total != '6' && total != '7' && total != '8') {
+                    $(this).css('background-color', '#99FFCC')
+                }
+                else {
+                    $(this).css('background-color', '#fff')
+                }
+            });
+        }
+    </script>
+}
