@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.25, 21.375" name="DESSAUControlGestion">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.25, 23.125" name="DESSAUControlGestion">
   <DataContextMoniker Name="/DESSAUControlGestionDataContext" />
   <nestedChildShapes>
     <classShape Id="ac847f0d-c18f-42b9-9ff0-0fcf2123309a" absoluteBounds="0.75, 14.75, 2, 1.1939925130208344">
@@ -110,7 +110,7 @@
         <elementListCompartment Id="af95a5ca-c7a9-4375-ab85-6a3f770f8c4c" absoluteBounds="6.515, 13.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 5.06899251302083); (3.125 : 5.44399251302083); (3.125 : 6); (9.125 : 6); (9.5 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 5.06899251302083); (2.90982443490112 : 5.22881694792195 : JumpStart); (3.02767556509888 : 5.34666807811971 : JumpEnd); (3.125 : 5.44399251302083); (3.125 : 6); (5.79166666666667 : 6 : JumpStart); (5.95833333333333 : 6 : JumpEnd); (9.125 : 6); (9.5 : 6.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Actividad/Actividad_CategoriaActividad" />
       <nodes>
         <classShapeMoniker Id="001e8a75-8192-4159-a7d3-21328828de8e" />
@@ -145,14 +145,14 @@
         <classShapeMoniker Id="ecb0b2c0-6dfd-4174-bb72-7192a7303878" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 7.32055018880208); (5.57291666666667 : 7.32055018880208 : JumpStart); (5.73958333333333 : 7.32055018880208 : JumpEnd); (6.25 : 7.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 7.32055018880208); (6.25 : 7.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Evaluacion/Evaluacion_EvaluacionPregunta" />
       <nodes>
         <classShapeMoniker Id="a1e31a34-0260-4baf-9968-4aad29487d09" />
         <classShapeMoniker Id="100abed9-aec5-4de1-bcc1-ef64af38f08d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.65625 : 10.3189925130208); (5.65625 : 16.89349609375); (6.04166666666667 : 16.89349609375 : JumpStart); (6.20833333333333 : 16.89349609375 : JumpEnd); (6.5 : 16.89349609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.65625 : 10.3189925130208); (5.65625 : 16.89349609375); (6.5 : 16.89349609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Categoria/Categoria_PlantillaEvaluacion" />
       <nodes>
         <classShapeMoniker Id="90cf8446-ad89-4ac7-afc3-834c8c972ef6" />
@@ -166,42 +166,42 @@
         <classShapeMoniker Id="d7920792-122f-4ce2-8520-bf3eddc483ec" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 15.15625); (5.57291666666667 : 15.15625 : JumpStart); (5.73958333333333 : 15.15625 : JumpEnd); (6.04166666666667 : 15.15625 : JumpStart); (6.20833333333333 : 15.15625 : JumpEnd); (6.34375 : 15.15625); (6.34375 : 8.07859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 15.15625); (5.57291666666667 : 15.15625 : JumpStart); (5.73958333333333 : 15.15625 : JumpEnd); (6.34375 : 15.15625); (6.34375 : 8.07859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Pregunta/Pregunta_EvaluacionPregunta" />
       <nodes>
         <classShapeMoniker Id="f833ebf8-79c9-4c7a-b8d8-fa8ccd5cfaef" />
         <classShapeMoniker Id="100abed9-aec5-4de1-bcc1-ef64af38f08d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 15.59375); (5.57291666666667 : 15.59375 : JumpStart); (5.73958333333333 : 15.59375 : JumpEnd); (6.04166666666667 : 15.59375 : JumpStart); (6.20833333333333 : 15.59375 : JumpEnd); (9.25 : 15.59375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 15.59375); (5.57291666666667 : 15.59375 : JumpStart); (5.73958333333333 : 15.59375 : JumpEnd); (6.04166666666667 : 15.59375 : JumpStart); (6.20833333333333 : 15.59375 : JumpEnd); (8.60416416666667 : 15.59375 : JumpStart); (8.77083083333333 : 15.59375 : JumpEnd); (9.25 : 15.59375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Pregunta/Pregunta_PlantillaEvaluacionPregunta" />
       <nodes>
         <classShapeMoniker Id="f833ebf8-79c9-4c7a-b8d8-fa8ccd5cfaef" />
         <classShapeMoniker Id="d7920792-122f-4ce2-8520-bf3eddc483ec" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 15.3469962565104); (3.5 : 15.3469962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 15.3469962565104); (3.5 : 15.3469962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoPregunta/TipoPregunta_Pregunta" />
       <nodes>
         <classShapeMoniker Id="ac847f0d-c18f-42b9-9ff0-0fcf2123309a" />
         <classShapeMoniker Id="f833ebf8-79c9-4c7a-b8d8-fa8ccd5cfaef" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.44074375651042); (3.5 : 4.44074375651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 4.44074375651041); (2.88541666666667 : 4.44074375651041 : JumpStart); (3.05208333333333 : 4.44074375651041 : JumpEnd); (3.5 : 4.44074375651041)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Actividad/Actividad_TimeSheet" />
       <nodes>
         <classShapeMoniker Id="001e8a75-8192-4159-a7d3-21328828de8e" />
         <classShapeMoniker Id="2a81caae-c92d-4e0b-81dd-f14329dc2bea" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 1.34699625651042); (7.25 : 1.34699625651042); (7.25 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 1.0156275); (7.875 : 1.0156275); (7.875 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoEstadoEvaluacion/TipoEstadoEvaluacion_EstadoEvaluacion" />
       <nodes>
         <classShapeMoniker Id="d19ca9ef-5a9d-4a17-9f1f-4bb7f8e8955c" />
         <classShapeMoniker Id="ecb0b2c0-6dfd-4174-bb72-7192a7303878" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 1.67674688476562); (10 : 1.67674688476562); (10 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 0.90625); (10.59375 : 0.90625); (10.59375 : 3.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoEstadoEvaluacion/TipoEstadoEvaluacion_EstadoEvaluacionHistorico" />
       <nodes>
         <classShapeMoniker Id="d19ca9ef-5a9d-4a17-9f1f-4bb7f8e8955c" />
@@ -222,12 +222,6 @@
         <classShapeMoniker Id="0739e9f1-91f0-4abd-8d9a-b7b63437a661" />
       </nodes>
     </associationConnector>
-    <classShape Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" absoluteBounds="0.75, 7.5, 2, 1.7708968098958353">
-      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Usuario" />
-      <nestedChildShapes>
-        <elementListCompartment Id="a12da38b-c0ff-4a92-b07d-35e00ba87710" absoluteBounds="0.765, 7.9600000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="5e27d65a-0194-4205-8174-0af20904cdc6" absoluteBounds="3.5, 11.25, 2, 1.3862939453124987">
       <DataClassMoniker Name="/DESSAUControlGestionDataContext/UsuarioSupervisor" />
       <nestedChildShapes>
@@ -240,59 +234,17 @@
         <elementListCompartment Id="72828dc3-8d5b-4872-8bae-d9dab8772b78" absoluteBounds="6.5150000000000006, 10.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 7.78929768880208); (3.5 : 7.78929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_Evaluacion" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
-        <classShapeMoniker Id="a1e31a34-0260-4baf-9968-4aad29487d09" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 7.58214884440104); (3.5 : 7.58214884440104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_Evaluacion1" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
-        <classShapeMoniker Id="a1e31a34-0260-4baf-9968-4aad29487d09" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 7.5612992741887); (3.3125 : 6.9987992741887); (3.3125 : 5.01687371549479); (3.5 : 5.01687371549479)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_TimeSheet" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
-        <classShapeMoniker Id="2a81caae-c92d-4e0b-81dd-f14329dc2bea" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 9.27089680989583); (1.75 : 11.9431469726562); (3.5 : 11.9431469726562)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioSupervisor" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
-        <classShapeMoniker Id="5e27d65a-0194-4205-8174-0af20904cdc6" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 9.27089680989583); (2.2812525 : 11.5653209863281); (3.5 : 11.5653209863281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioSupervisor1" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
-        <classShapeMoniker Id="5e27d65a-0194-4205-8174-0af20904cdc6" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 10.4142976888021); (9.25 : 10.4142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.5 : 10.4142976888021); (8.60416416666667 : 10.4142976888021 : JumpStart); (8.77083083333333 : 10.4142976888021 : JumpEnd); (9.25 : 10.4142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/UsuarioCategoriaProyecto/UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" />
       <nodes>
         <classShapeMoniker Id="9d148519-2d67-4d25-a7e5-9ce737d53089" />
         <classShapeMoniker Id="ee1f1d1c-6ffe-4dc6-853a-17adf7c94945" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 9.97199625651042); (6.26041666666667 : 9.97199625651042 : JumpStart); (6.42708333333333 : 9.97199625651042 : JumpEnd); (6.5 : 9.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.75 : 9.97199625651042); (6.5 : 9.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Categoria/Categoria_UsuarioCategoriaProyecto" />
       <nodes>
         <classShapeMoniker Id="90cf8446-ad89-4ac7-afc3-834c8c972ef6" />
-        <classShapeMoniker Id="9d148519-2d67-4d25-a7e5-9ce737d53089" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 8.60179768880208); (6.26041666666667 : 8.60179768880208 : JumpStart); (6.42708333333333 : 8.60179768880208 : JumpEnd); (8.40625 : 8.60179768880208); (8.40625 : 9.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioCategoriaProyecto" />
-      <nodes>
-        <classShapeMoniker Id="999aeb0f-d012-4728-bf0a-3f0263ebb0d4" />
         <classShapeMoniker Id="9d148519-2d67-4d25-a7e5-9ce737d53089" />
       </nodes>
     </associationConnector>
@@ -302,7 +254,7 @@
         <elementListCompartment Id="0f72cd17-8115-4dfe-9a78-fbb04471d0f3" absoluteBounds="3.8899999999999997, 20.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3 : 19.9094962565104); (3.875 : 19.9094962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3 : 19.9094962565104); (3.875 : 19.9094962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Cliente/Cliente_Contrato" />
       <nodes>
         <classShapeMoniker Id="3818a8ad-3874-475c-b88d-7cc533dc207f" />
@@ -315,19 +267,151 @@
         <elementListCompartment Id="a9af7856-55fe-46df-802f-a0df39e4bb67" absoluteBounds="6.515, 18.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.5013612283153 : 18); (6.125 : 17.6236387716847); (6.125 : 11.5785953776042); (6.28482443490112 : 11.418770942703 : JumpStart); (6.40267556509888 : 11.3009198125053 : JumpEnd); (6.5 : 11.2035953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.5013612283153 : 18); (6.125 : 17.6236387716847); (6.125 : 11.5785953776042); (6.28482443490112 : 11.4187709427031 : JumpStart); (6.40267556509888 : 11.3009198125053 : JumpEnd); (6.5 : 11.2035953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Proyecto/Proyecto_UsuarioCategoriaProyecto" />
       <nodes>
         <classShapeMoniker Id="c6af7ec1-40a8-40ab-83db-6d7915be8ddf" />
         <classShapeMoniker Id="9d148519-2d67-4d25-a7e5-9ce737d53089" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.875 : 19.75); (4.875 : 18.8749995); (6.5 : 18.8749995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.875 : 19.75); (4.875 : 18.8749995); (6.5 : 18.8749995)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionDataContext/Contrato/Contrato_Proyecto" />
       <nodes>
         <classShapeMoniker Id="c153733d-acde-4707-8f87-a2355fbdbd41" />
         <classShapeMoniker Id="c6af7ec1-40a8-40ab-83db-6d7915be8ddf" />
       </nodes>
     </associationConnector>
+    <classShape Id="df4b9121-4e1c-4186-8423-5ecaf7b67b13" absoluteBounds="7.875, 21.625, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/TipoUsuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e1cd6eeb-0e88-47ba-afb0-efda85f5026d" absoluteBounds="7.89, 22.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="80dc2fed-cf90-4192-860b-52a74b466ade" absoluteBounds="10.25, 20.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/TipoUsuarioPermiso" />
+      <nestedChildShapes>
+        <elementListCompartment Id="769301eb-37d1-479d-8a66-95e7118b8488" absoluteBounds="10.265, 20.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.875 : 21.625); (8.875 : 20.9999995); (10.25 : 20.9999995)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoUsuario/TipoUsuario_TipoUsuarioPermiso" />
+      <nodes>
+        <classShapeMoniker Id="df4b9121-4e1c-4186-8423-5ecaf7b67b13" />
+        <classShapeMoniker Id="80dc2fed-cf90-4192-860b-52a74b466ade" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2938156b-92d1-49bb-a156-5ebbab04f7f7" absoluteBounds="10.875, 18.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Permiso" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b4b3ad7c-bc84-45d1-ad44-b14243994e97" absoluteBounds="10.89, 18.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.5625 : 19.4439925130208); (11.5625 : 20.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Permiso/Permiso_TipoUsuarioPermiso" />
+      <nodes>
+        <classShapeMoniker Id="2938156b-92d1-49bb-a156-5ebbab04f7f7" />
+        <classShapeMoniker Id="80dc2fed-cf90-4192-860b-52a74b466ade" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d160f5bd-b226-4866-b913-1a36e673402b" absoluteBounds="0.5, 8.125, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Usuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1d032a19-d7f0-4f04-a15d-6808ed0e9446" absoluteBounds="0.51500000000000012, 8.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 8.59375); (2.88541666666667 : 8.59375 : JumpStart); (3.05208333333333 : 8.59375 : JumpEnd); (3.59375 : 8.59375); (3.59375 : 8.07859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_Evaluacion" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="a1e31a34-0260-4baf-9968-4aad29487d09" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 8.3281225); (2.88541666666667 : 8.3281225 : JumpStart); (3.05208333333333 : 8.3281225 : JumpEnd); (3.5624975 : 8.3281225); (3.5624975 : 8.07859537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_Evaluacion1" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="a1e31a34-0260-4baf-9968-4aad29487d09" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(0.59375 : 8.125); (0.59375 : 5.33099609375); (2.88541666666667 : 5.33099609375 : JumpStart); (3.0953369140625 : 5.33099609375 : JumpEnd); (3.5 : 5.33099609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_TimeSheet" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="2a81caae-c92d-4e0b-81dd-f14329dc2bea" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(0.53125 : 10.0881982421875); (0.53125 : 11.71875); (3.5 : 11.71875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioSupervisor" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="5e27d65a-0194-4205-8174-0af20904cdc6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(0.546875 : 10.0881982421875); (0.546875 : 11.4531225); (3.5 : 11.4531225)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioSupervisor1" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="5e27d65a-0194-4205-8174-0af20904cdc6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 8.8593775); (2.88541666666667 : 8.8593775 : JumpStart); (3.05208333333333 : 8.8593775 : JumpEnd); (5.57291666666667 : 8.8593775 : JumpStart); (5.73958333333333 : 8.8593775 : JumpEnd); (6.26041666666667 : 8.8593775 : JumpStart); (6.42708333333333 : 8.8593775 : JumpEnd); (7.5 : 8.8593775); (7.5 : 9.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_UsuarioCategoriaProyecto" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="9d148519-2d67-4d25-a7e5-9ce737d53089" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.6874975 : 21.625); (8.6874975 : 8.99219125); (7.58333333333333 : 8.99219125 : JumpStart); (7.41666666666667 : 8.99219125 : JumpEnd); (6.42708333333333 : 8.99219125 : JumpStart); (6.26041666666667 : 8.99219125 : JumpEnd); (5.73958333333333 : 8.99219125 : JumpStart); (5.57291666666667 : 8.99219125 : JumpEnd); (3.05208333333333 : 8.99219125 : JumpStart); (2.88541666666667 : 8.99219125 : JumpEnd); (2.5 : 8.99219125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoUsuario/TipoUsuario_Usuario" />
+      <nodes>
+        <classShapeMoniker Id="df4b9121-4e1c-4186-8423-5ecaf7b67b13" />
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="9c8ae42a-eaf3-4dde-9f5c-bc181c3844b6" absoluteBounds="1.125, 1.25, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Notificacion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ca062ae-4926-4ab8-9bbc-42d63d16e1bc" absoluteBounds="1.1400000000000001, 1.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 9.57144724609375); (2.96875 : 9.57144724609375); (2.96875 : 3.59780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/Usuario/Usuario_Notificacion" />
+      <nodes>
+        <classShapeMoniker Id="d160f5bd-b226-4866-b913-1a36e673402b" />
+        <classShapeMoniker Id="9c8ae42a-eaf3-4dde-9f5c-bc181c3844b6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0fb55031-996d-4d71-936e-ab7995cd0a6d" absoluteBounds="8.125, 1.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/TipoEstadoNotificacion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d873e343-1c49-4b18-8f4a-015b05e00b97" absoluteBounds="8.14, 1.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.125 : 2.09699625651042); (7.95833333333333 : 2.09699625651042 : JumpStart); (7.79166666666667 : 2.09699625651042 : JumpEnd); (3.125 : 2.09699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoEstadoNotificacion/TipoEstadoNotificacion_Notificacion" />
+      <nodes>
+        <classShapeMoniker Id="0fb55031-996d-4d71-936e-ab7995cd0a6d" />
+        <classShapeMoniker Id="9c8ae42a-eaf3-4dde-9f5c-bc181c3844b6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1bc37c07-cb47-4a82-960f-2d7beb1d1ee6" absoluteBounds="5.625, 2.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/TipoNotificacion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fa50fcf6-97f8-454d-bb80-b5b2dbae0c9d" absoluteBounds="5.64, 2.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.625 : 2.78125); (3.125 : 2.78125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionDataContext/TipoNotificacion/TipoNotificacion_Notificacion" />
+      <nodes>
+        <classShapeMoniker Id="1bc37c07-cb47-4a82-960f-2d7beb1d1ee6" />
+        <classShapeMoniker Id="9c8ae42a-eaf3-4dde-9f5c-bc181c3844b6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="ecb8431e-fcb8-456f-a0a2-9455533766fb" absoluteBounds="0.625, 12.25, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Correo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5483561f-4045-454e-b206-115f8ce67e5b" absoluteBounds="0.64000000000000012, 12.71, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
