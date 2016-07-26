@@ -54,6 +54,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Proyecto.cs" />
     <Compile Include="Rut.cs" />
     <Compile Include="TipoEstadoUsuarioCategoriaProyecto.cs" />
   </ItemGroup>

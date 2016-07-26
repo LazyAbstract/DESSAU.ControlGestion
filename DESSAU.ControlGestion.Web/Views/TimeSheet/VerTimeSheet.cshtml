@@ -13,10 +13,77 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm(null, null, FormMethod.Get)) {
-
-
+        @using (Html.BeginForm(null, null, FormMethod.Get))
+        {
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Hoja de planificación</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.FORM.Fecha, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.Fecha)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = "form-label" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="submit" value="Buscar" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 </div>
-
+<div class="row">
+    @using (Ajax.BeginForm("",new AjaxOptions() {
+    }))
+    {
+        foreach (var item in Model.UsuarioCategoriaProyectos)
+        {
+            <h3>@(String.Format("{0}({1})", item.Categoria.Nombre, item.Proyecto.NombreCompleto))</h3>
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    @foreach (var dia in Model.FechaDesdeHasta)
+                    {
+                        <div class="col-md-2">
+                            @dia.ToString("ddd, dd/MM")
+                        </div>
+                    }
+                </div>
+                @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
+                {
+                    <div class="col-md-2">
+                        @actividad.Nombre
+                    </div>
+                    @foreach (var dia in Model.FechaDesdeHasta)
+                    {
+                        <div class="col-md-2">
+                            @Html.TextBox("")
+                        </div>
+                    }
+                }
+        }
+    } 
+</div>
