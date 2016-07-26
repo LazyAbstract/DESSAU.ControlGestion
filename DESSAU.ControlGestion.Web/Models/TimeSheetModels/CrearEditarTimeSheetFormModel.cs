@@ -1,4 +1,5 @@
-﻿using DESSAU.ControlGestion.Core;
+﻿using AutoMapper;
+using DESSAU.ControlGestion.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,18 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
 {
     public class CrearEditarTimeSheetFormModel
     {
-        public int idUsuario { get; set; }
-        public List<DateTime> FechaDeseHasta { get; set; }
+        public int IdUsuario { get; set; }
         public IEnumerable<TimeSheetDTO> TimeSheetDTOs { get; set; }
-        public IEnumerable<DiaEspecial> DiaEspecials { get; set; }
+
+        public CrearEditarTimeSheetFormModel()
+        {
+            TimeSheetDTOs = new List<TimeSheetDTO>();
+        }
+
+        public CrearEditarTimeSheetFormModel(IEnumerable<TimeSheet> timeSheets):this()
+        {
+            Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(timeSheets, TimeSheetDTOs);
+        }
 }
 
     public class TimeSheetDTO

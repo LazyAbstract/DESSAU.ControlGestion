@@ -18,27 +18,48 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM)
         {
-            VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM);
+            VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
-                x.IdUsuario == _CurrentUsuario.IdUsuario &&
-                x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != 
+                x.Usuario.Correo == User.Identity.Name &&
+                x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
             IQueryable<TimeSheet> timeSheets = db.TimeSheets.Where(x => x.IdUsuario == _CurrentUsuario.IdUsuario);
             if (ModelState.IsValid)
             {
                 if (FORM.Fecha.HasValue)
                 {
-                    timeSheets = timeSheets.Where(x => model.FechaDesdeHasta.Contains(x.Fecha));
+                    timeSheets = timeSheets.Where(x => model.getFechaDesdeHasta.Contains(x.Fecha));
                 }
                 if (FORM.IdCategoria.HasValue)
                 {
                     timeSheets = timeSheets.Where(x => x.Actividad.CategoriaActividads.Any(y => y.IdCategoria == FORM.IdCategoria.Value));
-                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x=>x.IdCategoria == FORM.IdCategoria);
-                }                
+                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
+                }
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
-            model.TimeSheets = timeSheets;
+            model.TimeSheetFORM = new CrearEditarTimeSheetFormModel(timeSheets);
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, CrearEditarTimeSheetFormModel TimeSheetFORM)
+        {
+            VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
+            model.TimeSheetFORM = TimeSheetFORM;
+            IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
+                x.IdUsuario == _CurrentUsuario.IdUsuario &&
+                x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            if (ModelState.IsValid)
+            {
+                if (FORM.IdCategoria.HasValue)
+                {
+                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
+                }
+            }
+            model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
+            return View(model);
+        }
+
     }
 }

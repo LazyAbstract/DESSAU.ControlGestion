@@ -11,27 +11,41 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
     public class VerTimeSheetViewModel
     {
         public VerTimeSheetFormModel FORM { get; set; }
+        public CrearEditarTimeSheetFormModel TimeSheetFORM { get; set; }
         public SelectList Proyectos { get; set; }
         public SelectList Categorias { get; set; }
+        public List<DateTime> FechaDeseHasta { get; set; }
+        public IEnumerable<DiaEspecial> DiaEspecials { get; set; }
 
-        public List<DateTime> FechaDesdeHasta
+        private List<DateTime> _FechaDesdeHasta { get; set; }
+
+        public List<DateTime> getFechaDesdeHasta
         {
             get
             {
-                DateTime startMonday = FORM.Fecha.Value.StartOfWeek(DayOfWeek.Monday);
-                return Enumerable.Range(0, 4)
-                    .Select(offset => startMonday.AddDays(offset)).ToList();
+                return _FechaDesdeHasta;
             }
         }
-        public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
-        public IEnumerable<TimeSheet> TimeSheets { get; set; }
 
         public VerTimeSheetViewModel()
         {
             FORM = new VerTimeSheetFormModel();
+            TimeSheetFORM = new CrearEditarTimeSheetFormModel();
+            DateTime startMonday = FORM.Fecha.Value.StartOfWeek(DayOfWeek.Monday);
+            _FechaDesdeHasta =  Enumerable.Range(0, 5)
+                .Select(offset => startMonday.AddDays(offset)).ToList();
+        }
+        public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
+        public IEnumerable<TimeSheet> TimeSheets { get; set; }
+
+        public VerTimeSheetViewModel(DESSAUControlGestionDataContext db):this()
+        {
+            Proyectos = new SelectList(db.Proyectos, "IdProyecto", "Nombre");
+            Categorias = new SelectList(db.Categorias, "IdCategoria", "Nombre");
+            DiaEspecials = db.DiaEspecials.Where(x=> getFechaDesdeHasta.Contains(x.Fecha.Date));
         }
 
-        public VerTimeSheetViewModel(VerTimeSheetFormModel form) : this()
+        public VerTimeSheetViewModel(VerTimeSheetFormModel form, DESSAUControlGestionDataContext db) :this(db)
         {
             FORM = form;
         }
