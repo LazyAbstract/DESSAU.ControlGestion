@@ -25,11 +25,12 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
 
     public class TimeSheetDTO
     {
-        public int? idTimeSheet { get; set; }
+        public int? IdTimeSheet { get; set; }
         public DateTime Fecha { get; set; }
-        public int? IdTipoActividad { get; set; }
+        public int? IdActividad { get; set; }
         public int? HorasPlanificadas { get; set; }
         public int? HorasReportadas { get; set; }
+        public int? IdUsuarioCategoriaProyecto { get; set; }
     }
 
 }

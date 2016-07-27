@@ -1,4 +1,5 @@
-﻿using DESSAU.ControlGestion.Core;
+﻿using AutoMapper;
+using DESSAU.ControlGestion.Core;
 using DESSAU.ControlGestion.Web.Models.TimeSheetModels;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 }
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
-            model.TimeSheetFORM = new CrearEditarTimeSheetFormModel(timeSheets);
+            if(timeSheets.Any())
+            {
+                model.TimeSheetFORM = Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(timeSheets);
+            }
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, CrearEditarTimeSheetFormModel TimeSheetFORM)
+        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, IEnumerable<TimeSheetDTO> TimeSheetFORM)
         {
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             model.TimeSheetFORM = TimeSheetFORM;

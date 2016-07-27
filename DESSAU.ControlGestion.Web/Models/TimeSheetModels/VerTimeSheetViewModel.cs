@@ -11,7 +11,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
     public class VerTimeSheetViewModel
     {
         public VerTimeSheetFormModel FORM { get; set; }
-        public CrearEditarTimeSheetFormModel TimeSheetFORM { get; set; }
+        public IEnumerable<TimeSheetDTO> TimeSheetFORM { get; set; }
         public SelectList Proyectos { get; set; }
         public SelectList Categorias { get; set; }
         public List<DateTime> FechaDeseHasta { get; set; }
@@ -30,7 +30,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
         public VerTimeSheetViewModel()
         {
             FORM = new VerTimeSheetFormModel();
-            TimeSheetFORM = new CrearEditarTimeSheetFormModel();
+            TimeSheetFORM = new List<TimeSheetDTO>();
             DateTime startMonday = FORM.Fecha.Value.StartOfWeek(DayOfWeek.Monday);
             _FechaDesdeHasta =  Enumerable.Range(0, 5)
                 .Select(offset => startMonday.AddDays(offset)).ToList();

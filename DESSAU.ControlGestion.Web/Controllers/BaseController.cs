@@ -16,13 +16,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public Usuario _CurrentUsuario
         {
             get{
-                try{
-                    return (Usuario)Session["CurrentUsuario"];
-                }
-                catch(Exception ex)
-                {
-                    return new Usuario();
-                }
+                return db.Usuarios.SingleOrDefault(x => x.Correo == User.Identity.Name);
             }
         }
 
