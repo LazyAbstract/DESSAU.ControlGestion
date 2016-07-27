@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DESSAU.ControlGestion.Web.MapperProfiles.TimeSheetModels
+namespace DESSAU.ControlGestion.Web.MapperProfiles.TimeSheetMappers
 {
     public class TimeSheetTimeSheetDTO : Profile
     {
@@ -18,6 +18,7 @@ namespace DESSAU.ControlGestion.Web.MapperProfiles.TimeSheetModels
         {
             Mapper.CreateMap<TimeSheet, TimeSheetDTO>();
             Mapper.CreateMap<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>();
+            Mapper.CreateMap<IQueryable<TimeSheet>, IEnumerable<TimeSheetDTO>>();
         }
     }
 }

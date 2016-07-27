@@ -59,7 +59,8 @@
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
         {
-            foreach (var item in Model.UsuarioCategoriaProyectos.Take(1))
+            int index_categoriaProyecto = 0;
+            foreach (var item in Model.UsuarioCategoriaProyectos)
             {
                 <input type="submit" name="FORM.Accion" class="btn btn-default" value="Guardar" />
 
@@ -79,6 +80,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    
                         @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
                     {
                             <tr class="">
@@ -89,11 +91,22 @@
                                 {
                                     if (!Model.DiaEspecials.Any(x => x.Fecha == dia))
                                     {
-                                        //var formSheet = Model.TimeSheetFORM.TimeSheetDTOs.SingleOrDefault(x => x.);
-                                        //string valor = formSheet != null ? formSheet.Hora.GetValueOrDefault(0).ToString() : "0";
+                                        string baseName = String.Format("TimeSheetFORM[{0}]", index_categoriaProyecto);
+                                        var timeSheetFormItem = Model.TimeSheetFORM.SingleOrDefault(x => x.Fecha.Date == dia);
+                                        var valorPlanificada = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0).ToString() : "0";
+                                        var valorReal = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0).ToString() : "0";
                                         <td class="">
+                                            <input name="@String.Format("{0}.IdActividad",baseName)" type="hidden" value="@actividad.IdActividad" />
+                                            <input name="@String.Format("{0}.IdUsuarioCategoriaProyecto",baseName)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
                                             <div class="input-group spinner">
-                                                <input type="text" onchange="suma('@((int)dia.DayOfWeek)')" value="0"  class = "input-timesheet form-control @("numero_"+(int)dia.DayOfWeek)"  />
+                                                <input name="@String.Format("{0}.HorasPlanificadas",baseName)" type="text" onchange="@String.Format("suma('{0}','{1}','planificada')",(int)dia.DayOfWeek, index_categoriaProyecto)" value="0" class="input-timesheet form-control @String.Format("numero_{0}_{1}_planificada", index_categoriaProyecto, (int)dia.DayOfWeek)" />
+                                                <div class="input-group-btn-vertical">
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="input-group spinner">
+                                                <input name="@String.Format("{0}.HorasReportadas",baseName)" type="text" onchange="@String.Format("suma('{0}','{1}','reportada')",(int)dia.DayOfWeek, index_categoriaProyecto)" value="0" class="input-timesheet form-control @String.Format("numero_{0}_{1}_reportada", index_categoriaProyecto, (int)dia.DayOfWeek)" />
                                                 <div class="input-group-btn-vertical">
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
@@ -122,13 +135,16 @@
                                     <th class="success">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </th>
-                                
+
                                 }
                                 else
                                 {
                                     <th class="center totales">
-                                        <span id="total_dia_@((int)dia.DayOfWeek)"class="center">
-                                            @(Model.TimeSheetFORM.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)))
+                                        <span id="@String.Format("total_dia_{0}_{1}_planificada", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                            @(Model.TimeSheetFORM.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)))
+                                        </span>
+                                        <span id="@String.Format("total_dia_{0}_{1}_reportada", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                            @(Model.TimeSheetFORM.Where(x => x.Fecha == dia).Sum(x => x.HorasReportadas.GetValueOrDefault(0)))
                                         </span>
                                     </th>
                                 }
@@ -136,6 +152,7 @@
                         </tr>
                     </thead>
                 </table>
+                index_categoriaProyecto++;
             }
         }
     </div>
@@ -206,13 +223,13 @@
             });
             pintaTotales();
         });
-        function suma(dia) {
+        function suma(dia, categoria, tipo) {
             var sum = 0;
-            $('.numero_' + dia).each(function () {
+            $('.numero_' + categoria + '_' + dia+'_'+tipo).each(function () {
                 sum += Number($(this).val());
                 pinta($(this));
             });
-            $('#total_dia_' + dia).html(sum);
+            $('#total_dia_' + categoria + '_' + dia+'_'+tipo).html(sum);
             pintaTotales();
         }
 
