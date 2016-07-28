@@ -222,7 +222,7 @@
             $('.spinner .btn:first-of-type').on('click', function () {
                 if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
                     $(this).closest(".spinner").find('input[type="text"]').val(0);
-                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<9) {
+                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<10) {
                     $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
                     $(this).closest(".spinner").find('input[type="text"]').change();
                 }
