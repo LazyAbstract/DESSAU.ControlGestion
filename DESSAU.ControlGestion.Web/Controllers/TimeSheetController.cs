@@ -24,7 +24,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 x.Usuario.Correo == User.Identity.Name &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
-            IQueryable<TimeSheet> timeSheets = db.TimeSheets.Where(x => x.IdUsuario == _CurrentUsuario.IdUsuario);
+            IQueryable<TimeSheet> timeSheets = db.TimeSheets.Where(x => x.UsuarioCategoriaProyecto.IdUsuario == _CurrentUsuario.IdUsuario);
             if (ModelState.IsValid)
             {
                 if (FORM.Fecha.HasValue)
