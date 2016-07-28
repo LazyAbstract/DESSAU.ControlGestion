@@ -59,6 +59,7 @@
     <Compile Include="TipoEstadoUsuarioCategoriaProyecto.cs" />
     <Compile Include="TipoEstadoNotificacion.cs" />
     <Compile Include="TipoNotificacion.cs" />
+    <Compile Include="TipoTimeSheet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
