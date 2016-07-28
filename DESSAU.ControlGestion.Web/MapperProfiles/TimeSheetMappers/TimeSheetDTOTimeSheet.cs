@@ -18,7 +18,6 @@ namespace DESSAU.ControlGestion.Web.MapperProfiles.TimeSheetMappers
         protected override void Configure()
         {
             Mapper.CreateMap<TimeSheetDTO, TimeSheet>();
-            Mapper.CreateMap<IEnumerable<TimeSheetDTO>, IEnumerable<TimeSheet>>();
         }
     }
 }

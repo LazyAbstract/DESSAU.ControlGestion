@@ -21,24 +21,24 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
-                x.Usuario.Correo == User.Identity.Name &&
+                x.IdUsuario == UsuarioActual.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
-            IQueryable<TimeSheet> timeSheets = db.TimeSheets.Where(x => x.UsuarioCategoriaProyecto.IdUsuario == _CurrentUsuario.IdUsuario);
+            IQueryable<TimeSheet> timeSheets = usuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
             if (ModelState.IsValid)
             {
+                if (FORM.IdCategoria.HasValue)
+                {
+                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
+                    timeSheets = usuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
+                }
                 if (FORM.Fecha.HasValue)
                 {
                     timeSheets = timeSheets.Where(x => model.getFechaDesdeHasta.Contains(x.Fecha));
                 }
-                if (FORM.IdCategoria.HasValue)
-                {
-                    timeSheets = timeSheets.Where(x => x.Actividad.CategoriaActividads.Any(y => y.IdCategoria == FORM.IdCategoria.Value));
-                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
-                }
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
-            if(timeSheets.Any())
+            if (timeSheets.Any())
             {
                 model.TimeSheetFORM = Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(timeSheets);
             }
@@ -60,16 +60,39 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                foreach(var timeSheetDTO in TimeSheetFORM)
+                List<TimeSheetDTO> resultTimeSheetDTO = new List<TimeSheetDTO>();
+                foreach (var timeSheetDTO in TimeSheetFORM)
                 {
-                    if (timeSheetDTO.Horas.HasValue){
+                    if (timeSheetDTO.Horas.HasValue && (timeSheetDTO.Horas.Value != 0 || timeSheetDTO.IdTimeSheet.HasValue))
+                    {
                         TimeSheet timeSheet = db.TimeSheets.SingleOrDefault(x => x.IdTimeSheet == timeSheetDTO.IdTimeSheet);
                         if (timeSheet == null)
                         {
-                            timeSheet = new TimeSheet();
+                            timeSheet = new TimeSheet()
+                            {
+                                Fecha = timeSheetDTO.Fecha,
+                                IdActividad = timeSheetDTO.IdActividad.GetValueOrDefault(0),
+                                IdUsuarioCategoriaProyecto = timeSheetDTO.IdUsuarioCategoriaProyecto.GetValueOrDefault(0)
+                            };
                         }
+                        switch (FORM.IdTipoTimeSheet)
+                        {
+                            case TipoTimeSheet.Planificacion:
+                                timeSheet.HorasPlanificadas = timeSheetDTO.Horas.GetValueOrDefault(0);
+                                break;
+                            case TipoTimeSheet.Reportado:
+                                timeSheet.HorasReportadas = timeSheetDTO.Horas.GetValueOrDefault(0);
+                                break;
+                        }
+                        if (!timeSheetDTO.IdTimeSheet.HasValue)
+                        {
+                            db.TimeSheets.InsertOnSubmit(timeSheet);
+                        }
+                        db.SubmitChanges();
+                        resultTimeSheetDTO.Add(Mapper.Map<TimeSheet, TimeSheetDTO>(timeSheet));
                     }
                 }
+                model.TimeSheetFORM = resultTimeSheetDTO;
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             return View(model);

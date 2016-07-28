@@ -116,6 +116,7 @@
                                             {
                                                 <input name="@String.Format("{0}.IdTimeSheet",baseName)" type="hidden" value="@timeSheetFormItem.IdTimeSheet" />
                                             }
+                                            <input name="@String.Format("{0}.Fecha",baseName)" type="hidden" value="@dia.Date" />
                                             <input name="@String.Format("{0}.IdActividad",baseName)" type="hidden" value="@actividad.IdActividad" />
                                             <input name="@String.Format("{0}.IdUsuarioCategoriaProyecto",baseName)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
                                             <div class="input-group spinner">
@@ -125,7 +126,6 @@
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
                                                 </div>
                                             </div>
-                                            @Html.ValidationMessage(String.Format("{0}.Horas", baseName))
                                         </td>
                                     }
                                     else
@@ -267,7 +267,7 @@
         function pintaTotales() {
             $('.totales').each(function () {
                 var total = $.trim($(this).children('span').text());
-                if (total != '0' && total != '1' && total != '2' && total != '3' && total != '4' && total != '5' && total != '6' && total != '7' && total != '8') {
+                if (total == '9') {
                     $(this).css('background-color', '#99FFCC')
                 }
                 else {

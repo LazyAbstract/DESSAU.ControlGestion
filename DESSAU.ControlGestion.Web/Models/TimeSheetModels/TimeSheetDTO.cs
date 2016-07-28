@@ -2,6 +2,7 @@
 using DESSAU.ControlGestion.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,6 +16,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
         public int? HorasPlanificadas { get; set; }
         public int? HorasReportadas { get; set; }
         public int? IdUsuarioCategoriaProyecto { get; set; }
+
+        [Required]
         public int? Horas { get; set; }
     }
 
