@@ -31,9 +31,22 @@ namespace DESSAU.ControlGestion.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
+                      //"~/Content/site.css",
                       "~/Content/MySite.css",
                       "~/Content/ct/css/pe-icon-7-stroke.css"));
+
+            bundles.Add(new StyleBundle("~/Content/startboostrapcss").Include(
+                      "~/Content/bower_components/metisMenu/dist/metisMenu.css",
+                      "~/Content/dist/css/sb-admin-2.css",
+                      "~/Content/bower_components/morrisjs/morris.css",
+                      "~/Content/bower_components/font-awesome/css/font-awesome.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/startboostrapjs").Include(
+                      "~/Content/bower_components/metisMenu/dist/metisMenu.min.js",
+                      "~/Content/bower_components/raphael/raphael-min.js",
+                      "~/Content/bower_components/morrisjs/morris.min.js",
+                      "~/Content/js/morris-data.js",
+                      "~/Content/dist/js/sb-admin-2.js"));
         }
     }
 }
