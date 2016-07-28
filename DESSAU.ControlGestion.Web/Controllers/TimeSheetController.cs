@@ -17,8 +17,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM)
+        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, int? IdTipoTimeSheet)
         {
+            //  pequeño haack pa hacer que valla donde quiero
+            if (IdTipoTimeSheet.HasValue) FORM.IdTipoTimeSheet = IdTipoTimeSheet;
+            if (FORM.IdTipoTimeSheet == TipoTimeSheet.Planificacion) FORM.ClaseBootstrap = "primary";
+            else FORM.ClaseBootstrap = "info";
+
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
                 x.IdUsuario == UsuarioActual.IdUsuario &&

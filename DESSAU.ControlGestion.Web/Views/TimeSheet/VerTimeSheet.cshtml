@@ -11,21 +11,21 @@
         @switch (Model.FORM.IdTipoTimeSheet)
         {
             case TipoTimeSheet.Planificacion:
-                <h2>Hoja de Planificación de Horas</h2>
+                //después hacemos esto intelegente
+                <h2><i class="fa fa-table fa-fw"></i>Planificación Agosto</h2>
                 break;
             case TipoTimeSheet.Reportado:
-                <h2>Hoja de Reporte de Horas</h2>
+                <h2><i class="fa fa-edit fa-fw"></i>Declaración de Avances Julio</h2>
                 break;
         }
     </div>
 </div>
-<div class="row">
+@*<div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Get))
         {
-            <div class="panel panel-primary">
+            <div class="panel panel-@Model.FORM.ClaseBootstrap">
                 <div class="panel-heading">
-
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -62,7 +62,7 @@
             </div>
         }
     </div>
-</div>
+</div>*@
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
@@ -71,9 +71,22 @@
             int index_timeSheet = 0;
             foreach (var item in Model.UsuarioCategoriaProyectos)
             {
-                <input type="submit" name="FORM.Accion" class="btn btn-default" value="Guardar" />
+                <div class="panel panel-@Model.FORM.ClaseBootstrap">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@item.Usuario.NombreCompleto</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h6>@item.Proyecto.Nombre</h6>
+                        <h6>@item.Categoria.Nombre</h6>  
+                    </div>
+                </div>
+                @*<h3>@item.Usuario.NombreCompleto</h3>
+                <h4>@item.Proyecto.Nombre</h4>
+                <h4>@item.Categoria.Nombre</h4>*@                
+                <hr/>
+                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
                 @Html.HiddenFor(x => x.FORM.IdTipoTimeSheet)
-                @Html.Raw(String.Format("<h3>{0}</h3><h4>{1}</h4>", item.Categoria.Nombre, item.Proyecto.NombreCompleto))
+                @*@Html.Raw(String.Format("<h3>{0}</h3><h4>{1}</h4>", item.Categoria.Nombre, item.Proyecto.NombreCompleto))*@
                 <table class="table table-hover table-striped">
 
                     <thead>
@@ -164,6 +177,7 @@
                     </thead>
                 </table>
                 index_categoriaProyecto++;
+                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
             }
         }
     </div>

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DESSAU.ControlGestion.Core
 {
-    public partial class Proyecto
+    public partial class Usuario
     {
         public string NombreCompleto
         {
             get
             {
-                return String.Format("{0}, {1}, {2}", Nombre, Contrato.Nombre, Contrato.Cliente.Nombre);
+                return this.Nombre + " " + this.ApellidoPaterno;
             }
         }
     }

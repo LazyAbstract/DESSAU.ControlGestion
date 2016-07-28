@@ -684,6 +684,7 @@
     <Content Include="Content\dist\css\timeline.css" />
     <Content Include="Content\dist\js\sb-admin-2.js" />
     <Content Include="Content\images\dessau_logo.png" />
+    <Content Include="Content\images\logo-commonabstract-temporal.PNG" />
     <Content Include="Content\js\flot-data.js" />
     <Content Include="Content\js\morris-data.js" />
     <Content Include="Content\MySite.css" />
@@ -1016,6 +1017,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\dessaucontrolhh - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dessaucontrolhh - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DESSAUControlGestionConfiguration.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

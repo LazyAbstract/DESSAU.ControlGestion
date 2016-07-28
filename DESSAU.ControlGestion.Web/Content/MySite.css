@@ -12,6 +12,10 @@
     white-space: nowrap;
 }
 
+a[disabled] {
+    pointer-events: none;
+}
+
 .navbar-inverse {
   background-color: #265c81 !important;
   border-color: #327fb4 !important;

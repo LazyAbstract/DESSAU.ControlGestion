@@ -7,6 +7,9 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/startboostrapcss")
     @Scripts.Render("~/bundles/jquery")
+
+    <link href="../Content/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <script type="text/javascript">
         $(function () {
 
@@ -84,53 +87,6 @@
 </head>
 <body>
     <div id="wrapper">
-        @*<div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/images/dessau_logo.png")" alt="Home" height="35" style="margin-top:10px"/></a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>@Html.ActionLink("Usuarios", "ListarUsuario", "Usuario")</li>
-
-                                <li class="dropdown">
-                                    <a href="#" id="notificaciones" class="dropdown-toggle popup-marker" data-toggle="dropdown">
-                                        <i class="pe-7s-bell" style="font-size: 30px; position: relative;">
-                                            <span class="label label-danger" style="font-size:10px;position: absolute;right: -15px;top: -5px;" id="numero_notificaciones">-</span>
-                                        </i>
-                                    </a>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="pe-7s-user" style="font-size:30px; position: relative;"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" class="" data-toggle="">@User.Identity.Name</a></li>
-                                        <li class="divider"></li>
-                                        <li>@Html.ActionLink("Cambiar Contraseña", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                                        <li>
-                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                                            {
-                                                @Html.AntiForgeryToken()
-                                                <a class="menu-item-salir" href="javascript:document.getElementById('logoutForm').submit()">Salir</a>
-                                            }
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        }
-                    </div>
-                </div>
-            </div>*@
-
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -140,10 +96,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/images/dessau_logo.png")" alt="Home" class="navbar-brand" /></a>
+                <a class="navbar-brand" href="@Url.Action("Index","Home")"> Plataforma Control HH</a>               
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -271,195 +228,158 @@
                         </li>
                     </ul>
                     <!-- /.dropdown-tasks -->
-                </li>
+                </li>*@
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="icon-warning-sign"></i> Planificación Agosto Incompleta
+                                        <span class="pull-right text-muted small">@DateTime.Today.ToShortDateString()</span>
+                                    </div>
+                                </a>
+                            </li>
+                            @*<li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                        <span class="pull-right text-muted small">12 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-tasks fa-fw"></i> New Task
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                    </div>
+                                </a>
+                            </li>*@
+                            <li class="divider"></li>
+                            <li>
+                                <a class="text-center" href="#">
+                                    <strong>Ver Todas</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#"><i class="fa fa-user fa-fw"></i> Pérfil Usuario</a>
+                            </li>
+                            @*<li>
+                                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            </li>*@
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
                 <!-- /.dropdown -->
+                }                
             </ul>
             <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-                        <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="blank.html">Blank Page</a>
-                                </li>
-                                <li>
-                                    <a href="login.html">Login Page</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                    </ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li class="sidebar-search">
+                                <div class="input-group custom-search-form">
+                                    <input type="text" class="form-control" placeholder="Buscar...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!-- /input-group -->
+                            </li>
+                            @*<li>
+                                    <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                </li>*@
+                            <li>
+                                <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 1 })"><i class="fa fa-table fa-fw"></i> Planificación</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Test", "Reporte")"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Avance Proyecto</a>
+                                    </li>
+                                    <li>
+                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Reporte Individual</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ListarUsuario", "Usuario")"><i class="fa fa-cogs" aria-hidden="true"></i> Ajustes<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("ListarUsuario", "Usuario")"> Usuarios</a>
+                                    </li>
+                                    <li>
+                                        <a class="disabled" href="#">Actividades</a>
+                                    </li>
+                                    <li>
+                                        <a class="disabled" href="#">Categorías</a>
+                                    </li>
+                                    <li>
+                                        <a class="disabled" href="#">Ordenes Servicio</a>
+                                    </li>
+                                    <li>
+                                        <a class="disabled" href="#">Contratos</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
                 </div>
-                <!-- /.sidebar-collapse -->
-            </div>
             <!-- /.navbar-static-side -->
+            }
+            
         </nav>
 
         <div id="page-wrapper">
@@ -478,7 +398,7 @@
                 <div class="container">
                     <p class="navbar-text pull-right">
                         <a class="brand" href="http://www.commonabstract.cl" target="_blank">
-                            <img src="@Url.Content("~/Content/imagenes/no-logo.jpg")" />
+                            <img height="35px" src="@Url.Content("~/Content/images/logo-commonabstract-temporal.PNG")" />
                         </a>
                     </p>
                 </div>
