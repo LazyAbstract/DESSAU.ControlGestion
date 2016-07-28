@@ -10,7 +10,6 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
 {
     public class VerTimeSheetViewModel
     {
-        public int IdTipoPlanificacion { get; set; }
         public VerTimeSheetFormModel FORM { get; set; }
         public IEnumerable<TimeSheetDTO> TimeSheetFORM { get; set; }
         public SelectList Proyectos { get; set; }

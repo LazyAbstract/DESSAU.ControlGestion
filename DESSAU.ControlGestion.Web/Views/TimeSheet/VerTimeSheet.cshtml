@@ -8,7 +8,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Hoja de Planificación</h2>
+        @switch (Model.FORM.IdTipoTimeSheet)
+        {
+            case TipoTimeSheet.Planificacion:
+                <h2>Hoja de Planificación de Horas</h2>
+                break;
+            case TipoTimeSheet.Reportado:
+                <h2>Hoja de Reporte de Horas</h2>
+                break;
+        }
     </div>
 </div>
 <div class="row">
@@ -17,7 +25,7 @@
         {
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4>Hoja de planificación</h4>
+
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -60,10 +68,11 @@
         @using (Html.BeginForm(null, null, FormMethod.Post))
         {
             int index_categoriaProyecto = 0;
+            int index_timeSheet = 0;
             foreach (var item in Model.UsuarioCategoriaProyectos)
             {
                 <input type="submit" name="FORM.Accion" class="btn btn-default" value="Guardar" />
-
+                @Html.HiddenFor(x => x.FORM.IdTipoTimeSheet)
                 @Html.Raw(String.Format("<h3>{0}</h3><h4>{1}</h4>", item.Categoria.Nombre, item.Proyecto.NombreCompleto))
                 <table class="table table-hover table-striped">
 
@@ -80,7 +89,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
                         @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
                     {
                             <tr class="">
@@ -91,29 +99,42 @@
                                 {
                                     if (!Model.DiaEspecials.Any(x => x.Fecha == dia))
                                     {
-                                        string baseName = String.Format("TimeSheetFORM[{0}]", index_categoriaProyecto);
-                                        var timeSheetFormItem = Model.TimeSheetFORM.SingleOrDefault(x => x.Fecha.Date == dia);
-                                        var valorPlanificada = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0).ToString() : "0";
-                                        var valorReal = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0).ToString() : "0";
+                                        string baseName = String.Format("TimeSheetFORM[{0}]", index_timeSheet);
+                                        var timeSheetFormItem = Model.TimeSheetFORM.SingleOrDefault(x => x.Fecha.Date == dia && x.IdUsuarioCategoriaProyecto == item.IdUsuarioCategoriaProyecto && x.IdActividad == actividad.IdActividad);
+                                        var timeSheetValue = 0;
                                         <td class="">
+                                            @switch (Model.FORM.IdTipoTimeSheet)
+                                            {
+                                                case TipoTimeSheet.Planificacion:
+                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0) : 0;
+                                                    break;
+                                                case TipoTimeSheet.Reportado:
+                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasReportadas.GetValueOrDefault(0) : 0;
+                                                    break;
+                                            }
+                                            @if (timeSheetFormItem != null)
+                                            {
+                                                <input name="@String.Format("{0}.IdTimeSheet",baseName)" type="hidden" value="@timeSheetFormItem.IdTimeSheet" />
+                                            }
                                             <input name="@String.Format("{0}.IdActividad",baseName)" type="hidden" value="@actividad.IdActividad" />
                                             <input name="@String.Format("{0}.IdUsuarioCategoriaProyecto",baseName)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
                                             <div class="input-group spinner">
-                                                <input name="@String.Format("{0}.Horas",baseName)" type="text" onchange="@String.Format("suma('{0}','{1}')",(int)dia.DayOfWeek, index_categoriaProyecto)" value="0" class="input-timesheet form-control @String.Format("numero_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" />
+                                                <input name="@String.Format("{0}.Horas",baseName)" type="text" onchange="@String.Format("suma('{0}','{1}')",(int)dia.DayOfWeek, index_categoriaProyecto)" value="@timeSheetValue" class="input-timesheet form-control @String.Format("numero_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" />
                                                 <div class="input-group-btn-vertical">
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
                                                 </div>
                                             </div>
+                                            @Html.ValidationMessage(String.Format("{0}.Horas", baseName))
                                         </td>
                                     }
                                     else
                                     {
                                         <td class="success">
                                             <span class="glyphicon glyphicon-minus"></span>
-
                                         </td>
                                     }
+                                    index_timeSheet++;
                                 }
                             </tr>
                         }
@@ -197,13 +218,23 @@
     </style>
     <script type="text/javascript">
         (function ($) {
+            $('.input-timesheet').numeric({ decimal: false, negative: false });
             $('.spinner .btn:first-of-type').on('click', function () {
-                $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
-                $(this).closest(".spinner").find('input[type="text"]').change();
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<9) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
+                
             });
             $('.spinner .btn:last-of-type').on('click', function () {
-                $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
-                $(this).closest(".spinner").find('input[type="text"]').change();
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
             });
         })(jQuery);
 
@@ -212,6 +243,7 @@
                 pinta($(this));
             });
             pintaTotales();
+            
         });
         function suma(dia, categoria) {
             var sum = 0;

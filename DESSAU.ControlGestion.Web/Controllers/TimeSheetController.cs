@@ -54,11 +54,21 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 x.IdUsuario == _CurrentUsuario.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            if (FORM.IdCategoria.HasValue)
+            {
+                usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
+            }
             if (ModelState.IsValid)
             {
-                if (FORM.IdCategoria.HasValue)
+                foreach(var timeSheetDTO in TimeSheetFORM)
                 {
-                    usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
+                    if (timeSheetDTO.Horas.HasValue){
+                        TimeSheet timeSheet = db.TimeSheets.SingleOrDefault(x => x.IdTimeSheet == timeSheetDTO.IdTimeSheet);
+                        if (timeSheet == null)
+                        {
+                            timeSheet = new TimeSheet();
+                        }
+                    }
                 }
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
