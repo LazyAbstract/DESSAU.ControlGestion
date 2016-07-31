@@ -1,0 +1,183 @@
+﻿@model DESSAU.ControlGestion.Web.Models.ReporteModels.ReporteDedicacionActividadViewModel
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 id="title-periodo">Porcentaje Deidación Actividad @Model.Periodo</h3>
+    </div>
+</div>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Periodo" />
+                    @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione un Proyecto", new { @class = "form-control", placeholder = "Proyectos" })
+                    @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control", placeholder = "Profesionales" })
+                </div>
+                <button type="button" id="button-periodo" class="btn btn-default">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>Detalle del proyecto y del profesional</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4><i class="fa fa-table fa-fw"></i> Dedicación Actividades Planificadas</h4>
+            </div>
+            <div class="panel-body">
+                <div id="chart-planificacion"></div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4><i class="fa fa-edit fa-fw"></i> Dedicación Actividades Declaradas</h4>
+            </div>
+            <div class="panel-body">
+                <div id="chart-declaracion"></div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      $('#button-periodo').click(function () {
+          mesAno = $('#Form_Periodo').val();
+          $('#title-periodo').text('Porcentaje Deidación Actividad ' + mesAno);
+          drawChart();
+      });
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+          mesAno = $('#Form_Periodo').val();
+          idProyecto = $('#Form_IdProyecto').val();
+          idUsuario = $('#Form_IdUsuario').val();
+
+          var chartsOptions = [
+          {
+              //title: 'Dotación y PEC en Capacitación por Canal',
+              width: 500,
+              height: 300,
+              //vAxis: {
+              //    title: 'Canal',
+              //    titleTextStyle: { color: 'black' }
+              //},
+              legend: { position: 'top' },
+              dataType: 'PieChart',
+              //chartArea: { left: 220, width: 280},
+              uiElement: 'chart-planificacion',
+              dataSourceId: 'Data1',
+              IsPercentage: 1,
+              NoColumns: 1
+          },
+           {
+               //title: 'Tendencia de Rotación',
+               width: 500,
+               height: 300,
+               curveType: 'function',
+               legend: { position: 'top' },
+               //vAxis: {
+               //    format: '#%',
+               //    viewWindowMode: 'explicit',
+               //    viewWindow: {
+               //        max: 1.01,
+               //        min: 0
+               //    }
+               //},
+               dataType: 'PieChart',
+               uiElement: 'chart-declaracion',
+               dataSourceId: 'Data2',
+               IsPercentage: 1,
+               NoColumns: 1
+           }];
+
+          $.ajax({
+              type: "GET",
+              url: '@Url.Action("GetDataDashBoard")',
+              data: 'Periodo=' + mesAno + '&IdCanal=' + idCanal + '&IdZona=' + idZona,
+              success: function (result) {
+                  $.map(chartsOptions, function (chartOption) {
+                      var chart;
+                      var uiElement = document.getElementById(chartOption.uiElement);
+
+                      switch(chartOption.dataType){
+                          case 'PieChart':
+                              chart = new google.visualization.PieChart(uiElement);
+                              break;
+                          case 'BarChart':
+                              chart = new google.visualization.BarChart(uiElement);
+                              break;
+                          case 'LineChart':
+                              chart = new google.visualization.LineChart(uiElement);
+                              break;
+                          case 'ColumnChart':
+                              chart = new google.visualization.ColumnChart(uiElement);
+                              break;
+                          default:
+                      }
+
+                      var data = new google.visualization.DataTable();
+                      var ajaxDataDefinition = $.grep(result, function(e){ return e.Id == chartOption.dataSourceId; });
+                      if(ajaxDataDefinition.length == 1)
+                      {
+                          $.map(ajaxDataDefinition[0].Columns, function (col) {
+                              data.addColumn(col.type, col.Title);
+                          });
+                          data.addRows(ajaxDataDefinition[0].Rows);
+                      }
+
+                      if (chartOption.IsPercentage == 1) {
+                          var formatter = new google.visualization.NumberFormat({ pattern: '#%' });
+                          formatter.format(data, 1);
+                          if (chartOption.NoColumns == 2) {
+                              formatter.format(data, 2);
+                          }
+                      }
+                      chart.draw(data, chartOption);
+                  });
+              },
+              error: function () {
+                  alert('Error!');
+              }
+          });
+      }
+
+      $(function () {
+          $('#Form_IdUsuario').CascadingDropDown('#Form_IdProyecto', $.url('Reporte/GetNomina'));
+          $('#Form_IdUsuario').change();
+      });
+</script>
