@@ -15,5 +15,13 @@ namespace DESSAU.ControlGestion.Core
                 return this.Nombre + " " + this.ApellidoPaterno;
             }
         }
+
+        public string ApellidoNombre
+        {
+            get
+            {
+                return this.ApellidoPaterno + ", " + this.Nombre;
+            }
+        }
     }
 }

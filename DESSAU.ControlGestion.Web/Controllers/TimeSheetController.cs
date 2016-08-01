@@ -56,7 +56,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             model.TimeSheetFORM = TimeSheetFORM;
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
-                x.IdUsuario == _CurrentUsuario.IdUsuario &&
+                x.IdUsuario == UsuarioActual.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
             if (FORM.IdCategoria.HasValue)

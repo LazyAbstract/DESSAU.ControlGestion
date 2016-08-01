@@ -96,7 +96,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/images/dessau_logo.png")" alt="Home" class="navbar-brand" /></a>
-                <a class="navbar-brand" href="@Url.Action("Index","Home")"> Plataforma Control HH</a>               
+                <a class="navbar-brand" href="@Url.Action("Index","Home")"> Servicio de Apoyo Proyectos Especiales GPRO</a>               
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
@@ -342,11 +342,17 @@
                             <li>
                                 <a href="@Url.Action("Test", "Reporte")"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    <li>
+                                    @*<li>
                                         <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Avance Proyecto</a>
+                                    </li>*@
+                                    @*<li>
+                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Reporte Individual</a>
+                                    </li>*@
+                                    <li>
+                                        <a href="@Url.Action("ReporteDedicacionActividad", "Reporte")">Dedicación por Actividad</a>
                                     </li>
                                     <li>
-                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Reporte Individual</a>
+                                        <a href="@Url.Action("VerNomina", "Nomina")">Nóminas por ODS</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

@@ -22,7 +22,8 @@ namespace DESSAU.ControlGestion.Web
             bundles.Add(new ScriptBundle("~/bundles/myScripts").Include(
                       "~/Scripts/jquery-ui-{version}.js",
                       "~/Scripts/DESSAUControlGestionConfiguration.js",
-                      "~/Scripts/jquery.cascadingDropDown.js", "~/Scripts/jquery.numeric.min.js"
+                      "~/Scripts/jquery.cascadingDropDown.js"
+                      //"~/Scripts/jquery.numeric.min.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(

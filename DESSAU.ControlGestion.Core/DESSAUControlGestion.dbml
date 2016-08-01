@@ -275,6 +275,31 @@
       <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyectoHistorico" Member="EstadoUsuarioCategoriaProyectoHistoricos" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyectoHistorico" />
     </Type>
   </Table>
+  <Table Name="dbo.UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos">
+    <Type Name="UsuarioCategoriaProyecto">
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" Cardinality="One" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="EstadoPlanificacionDeclaracion" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="TimeSheets" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheet" />
+      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
+      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
+      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions">
+    <Type Name="EstadoPlanificacionDeclaracion">
+      <Column Name="IdEstadoPlanificacionDeclaracion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ano" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlanificacionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DeclaracionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.TimeSheet" Member="TimeSheets">
     <Type Name="TimeSheet">
       <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -283,22 +308,19 @@
       <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PorcentajeAvance" Type="System.Decimal" DbType="Decimal(5,4)" CanBeNull="true" />
       <Association Name="Actividad_TimeSheet" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
       <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos">
-    <Type Name="UsuarioCategoriaProyecto">
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" Cardinality="One" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="TimeSheets" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheet" />
-      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
-      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
-      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
+  <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_ReporteDedicacionActividadResult">
+      <Column Name="Actividad" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
