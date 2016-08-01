@@ -1,5 +1,6 @@
 ﻿using DESSAU.ControlGestion.Core;
 using DESSAU.ControlGestion.Web.Configuration;
+using FluentValidation.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace DESSAU.ControlGestion.Web
             ModelBinders.Binders.Add(typeof(Rut), new RutModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new CurrentCultureDateTimeBinder());
             ModelBinders.Binders.Add(typeof(DateTime), new CurrentCultureDateTimeBinder());
+            FluentValidationModelValidatorProvider.Configure();
+
 
             IList<IConfigurable> configurations = new List<IConfigurable>();
             configurations.Add(new MapperConfiguration());

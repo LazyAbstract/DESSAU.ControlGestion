@@ -45,13 +45,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             if (timeSheets.Any())
             {
-                model.TimeSheetFORM = Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(timeSheets);
+                model.TimeSheetFORM = timeSheets.GroupBy(x => x.IdUsuarioCategoriaProyecto)
+                    .Select(x => new TimeSheetCategoriaProyectoDTO()
+                    {
+                        IdUsuarioCategoriaProyecto = x.Key,
+                        TimeSheetDTOs = Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(x)
+                    });
             }
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, IEnumerable<TimeSheetDTO> TimeSheetFORM)
+        public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, IEnumerable<TimeSheetCategoriaProyectoDTO> TimeSheetFORM)
         {
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             model.TimeSheetFORM = TimeSheetFORM;
@@ -65,39 +70,50 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                List<TimeSheetDTO> resultTimeSheetDTO = new List<TimeSheetDTO>();
-                foreach (var timeSheetDTO in TimeSheetFORM)
+                List<TimeSheetCategoriaProyectoDTO> timeSheetCategoriaProyectoDTOs = new List<TimeSheetCategoriaProyectoDTO>();
+                foreach (var timeSheetFORMItem in TimeSheetFORM)
                 {
-                    if (timeSheetDTO.Horas.HasValue && (timeSheetDTO.Horas.Value != 0 || timeSheetDTO.IdTimeSheet.HasValue))
+                    List<TimeSheet> resultTimeSheet = new List<TimeSheet>();
+                    foreach (var timeSheetDTO in timeSheetFORMItem.TimeSheetDTOs)
                     {
-                        TimeSheet timeSheet = db.TimeSheets.SingleOrDefault(x => x.IdTimeSheet == timeSheetDTO.IdTimeSheet);
-                        if (timeSheet == null)
+                        if (timeSheetDTO.Horas.HasValue && (timeSheetDTO.Horas.Value != 0 || timeSheetDTO.IdTimeSheet.HasValue))
                         {
-                            timeSheet = new TimeSheet()
+                            TimeSheet timeSheet = db.TimeSheets.SingleOrDefault(x => x.IdTimeSheet == timeSheetDTO.IdTimeSheet);
+                            if (timeSheet == null)
                             {
-                                Fecha = timeSheetDTO.Fecha,
-                                IdActividad = timeSheetDTO.IdActividad.GetValueOrDefault(0),
-                                IdUsuarioCategoriaProyecto = timeSheetDTO.IdUsuarioCategoriaProyecto.GetValueOrDefault(0)
-                            };
+                                timeSheet = new TimeSheet()
+                                {
+                                    Fecha = timeSheetDTO.Fecha.Value,
+                                    IdActividad = timeSheetDTO.IdActividad.GetValueOrDefault(0),
+                                    IdUsuarioCategoriaProyecto = timeSheetFORMItem.IdUsuarioCategoriaProyecto.GetValueOrDefault(0)
+                                };
+                            }
+                            switch (FORM.IdTipoTimeSheet)
+                            {
+                                case TipoTimeSheet.Planificacion:
+                                    timeSheet.HorasPlanificadas = timeSheetDTO.Horas.GetValueOrDefault(0);
+                                    break;
+                                case TipoTimeSheet.Reportado:
+                                    timeSheet.HorasReportadas = timeSheetDTO.Horas.GetValueOrDefault(0);
+                                    break;
+                            }
+                            if (!timeSheetDTO.IdTimeSheet.HasValue)
+                            {
+                                db.TimeSheets.InsertOnSubmit(timeSheet);
+                            }
+                            db.SubmitChanges();
+                            resultTimeSheet.Add(timeSheet);
                         }
-                        switch (FORM.IdTipoTimeSheet)
-                        {
-                            case TipoTimeSheet.Planificacion:
-                                timeSheet.HorasPlanificadas = timeSheetDTO.Horas.GetValueOrDefault(0);
-                                break;
-                            case TipoTimeSheet.Reportado:
-                                timeSheet.HorasReportadas = timeSheetDTO.Horas.GetValueOrDefault(0);
-                                break;
-                        }
-                        if (!timeSheetDTO.IdTimeSheet.HasValue)
-                        {
-                            db.TimeSheets.InsertOnSubmit(timeSheet);
-                        }
-                        db.SubmitChanges();
-                        resultTimeSheetDTO.Add(Mapper.Map<TimeSheet, TimeSheetDTO>(timeSheet));
+
                     }
+                    timeSheetCategoriaProyectoDTOs.Add(new TimeSheetCategoriaProyectoDTO()
+                    {
+                        IdUsuarioCategoriaProyecto = timeSheetFORMItem.IdUsuarioCategoriaProyecto,
+                        TimeSheetDTOs = Mapper.Map<IEnumerable<TimeSheet>, IEnumerable<TimeSheetDTO>>(resultTimeSheet)
+                    });
+
                 }
-                model.TimeSheetFORM = resultTimeSheetDTO;
+                model.TimeSheetFORM = timeSheetCategoriaProyectoDTOs;
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             return View(model);
