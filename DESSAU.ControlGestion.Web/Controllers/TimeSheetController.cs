@@ -58,6 +58,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpPost]
         public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, IEnumerable<TimeSheetCategoriaProyectoDTO> TimeSheetFORM)
         {
+            // No se porque no me pasa la fecha como hidden :(
+            FORM.Fecha = FORM.Fecha.GetValueOrDefault(TimeSheetFORM.First().TimeSheetDTOs.Min(x=>x.Fecha.Value));
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             model.TimeSheetFORM = TimeSheetFORM;
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>

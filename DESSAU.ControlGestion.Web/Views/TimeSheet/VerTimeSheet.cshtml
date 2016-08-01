@@ -93,7 +93,8 @@
                     <h4>@item.Categoria.Nombre</h4>*@
                 <hr />
                 <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
-                @Html.HiddenFor(x => x.FORM.IdTipoTimeSheet)
+                <input type="hidden" name="FORM.IdTipoTimeSheet" value="@Model.FORM.IdTipoTimeSheet" />
+                <input type="hidden" name="FORM.Fecha" value="@Model.FORM.Fecha.Value.ToShortDateString()" />
                @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
                 <table class="table table-hover table-striped">
 
