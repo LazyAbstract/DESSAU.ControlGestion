@@ -12,81 +12,90 @@
         {
             case TipoTimeSheet.Planificacion:
                 //después hacemos esto intelegente
-                <h2><i class="fa fa-table fa-fw"></i>Planificación Agosto</h2>
+                <h2><i class="fa fa-table fa-fw"></i> @String.Format("Planificación {0}", Model.FORM.Fecha.GetValueOrDefault().ToString("MMMM"))</h2>
                 break;
             case TipoTimeSheet.Reportado:
-                <h2><i class="fa fa-edit fa-fw"></i>Declaración de Avances Julio</h2>
+                <h2><i class="fa fa-edit fa-fw"></i>@String.Format("Declaración de Avances {0}", Model.FORM.Fecha.GetValueOrDefault().ToString("MMMM"))</h2>
                 break;
         }
     </div>
 </div>
-@*<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm(null, null, FormMethod.Get))
-        {
-            <div class="panel panel-@Model.FORM.ClaseBootstrap">
-                <div class="panel-heading">
+<div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm(null, null, FormMethod.Get))
+            {
+                <div class="panel panel-@Model.FORM.ClaseBootstrap">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.FORM.Fecha)
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group" role="group">
+                                    @Html.ButtonIconActionLink("chevron-left", "Semana Anterior", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(-7).ToShortDateString(), IdTipoTimeSheet= Model.FORM.IdTipoTimeSheet })
+                                    @Html.ButtonIconActionLink("chevron-right", "Semana Siguiente", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-2">
+                                @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = "form-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = "form-label" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="submit" name="FORM.Accion" value="Buscar" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
-                        </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(x => x.FORM.Fecha, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.FORM.Fecha)
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = "form-label" })
-                        </div>
-                        <div class="col-md-4">
-                            @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
-                        </div>
-                        <div class="col-md-2">
-                            @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = "form-label" })
-                        </div>
-                        <div class="col-md-4">
-                            @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input type="submit" name="FORM.Accion" value="Buscar" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>*@
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
-        {
-            int index_categoriaProyecto = 0;
-            int index_timeSheet = 0;
-            foreach (var item in Model.UsuarioCategoriaProyectos)
             {
-                <div class="panel panel-@Model.FORM.ClaseBootstrap">
+                int index_categoriaProyecto = 0;
+                foreach (var item in Model.UsuarioCategoriaProyectos)
+                {
+                    int index_timeSheet = 0;
+                    var usuarioCategoriaProyectos = Model.TimeSheetFORM.SingleOrDefault(x => x.IdUsuarioCategoriaProyecto == item.IdUsuarioCategoriaProyecto);
+                    <div class="panel panel-@Model.FORM.ClaseBootstrap">
+                    <input name="@String.Format("TimeSheetFORM[{0}].IdUsuarioCategoriaProyecto",index_categoriaProyecto)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
                     <div class="panel-heading">
                         <h3 class="panel-title">@item.Usuario.NombreCompleto</h3>
                     </div>
                     <div class="panel-body">
                         <h6>@item.Proyecto.Nombre</h6>
-                        <h6>@item.Categoria.Nombre</h6>  
+                        <h6>@item.Categoria.Nombre</h6>
                     </div>
                 </div>
                 @*<h3>@item.Usuario.NombreCompleto</h3>
-                <h4>@item.Proyecto.Nombre</h4>
-                <h4>@item.Categoria.Nombre</h4>*@                
-                <hr/>
+                    <h4>@item.Proyecto.Nombre</h4>
+                    <h4>@item.Categoria.Nombre</h4>*@
+                <hr />
                 <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
-                @Html.HiddenFor(x => x.FORM.IdTipoTimeSheet)
-                @*@Html.Raw(String.Format("<h3>{0}</h3><h4>{1}</h4>", item.Categoria.Nombre, item.Proyecto.NombreCompleto))*@
+                <input type="hidden" name="FORM.IdTipoTimeSheet" value="@Model.FORM.IdTipoTimeSheet" />
+                <input type="hidden" name="FORM.Fecha" value="@Model.FORM.Fecha.Value.ToShortDateString()" />
+               @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
                 <table class="table table-hover table-striped">
 
                     <thead>
@@ -112,17 +121,19 @@
                                 {
                                     if (!Model.DiaEspecials.Any(x => x.Fecha == dia))
                                     {
-                                        string baseName = String.Format("TimeSheetFORM[{0}]", index_timeSheet);
-                                        var timeSheetFormItem = Model.TimeSheetFORM.SingleOrDefault(x => x.Fecha.Date == dia && x.IdUsuarioCategoriaProyecto == item.IdUsuarioCategoriaProyecto && x.IdActividad == actividad.IdActividad);
+                                        string baseName = String.Format("TimeSheetFORM[{0}].TimeSheetDTOs[{1}]", index_categoriaProyecto, index_timeSheet);
+                                        var timeSheetFormItem = usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs
+                                            .SingleOrDefault(x => x.Fecha.Value.Date == dia.Date && x.IdActividad == actividad.IdActividad) 
+                                            : null;
                                         var timeSheetValue = 0;
                                         <td class="">
                                             @switch (Model.FORM.IdTipoTimeSheet)
                                             {
                                                 case TipoTimeSheet.Planificacion:
-                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(0) : 0;
+                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasPlanificadas.GetValueOrDefault(timeSheetFormItem.Horas.GetValueOrDefault(0)) : 0;
                                                     break;
                                                 case TipoTimeSheet.Reportado:
-                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasReportadas.GetValueOrDefault(0) : 0;
+                                                    timeSheetValue = timeSheetFormItem != null ? timeSheetFormItem.HorasReportadas.GetValueOrDefault(timeSheetFormItem.Horas.GetValueOrDefault(0)) : 0;
                                                     break;
                                             }
                                             @if (timeSheetFormItem != null)
@@ -131,10 +142,10 @@
                                             }
                                             <input name="@String.Format("{0}.Fecha",baseName)" type="hidden" value="@dia.Date" />
                                             <input name="@String.Format("{0}.IdActividad",baseName)" type="hidden" value="@actividad.IdActividad" />
-                                            <input name="@String.Format("{0}.IdUsuarioCategoriaProyecto",baseName)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
-                                            <div class="input-group spinner">
-                                                <input name="@String.Format("{0}.Horas",baseName)" type="text" onchange="@String.Format("suma('{0}','{1}')",(int)dia.DayOfWeek, index_categoriaProyecto)" value="@timeSheetValue" class="input-timesheet form-control @String.Format("numero_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" />
+                                            <div class="input-group spinner @String.Format("diaCategoriaProyecto_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek) ">
+                                                <input name="@String.Format("{0}.Horas",baseName)" type="text" data-dia="@((int)dia.DayOfWeek)" data-categoria="@(index_categoriaProyecto)" value="@timeSheetValue" class="input-timesheet form-control @String.Format("numero_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" />
                                                 <div class="input-group-btn-vertical">
+                                                    @*onchange="@String.Format("suma('{0}','{1}')", (int)dia.DayOfWeek, index_categoriaProyecto)"*@ 
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
                                                 </div>
@@ -168,7 +179,7 @@
                                 {
                                     <th class="center totales">
                                         <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
-                                            @(Model.TimeSheetFORM.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)))
+                                            @(usuarioCategoriaProyectos!=null? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
                                         </span>
                                     </th>
                                 }
@@ -181,113 +192,118 @@
             }
         }
     </div>
-</div>
-@section Scripts {
-    <style>
-        .totales {
-            border: 1px solid black;
-        }
-
-        .spinner {
-            width: 100px;
-        }
-
-            .spinner input {
-                text-align: right;
+    </div>
+    @section Scripts {
+        <style>
+            .totales {
+                border: 1px solid black;
             }
 
-        .input-group-btn-vertical {
-            position: relative;
-            white-space: nowrap;
-            width: 1%;
-            vertical-align: middle;
-            display: table-cell;
-        }
+            .spinner {
+                width: 100px;
+            }
 
-            .input-group-btn-vertical > .btn {
-                display: block;
-                float: none;
-                width: 100%;
-                max-width: 100%;
-                padding: 8px;
-                margin-left: -1px;
+                .spinner input {
+                    text-align: right;
+                }
+
+            .input-group-btn-vertical {
                 position: relative;
-                border-radius: 0;
+                white-space: nowrap;
+                width: 1%;
+                vertical-align: middle;
+                display: table-cell;
             }
 
-                .input-group-btn-vertical > .btn:first-child {
-                    border-top-right-radius: 4px;
+                .input-group-btn-vertical > .btn {
+                    display: block;
+                    float: none;
+                    width: 100%;
+                    max-width: 100%;
+                    padding: 8px;
+                    margin-left: -1px;
+                    position: relative;
+                    border-radius: 0;
                 }
 
-                .input-group-btn-vertical > .btn:last-child {
-                    margin-top: -2px;
-                    border-bottom-right-radius: 4px;
-                }
+                    .input-group-btn-vertical > .btn:first-child {
+                        border-top-right-radius: 4px;
+                    }
 
-            .input-group-btn-vertical i {
-                position: absolute;
-                top: 0;
-                left: 3px;
-            }
-    </style>
-    <script type="text/javascript">
-        (function ($) {
-            $('.input-timesheet').numeric({ decimal: false, negative: false });
-            $('.spinner .btn:first-of-type').on('click', function () {
-                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
-                    $(this).closest(".spinner").find('input[type="text"]').val(0);
-                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<10) {
-                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
-                    $(this).closest(".spinner").find('input[type="text"]').change();
+                    .input-group-btn-vertical > .btn:last-child {
+                        margin-top: -2px;
+                        border-bottom-right-radius: 4px;
+                    }
+
+                .input-group-btn-vertical i {
+                    position: absolute;
+                    top: 0;
+                    left: 3px;
                 }
+        </style>
+        <script type="text/javascript">
+            (function ($) {
+                $('.input-timesheet').numeric({ decimal: false, negative: false });
+                $('.spinner .btn:first-of-type').on('click', function () {
+                    if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                        $(this).closest(".spinner").find('input[type="text"]').val(0);
+                    }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<10) {
+                        $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
+                        $(this).closest(".spinner").find('input[type="text"]').change();
+                    }
+
+                });
+                $('.spinner .btn:last-of-type').on('click', function () {
+                    if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                        $(this).closest(".spinner").find('input[type="text"]').val(0);
+                    }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
+                        $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
+                        $(this).closest(".spinner").find('input[type="text"]').change();
+                    }
+                });
                 
-            });
-            $('.spinner .btn:last-of-type').on('click', function () {
-                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
-                    $(this).closest(".spinner").find('input[type="text"]').val(0);
-                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
-                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
-                    $(this).closest(".spinner").find('input[type="text"]').change();
-                }
-            });
-        })(jQuery);
+                $('.input-timesheet').change(function(){
+                    suma($(this).data("dia"), $(this).data("categoria"));
+                });
+                $('.input-timesheet').each(function () {
+                    pinta($(this));
+                });
+                $('.input-timesheet').change();
+                pintaTotales();
+            })(jQuery);
 
-        $(document).ready(function () {
-            $('.input-timesheet').each(function () {
-                pinta($(this));
-            });
-            pintaTotales();
-            
-        });
-        function suma(dia, categoria) {
-            var sum = 0;
-            $('.numero_' + categoria + '_' + dia).each(function () {
-                sum += Number($(this).val());
-                pinta($(this));
-            });
-            $('#total_dia_' + categoria + '_' + dia).html(sum);
-            pintaTotales();
-        }
-
-        function pinta(obj) {
-            if (obj.val() != '0') {
-                obj.css('background-color', '#99FFCC')
+            function suma(dia, categoria) {
+                var sum = 0;
+                $('.numero_' + categoria + '_' + dia).each(function () {
+                    sum += Number($(this).val());
+                    pinta($(this));
+                });
+                $('#total_dia_' + categoria + '_' + dia).html(sum);               
+                pintaTotales();
             }
-            else {
-                obj.css('background-color', '#fff')
-            }
-        }
 
-        function pintaTotales() {
-            $('.totales').each(function () {
-                var total = $.trim($(this).children('span').text());
-                if (total == '9') {
-                    $(this).css('background-color', '#99FFCC')
+            function pinta(obj) {
+                if (obj.val() != '0') {
+                    obj.css('background-color', '#99FFCC')
                 }
                 else {
-                    $(this).css('background-color', '#fff')
+                    obj.css('background-color', '#fff')
                 }
-            });
-        }
-    </script>
-}
+            }
+
+            function pintaTotales() {
+                $('.totales').each(function () {
+                    var total = $.trim($(this).children('span').text());
+                    if (total == '10') {
+                        $(this).css('background-color', '#99FFCC')
+                    }
+                    else if (total=='0') {
+                        $(this).css('background-color', '#fff')
+                    }
+                    else {
+                        $(this).css('background-color', 'Red')
+                    }
+                });
+            }
+        </script>
+    }
