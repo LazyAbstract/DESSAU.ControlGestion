@@ -28,7 +28,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
                 foreach (var item in x.TimeSheetDTOs.Where(y=> y.Fecha.HasValue).GroupBy(y => y.Fecha))
                 {
                     var bufferSumHoras = item.Sum(y => y.Horas.GetValueOrDefault(0));
-                    if(bufferSumHoras!=0 && bufferSumHoras != 10)
+                    if(bufferSumHoras!=0 && bufferSumHoras != (item.Key.Value.DayOfWeek == DayOfWeek.Friday ? 5: 10))
                     {
                         diasErroneos.Add(item.Key.Value);
                     }
@@ -36,7 +36,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
                 if (diasErroneos.Any())
                 {
                     return new ValidationFailure("TimeSheetDTOs", 
-                        String.Format("De ingresar valores en {0}, estas deben sumar 10 horas por día.", 
+                        String.Format("De ingresar valores en {0}, estas deben sumar 10 horas por día de lunes a jueves y 5 los viernes.", 
                             String.Join(", ",diasErroneos.Select(y=> y.ToString("ddd dd/MM"))))
                         );
                 }
