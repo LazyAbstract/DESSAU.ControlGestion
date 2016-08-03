@@ -408,6 +408,20 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_ReporteDedicacionActividadResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_GetDiasPendientesPlanificacionByIdUsuario")]
+		public ISingleResult<sp_GetDiasPendientesPlanificacionByIdUsuarioResult> sp_GetDiasPendientesPlanificacionByIdUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario);
+			return ((ISingleResult<sp_GetDiasPendientesPlanificacionByIdUsuarioResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_GetDiasPendientesDeclaracionByIdUsuario")]
+		public ISingleResult<sp_GetDiasPendientesDeclaracionByIdUsuarioResult> sp_GetDiasPendientesDeclaracionByIdUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario);
+			return ((ISingleResult<sp_GetDiasPendientesDeclaracionByIdUsuarioResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -6879,6 +6893,58 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._PorcentajeDedicacionDeclaracion != value))
 				{
 					this._PorcentajeDedicacionDeclaracion = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_GetDiasPendientesPlanificacionByIdUsuarioResult
+	{
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		public sp_GetDiasPendientesPlanificacionByIdUsuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+	}
+	
+	public partial class sp_GetDiasPendientesDeclaracionByIdUsuarioResult
+	{
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		public sp_GetDiasPendientesDeclaracionByIdUsuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
 				}
 			}
 		}

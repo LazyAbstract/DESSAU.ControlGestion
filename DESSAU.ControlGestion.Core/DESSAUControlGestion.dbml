@@ -323,4 +323,16 @@
       <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.sp_GetDiasPendientesPlanificacionByIdUsuario" Method="sp_GetDiasPendientesPlanificacionByIdUsuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetDiasPendientesPlanificacionByIdUsuarioResult">
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_GetDiasPendientesDeclaracionByIdUsuario" Method="sp_GetDiasPendientesDeclaracionByIdUsuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetDiasPendientesDeclaracionByIdUsuarioResult">
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

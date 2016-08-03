@@ -11,7 +11,6 @@
         @switch (Model.FORM.IdTipoTimeSheet)
         {
             case TipoTimeSheet.Planificacion:
-                //después hacemos esto intelegente
                 <h2><i class="fa fa-table fa-fw"></i> @String.Format("Planificación {0}", Model.FORM.Fecha.GetValueOrDefault().ToString("MMMM"))</h2>
                 break;
             case TipoTimeSheet.Reportado:
@@ -33,7 +32,7 @@
                                 @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                                @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "form-control fecha" })
                                 @Html.ValidationMessageFor(x => x.FORM.Fecha)
                             </div>
                             <div class="col-md-4">

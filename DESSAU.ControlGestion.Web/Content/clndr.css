@@ -405,7 +405,7 @@ html[xmlns] .clearfix {
             -ms-user-select: none;
             /* IE10+ */
         }
-        #mini-clndr {
+        .mini-clndr {
   font-family: Asap, Helvetica, Arial;
   margin: 0 auto;
   width: 294px;
@@ -413,16 +413,16 @@ html[xmlns] .clearfix {
   -webkit-box-shadow: 4px 4px 0 #343434;
   box-shadow: 4px 4px 0 #343434;
 }
-#mini-clndr .clndr {
+.mini-clndr .clndr {
   overflow: hidden;
   border-bottom: 7px solid #005F71;
 }
-#mini-clndr .clndr .controls {
+.mini-clndr .clndr .controls {
   background-color: #005F71;
   color: white;
 }
-#mini-clndr .clndr .controls .clndr-previous-button,
-#mini-clndr .clndr .controls .clndr-next-button {
+.mini-clndr .clndr .controls .clndr-previous-button,
+.mini-clndr .clndr .controls .clndr-next-button {
   width: 15%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -444,11 +444,11 @@ html[xmlns] .clearfix {
   -o-transition: background-color 0.5s;
   transition: background-color 0.5s;
 }
-#mini-clndr .clndr .controls .clndr-previous-button:hover,
-#mini-clndr .clndr .controls .clndr-next-button:hover {
+.mini-clndr .clndr .controls .clndr-previous-button:hover,
+.mini-clndr .clndr .controls .clndr-next-button:hover {
   background-color: #528b5e;
 }
-#mini-clndr .clndr .controls .month {
+.mini-clndr .clndr .controls .month {
   width: 65%;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -458,13 +458,13 @@ html[xmlns] .clearfix {
   font-weight: 700;
   letter-spacing: 1px;
 }
-#mini-clndr .clndr .days-container {
+.mini-clndr .clndr .days-container {
   position: relative;
   width: 294px;
   height: 228px;
   display: inline-block;
 }
-#mini-clndr .clndr .days-container .days {
+.mini-clndr .clndr .days-container .days {
   position: absolute;
   left: 0;
   width: 294px;
@@ -476,8 +476,8 @@ html[xmlns] .clearfix {
   transition: left 0.5s;
   background-color: #ebebeb;
 }
-#mini-clndr .clndr .days-container .days .day,
-#mini-clndr .clndr .days-container .days .empty {
+.mini-clndr .clndr .days-container .days .day,
+.mini-clndr .clndr .days-container .days .empty {
   width: 42px;
   display: inline-block;
   padding-top: 8px;
@@ -488,8 +488,8 @@ html[xmlns] .clearfix {
   border-right: 1px solid rgba(255, 255, 255, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
-#mini-clndr .clndr .days-container .days .day.event,
-#mini-clndr .clndr .days-container .days .empty.event {
+.mini-clndr .clndr .days-container .days .day.event,
+.mini-clndr .clndr .days-container .days .empty.event {
   background-color: red;
   color: white;
   font-weight: bolder;
@@ -500,30 +500,30 @@ html[xmlns] .clearfix {
   transition: background-color 0.5s;
   cursor: pointer;
 }
-#mini-clndr .clndr .days-container .days .day.event:hover,
-#mini-clndr .clndr .days-container .days .empty.event:hover {
+.mini-clndr .clndr .days-container .days .day.event:hover,
+.mini-clndr .clndr .days-container .days .empty.event:hover {
   background-color: #b8b8b8;
 }
-#mini-clndr .clndr .days-container .days .day.adjacent-month,
-#mini-clndr .clndr .days-container .days .empty.adjacent-month {
+.mini-clndr .clndr .days-container .days .day.adjacent-month,
+.mini-clndr .clndr .days-container .days .empty.adjacent-month {
   color: rgba(0, 0, 0, 0.3);
 }
-#mini-clndr .clndr .days-container .days .empty {
+.mini-clndr .clndr .days-container .days .empty {
   height: 31px;
   vertical-align: bottom;
 }
-#mini-clndr .clndr .days-container .days .headers {
+.mini-clndr .clndr .days-container .days .headers {
   background-color: #00A0BE;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-#mini-clndr .clndr .days-container .days .headers .day-header {
+.mini-clndr .clndr .days-container .days .headers .day-header {
   width: 42px;
   display: inline-block;
   text-align: center;
   color: white;
 }
-#mini-clndr .clndr .days-container .events {
+.mini-clndr .clndr .days-container .events {
   position: absolute;
   left: 294px;
   width: 294px;
@@ -535,10 +535,10 @@ html[xmlns] .clearfix {
   transition: left 0.5s;
   background-color: #ebebeb;
 }
-#mini-clndr .clndr .days-container .events .headers {
+.mini-clndr .clndr .days-container .events .headers {
   position: relative;
 }
-#mini-clndr .clndr .days-container .events .event-header {
+.mini-clndr .clndr .days-container .events .event-header {
   width: 100%;
   background-color: #00A0BE;
   padding-top: 5px;
@@ -546,7 +546,7 @@ html[xmlns] .clearfix {
   text-align: center;
   color: white;
 }
-#mini-clndr .clndr .days-container .events .x-button {
+.mini-clndr .clndr .days-container .events .x-button {
   position: absolute;
   font-size: 80%;
   top: 7px;
@@ -558,14 +558,14 @@ html[xmlns] .clearfix {
   -o-transition: color 0.25s;
   transition: color 0.25s;
 }
-#mini-clndr .clndr .days-container .events .x-button:hover {
+.mini-clndr .clndr .days-container .events .x-button:hover {
   color: white;
 }
-#mini-clndr .clndr .days-container .events .events-list {
+.mini-clndr .clndr .days-container .events .events-list {
   overflow: scroll;
   height: 195px;
 }
-#mini-clndr .clndr .days-container .events .events-list .event {
+.mini-clndr .clndr .days-container .events .events-list .event {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 10px;
@@ -576,10 +576,10 @@ html[xmlns] .clearfix {
   -o-transition: background-color 0.25s;
   transition: background-color 0.25s;
 }
-#mini-clndr .clndr .days-container .events .events-list .event:hover {
+.mini-clndr .clndr .days-container .events .events-list .event:hover {
   background-color: #f5f5f5;
 }
-#mini-clndr .clndr .days-container .events .events-list .event a {
+.mini-clndr .clndr .days-container .events .events-list .event a {
   position: relative;
   font-size: 12px;
   letter-spacing: 1px;
@@ -592,13 +592,13 @@ html[xmlns] .clearfix {
   -o-transition: color 0.25s;
   transition: color 0.25s;
 }
-#mini-clndr .clndr .days-container .events .events-list .event a:hover {
+.mini-clndr .clndr .days-container .events .events-list .event a:hover {
   background-color: transparent;
   color: #005F71;
 }
-#mini-clndr .clndr .days-container.show-events .days {
+.mini-clndr .clndr .days-container.show-events .days {
   left: -294px;
 }
-#mini-clndr .clndr .days-container.show-events .events {
+.mini-clndr .clndr .days-container.show-events .events {
   left: 0;
 }

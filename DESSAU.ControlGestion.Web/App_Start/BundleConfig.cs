@@ -22,9 +22,8 @@ namespace DESSAU.ControlGestion.Web
             bundles.Add(new ScriptBundle("~/bundles/myScripts").Include(
                       "~/Scripts/jquery-ui-{version}.js",
                       "~/Scripts/DESSAUControlGestionConfiguration.js",
-                      "~/Scripts/jquery.cascadingDropDown.js"
-                      //"~/Scripts/jquery.numeric.min.js"
-                      ));
+                      "~/Scripts/jquery.cascadingDropDown.js",
+                      "~/Scripts/jquery.numeric.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
@@ -48,6 +47,20 @@ namespace DESSAU.ControlGestion.Web
                       "~/Content/bower_components/morrisjs/morris.min.js",
                       "~/Content/js/morris-data.js",
                       "~/Content/dist/js/sb-admin-2.js"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+                        "~/Content/themes/base/core.css",
+                        "~/Content/themes/base/resizable.css",
+                        "~/Content/themes/base/selectable.css",
+                        "~/Content/themes/base/accordion.css",
+                        "~/Content/themes/base/autocomplete.css",
+                        "~/Content/themes/base/button.css",
+                        "~/Content/themes/base/dialog.css",
+                        "~/Content/themes/base/slider.css",
+                        "~/Content/themes/base/tabs.css",
+                        "~/Content/themes/base/datepicker.css",
+                        "~/Content/themes/base/progressbar.css",
+                        "~/Content/themes/base/theme.css"));
         }
     }
 }

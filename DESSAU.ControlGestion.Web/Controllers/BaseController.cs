@@ -13,12 +13,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
     {
         public DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
             .WithConnectionStringFromConfiguration();
-        //public Usuario _CurrentUsuario
-        //{
-        //    get{
-        //        return db.Usuarios.SingleOrDefault(x => x.Correo == User.Identity.Name);
-        //    }
-        //}
 
         public string Mensaje
         {

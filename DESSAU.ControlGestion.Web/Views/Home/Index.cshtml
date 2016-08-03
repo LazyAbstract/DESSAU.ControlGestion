@@ -1,39 +1,117 @@
-﻿@{
+﻿@model DESSAU.ControlGestion.Web.Models.HomeModels.IndexViewModel
+
+@{
     ViewBag.Title = "DESSAU";
 }
 
-    <h2>DESSAU - Plataforma Control HH</h2>
-    <p class="lead">Versión Desarollo Plataforma Servicio de Apoyo Proyectos Especiales GPRO</p>
+@section styles{
+    <link rel="stylesheet" href="@Url.Content("~/Content/clndr.css")" />
+}
 
-@*<input type="date" id="datepicker" />*@
-
-
-@*<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="row">
+    <div class="col-md-12">
+        <h2>DESSAU - Plataforma Servicio de Apoyo Proyectos Especiales GPRO</h2>
+        <p>El objetivo de esta plataforma es registrar la planificación mensual de horas de dedicación por actividad y, a su vez, la declaración de las horas reales de dedicación en dichas actividades.</p>
+        <hr/>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>*@
+</div>
 
-<script type="text/javascript">
-    $("#datepicker").datepicker({
-        format: "mm-yyyy",
-        startView: "months",
-        minViewMode: "months"
-    });
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4><i class="fa fa-table fa-fw"></i> Planificación</h4>
+            </div>
+            <div class="panel-body">
+                @if (@Model.DiasPendientesPlanificacion.Any())
+                {
+                    <p>
+                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesPlanificacion.Count() días pendientes en su Planificación. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet") para actualizarlo.
+                    </p>
+                    <div id="mini-clndr-plani" class="mini-clndr"></div>
+                    <br />
+                    <p>Al clickear un día en el calendario se redirijirá al formulario de Planificación de esa semana.</p>
+                }
+                else
+                {
+                    <p></p>
+                }
+            </div>
+        </div>
+    </div>   
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4><i class="fa fa-edit fa-fw"></i> Declaración Avances</h4>
+            </div>
+            <div class="panel-body">
+                @if (@Model.DiasPendientesDeclaracion.Any())
+                {
+                    <p>
+                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesDeclaracion.Count() días pendientes en su Declaración. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 }, null) para actualizarlo.
+                    </p>
+                    <div id="mini-clndr-decla" class="mini-clndr"></div>
+                    <br />
+                    <p>Al clickear un día en el calendario se redirijirá al formulario de Declaración de Avances de esa semana.</p>
+                }
+                else
+                {
+                    <p></p>
+                }
+            </div>
+        </div>
+    </div> 
+</div>
+
+@section scripts{
+<script type="text/javascript" src="@Url.Content("~/Scripts/underscore-min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/moment.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/clndr.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/moment.locale.es.js")"></script>
+<script type="text/template" id="clndr-template">
+    <div class="controls">
+        <div class="clndr-previous-button">&lsaquo;</div>
+        <div class="month"><%= month %></div>
+        <div class="clndr-next-button">&rsaquo;</div>
+    </div>
+    <div class="days-container">
+        <div class="days">
+            <div class="headers">
+                <% _.each(daysOfTheWeek, function(day) { %><div class="day-header"><%= day %></div><% }); %>
+            </div>
+            <% _.each(days, function(day) { %><div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div><% }); %>
+        </div>
+    </div>
 </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#mini-clndr-plani').clndr({
+                template: $('#clndr-template').html(),
+                events: @Html.Raw(Json.Encode(Model.DiasPendientesPlanificacion)),
+                clickEvents: {
+                    // fired whenever a calendar box is clicked.
+                    // returns a 'target' object containing the DOM element, any events, and the date as a moment.js object.
+                    click: function(target){
+                        window.location.href = '@Url.Action("VerTimeSheet", "TimeSheet", null)'+'?Fecha='+target.date.format('DD-MM-YYYY');
+                    }
+                }
+            });
+
+            $('#mini-clndr-decla').clndr({
+                template: $('#clndr-template').html(),
+                events: @Html.Raw(Json.Encode(Model.DiasPendientesDeclaracion)),
+                clickEvents: {
+                    // fired whenever a calendar box is clicked.
+                    // returns a 'target' object containing the DOM element, any events, and the date as a moment.js object.
+                    click: function(target){
+                        window.location.href = '@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })'+'?Fecha='+target.date.format('DD-MM-YYYY');
+                    }
+                }
+            }).back();
+        });
+    </script>
+    }
+
+
+
+

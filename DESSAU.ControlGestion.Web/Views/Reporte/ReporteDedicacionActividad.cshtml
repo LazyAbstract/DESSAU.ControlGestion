@@ -46,7 +46,7 @@
             <div class="panel-heading">
                 <h4><i class="fa fa-table fa-fw"></i> Dedicación Actividades Planificadas</h4>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="chart-container">
                 <div id="chart-planificacion"></div>
             </div>
         </div> 
@@ -74,7 +74,7 @@
 
       $('#button-periodo').click(function () {
           mesAno = $('#Form_Periodo').val();
-          $('#title-periodo').text('Porcentaje Deidación Actividad ' + mesAno);
+          $('#title-periodo').text('Porcentaje Dedicaión Actividad ' + mesAno);
           drawChart();
       });
 
@@ -87,11 +87,14 @@
           idProyecto = $('#Form_IdProyecto').val();
           idUsuario = $('#Form_IdUsuario').val();
 
+          var ancho = $("#chart-container").width();
+          var alto = (3 * ancho) / 5;
+
           var chartsOptions = [
           {
               //title: 'Dotación y PEC en Capacitación por Canal',
-              width: 500,
-              height: 300,
+              width: ancho,
+              height: alto,
               //vAxis: {
               //    title: 'Canal',
               //    titleTextStyle: { color: 'black' }
@@ -106,8 +109,8 @@
           },
            {
                //title: 'Tendencia de Rotación',
-               width: 500,
-               height: 300,
+               width: ancho,
+               height: alto,
                curveType: 'function',
                legend: { position: 'top' },
                //vAxis: {
@@ -127,8 +130,8 @@
 
           $.ajax({
               type: "GET",
-              url: '@Url.Action("GetDataDashBoard")',
-              data: 'Periodo=' + mesAno + '&IdCanal=' + idCanal + '&IdZona=' + idZona,
+              url: '@Url.Action("GetDedicacionActividadData")',
+              data: 'Periodo=' + mesAno + '&IdProyecto=' + idProyecto + '&IdUsuario=' + idUsuario,
               success: function (result) {
                   $.map(chartsOptions, function (chartOption) {
                       var chart;

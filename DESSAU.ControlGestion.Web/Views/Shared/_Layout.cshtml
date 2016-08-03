@@ -4,15 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/startboostrapcss")
     @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/startboostrapcss")
+    @RenderSection("styles", required: false)
 
     <link href="../Content/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript">
         $(function () {
-
             $.url = function (url) {
                 {
                     var path = '@Request.ApplicationPath'
@@ -78,8 +79,6 @@
                     $('#notificaciones').popover('show');
                     $('#numero_notificaciones').toggle(data.numero != '0');
                     $('#numero_notificaciones').html(data.numero);
-
-
                 }
             });
         }
@@ -296,18 +295,26 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#"><i class="fa fa-user fa-fw"></i> Pérfil Usuario</a>
-                            </li>
-                            @*<li>
-                                <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>*@
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
-                            </li>
-                        </ul>
+                            <ul class="dropdown-menu dropdown-user">
+                                @*<li>
+                                    <a href="#"><i class="fa fa-user fa-fw"></i> Pérfil Usuario</a>
+                                </li>*@
+                                <li>
+                                    <a href="@Url.Action("ChangePassword", "Manage")"><i class="fa fa-history" aria-hidden="true"></i> Cambiar Contraseña</a>
+                                </li>
+                                @*<li>
+                                    <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>*@
+                                <li class="divider"></li>
+                                <li>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" style = "color:black;"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                                    }
+                                </li>
+                            </ul>
+                        
                         <!-- /.dropdown-user -->
                     </li>
                 <!-- /.dropdown -->
@@ -340,14 +347,11 @@
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Test", "Reporte")"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    @*<li>
-                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Avance Proyecto</a>
-                                    </li>*@
-                                    @*<li>
-                                        <a class="disabled" disabled="disabled" href="@Url.Action("Test", "Reporte")">Reporte Individual</a>
-                                    </li>*@
+                                    <li>
+                                        <a href="@Url.Action("Dashboard", "Reporte")">DashBoard</a>
+                                    </li>
                                     <li>
                                         <a href="@Url.Action("ReporteDedicacionActividad", "Reporte")">Dedicación por Actividad</a>
                                     </li>

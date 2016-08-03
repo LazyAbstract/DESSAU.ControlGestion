@@ -37,7 +37,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
                 {
                     return new ValidationFailure("TimeSheetDTOs", 
                         String.Format("De ingresar valores en {0}, estas deben sumar 10 horas por día.", 
-                            String.Join(", ",diasErroneos.Select(y=> y.ToString("ddd dd/MM"))))
+                            String.Join(", ", diasErroneos.Select(y=> y.ToString("ddd dd/MM"))))
                         );
                 }
                 return null;
