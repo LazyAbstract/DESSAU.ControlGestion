@@ -18,14 +18,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult VerNomina(int? pagina, VerNominaFormModel Form)
+        public ActionResult VerNomina(int? pagina, int? IdProyecto)
         {
             VerNominaViewModel model = new VerNominaViewModel();
             IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
                     .OrderBy(x => x.Categoria.Nombre).ThenBy(x => x.Usuario.ApellidoPaterno);
-            if (Form.IdProyecto.HasValue) Nominas = db.UsuarioCategoriaProyectos
-                    .Where(x => x.IdProyecto == Form.IdProyecto);
+            if (IdProyecto.HasValue) Nominas = db.UsuarioCategoriaProyectos
+                    .Where(x => x.IdProyecto == IdProyecto);
             model.Nominas = Nominas.ToPagedList(pagina ?? 1, 10);
+            model.IdProyecto = IdProyecto;
             return View(model);
         }
     }

@@ -103,7 +103,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
             {
                 if (Form.IdUsuario.HasValue)
                 {
-
                     Usuario _user = db.Usuarios.Single(x => x.IdUsuario == Form.IdUsuario);
                     int AntigupoTipoUsuario = _user.IdTipoUsuario;
                     _user.Nombre = Form.Nombre;

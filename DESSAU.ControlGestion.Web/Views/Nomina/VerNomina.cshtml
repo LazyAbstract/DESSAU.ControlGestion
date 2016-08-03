@@ -21,7 +21,7 @@
             <ul class="nav navbar-nav"></ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione un Proyecto", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.IdProyecto, Model.Proyectos, "Seleccione un Proyecto", new { @class = "form-control" })
                 </div>
                 <button type="submit" class="btn btn-default">Buscar</button>
             </form>
@@ -33,7 +33,8 @@
     <div class="col-md-12">
         @Html.PagedListPager(Model.Nominas, page => Url.Action("VerNomina", new
    {
-       pagina = page
+       pagina = page,
+       IdProyecto = Model.IdProyecto
    }))
         @(Html.Grid(Model.Nominas)
         .Attributes(@class => "table table-striped")
@@ -41,12 +42,12 @@
         {
             col.For(x => x.Usuario.ApellidoNombre).Named("Nombre Completo");
             col.For(x => x.Categoria.Nombre).Named("Categoría");
-            col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>") 
+            col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
-                .Named("Estado Planificación").DoNotEncode();
-            col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>") 
+                .Named("Estado Planificación").Encode(false);
+            col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
-                .Named("Estado Declaración").DoNotEncode();
+                .Named("Estado Declaración").Encode(false);
         }).Empty("No se han encontrado profesionales asignados a este proyecto"))
     </div>
 </div>

@@ -231,7 +231,7 @@
                 <!-- /.dropdown -->
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="dropdown">
+                    @*<li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -240,11 +240,11 @@
                                 <a href="#">
                                     <div>
                                         <i class="icon-warning-sign"></i> Planificación Agosto Incompleta
-                                        <span class="pull-right text-muted small">@DateTime.Today.ToShortDateString()</span>
+                                        <span class="pull-right text-muted small">@/*DateTime.Today.ToShortDateString()*/</span>
                                     </div>
                                 </a>
                             </li>
-                            @*<li class="divider"></li>
+                            <li class="divider"></li>
                             <li>
                                 <a href="#">
                                     <div>
@@ -279,7 +279,7 @@
                                         <span class="pull-right text-muted small">4 minutes ago</span>
                                     </div>
                                 </a>
-                            </li>*@
+                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a class="text-center" href="#">
@@ -289,7 +289,7 @@
                             </li>
                         </ul>
                         <!-- /.dropdown-alerts -->
-                    </li>
+                    </li>*@
                 <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -346,42 +346,48 @@
                             <li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
-                            <li>
-                                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="@Url.Action("Dashboard", "Reporte")">DashBoard</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("ReporteDedicacionActividad", "Reporte")">Dedicación por Actividad</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("VerNomina", "Nomina")">Nóminas por ODS</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="@Url.Action("ListarUsuario", "Usuario")"><i class="fa fa-cogs" aria-hidden="true"></i> Ajustes<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="@Url.Action("ListarUsuario", "Usuario")"> Usuarios</a>
-                                    </li>
-                                    <li>
-                                        <a class="disabled" href="#">Actividades</a>
-                                    </li>
-                                    <li>
-                                        <a class="disabled" href="#">Categorías</a>
-                                    </li>
-                                    <li>
-                                        <a class="disabled" href="#">Ordenes Servicio</a>
-                                    </li>
-                                    <li>
-                                        <a class="disabled" href="#">Contratos</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
+                            @if (User.IsInRole("Reporte"))
+                            {
+                                <li>
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="@Url.Action("Dashboard", "Reporte")">DashBoard</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ReporteDedicacionActividad", "Reporte")">Dedicación por Actividad</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("VerNomina", "Nomina")">Nóminas por ODS</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> Ajustes<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="@Url.Action("ListarUsuario", "Usuario")"> Usuarios</a>
+                                        </li>
+                                        <li>
+                                            <a class="disabled" href="#">Actividades</a>
+                                        </li>
+                                        <li>
+                                            <a class="disabled" href="#">Categorías</a>
+                                        </li>
+                                        <li>
+                                            <a class="disabled" href="#">Ordenes Servicio</a>
+                                        </li>
+                                        <li>
+                                            <a class="disabled" href="#">Contratos</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                            }                           
 
                         </ul>
                     </div>

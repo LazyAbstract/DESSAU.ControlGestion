@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="row">
     <div class="col-md-12">
         @switch (Model.FORM.IdTipoTimeSheet)
@@ -19,55 +18,47 @@
         }
     </div>
 </div>
-<div class="row">
-        <div class="col-md-12">
-            @using (Html.BeginForm(null, null, FormMethod.Get))
-            {
-                <div class="panel panel-@Model.FORM.ClaseBootstrap">
-                    <div class="panel-heading">
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                @Html.LabelFor(x => x.FORM.Fecha, new { @class = "form-label" })
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "form-control fecha" })
-                                @Html.ValidationMessageFor(x => x.FORM.Fecha)
-                            </div>
-                            <div class="col-md-4">
-                                <div class="btn-group" role="group">
-                                    @Html.ButtonIconActionLink("chevron-left", "Semana Anterior", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(-7).ToShortDateString(), IdTipoTimeSheet= Model.FORM.IdTipoTimeSheet })
-                                    @Html.ButtonIconActionLink("chevron-right", "Semana Siguiente", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
-                                </div>
-                            </div>
-                        </div>
-                        @*<div class="row">
-                            <div class="col-md-2">
-                                @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = "form-label" })
-                            </div>
-                            <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
-                            </div>
-                            <div class="col-md-2">
-                                @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = "form-label" })
-                            </div>
-                            <div class="col-md-4">
-                                @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
-                            </div>
-                        </div>*@
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input type="submit" name="FORM.Accion" value="Buscar" class="btn btn-default" />
-                            </div>
-                        </div>
-                    </div>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Fecha</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control foco" })
                 </div>
-            }
+                <button type="submit" class="btn btn-default">Buscar</button>
+                @Html.ButtonIconActionLink("chevron-left", "Semana Anterior", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(-7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
+                @Html.ButtonIconActionLink("chevron-right", "Semana Siguiente", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
+            </form>
         </div>
     </div>
+</nav>
+
+@*<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-@Model.FORM.ClaseBootstrap">
+            <input name="@String.Format("TimeSheetFORM[{0}].IdUsuarioCategoriaProyecto",index_categoriaProyecto)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
+            <div class="panel-heading">
+                <h3 class="panel-title">@Model.Usuario.NombreCompleto</h3>
+            </div>
+            <div class="panel-body">
+                <h6>@Model.Proyecto.Nombre</h6>
+                <h6>@Model.Categoria.Nombre</h6>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
@@ -87,14 +78,11 @@
                         <h6>@item.Categoria.Nombre</h6>
                     </div>
                 </div>
-                @*<h3>@item.Usuario.NombreCompleto</h3>
-                    <h4>@item.Proyecto.Nombre</h4>
-                    <h4>@item.Categoria.Nombre</h4>*@
                 <hr />
-                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
+                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" /><br/><br />
                 <input type="hidden" name="FORM.IdTipoTimeSheet" value="@Model.FORM.IdTipoTimeSheet" />
                 <input type="hidden" name="FORM.Fecha" value="@Model.FORM.Fecha.Value.ToShortDateString()" />
-               @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
+                @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
                 <table class="table table-hover table-striped">
 
                     <thead>
@@ -176,11 +164,22 @@
                                 }
                                 else
                                 {
-                                    <th class="center totales">
-                                        <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
-                                            @(usuarioCategoriaProyectos!=null? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
-                                        </span>
-                                    </th>
+                                    if (dia.DayOfWeek == DayOfWeek.Friday)
+                                    {
+                                        <th class="center total-viernes">
+                                            <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                                @(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
+                                            </span>
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        <th class="center totales">
+                                            <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                                @(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
+                                            </span>
+                                        </th>
+                                    }
                                 }
                             }
                         </tr>
@@ -297,6 +296,19 @@
                         $(this).css('background-color', '#99FFCC')
                     }
                     else if (total=='0') {
+                        $(this).css('background-color', '#fff')
+                    }
+                    else {
+                        $(this).css('background-color', 'Red')
+                    }
+                });
+
+                $('.total-viernes').each(function () {
+                    var total = $.trim($(this).children('span').text());
+                    if (total == '5') {
+                        $(this).css('background-color', '#99FFCC')
+                    }
+                    else if (total == '0') {
                         $(this).css('background-color', '#fff')
                     }
                     else {

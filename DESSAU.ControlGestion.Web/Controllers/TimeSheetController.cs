@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DESSAU.ControlGestion.Web.Controllers
 {
+    [Authorize]
     public class TimeSheetController : BaseController
     {
         public ActionResult Index()
