@@ -170,7 +170,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             Usuario _user = db.Usuarios.Single(x => x.IdUsuario == IdUsuario);
             var user = await UserManager.FindByNameAsync(_user.Correo);
-            string Password = _user.ApellidoPaterno.ToLower().Substring(0, 4) + _user.Nombre.ToLower().Substring(0, 2);
+            string Password = _user.Contrasena;
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
             var result = await UserManager.ResetPasswordAsync(user.Id, code, Password);
             Mensaje = "La contraseña fue reseteada exitosamente";
@@ -178,16 +178,16 @@ namespace DESSAU.ControlGestion.Web.Controllers
         }
 
         //Método Champilistico de Creación de Usuarios
-        //public async Task<ActionResult> CargaOriginalUsuarios()
-        //{
-        //    IEnumerable<Usuario> Usuarios = db.Usuarios.Where(x => x.IdTipoUsuario == 1);
-        //    foreach (var _user in Usuarios)
-        //    {
-        //        string Password = _user.ApellidoPaterno.ToLower().Substring(0, 4) + _user.Nombre.ToLower().Substring(0, 2);
-        //        var user = new ApplicationUser { UserName = _user.Correo, Email = _user.Correo };
-        //        var result = await UserManager.CreateAsync(user, Password);
-        //    }
-        //    return new EmptyResult();
-        //}
+        public async Task<ActionResult> CargaOriginalUsuarios()
+        {
+            IEnumerable<Usuario> Usuarios = db.Usuarios.Where(x => x.IdTipoUsuario == 1);
+            foreach (var _user in Usuarios)
+            {
+                string Password = _user.Contrasena;
+                var user = new ApplicationUser { UserName = _user.Correo, Email = _user.Correo };
+                var result = await UserManager.CreateAsync(user, Password);
+            }
+            return new EmptyResult();
+        }
     }
 }

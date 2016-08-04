@@ -63,6 +63,7 @@
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
             {
+                @Html.HiddenFor(x => x.FORM.ClaseBootstrap)
                 int index_categoriaProyecto = 0;
                 foreach (var item in Model.UsuarioCategoriaProyectos)
                 {
@@ -99,7 +100,7 @@
                     </thead>
                     <tbody>
                         @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
-                    {
+                        {
                             <tr class="">
                                 <th class="left">
                                     @actividad.Nombre
@@ -138,14 +139,14 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        index_timeSheet++;
                                     }
                                     else
                                     {
                                         <td class="success">
                                             <span class="glyphicon glyphicon-minus"></span>
                                         </td>
-                                    }
-                                    index_timeSheet++;
+                                    }                                    
                                 }
                             </tr>
                         }

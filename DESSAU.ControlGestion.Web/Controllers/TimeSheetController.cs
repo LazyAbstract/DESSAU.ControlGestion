@@ -63,6 +63,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             FORM.Fecha = FORM.Fecha.GetValueOrDefault(TimeSheetFORM.First().TimeSheetDTOs.Min(x=>x.Fecha.Value));
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
             model.TimeSheetFORM = TimeSheetFORM;
+            //model.FORM.ClaseBootstrap = "info";
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
                 x.IdUsuario == UsuarioActual.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=

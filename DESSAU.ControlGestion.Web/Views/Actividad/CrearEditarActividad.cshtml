@@ -1,0 +1,75 @@
+﻿@model DESSAU.ControlGestion.Web.Models.ActividadModels.CrearEditarActividadViewModel
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @if (Model.Form.IdActividad.HasValue)
+            {
+                <h4>Editar Actividad</h4>
+            }
+            else
+            {
+                <h4>Agregar Actividad</h4>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Form.IdActividad)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.NombreActividad)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_NombreActividad" name="Form.NombreActividad" placeholder="Nombre Actividad" value="@Model.Form.NombreActividad" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.NombreActividad)
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <tr>
+                <th class="col-md-2">
+                </th>
+                <th class="col-md-5">
+                    Categorías
+                </th>
+            </tr>
+            @{int i = 0;}         
+            @foreach (var item in Model.Categorias)
+            {
+                <tr>
+                    <td class="col-md-2">
+                        @if (Model.Form.IdCategorias.Any(x => x == item.IdCategoria))
+                        {
+                            <input checked="checked" type="checkbox" name="Form.IdCategorias[@i]"
+                                   value="@item.IdCategoria" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="Form.IdCategorias[@i]"
+                                   value="@item.IdCategoria" />
+                        }
+                    </td>
+                    <td class="col-md-5">
+                        @(item.Nombre)
+                    </td>
+                </tr>
+                i++;
+            }
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
