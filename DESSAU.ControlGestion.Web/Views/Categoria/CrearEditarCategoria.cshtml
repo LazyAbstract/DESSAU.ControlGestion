@@ -1,0 +1,49 @@
+﻿@model DESSAU.ControlGestion.Web.Models.CategoriaModels.CrearEditarCategoriaViewModel
+
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    if (Model.Form.IdCategoria.HasValue)
+    {
+        @Html.HiddenFor(x => x.Form.IdCategoria)
+    }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @if (Model.Form.IdCategoria.HasValue)
+            {
+                <h4>Editar Categoría</h4>
+            }
+            else
+            {
+                <h4>Agregar Categoría</h4>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.NombreCategoria)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_NombreCategoria" name="Form.NombreCategoria" placeholder="Nombre Categoría" value="@Model.Form.NombreCategoria" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.NombreCategoria)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
