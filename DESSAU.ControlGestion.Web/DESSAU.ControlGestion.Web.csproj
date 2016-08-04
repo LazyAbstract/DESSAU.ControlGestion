@@ -205,6 +205,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActividadController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NominaController.cs" />
@@ -225,6 +226,9 @@
     <Compile Include="Models\ActividadModels\CrearEditarActividadFormModel.cs" />
     <Compile Include="Models\ActividadModels\CrearEditarActividadViewModel.cs" />
     <Compile Include="Models\ActividadModels\ListarActividadViewModel.cs" />
+    <Compile Include="Models\CategoriaModels\CrearEditarCategoriaFormModel.cs" />
+    <Compile Include="Models\CategoriaModels\CrearEditarCategoriaViewModel.cs" />
+    <Compile Include="Models\CategoriaModels\ListarCategoriaViewModel.cs" />
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1154,6 +1158,8 @@
     <Content Include="Views\Reporte\ReporteDedicacionActividad.cshtml" />
     <Content Include="Views\Actividad\ListarActividad.cshtml" />
     <Content Include="Views\Actividad\CrearEditarActividad.cshtml" />
+    <Content Include="Views\Categoria\ListarCategoria.cshtml" />
+    <Content Include="Views\Categoria\CrearEditarCategoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

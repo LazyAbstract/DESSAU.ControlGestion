@@ -8,13 +8,14 @@ using System.Web;
 
 namespace DESSAU.ControlGestion.Web.Models.ActividadModels
 {
-    public class CrearEditarActividadFormModel
+    public class CrearEditarActividadFormModel : IDataErrorInfo
     {
         public int? IdActividad { get; set; }
         [Required]
         [DisplayName("Nombre Actividad")]
         [MaxLength(255, ErrorMessage = "El nombre de la Actividad no puede superar los 255 caracteres.")]
         public string NombreActividad { get; set; }
+        [Required(ErrorMessage = "Debe elegir al menos una Categoría.")]
         public List<int> IdCategorias { get; set; }
 
         public CrearEditarActividadFormModel()
@@ -32,7 +33,7 @@ namespace DESSAU.ControlGestion.Web.Models.ActividadModels
                     .WithConnectionStringFromConfiguration();
                 if (db.Actividads.Any(x => x.Nombre == NombreActividad) && !IdActividad.HasValue)
                 {
-                    return "El nombre de la actividad ya está en uso.";
+                    return "El nombre de la Actividad ya está en uso.";
                 }
                 return string.Empty;
             }

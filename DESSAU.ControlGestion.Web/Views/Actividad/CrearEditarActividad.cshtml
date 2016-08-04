@@ -6,6 +6,10 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
+    if (Model.Form.IdActividad.HasValue)
+    {
+        @Html.HiddenFor(x => x.Form.IdActividad)
+    }
     <div class="panel panel-primary">
         <div class="panel-heading">
             @if (Model.Form.IdActividad.HasValue)
@@ -21,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     @Html.ValidationSummary()
-                    @Html.HiddenFor(x => x.Form.IdActividad)
+                    
                 </div>
             </div>
             <div class="form-group">
@@ -47,14 +51,14 @@
             {
                 <tr>
                     <td class="col-md-2">
-                        @if (Model.Form.IdCategorias.Any(x => x == item.IdCategoria))
+                        @if (Model.Form.IdCategorias.Contains(item.IdCategoria))
                         {
-                            <input checked="checked" type="checkbox" name="Form.IdCategorias[@i]"
+                            <input checked="checked" type="checkbox" name="Form.IdCategorias[@i]" id="Form_IdCategorias[@i]"
                                    value="@item.IdCategoria" />
                         }
                         else
                         {
-                            <input type="checkbox" name="Form.IdCategorias[@i]"
+                            <input type="checkbox" name="Form.IdCategorias[@i]" id="Form_IdCategorias[@i]"
                                    value="@item.IdCategoria" />
                         }
                     </td>

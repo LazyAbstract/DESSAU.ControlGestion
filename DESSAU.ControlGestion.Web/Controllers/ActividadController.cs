@@ -19,8 +19,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
 
         public ActionResult ListarActividad(int? pagina, string filtro)
         {
-            ListarActividadViewModel Model = new ListarActividadViewModel();
-            Model.filtro = filtro;
+            ListarActividadViewModel model = new ListarActividadViewModel();
+            model.filtro = filtro;
             IEnumerable<Actividad> Acts = db.Actividads.OrderBy(x => x.Nombre);
             if (!String.IsNullOrEmpty(filtro))
             {
@@ -28,8 +28,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 Acts = db.Actividads
                     .Where(x => x.Nombre.ToLower().Contains(filtro));
             }
-            Model.Actividades = Acts.ToPagedList(pagina ?? 1, 10);
-            return View(Model);
+            model.Actividades = Acts.ToPagedList(pagina ?? 1, 10);
+            return View(model);
         }
 
         public ActionResult CrearEditarActividad(int? IdActividad)
@@ -93,14 +93,24 @@ namespace DESSAU.ControlGestion.Web.Controllers
 
                     foreach (var IdCategoria in Form.IdCategorias)
                     {
-                        CategoriaActividad catAct = new CategoriaActividad()
+                        var hola = db.CategoriaActividads
+                            .SingleOrDefault(x => x.IdActividad == act.IdActividad 
+                            && x.IdCategoria == IdCategoria);
+                        if (hola != null)
                         {
-                            IdActividad = act.IdActividad,
-                            IdCategoria = IdCategoria,
-                            Vigente = true,
-                        };
+                            hola.Vigente = true;
+                        }
+                        else
+                        {
+                            CategoriaActividad catAct = new CategoriaActividad()
+                            {
+                                IdActividad = act.IdActividad,
+                                IdCategoria = IdCategoria,
+                                Vigente = true,
+                            };
 
-                        db.CategoriaActividads.InsertOnSubmit(catAct);
+                            db.CategoriaActividads.InsertOnSubmit(catAct);
+                        }           
                     }
 
                     db.SubmitChanges();
