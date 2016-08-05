@@ -1,0 +1,45 @@
+﻿@model DESSAU.ControlGestion.Web.Models.NominaModels.CrearEditarNominaViewModel
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-nuevo-usuario" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Asignar @Model.Usuario.NombreCompleto a Orden de Servicio</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Form.IdUsuario)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdCategoria)</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(x => x.Form.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control" })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.IdCategoria)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ApellidoPaterno" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdProyecto)</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione una Orden de Servicio", new { @class = "form-control" })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.IdProyecto)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}
