@@ -178,16 +178,27 @@ namespace DESSAU.ControlGestion.Web.Controllers
         }
 
         //Método Champilistico de Creación de Usuarios
-        public async Task<ActionResult> CargaOriginalUsuarios()
-        {
-            IEnumerable<Usuario> Usuarios = db.Usuarios.Where(x => x.IdTipoUsuario == 1);
-            foreach (var _user in Usuarios)
-            {
-                string Password = _user.Contrasena;
-                var user = new ApplicationUser { UserName = _user.Correo, Email = _user.Correo };
-                var result = await UserManager.CreateAsync(user, Password);
-            }
-            return new EmptyResult();
-        }
+        //public async Task<ActionResult> CargaOriginalUsuarios()
+        //{
+        //    IEnumerable<Usuario> Usuarios = db.Usuarios.Where(x => x.IdTipoUsuario == 3);
+        //    foreach (var _user in Usuarios)
+        //    {
+        //        var buffer = await UserManager.FindByNameAsync(_user.Correo);
+        //        if(buffer == null)
+        //        {
+        //            string Password = _user.Contrasena;
+        //            var user = new ApplicationUser { UserName = _user.Correo, Email = _user.Correo };
+        //            var result = await UserManager.CreateAsync(user, Password);
+        //            if (result.Succeeded)
+        //            {
+        //                foreach (var permiso in db.TipoUsuarioPermisos.Where(x => x.IdTipoUsuario == _user.IdTipoUsuario).Select(x => x.Permiso.Nombre))
+        //                {
+        //                    var roleresult = UserManager.AddToRole(user.Id, permiso);
+        //                }
+        //            }
+        //        }                
+        //    }
+        //    return new EmptyResult();
+        //}
     }
 }

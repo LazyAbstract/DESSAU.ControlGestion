@@ -45,6 +45,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 Mes = lector.GetMes;
                 Ano = lector.GetAnno;
             }
+            if (!IdProyecto.HasValue) IdProyecto = 1;
 
             var Data =
                new dynamic[]

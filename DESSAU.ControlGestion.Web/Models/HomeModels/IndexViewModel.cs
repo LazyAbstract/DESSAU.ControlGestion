@@ -13,6 +13,7 @@ namespace DESSAU.ControlGestion.Web.Models.HomeModels
         public IEnumerable<object> DiasPendientesPlanificacion { get; set; }
         public IEnumerable<object> DiasPendientesDeclaracion { get; set; }
         public Usuario Usuario { get; set; }
+        //public string MesPlanificacion { get; set; }
 
         public IndexViewModel()
         {

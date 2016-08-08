@@ -13,6 +13,7 @@
         <h2>DESSAU - Plataforma Servicio de Apoyo Proyectos Especiales GPRO</h2>
         <p>El objetivo de esta plataforma es registrar la planificación mensual de horas de dedicación por actividad y, a su vez, la declaración de las horas reales de dedicación en dichas actividades.</p>
         <hr/>
+        <h2><i class="fa fa-calendar" aria-hidden="true"></i> Calendario Inicio</h2>
     </div>
 </div>
 
@@ -34,7 +35,12 @@
                 }
                 else
                 {
-                    <p></p>
+                    <p>
+                        Estimado @Model.Usuario.NombreCompleto, su planificación está completa.
+                    </p>
+                    <div id="mini-clndr-plani" class="mini-clndr"></div>
+                    <br />
+                    <p>Al clickear un día en el calendario se redirijirá al formulario de Planificación de esa semana.</p>
                 }
             </div>
         </div>
@@ -56,7 +62,12 @@
                 }
                 else
                 {
-                    <p></p>
+                    <p>
+                        Estimado @Model.Usuario.NombreCompleto, su Declaración de Avances está completa.
+                    </p>
+                    <div id="mini-clndr-decla" class="mini-clndr"></div>
+                    <br />
+                    <p>Al clickear un día en el calendario se redirijirá al formulario de Declaración de Avances de esa semana.</p>
                 }
             </div>
         </div>
@@ -107,7 +118,7 @@
                         window.location.href = '@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })'+'?Fecha='+target.date.format('DD-MM-YYYY');
                     }
                 }
-            }).back();
+            });
         });
     </script>
     }

@@ -42,12 +42,32 @@
         {
             col.For(x => x.Usuario.ApellidoNombre).Named("Nombre Completo");
             col.For(x => x.Categoria.Nombre).Named("Categoría");
+            col.For(x => x.Proyecto.Nombre).Named("Orden Servicio");
             col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
                 .Named("Estado Planificación").Encode(false);
             col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
                 .Named("Estado Declaración").Encode(false);
+            col.For(x => Html.ButtonIconActionLink("transfer", "Re Asignar a ODS", "CrearEditarNomina", null, null, new { IdUsuario = x.IdUsuario }));
         }).Empty("No se han encontrado profesionales asignados a este proyecto"))
     </div>
 </div>
+
+@if (User.IsInRole("Admin"))
+{
+    <hr/>
+    <h3>Profesionales no Asignados</h3>
+    <div class="row">
+        <div class="col-md-12">
+            @(Html.Grid(Model.NominaNoAsignados)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.ApellidoNombre).Named("Nombre Completo");
+            col.For(x => x.TipoUsuario.Nombre).Named("Tipo de Usuario");
+            col.For(x => Html.ButtonIconActionLink("log-in", "Asignar a ODS", "CrearEditarNomina", null, null, new { IdUsuario = x.IdUsuario }));
+        }).Empty("No se han encontrado profesionales asignados a este proyecto"))
+        </div>
+    </div>
+}

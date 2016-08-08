@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DESSAUControlGestion">
+  <DataContextMoniker Name="/DESSAUControlGestionDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f3abb5cc-c375-4ff3-be32-674905936d76" absoluteBounds="3.375, 2.25, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/DiaEspecial" />
+      <nestedChildShapes>
+        <elementListCompartment Id="837daf9a-b1d1-4518-b83c-a4006b53da1a" absoluteBounds="3.3899999999999997, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

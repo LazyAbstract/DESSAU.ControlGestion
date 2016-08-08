@@ -337,9 +337,9 @@
                                 </div>
                                 <!-- /input-group -->
                             </li>
-                            @*<li>
-                                    <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                                </li>*@
+                            <li>
+                                <a href="@Url.Action("Index","Home")"><i class="fa fa-calendar" aria-hidden="true"></i> Calendario Inicio</a> 
+                            </li>
                             <li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 1 })"><i class="fa fa-table fa-fw"></i> Planificación</a>
                             </li>
@@ -377,6 +377,9 @@
                                         </li>
                                         <li>
                                             <a href="@Url.Action("ListarCategoria", "Categoria")">Categorías</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("VerNomina", "Nomina")">Nóminas</a>
                                         </li>
                                         <li>
                                             <a class="disabled" href="#">Ordenes Servicio</a>

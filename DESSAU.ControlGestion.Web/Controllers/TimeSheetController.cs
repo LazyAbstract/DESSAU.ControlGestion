@@ -30,6 +30,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 x.IdUsuario == UsuarioActual.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+
+            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, FORM.IdTipoTimeSheet.GetValueOrDefault(1), FORM.Fecha.GetValueOrDefault(DateTime.Now));
             IQueryable<TimeSheet> timeSheets = usuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
             if (ModelState.IsValid)
             {
@@ -103,6 +105,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             }
                             if (!timeSheetDTO.IdTimeSheet.HasValue)
                             {
+                                Mensaje = "Se han guardado los cambios exitosamente.";
                                 db.TimeSheets.InsertOnSubmit(timeSheet);
                             }
                             db.SubmitChanges();
@@ -120,8 +123,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 model.TimeSheetFORM = timeSheetCategoriaProyectoDTOs;
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
+            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, FORM.IdTipoTimeSheet.Value, FORM.Fecha.GetValueOrDefault(DateTime.Now));
             return View(model);
         }
-
     }
 }

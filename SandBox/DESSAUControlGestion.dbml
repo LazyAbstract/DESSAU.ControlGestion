@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DESSAU_ControlGestion" Class="DESSAUControlGestionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=DESSAU_ControlGestion;Integrated Security=True" SettingsObjectName="SandBox.Properties.Settings" SettingsPropertyName="DESSAU_ControlGestionConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DiaEspecial" Member="DiaEspecials">
+    <Type Name="DiaEspecial">
+      <Column Name="IdDiaEspecial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoDiaEspecial" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Horas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

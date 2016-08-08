@@ -1,7 +1,7 @@
 ﻿@model DESSAU.ControlGestion.Web.Models.TimeSheetModels.VerTimeSheetViewModel
 
 @{
-    ViewBag.Title = "VerTimeSheet";
+    ViewBag.Title = "DESSAU";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,6 +33,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav"></ul>
             <form class="navbar-form navbar-left" role="search" method="get">
+                @Html.HiddenFor(x => x.FORM.IdTipoTimeSheet)
                 <div class="form-group">
                     @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control foco" })
                 </div>
@@ -44,48 +45,46 @@
     </div>
 </nav>
 
-@*<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-@Model.FORM.ClaseBootstrap">
-            <input name="@String.Format("TimeSheetFORM[{0}].IdUsuarioCategoriaProyecto",index_categoriaProyecto)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
-            <div class="panel-heading">
-                <h3 class="panel-title">@Model.Usuario.NombreCompleto</h3>
-            </div>
-            <div class="panel-body">
-                <h6>@Model.Proyecto.Nombre</h6>
-                <h6>@Model.Categoria.Nombre</h6>
+@if (Model.UsuarioCategoriaProyectos.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-@Model.FORM.ClaseBootstrap">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Model.UsuarioCategoriaProyectos.First().Usuario.NombreCompleto</h3>
+                </div>
+                <div class="panel-body">
+                    <h6>@Model.UsuarioCategoriaProyectos.First().Proyecto.Nombre</h6>
+                    <h6>@Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>
+                </div>
             </div>
         </div>
     </div>
-</div>*@
+}
 
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.FORM.ClaseBootstrap)
+            int index_categoriaProyecto = 0;
+            foreach (var item in Model.UsuarioCategoriaProyectos)
             {
-                @Html.HiddenFor(x => x.FORM.ClaseBootstrap)
-                int index_categoriaProyecto = 0;
-                foreach (var item in Model.UsuarioCategoriaProyectos)
-                {
-                    int index_timeSheet = 0;
-                    var usuarioCategoriaProyectos = Model.TimeSheetFORM.SingleOrDefault(x => x.IdUsuarioCategoriaProyecto == item.IdUsuarioCategoriaProyecto);
-                    <div class="panel panel-@Model.FORM.ClaseBootstrap">
-                    <input name="@String.Format("TimeSheetFORM[{0}].IdUsuarioCategoriaProyecto",index_categoriaProyecto)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
-                    <div class="panel-heading">
-                        <h3 class="panel-title">@item.Usuario.NombreCompleto</h3>
-                    </div>
-                    <div class="panel-body">
-                        <h6>@item.Proyecto.Nombre</h6>
-                        <h6>@item.Categoria.Nombre</h6>
+                int index_timeSheet = 0;
+                DESSAU.ControlGestion.Web.Models.TimeSheetModels.TimeSheetCategoriaProyectoDTO usuarioCategoriaProyectos = Model.TimeSheetFORM.SingleOrDefault(x => x.IdUsuarioCategoriaProyecto == item.IdUsuarioCategoriaProyecto);
+                <input name="@String.Format("TimeSheetFORM[{0}].IdUsuarioCategoriaProyecto", index_categoriaProyecto)" type="hidden" value="@item.IdUsuarioCategoriaProyecto" />
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-@Model.FORM.ClaseBootstrap progress-bar-striped active" role="progressbar" aria-valuenow="@Model.calc.HorasIngresadas.ToString()" aria-valuemin="0" aria-valuemax="@Model.calc.CalculoHoraTotal.ToString()" style="width: @Model.calc.Porcentaje.ToString()%">
                     </div>
                 </div>
+
                 <hr />
                 <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" /><br/><br />
                 <input type="hidden" name="FORM.IdTipoTimeSheet" value="@Model.FORM.IdTipoTimeSheet" />
                 <input type="hidden" name="FORM.Fecha" value="@Model.FORM.Fecha.Value.ToShortDateString()" />
                 @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
                 <table class="table table-hover table-striped">
-
                     <thead>
                         <tr class="">
                             <th class="">
@@ -99,22 +98,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad))
+                        @foreach (var actividad in item.Categoria.CategoriaActividads.Select(x => x.Actividad)
+                            .OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
                         {
+                            string style = actividad.IdTipoActividad == 2 ? style = "background-color:cornflowerblue;" : null;
                             <tr class="">
-                                <th class="left">
+                                <th class="left" style="@style">
                                     @actividad.Nombre
-                                </th>
+                                </th>                             
                                 @foreach (var dia in Model.getFechaDesdeHasta)
                                 {
                                     if (!Model.DiaEspecials.Any(x => x.Fecha == dia))
                                     {
                                         string baseName = String.Format("TimeSheetFORM[{0}].TimeSheetDTOs[{1}]", index_categoriaProyecto, index_timeSheet);
                                         var timeSheetFormItem = usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs
-                                            .SingleOrDefault(x => x.Fecha.Value.Date == dia.Date && x.IdActividad == actividad.IdActividad) 
+                                            .SingleOrDefault(x => x.Fecha.Value.Date == dia.Date && x.IdActividad == actividad.IdActividad)
                                             : null;
                                         var timeSheetValue = 0;
-                                        <td class="">
+                                        
+                                        <td class="" style="@style">
                                             @switch (Model.FORM.IdTipoTimeSheet)
                                             {
                                                 case TipoTimeSheet.Planificacion:
@@ -161,7 +163,6 @@
                                     <th class="success">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </th>
-
                                 }
                                 else
                                 {
@@ -191,131 +192,131 @@
             }
         }
     </div>
-    </div>
-    @section Scripts {
-        <style>
-            .totales {
-                border: 1px solid black;
+</div>
+@section Scripts {
+    @*<style>
+        .totales {
+            border: 1px solid black;
+        }
+
+        .spinner {
+            width: 100px;
+        }
+
+            .spinner input {
+                text-align: right;
             }
 
-            .spinner {
-                width: 100px;
-            }
+        .input-group-btn-vertical {
+            position: relative;
+            white-space: nowrap;
+            width: 1%;
+            vertical-align: middle;
+            display: table-cell;
+        }
 
-                .spinner input {
-                    text-align: right;
-                }
-
-            .input-group-btn-vertical {
+            .input-group-btn-vertical > .btn {
+                display: block;
+                float: none;
+                width: 100%;
+                max-width: 100%;
+                padding: 8px;
+                margin-left: -1px;
                 position: relative;
-                white-space: nowrap;
-                width: 1%;
-                vertical-align: middle;
-                display: table-cell;
+                border-radius: 0;
             }
 
-                .input-group-btn-vertical > .btn {
-                    display: block;
-                    float: none;
-                    width: 100%;
-                    max-width: 100%;
-                    padding: 8px;
-                    margin-left: -1px;
-                    position: relative;
-                    border-radius: 0;
+                .input-group-btn-vertical > .btn:first-child {
+                    border-top-right-radius: 4px;
                 }
 
-                    .input-group-btn-vertical > .btn:first-child {
-                        border-top-right-radius: 4px;
-                    }
-
-                    .input-group-btn-vertical > .btn:last-child {
-                        margin-top: -2px;
-                        border-bottom-right-radius: 4px;
-                    }
-
-                .input-group-btn-vertical i {
-                    position: absolute;
-                    top: 0;
-                    left: 3px;
+                .input-group-btn-vertical > .btn:last-child {
+                    margin-top: -2px;
+                    border-bottom-right-radius: 4px;
                 }
-        </style>
-        <script type="text/javascript">
-            (function ($) {
-                $('.input-timesheet').numeric({ decimal: false, negative: false });
-                $('.spinner .btn:first-of-type').on('click', function () {
-                    if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
-                        $(this).closest(".spinner").find('input[type="text"]').val(0);
-                    }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<10) {
-                        $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
-                        $(this).closest(".spinner").find('input[type="text"]').change();
-                    }
 
-                });
-                $('.spinner .btn:last-of-type').on('click', function () {
-                    if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
-                        $(this).closest(".spinner").find('input[type="text"]').val(0);
-                    }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
-                        $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
-                        $(this).closest(".spinner").find('input[type="text"]').change();
-                    }
-                });
+            .input-group-btn-vertical i {
+                position: absolute;
+                top: 0;
+                left: 3px;
+            }
+    </style>*@
+    <script type="text/javascript">
+        (function ($) {
+            $('.input-timesheet').numeric({ decimal: false, negative: false });
+            $('.spinner .btn:first-of-type').on('click', function () {
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10)<10) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
+
+            });
+            $('.spinner .btn:last-of-type').on('click', function () {
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                }else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
+            });
                 
-                $('.input-timesheet').change(function(){
-                    suma($(this).data("dia"), $(this).data("categoria"));
-                });
-                $('.input-timesheet').each(function () {
-                    pinta($(this));
-                });
-                $('.input-timesheet').change();
-                pintaTotales();
-            })(jQuery);
+            $('.input-timesheet').change(function(){
+                suma($(this).data("dia"), $(this).data("categoria"));
+            });
+            $('.input-timesheet').each(function () {
+                pinta($(this));
+            });
+            $('.input-timesheet').change();
+            pintaTotales();
+        })(jQuery);
 
-            function suma(dia, categoria) {
-                var sum = 0;
-                $('.numero_' + categoria + '_' + dia).each(function () {
-                    sum += Number($(this).val());
-                    pinta($(this));
-                });
-                $('#total_dia_' + categoria + '_' + dia).html(sum);               
-                pintaTotales();
+        function suma(dia, categoria) {
+            var sum = 0;
+            $('.numero_' + categoria + '_' + dia).each(function () {
+                sum += Number($(this).val());
+                pinta($(this));
+            });
+            $('#total_dia_' + categoria + '_' + dia).html(sum);               
+            pintaTotales();
+        }
+
+        function pinta(obj) {
+            if (obj.val() != '0') {
+                obj.css('background-color', '#99FFCC')
             }
+            else {
+                obj.css('background-color', '#fff')
+            }
+        }
 
-            function pinta(obj) {
-                if (obj.val() != '0') {
-                    obj.css('background-color', '#99FFCC')
+        function pintaTotales() {
+            $('.totales').each(function () {
+                var total = $.trim($(this).children('span').text());
+                if (total == '10') {
+                    $(this).css('background-color', '#99FFCC')
+                }
+                else if (total=='0') {
+                    $(this).css('background-color', '#fff')
                 }
                 else {
-                    obj.css('background-color', '#fff')
+                    $(this).css('background-color', 'Red')
                 }
-            }
+            });
 
-            function pintaTotales() {
-                $('.totales').each(function () {
-                    var total = $.trim($(this).children('span').text());
-                    if (total == '10') {
-                        $(this).css('background-color', '#99FFCC')
-                    }
-                    else if (total=='0') {
-                        $(this).css('background-color', '#fff')
-                    }
-                    else {
-                        $(this).css('background-color', 'Red')
-                    }
-                });
-
-                $('.total-viernes').each(function () {
-                    var total = $.trim($(this).children('span').text());
-                    if (total == '5') {
-                        $(this).css('background-color', '#99FFCC')
-                    }
-                    else if (total == '0') {
-                        $(this).css('background-color', '#fff')
-                    }
-                    else {
-                        $(this).css('background-color', 'Red')
-                    }
-                });
-            }
-        </script>
-    }
+            $('.total-viernes').each(function () {
+                var total = $.trim($(this).children('span').text());
+                if (total == '5') {
+                    $(this).css('background-color', '#99FFCC')
+                }
+                else if (total == '0') {
+                    $(this).css('background-color', '#fff')
+                }
+                else {
+                    $(this).css('background-color', 'Red')
+                }
+            });
+        }
+    </script>
+}

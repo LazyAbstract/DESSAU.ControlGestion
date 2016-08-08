@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESSAU.ControlGestion.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESSAU.ControlGestion.EmisorCorreo", "DESSAU.ControlGestion.EmisorCorreo\DESSAU.ControlGestion.EmisorCorreo.csproj", "{193CCDD9-DF1B-49F6-822A-658DD8082EFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandBox", "SandBox\SandBox.csproj", "{70F9F440-032A-4587-BFF2-769499C68333}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{193CCDD9-DF1B-49F6-822A-658DD8082EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{193CCDD9-DF1B-49F6-822A-658DD8082EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{193CCDD9-DF1B-49F6-822A-658DD8082EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70F9F440-032A-4587-BFF2-769499C68333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70F9F440-032A-4587-BFF2-769499C68333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70F9F440-032A-4587-BFF2-769499C68333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70F9F440-032A-4587-BFF2-769499C68333}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

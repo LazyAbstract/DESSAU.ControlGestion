@@ -16,7 +16,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide()
         {
             Proyectos = db.Proyectos
-                .OrderBy(x => x.IdProyecto)
+                .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {
                     Value = x.IdProyecto.ToString(),
@@ -28,7 +28,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide(object selected)
         {
             Proyectos = db.Proyectos
-               .OrderBy(x => x.IdProyecto)
+               .OrderBy(x => x.Nombre)
                .Select(x => new SelectListItem()
                {
                    Value = x.IdProyecto.ToString(),

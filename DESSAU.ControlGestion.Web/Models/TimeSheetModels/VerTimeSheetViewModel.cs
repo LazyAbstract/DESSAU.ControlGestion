@@ -16,9 +16,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
         public SelectList Categorias { get; set; }
         public List<DateTime> FechaDeseHasta { get; set; }
         public IEnumerable<DiaEspecial> DiaEspecials { get; set; }
-
+        public CalculoHoraMensual calc { get; set; }
         private List<DateTime> _FechaDesdeHasta { get; set; }
-
         public List<DateTime> getFechaDesdeHasta
         {
             get
@@ -26,7 +25,6 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
                 return _FechaDesdeHasta;
             }
         }
-
         public VerTimeSheetViewModel()
         {
             FORM = new VerTimeSheetFormModel();
@@ -37,14 +35,12 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
         }
         public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
         public IEnumerable<TimeSheet> TimeSheets { get; set; }
-
         public VerTimeSheetViewModel(DESSAUControlGestionDataContext db):this()
         {
             Proyectos = new SelectList(db.Proyectos, "IdProyecto", "Nombre");
             Categorias = new SelectList(db.Categorias, "IdCategoria", "Nombre");
             DiaEspecials = db.DiaEspecials.Where(x=> getFechaDesdeHasta.Contains(x.Fecha.Date));
         }
-
         public VerTimeSheetViewModel(VerTimeSheetFormModel form, DESSAUControlGestionDataContext db) :this(db)
         {
             FORM = form;

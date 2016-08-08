@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3 id="title-periodo">Porcentaje Deidación Actividad @Model.Periodo</h3>
+        <h3 id="title-periodo">Porcentaje Dedicación Actividad @Model.Periodo</h3>
     </div>
 </div>
 
@@ -25,7 +25,7 @@
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Periodo" />
-                    @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione un Proyecto", new { @class = "form-control", placeholder = "Proyectos" })
+                    @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, new { @class = "form-control", placeholder = "Proyectos" })
                     @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control", placeholder = "Profesionales" })
                 </div>
                 <button type="button" id="button-periodo" class="btn btn-default">Buscar</button>
@@ -33,12 +33,6 @@
         </div>
     </div>
 </nav>
-
-<div class="row">
-    <div class="col-md-12">
-        <p>Detalle del proyecto y del profesional</p>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-md-6">

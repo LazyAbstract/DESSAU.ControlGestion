@@ -21,7 +21,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListarActividadViewModel model = new ListarActividadViewModel();
             model.filtro = filtro;
-            IEnumerable<Actividad> Acts = db.Actividads.OrderBy(x => x.Nombre);
+            IEnumerable<Actividad> Acts = db.Actividads.OrderBy(x => x.IdTipoActividad)
+                .ThenBy(x => x.Nombre);
             if (!String.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
@@ -40,6 +41,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 Actividad act = db.Actividads.Single(x => x.IdActividad == IdActividad);
                 model.Form.NombreActividad = act.Nombre;
                 model.Form.IdActividad = IdActividad;
+                model.Form.IdTipoActividad = act.IdTipoActividad;
                 model.Form.IdCategorias = act.CategoriaActividads.Where(x => x.Vigente == true)
                     .Select(x => x.IdCategoria).ToList();
             }
@@ -60,6 +62,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     Actividad act = new Actividad()
                     {
                         Nombre = Form.NombreActividad,
+                        IdTipoActividad = Form.IdTipoActividad,
                     };
 
                     db.Actividads.InsertOnSubmit(act);
@@ -85,6 +88,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     Actividad act = db.Actividads.Single(x => x.IdActividad == Form.IdActividad);
                     act.Nombre = Form.NombreActividad;
+                    act.IdTipoActividad = Form.IdTipoActividad;
 
                     foreach(var item in act.CategoriaActividads)
                     {

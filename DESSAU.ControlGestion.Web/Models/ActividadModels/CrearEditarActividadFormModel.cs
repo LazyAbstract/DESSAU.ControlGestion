@@ -15,7 +15,10 @@ namespace DESSAU.ControlGestion.Web.Models.ActividadModels
         [DisplayName("Nombre Actividad")]
         [MaxLength(255, ErrorMessage = "El nombre de la Actividad no puede superar los 255 caracteres.")]
         public string NombreActividad { get; set; }
-        [Required(ErrorMessage = "Debe elegir al menos una Categoría.")]
+        [Required]
+        [DisplayName("Tipo Actividad")]
+        public int IdTipoActividad { get; set; }
+        [Required(ErrorMessage = "Debe elegir al menos una Categoría.")]        
         public List<int> IdCategorias { get; set; }
 
         public CrearEditarActividadFormModel()
