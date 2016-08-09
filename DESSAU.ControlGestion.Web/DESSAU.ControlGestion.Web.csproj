@@ -232,6 +232,8 @@
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ReporteModels\DashboardFormModel.cs" />
+    <Compile Include="Models\ReporteModels\DashboardViewModel.cs" />
     <Compile Include="Models\TimeSheetModels\TimeSheetCagegoriaProyectoDTO.cs" />
     <Compile Include="Models\NominaModels\VerNominaFormModel.cs" />
     <Compile Include="Models\NominaModels\VerNominaViewModel.cs" />
@@ -1165,6 +1167,7 @@
     <Content Include="Views\Categoria\ListarCategoria.cshtml" />
     <Content Include="Views\Categoria\CrearEditarCategoria.cshtml" />
     <Content Include="Views\Nomina\CrearEditarNomina.cshtml" />
+    <Content Include="Views\Reporte\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

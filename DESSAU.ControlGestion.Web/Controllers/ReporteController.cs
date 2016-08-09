@@ -1,10 +1,13 @@
-﻿using DESSAU.ControlGestion.Web.Helpers;
+﻿using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.Models.ReporteModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static DESSAU.ControlGestion.Web.Models.ReporteModels.DashboardViewModel;
 
 namespace DESSAU.ControlGestion.Web.Controllers
 {
@@ -19,6 +22,39 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public ActionResult Test()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Dashboard(int? pagina, DashboardFormModel Form)
+        {            
+            int Mes;
+            int Ano;
+            DashboardViewModel model = new DashboardViewModel(Form);
+            if (String.IsNullOrWhiteSpace(Form.Periodo))
+            {
+                LectorMonthPicker lector = new LectorMonthPicker();
+                Mes = DateTime.Now.Month;
+                Ano = DateTime.Now.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
+                        + " " + DateTime.Now.Year.ToString();                
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+            }
+            model.Form.Fecha = new DateTime(Ano, Mes, 1);
+            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, TipoTimeSheet.Planificacion, new DateTime(Ano, Mes, 1));
+            IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
+                .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
+                .OrderBy(x => x.Usuario.ApellidoPaterno);
+            if (Form.IdProyecto.HasValue) Nominas = db.UsuarioCategoriaProyectos
+                    .Where(x => x.IdProyecto == Form.IdProyecto);
+            model.Nominas = Nominas.ToPagedList(pagina ?? 1, 100)
+                .Where(x => !x.PlanificacionOk(model.Form.Fecha) || !x.DeclaracionOk(model.Form.Fecha))
+                .ToPagedList(pagina ?? 1, 100);
+            return View(model);
         }
 
         public ActionResult ReporteDedicacionActividad(ReporteDedicacionActividadFormModel Form)

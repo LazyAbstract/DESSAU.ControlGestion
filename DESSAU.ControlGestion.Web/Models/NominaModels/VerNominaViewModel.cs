@@ -16,11 +16,18 @@ namespace DESSAU.ControlGestion.Web.Models.NominaModels
         public IEnumerable<Usuario> NominaNoAsignados { get; set; }
         public IEnumerable<SelectListItem> Proyectos { get; set; }
         private ProyectoSelectListProvider pslp = new ProyectoSelectListProvider();
+        public DateTime Fecha { get; set; }
         public int? IdProyecto { get; set; } 
 
         public VerNominaViewModel()
         {           
             Proyectos = pslp.Provide();
+            Fecha = DateTime.Now;
+        }
+
+        public VerNominaViewModel(DateTime fecha) : this()
+        {
+            Fecha = fecha;
         }
     }
 }

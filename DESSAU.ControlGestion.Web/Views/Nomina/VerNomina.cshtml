@@ -43,10 +43,10 @@
             col.For(x => x.Usuario.ApellidoNombre).Named("Nombre Completo");
             col.For(x => x.Categoria.Nombre).Named("Categoría");
             col.For(x => x.Proyecto.Nombre).Named("Orden Servicio");
-            col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
+            col.For(x => x.PlanificacionOk(Model.Fecha) ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
                 .Named("Estado Planificación").Encode(false);
-            col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
+            col.For(x => x.DeclaracionOk(Model.Fecha) ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                 : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
                 .Named("Estado Declaración").Encode(false);
             col.For(x => Html.ButtonIconActionLink("transfer", "Re Asignar a ODS", "CrearEditarNomina", null, null, new { IdUsuario = x.IdUsuario }));

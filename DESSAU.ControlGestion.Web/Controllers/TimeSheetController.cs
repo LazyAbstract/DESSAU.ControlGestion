@@ -63,13 +63,14 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             // No se porque no me pasa la fecha como hidden :(
             FORM.Fecha = FORM.Fecha.GetValueOrDefault(TimeSheetFORM.First().TimeSheetDTOs.Min(x=>x.Fecha.Value));
-            VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
+            VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);           
             model.TimeSheetFORM = TimeSheetFORM;
             //model.FORM.ClaseBootstrap = "info";
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
                 x.IdUsuario == UsuarioActual.IdUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, FORM.IdTipoTimeSheet.Value, FORM.Fecha.GetValueOrDefault(DateTime.Now));
             if (FORM.IdCategoria.HasValue)
             {
                 usuarioCategoriaProyectos = usuarioCategoriaProyectos.Where(x => x.IdCategoria == FORM.IdCategoria);
@@ -123,7 +124,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 model.TimeSheetFORM = timeSheetCategoriaProyectoDTOs;
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
-            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, FORM.IdTipoTimeSheet.Value, FORM.Fecha.GetValueOrDefault(DateTime.Now));
             return View(model);
         }
     }

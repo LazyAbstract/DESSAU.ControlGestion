@@ -39,7 +39,6 @@ namespace DESSAU.ControlGestion.Core
             _IdTipoTimeSheet = IdTipoTimeSheet;
             _IdUsuario = IdUsuario;
         }
-
         public int HorasLaborales(DateTime FechaCalculo)
         {
             int response = 0;
@@ -66,7 +65,6 @@ namespace DESSAU.ControlGestion.Core
             }
             return response;
         }
-
         public int CalculoHoraTotal
         {
             get
@@ -78,7 +76,6 @@ namespace DESSAU.ControlGestion.Core
             }
             
         }
-
         public int HorasIngresadas
         {
             get
@@ -102,13 +99,72 @@ namespace DESSAU.ControlGestion.Core
             }
            
         }
-
         public int Porcentaje
         {
             get
             {
                 return (100) * this.HorasIngresadas / this.CalculoHoraTotal;
             }            
+        }
+        public int CalculoHoraTotalProyecto(int? IdProyecto, DateTime Fecha)
+        {
+            Proyecto proy = db.Proyectos.SingleOrDefault(x => x.IdProyecto == IdProyecto);
+            int upcs = db.UsuarioCategoriaProyectos.Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente).Count();
+            if (proy != null)
+            {
+                upcs = proy.UsuarioCategoriaProyectos.Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente).Count();
+            }
+            return this.HorasLaborales(Fecha) * upcs;
+        }
+        public int CalculoHoraPlanificadaProyecto(int? IdProyecto, DateTime Fecha)
+        {
+            Proyecto proy = db.Proyectos.SingleOrDefault(x => x.IdProyecto == IdProyecto);
+            int response = 0;
+            if (proy != null)
+            {
+                IEnumerable<TimeSheet> timeSheets = proy.UsuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
+                if(timeSheets.Any())
+                {
+                    response = timeSheets.Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year)
+                        .Sum(x => x.HorasPlanificadas);
+                }
+            }
+            else
+            {
+                IEnumerable<TimeSheet> timeSheets = db.UsuarioCategoriaProyectos.SelectMany(x => x.TimeSheets)
+                    .Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year);
+                if(timeSheets.Any(x => x.HorasPlanificadas > 0))
+                {
+                    response = timeSheets.Sum(x => x.HorasPlanificadas);
+                }
+            }
+            return response;
+        }
+        public int CalculoHoraDeclaradaProyecto(int? IdProyecto, DateTime Fecha)
+        {
+            Proyecto proy = db.Proyectos.SingleOrDefault(x => x.IdProyecto == IdProyecto);
+            int response = 0;
+            if (proy != null)
+            {
+                IEnumerable<TimeSheet> timeSheets = proy.UsuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
+                if (timeSheets.Any())
+                {
+                    response = timeSheets.Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year)
+                        .Sum(x => x.HorasReportadas.GetValueOrDefault(0));
+                }
+            }
+            else
+            {
+                IEnumerable<TimeSheet> timeSheets = db.UsuarioCategoriaProyectos.SelectMany(x => x.TimeSheets)
+                    .Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year);
+                if (timeSheets.Any(x => x.HorasReportadas.GetValueOrDefault(0) > 0))
+                {
+                    response = timeSheets.Sum(x => x.HorasReportadas.GetValueOrDefault(0));
+                }
+            }
+            return response;
         }
 
     }
