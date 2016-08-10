@@ -108,9 +108,6 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertEstadoPlanificacionDeclaracion(EstadoPlanificacionDeclaracion instance);
     partial void UpdateEstadoPlanificacionDeclaracion(EstadoPlanificacionDeclaracion instance);
     partial void DeleteEstadoPlanificacionDeclaracion(EstadoPlanificacionDeclaracion instance);
-    partial void InsertTimeSheet(TimeSheet instance);
-    partial void UpdateTimeSheet(TimeSheet instance);
-    partial void DeleteTimeSheet(TimeSheet instance);
     partial void InsertCategoriaActividad(CategoriaActividad instance);
     partial void UpdateCategoriaActividad(CategoriaActividad instance);
     partial void DeleteCategoriaActividad(CategoriaActividad instance);
@@ -129,6 +126,9 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertActividad(Actividad instance);
     partial void UpdateActividad(Actividad instance);
     partial void DeleteActividad(Actividad instance);
+    partial void InsertTimeSheet(TimeSheet instance);
+    partial void UpdateTimeSheet(TimeSheet instance);
+    partial void DeleteTimeSheet(TimeSheet instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -369,14 +369,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<TimeSheet> TimeSheets
-		{
-			get
-			{
-				return this.GetTable<TimeSheet>();
-			}
-		}
-		
 		public System.Data.Linq.Table<CategoriaActividad> CategoriaActividads
 		{
 			get
@@ -422,6 +414,14 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<Actividad>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TimeSheet> TimeSheets
+		{
+			get
+			{
+				return this.GetTable<TimeSheet>();
 			}
 		}
 		
@@ -5980,270 +5980,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TimeSheet")]
-	public partial class TimeSheet : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdTimeSheet;
-		
-		private int _IdActividad;
-		
-		private int _IdUsuarioCategoriaProyecto;
-		
-		private System.DateTime _Fecha;
-		
-		private int _HorasPlanificadas;
-		
-		private System.Nullable<int> _HorasReportadas;
-		
-		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
-		
-		private EntityRef<Actividad> _Actividad;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdTimeSheetChanging(int value);
-    partial void OnIdTimeSheetChanged();
-    partial void OnIdActividadChanging(int value);
-    partial void OnIdActividadChanged();
-    partial void OnIdUsuarioCategoriaProyectoChanging(int value);
-    partial void OnIdUsuarioCategoriaProyectoChanged();
-    partial void OnFechaChanging(System.DateTime value);
-    partial void OnFechaChanged();
-    partial void OnHorasPlanificadasChanging(int value);
-    partial void OnHorasPlanificadasChanged();
-    partial void OnHorasReportadasChanging(System.Nullable<int> value);
-    partial void OnHorasReportadasChanged();
-    #endregion
-		
-		public TimeSheet()
-		{
-			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
-			this._Actividad = default(EntityRef<Actividad>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTimeSheet", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdTimeSheet
-		{
-			get
-			{
-				return this._IdTimeSheet;
-			}
-			set
-			{
-				if ((this._IdTimeSheet != value))
-				{
-					this.OnIdTimeSheetChanging(value);
-					this.SendPropertyChanging();
-					this._IdTimeSheet = value;
-					this.SendPropertyChanged("IdTimeSheet");
-					this.OnIdTimeSheetChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdActividad", DbType="Int NOT NULL")]
-		public int IdActividad
-		{
-			get
-			{
-				return this._IdActividad;
-			}
-			set
-			{
-				if ((this._IdActividad != value))
-				{
-					if (this._Actividad.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdActividadChanging(value);
-					this.SendPropertyChanging();
-					this._IdActividad = value;
-					this.SendPropertyChanged("IdActividad");
-					this.OnIdActividadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
-		public int IdUsuarioCategoriaProyecto
-		{
-			get
-			{
-				return this._IdUsuarioCategoriaProyecto;
-			}
-			set
-			{
-				if ((this._IdUsuarioCategoriaProyecto != value))
-				{
-					if (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdUsuarioCategoriaProyectoChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuarioCategoriaProyecto = value;
-					this.SendPropertyChanged("IdUsuarioCategoriaProyecto");
-					this.OnIdUsuarioCategoriaProyectoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date NOT NULL")]
-		public System.DateTime Fecha
-		{
-			get
-			{
-				return this._Fecha;
-			}
-			set
-			{
-				if ((this._Fecha != value))
-				{
-					this.OnFechaChanging(value);
-					this.SendPropertyChanging();
-					this._Fecha = value;
-					this.SendPropertyChanged("Fecha");
-					this.OnFechaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasPlanificadas", DbType="Int NOT NULL")]
-		public int HorasPlanificadas
-		{
-			get
-			{
-				return this._HorasPlanificadas;
-			}
-			set
-			{
-				if ((this._HorasPlanificadas != value))
-				{
-					this.OnHorasPlanificadasChanging(value);
-					this.SendPropertyChanging();
-					this._HorasPlanificadas = value;
-					this.SendPropertyChanged("HorasPlanificadas");
-					this.OnHorasPlanificadasChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasReportadas", DbType="Int")]
-		public System.Nullable<int> HorasReportadas
-		{
-			get
-			{
-				return this._HorasReportadas;
-			}
-			set
-			{
-				if ((this._HorasReportadas != value))
-				{
-					this.OnHorasReportadasChanging(value);
-					this.SendPropertyChanging();
-					this._HorasReportadas = value;
-					this.SendPropertyChanged("HorasReportadas");
-					this.OnHorasReportadasChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_TimeSheet", Storage="_UsuarioCategoriaProyecto", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto", IsForeignKey=true)]
-		public UsuarioCategoriaProyecto UsuarioCategoriaProyecto
-		{
-			get
-			{
-				return this._UsuarioCategoriaProyecto.Entity;
-			}
-			set
-			{
-				UsuarioCategoriaProyecto previousValue = this._UsuarioCategoriaProyecto.Entity;
-				if (((previousValue != value) 
-							|| (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsuarioCategoriaProyecto.Entity = null;
-						previousValue.TimeSheets.Remove(this);
-					}
-					this._UsuarioCategoriaProyecto.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheets.Add(this);
-						this._IdUsuarioCategoriaProyecto = value.IdUsuarioCategoriaProyecto;
-					}
-					else
-					{
-						this._IdUsuarioCategoriaProyecto = default(int);
-					}
-					this.SendPropertyChanged("UsuarioCategoriaProyecto");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
-		public Actividad Actividad
-		{
-			get
-			{
-				return this._Actividad.Entity;
-			}
-			set
-			{
-				Actividad previousValue = this._Actividad.Entity;
-				if (((previousValue != value) 
-							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Actividad.Entity = null;
-						previousValue.TimeSheets.Remove(this);
-					}
-					this._Actividad.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheets.Add(this);
-						this._IdActividad = value.IdActividad;
-					}
-					else
-					{
-						this._IdActividad = default(int);
-					}
-					this.SendPropertyChanged("Actividad");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CategoriaActividad")]
 	public partial class CategoriaActividad : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -7069,9 +6805,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private string _Nombre;
 		
-		private EntitySet<TimeSheet> _TimeSheets;
-		
 		private EntitySet<CategoriaActividad> _CategoriaActividads;
+		
+		private EntitySet<TimeSheet> _TimeSheets;
 		
 		private EntityRef<TipoActividad> _TipoActividad;
 		
@@ -7089,8 +6825,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		public Actividad()
 		{
-			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
 			this._CategoriaActividads = new EntitySet<CategoriaActividad>(new Action<CategoriaActividad>(this.attach_CategoriaActividads), new Action<CategoriaActividad>(this.detach_CategoriaActividads));
+			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
 			this._TipoActividad = default(EntityRef<TipoActividad>);
 			OnCreated();
 		}
@@ -7159,19 +6895,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_TimeSheets", ThisKey="IdActividad", OtherKey="IdActividad")]
-		public EntitySet<TimeSheet> TimeSheets
-		{
-			get
-			{
-				return this._TimeSheets;
-			}
-			set
-			{
-				this._TimeSheets.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_CategoriaActividad", Storage="_CategoriaActividads", ThisKey="IdActividad", OtherKey="IdActividad")]
 		public EntitySet<CategoriaActividad> CategoriaActividads
 		{
@@ -7182,6 +6905,19 @@ namespace DESSAU.ControlGestion.Core
 			set
 			{
 				this._CategoriaActividads.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_TimeSheets", ThisKey="IdActividad", OtherKey="IdActividad")]
+		public EntitySet<TimeSheet> TimeSheets
+		{
+			get
+			{
+				return this._TimeSheets;
+			}
+			set
+			{
+				this._TimeSheets.Assign(value);
 			}
 		}
 		
@@ -7239,6 +6975,18 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		private void attach_CategoriaActividads(CategoriaActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = this;
+		}
+		
+		private void detach_CategoriaActividads(CategoriaActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = null;
+		}
+		
 		private void attach_TimeSheets(TimeSheet entity)
 		{
 			this.SendPropertyChanging();
@@ -7250,17 +6998,269 @@ namespace DESSAU.ControlGestion.Core
 			this.SendPropertyChanging();
 			entity.Actividad = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TimeSheet")]
+	public partial class TimeSheet : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_CategoriaActividads(CategoriaActividad entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdTimeSheet;
+		
+		private int _IdActividad;
+		
+		private int _IdUsuarioCategoriaProyecto;
+		
+		private System.DateTime _Fecha;
+		
+		private int _HorasPlanificadas;
+		
+		private System.Nullable<int> _HorasReportadas;
+		
+		private EntityRef<Actividad> _Actividad;
+		
+		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdTimeSheetChanging(int value);
+    partial void OnIdTimeSheetChanged();
+    partial void OnIdActividadChanging(int value);
+    partial void OnIdActividadChanged();
+    partial void OnIdUsuarioCategoriaProyectoChanging(int value);
+    partial void OnIdUsuarioCategoriaProyectoChanged();
+    partial void OnFechaChanging(System.DateTime value);
+    partial void OnFechaChanged();
+    partial void OnHorasPlanificadasChanging(int value);
+    partial void OnHorasPlanificadasChanged();
+    partial void OnHorasReportadasChanging(System.Nullable<int> value);
+    partial void OnHorasReportadasChanged();
+    #endregion
+		
+		public TimeSheet()
 		{
-			this.SendPropertyChanging();
-			entity.Actividad = this;
+			this._Actividad = default(EntityRef<Actividad>);
+			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
+			OnCreated();
 		}
 		
-		private void detach_CategoriaActividads(CategoriaActividad entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTimeSheet", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdTimeSheet
 		{
-			this.SendPropertyChanging();
-			entity.Actividad = null;
+			get
+			{
+				return this._IdTimeSheet;
+			}
+			set
+			{
+				if ((this._IdTimeSheet != value))
+				{
+					this.OnIdTimeSheetChanging(value);
+					this.SendPropertyChanging();
+					this._IdTimeSheet = value;
+					this.SendPropertyChanged("IdTimeSheet");
+					this.OnIdTimeSheetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdActividad", DbType="Int NOT NULL")]
+		public int IdActividad
+		{
+			get
+			{
+				return this._IdActividad;
+			}
+			set
+			{
+				if ((this._IdActividad != value))
+				{
+					if (this._Actividad.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdActividadChanging(value);
+					this.SendPropertyChanging();
+					this._IdActividad = value;
+					this.SendPropertyChanged("IdActividad");
+					this.OnIdActividadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
+		public int IdUsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._IdUsuarioCategoriaProyecto;
+			}
+			set
+			{
+				if ((this._IdUsuarioCategoriaProyecto != value))
+				{
+					if (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioCategoriaProyectoChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioCategoriaProyecto = value;
+					this.SendPropertyChanged("IdUsuarioCategoriaProyecto");
+					this.OnIdUsuarioCategoriaProyectoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date NOT NULL")]
+		public System.DateTime Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this.OnFechaChanging(value);
+					this.SendPropertyChanging();
+					this._Fecha = value;
+					this.SendPropertyChanged("Fecha");
+					this.OnFechaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasPlanificadas", DbType="Int NOT NULL")]
+		public int HorasPlanificadas
+		{
+			get
+			{
+				return this._HorasPlanificadas;
+			}
+			set
+			{
+				if ((this._HorasPlanificadas != value))
+				{
+					this.OnHorasPlanificadasChanging(value);
+					this.SendPropertyChanging();
+					this._HorasPlanificadas = value;
+					this.SendPropertyChanged("HorasPlanificadas");
+					this.OnHorasPlanificadasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasReportadas", DbType="Int")]
+		public System.Nullable<int> HorasReportadas
+		{
+			get
+			{
+				return this._HorasReportadas;
+			}
+			set
+			{
+				if ((this._HorasReportadas != value))
+				{
+					this.OnHorasReportadasChanging(value);
+					this.SendPropertyChanging();
+					this._HorasReportadas = value;
+					this.SendPropertyChanged("HorasReportadas");
+					this.OnHorasReportadasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
+		public Actividad Actividad
+		{
+			get
+			{
+				return this._Actividad.Entity;
+			}
+			set
+			{
+				Actividad previousValue = this._Actividad.Entity;
+				if (((previousValue != value) 
+							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Actividad.Entity = null;
+						previousValue.TimeSheets.Remove(this);
+					}
+					this._Actividad.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheets.Add(this);
+						this._IdActividad = value.IdActividad;
+					}
+					else
+					{
+						this._IdActividad = default(int);
+					}
+					this.SendPropertyChanged("Actividad");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_TimeSheet", Storage="_UsuarioCategoriaProyecto", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto", IsForeignKey=true)]
+		public UsuarioCategoriaProyecto UsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._UsuarioCategoriaProyecto.Entity;
+			}
+			set
+			{
+				UsuarioCategoriaProyecto previousValue = this._UsuarioCategoriaProyecto.Entity;
+				if (((previousValue != value) 
+							|| (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsuarioCategoriaProyecto.Entity = null;
+						previousValue.TimeSheets.Remove(this);
+					}
+					this._UsuarioCategoriaProyecto.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheets.Add(this);
+						this._IdUsuarioCategoriaProyecto = value.IdUsuarioCategoriaProyecto;
+					}
+					else
+					{
+						this._IdUsuarioCategoriaProyecto = default(int);
+					}
+					this.SendPropertyChanged("UsuarioCategoriaProyecto");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

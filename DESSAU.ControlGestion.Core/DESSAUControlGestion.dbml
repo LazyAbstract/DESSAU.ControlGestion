@@ -267,18 +267,6 @@
       <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TimeSheet" Member="TimeSheets">
-    <Type Name="TimeSheet">
-      <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-      <Association Name="Actividad_TimeSheet" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.CategoriaActividad" Member="CategoriaActividads">
     <Type Name="CategoriaActividad">
       <Column Name="IdCategoriaActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -327,9 +315,21 @@
       <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdTipoActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Actividad_TimeSheet" Member="TimeSheets" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheet" />
       <Association Name="Actividad_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdActividad" OtherKey="IdActividad" Type="CategoriaActividad" />
+      <Association Name="Actividad_TimeSheet" Member="TimeSheets" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheet" />
       <Association Name="TipoActividad_Actividad" Member="TipoActividad" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="TipoActividad" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TimeSheet" Member="TimeSheets">
+    <Type Name="TimeSheet">
+      <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Actividad_TimeSheet" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">

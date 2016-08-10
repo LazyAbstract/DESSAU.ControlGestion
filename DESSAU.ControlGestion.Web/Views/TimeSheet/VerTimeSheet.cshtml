@@ -64,7 +64,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm(null, null, FormMethod.Post))
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
             @Html.HiddenFor(x => x.FORM.ClaseBootstrap)
             int index_categoriaProyecto = 0;
@@ -188,7 +188,7 @@
                     </thead>
                 </table>
                 index_categoriaProyecto++;
-                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
+                <input id="bla" type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
             }
         }
     </div>
@@ -241,7 +241,7 @@
                 left: 3px;
             }
     </style>*@
-    <script type="text/javascript">
+<script type="text/javascript">
         (function ($) {
             $('.input-timesheet').numeric({ decimal: false, negative: false });
             $('.spinner .btn:first-of-type').on('click', function () {
@@ -318,5 +318,10 @@
                 }
             });
         }
+
+        $('#ts-form').submit(function (event) {
+            $('input[type="submit"]').prop('disabled', true);
+        });
+
     </script>
 }

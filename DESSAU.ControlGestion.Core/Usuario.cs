@@ -28,9 +28,9 @@ namespace DESSAU.ControlGestion.Core
         {
             get
             {
-                string ApellidoLimpio = this.ApellidoPaterno.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u').Replace('ñ', 'n');
-                string NombreLimpio = this.Nombre.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u').Replace('ñ', 'n');
-                return ApellidoLimpio.ToLower().Substring(0, 4) + NombreLimpio.ToLower().Substring(0, 2);
+                string ApellidoLimpio = this.ApellidoPaterno.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u').Replace('ñ', 'n').Replace('ö', 'o');
+                string NombreLimpio = this.Nombre.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u').Replace('ñ', 'n').Replace('ö', 'o');
+                return ApellidoLimpio.ToLower().Trim().Substring(0, 4) + NombreLimpio.Trim().ToLower().Substring(0, 2);
             }
         }
     }
