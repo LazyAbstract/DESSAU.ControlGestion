@@ -206,6 +206,7 @@
     <Compile Include="Controllers\ActividadController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\EvaluacionDesempenoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NominaController.cs" />
@@ -1175,6 +1176,7 @@
     <Content Include="Views\Reporte\Dashboard.cshtml" />
     <Content Include="Views\Proyecto\ListarProyecto.cshtml" />
     <Content Include="Views\Proyecto\CrearEditarProyecto.cshtml" />
+    <Content Include="Views\EvaluacionDesempeno\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

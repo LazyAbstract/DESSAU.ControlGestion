@@ -349,6 +349,12 @@
                             @if (User.IsInRole("Reporte"))
                             {
                                 <li>
+                                    <a href="@Url.Action("Index", "EvaluacionDesempeno")"><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación de Desempeño</a>
+                                </li>         
+                            }
+                            @if (User.IsInRole("Reporte"))
+                            {
+                                <li>
                                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
@@ -363,7 +369,7 @@
                                     </ul>
                                     <!-- /.nav-second-level -->
                                 </li>
-                            }
+                                }
                             @if (User.IsInRole("Admin"))
                             {
                                 <li>

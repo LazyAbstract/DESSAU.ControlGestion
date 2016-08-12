@@ -23,7 +23,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
                 .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
                 .OrderBy(x => x.Usuario.ApellidoPaterno);
-            if (IdProyecto.HasValue) Nominas = db.UsuarioCategoriaProyectos
+            if (IdProyecto.HasValue) Nominas = Nominas
                     .Where(x => x.IdProyecto == IdProyecto);
             model.Nominas = Nominas.ToPagedList(pagina ?? 1, 10);
             model.NominaNoAsignados = db.Usuarios.Where(x => !x.UsuarioCategoriaProyectos.Any() 
