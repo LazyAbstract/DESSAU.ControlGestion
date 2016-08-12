@@ -1,0 +1,73 @@
+﻿@model DESSAU.ControlGestion.Web.Models.ProyectoModels.CrearEditarProyectoViewModel
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @if (Model.Form.IdProyecto.HasValue)
+            {
+                <h4>Editar Orden de Servicio</h4>
+                @Html.HiddenFor(x => x.Form.IdProyecto)
+            }
+            else
+            {
+                <h4>Agregar Orden de Servicio</h4>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.Nombre)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_Nombre" name="Form.Nombre" placeholder="Nombre ODS" value="@Model.Form.Nombre" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.Nombre)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdContrato)</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(x => x.Form.IdContrato, Model.Contratos, "Seleccione un Contrato", new { @class = "form-control" })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.IdContrato)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.FechaInicio)</label>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(x => x.Form.FechaInicio, "{0:dd/MM/yyyy}", new { @class = "fecha form-control " })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.FechaInicio)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.FechaFin)</label>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(x => x.Form.FechaFin, "{0:dd/MM/yyyy}", new { @class = "fecha form-control " })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.FechaFin)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+                }
+
+

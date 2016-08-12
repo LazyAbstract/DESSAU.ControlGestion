@@ -209,6 +209,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NominaController.cs" />
+    <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\TimeSheetController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -232,6 +233,9 @@
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProyectoModels\CrearEditarProyectoFormModel.cs" />
+    <Compile Include="Models\ProyectoModels\CrearEditarProyectoViewModel.cs" />
+    <Compile Include="Models\ProyectoModels\ListarProyectoViewModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardFormModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardViewModel.cs" />
     <Compile Include="Models\TimeSheetModels\TimeSheetCagegoriaProyectoDTO.cs" />
@@ -249,6 +253,7 @@
     <Compile Include="Models\UsuarioModels\ListarUsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectListProviders\CategoriaSelectListProvider.cs" />
+    <Compile Include="SelectListProviders\ContratoSelectListProvider.cs" />
     <Compile Include="SelectListProviders\ISelectListProvider.cs" />
     <Compile Include="SelectListProviders\ProyectoSelectListProvider.cs" />
     <Compile Include="SelectListProviders\TipoActividadSelectListProvider.cs" />
@@ -1168,6 +1173,8 @@
     <Content Include="Views\Categoria\CrearEditarCategoria.cshtml" />
     <Content Include="Views\Nomina\CrearEditarNomina.cshtml" />
     <Content Include="Views\Reporte\Dashboard.cshtml" />
+    <Content Include="Views\Proyecto\ListarProyecto.cshtml" />
+    <Content Include="Views\Proyecto\CrearEditarProyecto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

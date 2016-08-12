@@ -1,0 +1,50 @@
+﻿@model DESSAU.ControlGestion.Web.Models.ProyectoModels.ListarProyectoViewModel
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Ordenes de Servicio</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Búsqueda amplia" name="filtro" id="input-filtro" value="@Model.filtro">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
+            @Html.ActionLink("Agregar", "CrearEditarProyecto", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.PagedListPager(Model.OrdenesServicio, page => Url.Action("ListarActividad", new
+   {
+       pagina = page,
+       filtro = Model.filtro
+   }))
+        @(Html.Grid(Model.OrdenesServicio)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.Nombre).Named("ODS");
+            col.For(x => x.Contrato.Nombre).Named("Contrato");
+            col.For(x => x.FechaIncio.ToShortDateString()).Named("Fecha de Inicio");
+            col.For(x => x.FechaTermino.GetValueOrDefault(DateTime.Now).ToShortDateString()).Named("Fecha Término");
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Proyecto", "CrearEditarProyecto", null, null, new { IdProyecto = x.IdProyecto }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+    </div>
+</div>
+
+
+

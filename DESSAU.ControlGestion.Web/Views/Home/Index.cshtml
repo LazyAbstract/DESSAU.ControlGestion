@@ -27,11 +27,11 @@
                 @if (@Model.DiasPendientesPlanificacion.Any())
                 {
                     <p>
-                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesPlanificacion.Count() días pendientes en su Planificación. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet") para actualizarlo.
+                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesPlanificacion.Count().ToString() días pendientes en su Planificación. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet") para actualizarlo.
                     </p>
                     <div id="mini-clndr-plani" class="mini-clndr"></div>
                     <br />
-                    <p>Al clickear un día en el calendario se redirijirá al formulario de Planificación de esa semana.</p>
+                    <p>Al clickear un día en rojo en el calendario se redirijirá al formulario de Planificación de esa semana.</p>
                 }
                 else
                 {
@@ -40,7 +40,6 @@
                     </p>
                     <div id="mini-clndr-plani" class="mini-clndr"></div>
                     <br />
-                    <p>Al clickear un día en el calendario se redirijirá al formulario de Planificación de esa semana.</p>
                 }
             </div>
         </div>
@@ -54,11 +53,11 @@
                 @if (@Model.DiasPendientesDeclaracion.Any())
                 {
                     <p>
-                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesDeclaracion.Count() días pendientes en su Declaración. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 }, null) para actualizarlo.
+                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesDeclaracion.Count().ToString() días pendientes en su Declaración. Por favor diríjase a este @Html.ActionLink("enlace", "VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 }, null) para actualizarlo.
                     </p>
                     <div id="mini-clndr-decla" class="mini-clndr"></div>
                     <br />
-                    <p>Al clickear un día en el calendario se redirijirá al formulario de Declaración de Avances de esa semana.</p>
+                    <p>Al clickear un día en rojo en el calendario se redirijirá al formulario de Declaración de Avances de esa semana.</p>
                 }
                 else
                 {
@@ -67,7 +66,7 @@
                     </p>
                     <div id="mini-clndr-decla" class="mini-clndr"></div>
                     <br />
-                    <p>Al clickear un día en el calendario se redirijirá al formulario de Declaración de Avances de esa semana.</p>
+                   
                 }
             </div>
         </div>
@@ -115,7 +114,7 @@
                     // fired whenever a calendar box is clicked.
                     // returns a 'target' object containing the DOM element, any events, and the date as a moment.js object.
                     click: function(target){
-                        window.location.href = '@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })'+'?Fecha='+target.date.format('DD-MM-YYYY');
+                        window.location.href = '@Url.Action("VerTimeSheet", "TimeSheet")'+'?IdTipoTimeSheet=2&Fecha='+target.date.format('DD-MM-YYYY');
                     }
                 }
             });
