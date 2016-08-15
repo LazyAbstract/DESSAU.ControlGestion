@@ -139,7 +139,7 @@
             .Columns(col =>
             {
                 col.For(x => x.Usuario.ApellidoNombre).Named("Nombre Completo");
-                col.For(x => x.Categoria.Nombre).Named("Categoría").;
+                col.For(x => x.Categoria.Nombre).Named("Categoría");
                 col.For(x => x.Proyecto.Nombre).Named("Orden Servicio");
                 col.For(x => x.PlanificacionOk(Model.Form.Fecha) ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
                     : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
