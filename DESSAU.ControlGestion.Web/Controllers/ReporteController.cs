@@ -51,18 +51,35 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 .OrderBy(x => x.Usuario.ApellidoPaterno);
             if (Form.IdProyecto.HasValue) Nominas = Nominas
                     .Where(x => x.IdProyecto == Form.IdProyecto);
-            model.Nominas = Nominas.ToPagedList(pagina ?? 1, 100)
-                .Where(x => !x.PlanificacionOk(model.Form.Fecha) || !x.DeclaracionOk(model.Form.Fecha))
+            model.Nominas = Nominas.ToList()
+                .Where(x => !x.PlanificacionOk || !x.DeclaracionOk)
                 .ToPagedList(pagina ?? 1, 100);
             return View(model);
         }
 
-        public ActionResult ReporteDedicacionActividad(ReporteDedicacionActividadFormModel Form)
+        public ActionResult ReporteDedicacionActividad(ReporteDedicacionActividadFormModel Form, int? IdUsuarioCategoriaProyecto)
         {
             ReporteDedicacionActividadViewModel model = new ReporteDedicacionActividadViewModel();
+            if (IdUsuarioCategoriaProyecto.HasValue)
+            {
+                var upc = db.UsuarioCategoriaProyectos.SingleOrDefault(x => x.IdUsuarioCategoriaProyecto == IdUsuarioCategoriaProyecto
+                    && x.EstadoUsuarioCategoriaProyecto.IdEstadoUsuarioCategoriaProyecto !=  TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+                if (upc != null)
+                {
+                    model.Form.IdUsuario = upc.IdUsuario;
+                    model.Form.IdProyecto = upc.IdProyecto;
+                }                
+            }
+            
             LectorMonthPicker lector = new LectorMonthPicker();
             model.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month) 
                 + " " + DateTime.Now.Year.ToString();
+
+            var hola = db.fn_HorasPlanificacionDeclaracion(8, 2016, model.Form.IdUsuario, model.Form.IdProyecto);
+            double chao = (100 * hola.Sum(x => x.Desviacion.GetValueOrDefault(0)) / (double)hola.Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)));
+            model.PorcentajeDesviacion = (int)Math.Round(chao);
+            if (model.PorcentajeDesviacion > 5) model.claseBootstrap = "warning";
+            if (model.PorcentajeDesviacion > 10) model.claseBootstrap = "danger";
             return View(model);
         }
 
@@ -81,22 +98,23 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 Mes = lector.GetMes;
                 Ano = lector.GetAnno;
             }
-            if (!IdProyecto.HasValue) IdProyecto = 1;
+            //if (!IdProyecto.HasValue) IdProyecto = 1;
 
             var Data =
                new dynamic[]
                {
                     new {
-                            Id = "Data1",
-                            Columns = new [] {
-                                new { Title = "Actividad", type = "string" },
-                                new { Title = "Dedicación Planificada", type = "number" },
-                            },
-                            Rows = db.fn_ReporteDedicacionActividad(Mes, Ano, IdUsuario, IdProyecto)
-                                .Select(x => new dynamic [] {
-                                    x.Actividad,
-                                    x.PorcentajeDedicacionPlanificacion
-                            }).ToArray()
+                        Id = "Data1",
+                        Columns = new [] {
+                            new { Title = "Actividad", type = "string" },
+                            new { Title = "Dedicación Planificada", type = "number" },
+                        },
+                        Rows = db.fn_ReporteDedicacionActividad(Mes, Ano, IdUsuario, IdProyecto)
+                            .OrderBy(x => x.Actividad)
+                            .Select(x => new dynamic [] {
+                                x.Actividad,
+                                x.PorcentajeDedicacionPlanificacion
+                        }).ToArray()
                     },
                     new {
                         Id = "Data2",
@@ -105,9 +123,25 @@ namespace DESSAU.ControlGestion.Web.Controllers
                                 new { Title = "Dedicación Declarada", type = "number" },
                             },
                         Rows = db.fn_ReporteDedicacionActividad(Mes, Ano, IdUsuario, IdProyecto)
+                            .OrderBy(x => x.Actividad)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
                                 x.PorcentajeDedicacionDeclaracion,
+                            }).ToArray()
+                    },
+                    new {
+                        Id = "Data3",
+                        Columns = new[] {
+                                new { Title = "Actividad", type = "string" },
+                                new { Title = "Horas Planificacón", type = "number" },
+                                new { Title = "Horas Declaración", type = "number" },
+                            },
+                        Rows = db.fn_HorasPlanificacionDeclaracion(Mes, Ano, IdUsuario, IdProyecto)
+                            .OrderByDescending(x => x.HorasPlanificadas)
+                            .Select(x => new dynamic [] {
+                                x.Actividad,
+                                x.HorasPlanificadas,
+                                x.HorasReportadas,
                             }).ToArray()
                     }
                };
@@ -120,7 +154,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             var formValue = formCollection.GetValues(0)[0];
             int IdProyecto = Int16.Parse(formValue);
             IEnumerable<SelectListItem> items = db.UsuarioCategoriaProyectos
-                .Where(x => x.IdProyecto == IdProyecto)
+                .Where(x => x.IdProyecto == IdProyecto && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != 99)
                 .Select(x => x.Usuario)
                 .OrderBy(x => x.ApellidoPaterno)
                 .Select(x => new SelectListItem()

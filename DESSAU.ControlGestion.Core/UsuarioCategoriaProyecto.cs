@@ -8,26 +8,27 @@ namespace DESSAU.ControlGestion.Core
 {
     public partial class UsuarioCategoriaProyecto
     {
-        private CalculoHoraMensual calc { get; set; }
+        private DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
+            .WithConnectionStringFromConfiguration();
 
-        public bool PlanificacionOk(DateTime Fecha)
+        public bool PlanificacionOk
         {
-            bool response = false;
-            calc = new CalculoHoraMensual(this.IdUsuario, TipoTimeSheet.Planificacion, Fecha);
-            int? horasPlanificadas = this.TimeSheets
-                .Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year).Sum(x => x.HorasPlanificadas);
-            if (horasPlanificadas.HasValue && horasPlanificadas.Value >= calc.CalculoHoraTotal) response = true;
-            return response;
+            get
+            {
+                bool response = true;
+                if (db.sp_GetDiasPendientesPlanificacionByIdUsuario(this.IdUsuario).Any()) response = false;
+                return response;
+            }            
         }
 
-        public bool DeclaracionOk(DateTime Fecha)
+        public bool DeclaracionOk
         {
-            bool response = false;
-            calc = new CalculoHoraMensual(this.IdUsuario, TipoTimeSheet.Reportado, Fecha);
-            int? horasReportadas = this.TimeSheets
-                .Where(x => x.Fecha.Month == Fecha.Month && x.Fecha.Year == Fecha.Year).Sum(x => x.HorasReportadas.GetValueOrDefault(0));
-            if (horasReportadas.HasValue && horasReportadas.Value >= calc.CalculoHoraTotal) response = true;
-            return response;
+            get
+            {
+                bool response = true;
+                if (db.sp_GetDiasPendientesDeclaracionByIdUsuario(this.IdUsuario).Any()) response = false;
+                return response;
+            }            
         }
 
         public int HorasPlanificadas(DateTime Fecha)

@@ -444,6 +444,12 @@ namespace DESSAU.ControlGestion.Core
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario);
 			return ((ISingleResult<sp_GetDiasPendientesDeclaracionByIdUsuarioResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_HorasPlanificacionDeclaracion", IsComposable=true)]
+		public IQueryable<fn_HorasPlanificacionDeclaracionResult> fn_HorasPlanificacionDeclaracion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mes", DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Ano", DbType="Int")] System.Nullable<int> ano, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdProyecto", DbType="Int")] System.Nullable<int> idProyecto)
+		{
+			return this.CreateMethodCallQuery<fn_HorasPlanificacionDeclaracionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -7373,6 +7379,86 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._Fecha != value))
 				{
 					this._Fecha = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_HorasPlanificacionDeclaracionResult
+	{
+		
+		private string _Actividad;
+		
+		private System.Nullable<int> _HorasPlanificadas;
+		
+		private System.Nullable<int> _HorasReportadas;
+		
+		private System.Nullable<int> _Desviacion;
+		
+		public fn_HorasPlanificacionDeclaracionResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Actividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Actividad
+		{
+			get
+			{
+				return this._Actividad;
+			}
+			set
+			{
+				if ((this._Actividad != value))
+				{
+					this._Actividad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasPlanificadas", DbType="Int")]
+		public System.Nullable<int> HorasPlanificadas
+		{
+			get
+			{
+				return this._HorasPlanificadas;
+			}
+			set
+			{
+				if ((this._HorasPlanificadas != value))
+				{
+					this._HorasPlanificadas = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasReportadas", DbType="Int")]
+		public System.Nullable<int> HorasReportadas
+		{
+			get
+			{
+				return this._HorasReportadas;
+			}
+			set
+			{
+				if ((this._HorasReportadas != value))
+				{
+					this._HorasReportadas = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Desviacion", DbType="Int")]
+		public System.Nullable<int> Desviacion
+		{
+			get
+			{
+				return this._Desviacion;
+			}
+			set
+			{
+				if ((this._Desviacion != value))
+				{
+					this._Desviacion = value;
 				}
 			}
 		}

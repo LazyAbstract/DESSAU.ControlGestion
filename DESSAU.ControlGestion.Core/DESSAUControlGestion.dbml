@@ -355,4 +355,16 @@
       <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.fn_HorasPlanificacionDeclaracion" Method="fn_HorasPlanificacionDeclaracion" IsComposable="true">
+    <Parameter Name="Mes" Parameter="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Ano" Parameter="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_HorasPlanificacionDeclaracionResult">
+      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Desviacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

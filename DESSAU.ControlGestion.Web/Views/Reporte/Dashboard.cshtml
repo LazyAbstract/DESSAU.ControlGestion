@@ -68,7 +68,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">@Model.calc.CalculoHoraTotalProyecto(Model.Form.IdProyecto, Model.Form.Fecha).ToString("N0")</div>
-                        <div>Total Horas Proyecto</div>
+                        <div>Total Horas</div>
                     </div>
                 </div>
             </div>
@@ -138,14 +138,14 @@
             .Attributes(@class => "table table-striped")
             .Columns(col =>
             {
-                col.For(x => x.Usuario.ApellidoNombre).Named("Nombre Completo");
+                col.For(x => Html.ActionLink("" + x.Usuario.ApellidoNombre, "ReporteDedicacionActividad", new { IdUsuarioCategoriaProyecto = x.IdUsuarioCategoriaProyecto })).Named("Nombre Completo");
                 col.For(x => x.Categoria.Nombre).Named("Categoría");
                 col.For(x => x.Proyecto.Nombre).Named("Orden Servicio");
-                col.For(x => x.PlanificacionOk(Model.Form.Fecha) ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
-                    : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
+                col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
+                    : Html.Raw("<i class='fa fa-exclamation-triangle fa-2' aria-hidden='true'></i>"))
                     .Named("Estado Planificación").Encode(false);
-                col.For(x => x.DeclaracionOk(Model.Form.Fecha) ? Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>")
-                    : Html.Raw("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>"))
+                col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
+                    : Html.Raw("<i class='fa fa-exclamation-triangle fa-2' aria-hidden='true'></i>"))
                     .Named("Estado Declaración").Encode(false);
             }).Empty("No se han encontrado profesionales asignados fuera de cumplimiento"))
     </div>
