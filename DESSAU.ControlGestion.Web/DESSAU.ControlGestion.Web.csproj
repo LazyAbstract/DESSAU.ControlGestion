@@ -231,6 +231,8 @@
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaFormModel.cs" />
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaViewModel.cs" />
     <Compile Include="Models\CategoriaModels\ListarCategoriaViewModel.cs" />
+    <Compile Include="Models\EvaluacionModels\EvaluationSheetFormModel.cs" />
+    <Compile Include="Models\EvaluacionModels\EvaluationSheetViewModel.cs" />
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1177,6 +1179,7 @@
     <Content Include="Views\Proyecto\ListarProyecto.cshtml" />
     <Content Include="Views\Proyecto\CrearEditarProyecto.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\Index.cshtml" />
+    <Content Include="Views\EvaluacionDesempeno\EvaluationSheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
