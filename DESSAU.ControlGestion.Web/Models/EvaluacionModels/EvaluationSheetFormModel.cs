@@ -40,7 +40,6 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
     {
         public int? IdEvaluacionPregunta { get; set; }
 
-        [Required]
         public int? IdPregunta { get; set; }
 
         [Required]

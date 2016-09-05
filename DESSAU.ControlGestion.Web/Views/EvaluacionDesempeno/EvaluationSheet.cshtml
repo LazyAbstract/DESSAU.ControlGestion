@@ -21,15 +21,15 @@
             <form class="navbar-form navbar-left" role="search" method="get">
                 @*<div class="row">
                     <div class="col-md-2">
-                        @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = " control-label" })
+                    @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = " control-label" })
                     </div>
                     <div class="col-md-5">
-                        @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
                     </div>
                     <div class="col-md-5">
-                        @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
+                    @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
                     </div>
-                </div>*@
+                    </div>*@
                 <div class="row">
                     <div class="col-md-2">
                         @Html.LabelFor(x => x.FORM.IdPlantillaEvaluacion, new { @class = "control-label" })
@@ -53,11 +53,11 @@
                     </div>
                 </div>
                 <row>
-                    <div class="col-lg-12">
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-default">Buscar</button>
                     </div>
                 </row>
-                
+
             </form>
         </div>
     </div>
@@ -66,7 +66,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-@Model.FORM.ClaseBootstrap">
+            <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">@Model.PlantillaEvaluacion.Nombre</h3>
                 </div>
@@ -93,15 +93,21 @@
     {
         using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
+            @Html.Hidden("FORM.Fecha", Model.FORM.Fecha)
+            @Html.Hidden("FORM.IdPlantillaEvaluacion", Model.FORM.IdPlantillaEvaluacion)
+            @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-default">Guardar</button>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <table class="table-striped table">
                         @*<tr>
-                                <th></th>
-                                @foreach (var tipoPregunta in Model.Preguntas.GroupBy(x => x.TipoPregunta.Nombre).OrderBy(x => x.Key))
-                                {
-                                    <th colspan="@tipoPregunta.Count()">@tipoPregunta.Key</th>
-                                }
+                            <th></th>
+                            @foreach (var tipoPregunta in Model.Preguntas.GroupBy(x => x.TipoPregunta.Nombre).OrderBy(x => x.Key))
+                            {
+                            <th colspan="@tipoPregunta.Count()">@tipoPregunta.Key</th>
+                            }
                             </tr>*@
                         <tr>
                             <th></th>
@@ -114,7 +120,7 @@
                             int i = 0;
                             foreach (var usuarioCategoriaProyecto in Model.UsuarioCategoriaProyectos)
                             {
-                                var evaluacionFORM = Model.EvaluacionFORMs.SingleOrDefault(x => x.IdUsuario == usuarioCategoriaProyecto.IdUsuario);
+                                var evaluacionFORM = Model.EvaluacionFORMs.FirstOrDefault(x => x.IdUsuario == usuarioCategoriaProyecto.IdUsuario);
                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].Fecha", i), Model.FORM.Fecha)
                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].IdUsuario", i), usuarioCategoriaProyecto.IdUsuario)
                                 if (evaluacionFORM != null)
@@ -139,15 +145,27 @@
                                                 }
                                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].IdPregunta", i, j), pregunta.IdPregunta)
                                                 @Html.TextBox(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(0))
+                                                @Html.ValidationMessage(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j))
                                             </td>
+                                            j++;
                                         }
                                     }
                                 </tr>
-                              }
+                                            i++;
+                                        }
                         }
                     </table>
                 </div>
             </div>
-        }
-    }
-}
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-default">Guardar</button>
+            </div>
+                                                }
+                                            }
+                                        }
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
