@@ -5,6 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación de Desempeño {0}", Model.FORM.Fecha.GetValueOrDefault(DateTime.Now.AddMonths(-1)).ToString("MMMM"))</h2>
+    </div>
+</div>
+
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -113,7 +119,7 @@
                             <th></th>
                             @foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
                             {
-                                <th>@pregunta.FormulacionPregunta</th>
+                                <th data-toggle="tooltip" data-placement="top" title=@pregunta.FormulacionPregunta>@pregunta.Habilidad</th>
                             }
                         </tr>
                         @{
