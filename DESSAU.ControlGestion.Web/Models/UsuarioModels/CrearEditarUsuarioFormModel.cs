@@ -17,11 +17,14 @@ namespace DESSAU.ControlGestion.Web.Models.UsuarioModels
         [DisplayName("Apellido Paterno")]
         public string ApellidoPaterno { get; set; }
         [Required]
-        [DisplayName("Correo Electrónico")]
+        [DisplayName("Nombre Usuario")]
         public string Correo { get; set; }
+        [Required]
+        [DisplayName("Correo Electrónico")]
+        [EmailAddress(ErrorMessage = "Correo Inválido")]
+        public string Contacto { get; set; }
         [Required(ErrorMessage = "Debe elegir al menos un Tipo de usuario.")]
         public int IdTipoUsuario { get; set; }
-
         public bool CreacionUsuario { get; set; }
 
         #region IDataErrorInfo Members

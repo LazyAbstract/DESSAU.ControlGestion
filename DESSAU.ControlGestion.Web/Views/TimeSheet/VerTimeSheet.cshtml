@@ -37,6 +37,10 @@
                 <div class="form-group">
                     @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control foco" })
                 </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.DropDownListFor(x => x.FORM.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })
+                }
                 <button type="submit" class="btn btn-default">Buscar</button>
                 @Html.ButtonIconActionLink("chevron-left", "Semana Anterior", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(-7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
                 @Html.ButtonIconActionLink("chevron-right", "Semana Siguiente", null, null, null, new { Fecha = Model.FORM.Fecha.Value.AddDays(7).ToShortDateString(), IdTipoTimeSheet = Model.FORM.IdTipoTimeSheet })
@@ -80,7 +84,11 @@
                 </div>
 
                 <hr />
-                <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" /><br/><br />
+                if (!Model.EsReporte)
+                {
+                    <input type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" /><br /><br />
+                }
+
                 <input type="hidden" name="FORM.IdTipoTimeSheet" value="@Model.FORM.IdTipoTimeSheet" />
                 <input type="hidden" name="FORM.Fecha" value="@Model.FORM.Fecha.Value.ToShortDateString()" />
                 @Html.ValidationMessage(String.Format("TimeSheetFORM[{0}].TimeSheetDTOs", index_categoriaProyecto))
@@ -188,59 +196,15 @@
                     </thead>
                 </table>
                 index_categoriaProyecto++;
-                <input id="bla" type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
+                if (!Model.EsReporte)
+                {
+                    <input id="bla" type="submit" name="FORM.Accion" class="btn btn-@Model.FORM.ClaseBootstrap" value="Guardar" />
+                }
             }
         }
     </div>
 </div>
 @section Scripts {
-    @*<style>
-        .totales {
-            border: 1px solid black;
-        }
-
-        .spinner {
-            width: 100px;
-        }
-
-            .spinner input {
-                text-align: right;
-            }
-
-        .input-group-btn-vertical {
-            position: relative;
-            white-space: nowrap;
-            width: 1%;
-            vertical-align: middle;
-            display: table-cell;
-        }
-
-            .input-group-btn-vertical > .btn {
-                display: block;
-                float: none;
-                width: 100%;
-                max-width: 100%;
-                padding: 8px;
-                margin-left: -1px;
-                position: relative;
-                border-radius: 0;
-            }
-
-                .input-group-btn-vertical > .btn:first-child {
-                    border-top-right-radius: 4px;
-                }
-
-                .input-group-btn-vertical > .btn:last-child {
-                    margin-top: -2px;
-                    border-bottom-right-radius: 4px;
-                }
-
-            .input-group-btn-vertical i {
-                position: absolute;
-                top: 0;
-                left: 3px;
-            }
-    </style>*@
 <script type="text/javascript">
         (function ($) {
             $('.input-timesheet').numeric({ decimal: false, negative: false });
@@ -323,5 +287,5 @@
             $('input[type="submit"]').prop('disabled', true);
         });
 
-    </script>
+</script>
 }

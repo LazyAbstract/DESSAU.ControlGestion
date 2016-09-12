@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using DESSAU.ControlGestion.Web.Helpers;
 using System.Web.Mvc;
+using DESSAU.ControlGestion.Web.SelectListProviders;
 
 namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
 {
@@ -14,6 +15,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
         public IEnumerable<TimeSheetCategoriaProyectoDTO> TimeSheetFORM { get; set; }
         public SelectList Proyectos { get; set; }
         public SelectList Categorias { get; set; }
+        public IEnumerable<SelectListItem> Usuarios { get; set; }
+        private UsuarioSelectListProvider uslp = new UsuarioSelectListProvider();
         public List<DateTime> FechaDeseHasta { get; set; }
         public IEnumerable<DiaEspecial> DiaEspecials { get; set; }
         public CalculoHoraMensual calc { get; set; }
@@ -25,6 +28,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
                 return _FechaDesdeHasta;
             }
         }
+        public bool EsReporte { get; set; }
         public VerTimeSheetViewModel()
         {
             FORM = new VerTimeSheetFormModel();
@@ -32,6 +36,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
             DateTime startMonday = FORM.Fecha.Value.StartOfWeek(DayOfWeek.Monday);
             _FechaDesdeHasta =  Enumerable.Range(0, 5)
                 .Select(offset => startMonday.AddDays(offset)).ToList();
+            Usuarios = uslp.Provide();
+            EsReporte = false;
         }
         public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
         public IEnumerable<TimeSheet> TimeSheets { get; set; }

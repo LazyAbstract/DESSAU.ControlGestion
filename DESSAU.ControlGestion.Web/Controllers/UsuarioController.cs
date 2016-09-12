@@ -108,6 +108,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     _user.Nombre = Form.Nombre;
                     _user.ApellidoPaterno = Form.ApellidoPaterno;
                     _user.IdTipoUsuario = Form.IdTipoUsuario;
+                    _user.Contacto = Form.Contacto;
 
                     if (AntigupoTipoUsuario != Form.IdTipoUsuario)
                     {
@@ -148,6 +149,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             Correo = Form.Correo,
                             Nombre = Form.Nombre,
                             ApellidoPaterno = Form.ApellidoPaterno,
+                            Contacto = Form.Contacto
                         };
 
                         db.Usuarios.InsertOnSubmit(_user);
