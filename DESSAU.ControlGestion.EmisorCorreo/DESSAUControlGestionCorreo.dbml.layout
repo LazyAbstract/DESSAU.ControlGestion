@@ -8,35 +8,16 @@
         <elementListCompartment Id="fcea6eb3-d330-4c9f-81b3-bc786fa00588" absoluteBounds="2.015, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="bd3a0fc0-ea0f-4883-afca-0876221b507f" absoluteBounds="6, 1.5, 2, 3.3093082682291666">
-      <DataClassMoniker Name="/DESSAUControlGestionCorreoDataContext/Correo" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c72db7af-8418-464c-b10d-f69098f72fbf" absoluteBounds="6.015, 1.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="dbfd7084-b4c7-49f5-b230-be9482fecfce" absoluteBounds="3, 3.625, 2, 2.3478011067708335">
       <DataClassMoniker Name="/DESSAUControlGestionCorreoDataContext/Notificacion" />
       <nestedChildShapes>
         <elementListCompartment Id="9eaf1a0a-6efb-426f-90b5-701352bb7f04" absoluteBounds="3.015, 4.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.5 : 2.44399251302083); (3.5 : 3.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.5 : 2.44399251302083); (3.5 : 3.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionCorreoDataContext/TipoEstadoNotificacion/TipoEstadoNotificacion_Notificacion" />
       <nodes>
         <classShapeMoniker Id="576a94f4-1373-429d-b9a9-412f1a132109" />
-        <classShapeMoniker Id="dbfd7084-b4c7-49f5-b230-be9482fecfce" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="d8ee4589-4a26-4dfa-bb32-86eee71d5b08" absoluteBounds="0.5, 3.75, 2, 1.9631982421875">
-      <DataClassMoniker Name="/DESSAUControlGestionCorreoDataContext/Usuario" />
-      <nestedChildShapes>
-        <elementListCompartment Id="23823269-acc3-48d1-8f89-33ca54820ffe" absoluteBounds="0.515, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(2.5 : 4.73159912109375); (3 : 4.73159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/DESSAUControlGestionCorreoDataContext/Usuario/Usuario_Notificacion" />
-      <nodes>
-        <classShapeMoniker Id="d8ee4589-4a26-4dfa-bb32-86eee71d5b08" />
         <classShapeMoniker Id="dbfd7084-b4c7-49f5-b230-be9482fecfce" />
       </nodes>
     </associationConnector>
@@ -53,5 +34,24 @@
         <classShapeMoniker Id="dbfd7084-b4c7-49f5-b230-be9482fecfce" />
       </nodes>
     </associationConnector>
+    <classShape Id="7fbd20ac-e619-446f-91e4-8ae0bf43aa9f" absoluteBounds="0.5, 3.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/DESSAUControlGestionCorreoDataContext/Usuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d60927fa-79b6-4d7e-922f-cfbfb3b6278b" absoluteBounds="0.515, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 4.73159912109375); (3 : 4.73159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DESSAUControlGestionCorreoDataContext/Usuario/Usuario_Notificacion" />
+      <nodes>
+        <classShapeMoniker Id="7fbd20ac-e619-446f-91e4-8ae0bf43aa9f" />
+        <classShapeMoniker Id="dbfd7084-b4c7-49f5-b230-be9482fecfce" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="577d653c-d1c8-4e62-9e6e-9f3e50b527a3" absoluteBounds="5.5, 1.875, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DESSAUControlGestionCorreoDataContext/Correo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6e80b90d-a84b-4281-b439-2637f4c4a127" absoluteBounds="5.515, 2.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

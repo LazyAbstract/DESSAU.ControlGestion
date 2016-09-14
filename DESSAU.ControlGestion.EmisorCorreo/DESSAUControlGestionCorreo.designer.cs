@@ -33,18 +33,18 @@ namespace DESSAU.ControlGestion.EmisorCorreo
     partial void InsertTipoEstadoNotificacion(TipoEstadoNotificacion instance);
     partial void UpdateTipoEstadoNotificacion(TipoEstadoNotificacion instance);
     partial void DeleteTipoEstadoNotificacion(TipoEstadoNotificacion instance);
-    partial void InsertCorreo(Correo instance);
-    partial void UpdateCorreo(Correo instance);
-    partial void DeleteCorreo(Correo instance);
     partial void InsertNotificacion(Notificacion instance);
     partial void UpdateNotificacion(Notificacion instance);
     partial void DeleteNotificacion(Notificacion instance);
-    partial void InsertUsuario(Usuario instance);
-    partial void UpdateUsuario(Usuario instance);
-    partial void DeleteUsuario(Usuario instance);
     partial void InsertTipoNotificacion(TipoNotificacion instance);
     partial void UpdateTipoNotificacion(TipoNotificacion instance);
     partial void DeleteTipoNotificacion(TipoNotificacion instance);
+    partial void InsertUsuario(Usuario instance);
+    partial void UpdateUsuario(Usuario instance);
+    partial void DeleteUsuario(Usuario instance);
+    partial void InsertCorreo(Correo instance);
+    partial void UpdateCorreo(Correo instance);
+    partial void DeleteCorreo(Correo instance);
     #endregion
 		
 		public DESSAUControlGestionCorreoDataContext() : 
@@ -85,19 +85,19 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			}
 		}
 		
-		public System.Data.Linq.Table<Correo> Correos
-		{
-			get
-			{
-				return this.GetTable<Correo>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Notificacion> Notificacions
 		{
 			get
 			{
 				return this.GetTable<Notificacion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TipoNotificacion> TipoNotificacions
+		{
+			get
+			{
+				return this.GetTable<TipoNotificacion>();
 			}
 		}
 		
@@ -109,11 +109,11 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			}
 		}
 		
-		public System.Data.Linq.Table<TipoNotificacion> TipoNotificacions
+		public System.Data.Linq.Table<Correo> Correos
 		{
 			get
 			{
-				return this.GetTable<TipoNotificacion>();
+				return this.GetTable<Correo>();
 			}
 		}
 	}
@@ -232,356 +232,6 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Correo")]
-	public partial class Correo : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdCorreo;
-		
-		private string _Remitente;
-		
-		private string _Destinatario;
-		
-		private string _CC;
-		
-		private string _BCC;
-		
-		private string _Asunto;
-		
-		private string _CuerpoTexto;
-		
-		private string _CuerpoHTML;
-		
-		private System.DateTime _FechaCreacion;
-		
-		private System.DateTime _FechaProgramadaEnvio;
-		
-		private System.DateTime _FechaEnvio;
-		
-		private int _IntentoFallido;
-		
-		private bool _Pendiente;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdCorreoChanging(int value);
-    partial void OnIdCorreoChanged();
-    partial void OnRemitenteChanging(string value);
-    partial void OnRemitenteChanged();
-    partial void OnDestinatarioChanging(string value);
-    partial void OnDestinatarioChanged();
-    partial void OnCCChanging(string value);
-    partial void OnCCChanged();
-    partial void OnBCCChanging(string value);
-    partial void OnBCCChanged();
-    partial void OnAsuntoChanging(string value);
-    partial void OnAsuntoChanged();
-    partial void OnCuerpoTextoChanging(string value);
-    partial void OnCuerpoTextoChanged();
-    partial void OnCuerpoHTMLChanging(string value);
-    partial void OnCuerpoHTMLChanged();
-    partial void OnFechaCreacionChanging(System.DateTime value);
-    partial void OnFechaCreacionChanged();
-    partial void OnFechaProgramadaEnvioChanging(System.DateTime value);
-    partial void OnFechaProgramadaEnvioChanged();
-    partial void OnFechaEnvioChanging(System.DateTime value);
-    partial void OnFechaEnvioChanged();
-    partial void OnIntentoFallidoChanging(int value);
-    partial void OnIntentoFallidoChanged();
-    partial void OnPendienteChanging(bool value);
-    partial void OnPendienteChanged();
-    #endregion
-		
-		public Correo()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdCorreo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdCorreo
-		{
-			get
-			{
-				return this._IdCorreo;
-			}
-			set
-			{
-				if ((this._IdCorreo != value))
-				{
-					this.OnIdCorreoChanging(value);
-					this.SendPropertyChanging();
-					this._IdCorreo = value;
-					this.SendPropertyChanged("IdCorreo");
-					this.OnIdCorreoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remitente", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Remitente
-		{
-			get
-			{
-				return this._Remitente;
-			}
-			set
-			{
-				if ((this._Remitente != value))
-				{
-					this.OnRemitenteChanging(value);
-					this.SendPropertyChanging();
-					this._Remitente = value;
-					this.SendPropertyChanged("Remitente");
-					this.OnRemitenteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Destinatario", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Destinatario
-		{
-			get
-			{
-				return this._Destinatario;
-			}
-			set
-			{
-				if ((this._Destinatario != value))
-				{
-					this.OnDestinatarioChanging(value);
-					this.SendPropertyChanging();
-					this._Destinatario = value;
-					this.SendPropertyChanged("Destinatario");
-					this.OnDestinatarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CC", DbType="NVarChar(255)")]
-		public string CC
-		{
-			get
-			{
-				return this._CC;
-			}
-			set
-			{
-				if ((this._CC != value))
-				{
-					this.OnCCChanging(value);
-					this.SendPropertyChanging();
-					this._CC = value;
-					this.SendPropertyChanged("CC");
-					this.OnCCChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BCC", DbType="NVarChar(255)")]
-		public string BCC
-		{
-			get
-			{
-				return this._BCC;
-			}
-			set
-			{
-				if ((this._BCC != value))
-				{
-					this.OnBCCChanging(value);
-					this.SendPropertyChanging();
-					this._BCC = value;
-					this.SendPropertyChanged("BCC");
-					this.OnBCCChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Asunto", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Asunto
-		{
-			get
-			{
-				return this._Asunto;
-			}
-			set
-			{
-				if ((this._Asunto != value))
-				{
-					this.OnAsuntoChanging(value);
-					this.SendPropertyChanging();
-					this._Asunto = value;
-					this.SendPropertyChanged("Asunto");
-					this.OnAsuntoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoTexto", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string CuerpoTexto
-		{
-			get
-			{
-				return this._CuerpoTexto;
-			}
-			set
-			{
-				if ((this._CuerpoTexto != value))
-				{
-					this.OnCuerpoTextoChanging(value);
-					this.SendPropertyChanging();
-					this._CuerpoTexto = value;
-					this.SendPropertyChanged("CuerpoTexto");
-					this.OnCuerpoTextoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoHTML", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string CuerpoHTML
-		{
-			get
-			{
-				return this._CuerpoHTML;
-			}
-			set
-			{
-				if ((this._CuerpoHTML != value))
-				{
-					this.OnCuerpoHTMLChanging(value);
-					this.SendPropertyChanging();
-					this._CuerpoHTML = value;
-					this.SendPropertyChanged("CuerpoHTML");
-					this.OnCuerpoHTMLChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCreacion", DbType="DateTime NOT NULL")]
-		public System.DateTime FechaCreacion
-		{
-			get
-			{
-				return this._FechaCreacion;
-			}
-			set
-			{
-				if ((this._FechaCreacion != value))
-				{
-					this.OnFechaCreacionChanging(value);
-					this.SendPropertyChanging();
-					this._FechaCreacion = value;
-					this.SendPropertyChanged("FechaCreacion");
-					this.OnFechaCreacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaProgramadaEnvio", DbType="DateTime NOT NULL")]
-		public System.DateTime FechaProgramadaEnvio
-		{
-			get
-			{
-				return this._FechaProgramadaEnvio;
-			}
-			set
-			{
-				if ((this._FechaProgramadaEnvio != value))
-				{
-					this.OnFechaProgramadaEnvioChanging(value);
-					this.SendPropertyChanging();
-					this._FechaProgramadaEnvio = value;
-					this.SendPropertyChanged("FechaProgramadaEnvio");
-					this.OnFechaProgramadaEnvioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEnvio", DbType="DateTime NOT NULL")]
-		public System.DateTime FechaEnvio
-		{
-			get
-			{
-				return this._FechaEnvio;
-			}
-			set
-			{
-				if ((this._FechaEnvio != value))
-				{
-					this.OnFechaEnvioChanging(value);
-					this.SendPropertyChanging();
-					this._FechaEnvio = value;
-					this.SendPropertyChanged("FechaEnvio");
-					this.OnFechaEnvioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IntentoFallido", DbType="Int NOT NULL")]
-		public int IntentoFallido
-		{
-			get
-			{
-				return this._IntentoFallido;
-			}
-			set
-			{
-				if ((this._IntentoFallido != value))
-				{
-					this.OnIntentoFallidoChanging(value);
-					this.SendPropertyChanging();
-					this._IntentoFallido = value;
-					this.SendPropertyChanged("IntentoFallido");
-					this.OnIntentoFallidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pendiente", DbType="Bit NOT NULL")]
-		public bool Pendiente
-		{
-			get
-			{
-				return this._Pendiente;
-			}
-			set
-			{
-				if ((this._Pendiente != value))
-				{
-					this.OnPendienteChanging(value);
-					this.SendPropertyChanging();
-					this._Pendiente = value;
-					this.SendPropertyChanged("Pendiente");
-					this.OnPendienteChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Notificacion")]
 	public partial class Notificacion : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -606,9 +256,9 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 		
 		private EntityRef<TipoEstadoNotificacion> _TipoEstadoNotificacion;
 		
-		private EntityRef<Usuario> _Usuario;
-		
 		private EntityRef<TipoNotificacion> _TipoNotificacion;
+		
+		private EntityRef<Usuario> _Usuario;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -635,8 +285,8 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 		public Notificacion()
 		{
 			this._TipoEstadoNotificacion = default(EntityRef<TipoEstadoNotificacion>);
-			this._Usuario = default(EntityRef<Usuario>);
 			this._TipoNotificacion = default(EntityRef<TipoNotificacion>);
+			this._Usuario = default(EntityRef<Usuario>);
 			OnCreated();
 		}
 		
@@ -846,40 +496,6 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Notificacion", Storage="_Usuario", ThisKey="IdUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
-		public Usuario Usuario
-		{
-			get
-			{
-				return this._Usuario.Entity;
-			}
-			set
-			{
-				Usuario previousValue = this._Usuario.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuario.Entity = null;
-						previousValue.Notificacions.Remove(this);
-					}
-					this._Usuario.Entity = value;
-					if ((value != null))
-					{
-						value.Notificacions.Add(this);
-						this._IdUsuario = value.IdUsuario;
-					}
-					else
-					{
-						this._IdUsuario = default(int);
-					}
-					this.SendPropertyChanged("Usuario");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoNotificacion_Notificacion", Storage="_TipoNotificacion", ThisKey="IdTipoNotificacion", OtherKey="IdTipoNotificacion", IsForeignKey=true)]
 		public TipoNotificacion TipoNotificacion
 		{
@@ -914,201 +530,37 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
-	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdUsuario;
-		
-		private int _IdTipoUsuario;
-		
-		private int _Rut;
-		
-		private string _Nombre;
-		
-		private string _ApellidoPaterno;
-		
-		private string _Correo;
-		
-		private EntitySet<Notificacion> _Notificacions;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdUsuarioChanging(int value);
-    partial void OnIdUsuarioChanged();
-    partial void OnIdTipoUsuarioChanging(int value);
-    partial void OnIdTipoUsuarioChanged();
-    partial void OnRutChanging(int value);
-    partial void OnRutChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    partial void OnApellidoPaternoChanging(string value);
-    partial void OnApellidoPaternoChanged();
-    partial void OnCorreoChanging(string value);
-    partial void OnCorreoChanged();
-    #endregion
-		
-		public Usuario()
-		{
-			this._Notificacions = new EntitySet<Notificacion>(new Action<Notificacion>(this.attach_Notificacions), new Action<Notificacion>(this.detach_Notificacions));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdUsuario
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Notificacion", Storage="_Usuario", ThisKey="IdUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
 		{
 			get
 			{
-				return this._IdUsuario;
+				return this._Usuario.Entity;
 			}
 			set
 			{
-				if ((this._IdUsuario != value))
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnIdUsuarioChanging(value);
 					this.SendPropertyChanging();
-					this._IdUsuario = value;
-					this.SendPropertyChanged("IdUsuario");
-					this.OnIdUsuarioChanged();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.Notificacions.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.Notificacions.Add(this);
+						this._IdUsuario = value.IdUsuario;
+					}
+					else
+					{
+						this._IdUsuario = default(int);
+					}
+					this.SendPropertyChanged("Usuario");
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoUsuario", DbType="Int NOT NULL")]
-		public int IdTipoUsuario
-		{
-			get
-			{
-				return this._IdTipoUsuario;
-			}
-			set
-			{
-				if ((this._IdTipoUsuario != value))
-				{
-					this.OnIdTipoUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._IdTipoUsuario = value;
-					this.SendPropertyChanged("IdTipoUsuario");
-					this.OnIdTipoUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rut", DbType="Int NOT NULL")]
-		public int Rut
-		{
-			get
-			{
-				return this._Rut;
-			}
-			set
-			{
-				if ((this._Rut != value))
-				{
-					this.OnRutChanging(value);
-					this.SendPropertyChanging();
-					this._Rut = value;
-					this.SendPropertyChanged("Rut");
-					this.OnRutChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoPaterno", DbType="NVarChar(225) NOT NULL", CanBeNull=false)]
-		public string ApellidoPaterno
-		{
-			get
-			{
-				return this._ApellidoPaterno;
-			}
-			set
-			{
-				if ((this._ApellidoPaterno != value))
-				{
-					this.OnApellidoPaternoChanging(value);
-					this.SendPropertyChanging();
-					this._ApellidoPaterno = value;
-					this.SendPropertyChanged("ApellidoPaterno");
-					this.OnApellidoPaternoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Correo
-		{
-			get
-			{
-				return this._Correo;
-			}
-			set
-			{
-				if ((this._Correo != value))
-				{
-					this.OnCorreoChanging(value);
-					this.SendPropertyChanging();
-					this._Correo = value;
-					this.SendPropertyChanged("Correo");
-					this.OnCorreoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Notificacion", Storage="_Notificacions", ThisKey="IdUsuario", OtherKey="IdUsuario")]
-		public EntitySet<Notificacion> Notificacions
-		{
-			get
-			{
-				return this._Notificacions;
-			}
-			set
-			{
-				this._Notificacions.Assign(value);
 			}
 		}
 		
@@ -1130,18 +582,6 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Notificacions(Notificacion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_Notificacions(Notificacion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
 		}
 	}
 	
@@ -1256,6 +696,566 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 		{
 			this.SendPropertyChanging();
 			entity.TipoNotificacion = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
+	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdUsuario;
+		
+		private int _IdTipoUsuario;
+		
+		private string _Nombre;
+		
+		private string _ApellidoPaterno;
+		
+		private string _Correo;
+		
+		private string _Contacto;
+		
+		private EntitySet<Notificacion> _Notificacions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdUsuarioChanging(int value);
+    partial void OnIdUsuarioChanged();
+    partial void OnIdTipoUsuarioChanging(int value);
+    partial void OnIdTipoUsuarioChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnApellidoPaternoChanging(string value);
+    partial void OnApellidoPaternoChanged();
+    partial void OnCorreoChanging(string value);
+    partial void OnCorreoChanged();
+    partial void OnContactoChanging(string value);
+    partial void OnContactoChanged();
+    #endregion
+		
+		public Usuario()
+		{
+			this._Notificacions = new EntitySet<Notificacion>(new Action<Notificacion>(this.attach_Notificacions), new Action<Notificacion>(this.detach_Notificacions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					this.OnIdUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuario = value;
+					this.SendPropertyChanged("IdUsuario");
+					this.OnIdUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoUsuario", DbType="Int NOT NULL")]
+		public int IdTipoUsuario
+		{
+			get
+			{
+				return this._IdTipoUsuario;
+			}
+			set
+			{
+				if ((this._IdTipoUsuario != value))
+				{
+					this.OnIdTipoUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._IdTipoUsuario = value;
+					this.SendPropertyChanged("IdTipoUsuario");
+					this.OnIdTipoUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoPaterno", DbType="NVarChar(225) NOT NULL", CanBeNull=false)]
+		public string ApellidoPaterno
+		{
+			get
+			{
+				return this._ApellidoPaterno;
+			}
+			set
+			{
+				if ((this._ApellidoPaterno != value))
+				{
+					this.OnApellidoPaternoChanging(value);
+					this.SendPropertyChanging();
+					this._ApellidoPaterno = value;
+					this.SendPropertyChanged("ApellidoPaterno");
+					this.OnApellidoPaternoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Correo
+		{
+			get
+			{
+				return this._Correo;
+			}
+			set
+			{
+				if ((this._Correo != value))
+				{
+					this.OnCorreoChanging(value);
+					this.SendPropertyChanging();
+					this._Correo = value;
+					this.SendPropertyChanged("Correo");
+					this.OnCorreoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Contacto", DbType="NVarChar(255)")]
+		public string Contacto
+		{
+			get
+			{
+				return this._Contacto;
+			}
+			set
+			{
+				if ((this._Contacto != value))
+				{
+					this.OnContactoChanging(value);
+					this.SendPropertyChanging();
+					this._Contacto = value;
+					this.SendPropertyChanged("Contacto");
+					this.OnContactoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Notificacion", Storage="_Notificacions", ThisKey="IdUsuario", OtherKey="IdUsuario")]
+		public EntitySet<Notificacion> Notificacions
+		{
+			get
+			{
+				return this._Notificacions;
+			}
+			set
+			{
+				this._Notificacions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Notificacions(Notificacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_Notificacions(Notificacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Correo")]
+	public partial class Correo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdCorreo;
+		
+		private string _Remitente;
+		
+		private string _Destinatario;
+		
+		private string _CC;
+		
+		private string _BCC;
+		
+		private string _Asunto;
+		
+		private string _CuerpoTexto;
+		
+		private string _CuerpoHTML;
+		
+		private System.DateTime _FechaCreacion;
+		
+		private System.Nullable<System.DateTime> _FechaProgramadaEnvio;
+		
+		private System.Nullable<System.DateTime> _FechaEnvio;
+		
+		private System.Nullable<int> _IntentoFallido;
+		
+		private bool _Pendiente;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdCorreoChanging(int value);
+    partial void OnIdCorreoChanged();
+    partial void OnRemitenteChanging(string value);
+    partial void OnRemitenteChanged();
+    partial void OnDestinatarioChanging(string value);
+    partial void OnDestinatarioChanged();
+    partial void OnCCChanging(string value);
+    partial void OnCCChanged();
+    partial void OnBCCChanging(string value);
+    partial void OnBCCChanged();
+    partial void OnAsuntoChanging(string value);
+    partial void OnAsuntoChanged();
+    partial void OnCuerpoTextoChanging(string value);
+    partial void OnCuerpoTextoChanged();
+    partial void OnCuerpoHTMLChanging(string value);
+    partial void OnCuerpoHTMLChanged();
+    partial void OnFechaCreacionChanging(System.DateTime value);
+    partial void OnFechaCreacionChanged();
+    partial void OnFechaProgramadaEnvioChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaProgramadaEnvioChanged();
+    partial void OnFechaEnvioChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaEnvioChanged();
+    partial void OnIntentoFallidoChanging(System.Nullable<int> value);
+    partial void OnIntentoFallidoChanged();
+    partial void OnPendienteChanging(bool value);
+    partial void OnPendienteChanged();
+    #endregion
+		
+		public Correo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdCorreo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdCorreo
+		{
+			get
+			{
+				return this._IdCorreo;
+			}
+			set
+			{
+				if ((this._IdCorreo != value))
+				{
+					this.OnIdCorreoChanging(value);
+					this.SendPropertyChanging();
+					this._IdCorreo = value;
+					this.SendPropertyChanged("IdCorreo");
+					this.OnIdCorreoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remitente", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Remitente
+		{
+			get
+			{
+				return this._Remitente;
+			}
+			set
+			{
+				if ((this._Remitente != value))
+				{
+					this.OnRemitenteChanging(value);
+					this.SendPropertyChanging();
+					this._Remitente = value;
+					this.SendPropertyChanged("Remitente");
+					this.OnRemitenteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Destinatario", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Destinatario
+		{
+			get
+			{
+				return this._Destinatario;
+			}
+			set
+			{
+				if ((this._Destinatario != value))
+				{
+					this.OnDestinatarioChanging(value);
+					this.SendPropertyChanging();
+					this._Destinatario = value;
+					this.SendPropertyChanged("Destinatario");
+					this.OnDestinatarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CC", DbType="NVarChar(255)")]
+		public string CC
+		{
+			get
+			{
+				return this._CC;
+			}
+			set
+			{
+				if ((this._CC != value))
+				{
+					this.OnCCChanging(value);
+					this.SendPropertyChanging();
+					this._CC = value;
+					this.SendPropertyChanged("CC");
+					this.OnCCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BCC", DbType="NVarChar(255)")]
+		public string BCC
+		{
+			get
+			{
+				return this._BCC;
+			}
+			set
+			{
+				if ((this._BCC != value))
+				{
+					this.OnBCCChanging(value);
+					this.SendPropertyChanging();
+					this._BCC = value;
+					this.SendPropertyChanged("BCC");
+					this.OnBCCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Asunto", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Asunto
+		{
+			get
+			{
+				return this._Asunto;
+			}
+			set
+			{
+				if ((this._Asunto != value))
+				{
+					this.OnAsuntoChanging(value);
+					this.SendPropertyChanging();
+					this._Asunto = value;
+					this.SendPropertyChanged("Asunto");
+					this.OnAsuntoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoTexto", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string CuerpoTexto
+		{
+			get
+			{
+				return this._CuerpoTexto;
+			}
+			set
+			{
+				if ((this._CuerpoTexto != value))
+				{
+					this.OnCuerpoTextoChanging(value);
+					this.SendPropertyChanging();
+					this._CuerpoTexto = value;
+					this.SendPropertyChanged("CuerpoTexto");
+					this.OnCuerpoTextoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoHTML", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string CuerpoHTML
+		{
+			get
+			{
+				return this._CuerpoHTML;
+			}
+			set
+			{
+				if ((this._CuerpoHTML != value))
+				{
+					this.OnCuerpoHTMLChanging(value);
+					this.SendPropertyChanging();
+					this._CuerpoHTML = value;
+					this.SendPropertyChanged("CuerpoHTML");
+					this.OnCuerpoHTMLChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCreacion", DbType="DateTime NOT NULL")]
+		public System.DateTime FechaCreacion
+		{
+			get
+			{
+				return this._FechaCreacion;
+			}
+			set
+			{
+				if ((this._FechaCreacion != value))
+				{
+					this.OnFechaCreacionChanging(value);
+					this.SendPropertyChanging();
+					this._FechaCreacion = value;
+					this.SendPropertyChanged("FechaCreacion");
+					this.OnFechaCreacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaProgramadaEnvio", DbType="DateTime")]
+		public System.Nullable<System.DateTime> FechaProgramadaEnvio
+		{
+			get
+			{
+				return this._FechaProgramadaEnvio;
+			}
+			set
+			{
+				if ((this._FechaProgramadaEnvio != value))
+				{
+					this.OnFechaProgramadaEnvioChanging(value);
+					this.SendPropertyChanging();
+					this._FechaProgramadaEnvio = value;
+					this.SendPropertyChanged("FechaProgramadaEnvio");
+					this.OnFechaProgramadaEnvioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEnvio", DbType="DateTime")]
+		public System.Nullable<System.DateTime> FechaEnvio
+		{
+			get
+			{
+				return this._FechaEnvio;
+			}
+			set
+			{
+				if ((this._FechaEnvio != value))
+				{
+					this.OnFechaEnvioChanging(value);
+					this.SendPropertyChanging();
+					this._FechaEnvio = value;
+					this.SendPropertyChanged("FechaEnvio");
+					this.OnFechaEnvioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IntentoFallido", DbType="Int")]
+		public System.Nullable<int> IntentoFallido
+		{
+			get
+			{
+				return this._IntentoFallido;
+			}
+			set
+			{
+				if ((this._IntentoFallido != value))
+				{
+					this.OnIntentoFallidoChanging(value);
+					this.SendPropertyChanging();
+					this._IntentoFallido = value;
+					this.SendPropertyChanged("IntentoFallido");
+					this.OnIntentoFallidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pendiente", DbType="Bit NOT NULL")]
+		public bool Pendiente
+		{
+			get
+			{
+				return this._Pendiente;
+			}
+			set
+			{
+				if ((this._Pendiente != value))
+				{
+					this.OnPendienteChanging(value);
+					this.SendPropertyChanging();
+					this._Pendiente = value;
+					this.SendPropertyChanged("Pendiente");
+					this.OnPendienteChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

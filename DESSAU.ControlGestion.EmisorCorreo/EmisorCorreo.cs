@@ -12,10 +12,10 @@ namespace DESSAU.ControlGestion.EmisorCorreo
         public static void EnviarCorreo(Correo correo)
         {
             SmtpClient smtpClient = new SmtpClient();
-            string Host = "smtp.googlemail.com";
+            string Host = "smtp.zoho.com";
             int Port = 587;
-            string UserCredential = "soporte@metricarts.com";
-            string PasswordCredential = "sotorpe@1";
+            string UserCredential = "soporte@commonabstract.cl";
+            string PasswordCredential = "nito110100";
 
             MailMessage mail = new MailMessage();
             if (correo.Remitente != null)

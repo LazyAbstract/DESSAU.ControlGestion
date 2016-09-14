@@ -36,8 +36,8 @@ namespace DESSAU.ControlGestion.EmisorCorreo
                     Correo Correo = new Correo()
                     {
                         Remitente = "soporte@metricarts.com",
-                        Destinatario = usuario.Correo,
-                        Asunto = "Notificación de MetricNET",
+                        Destinatario = String.IsNullOrEmpty(usuario.Contacto) ? usuario.Correo : usuario.Contacto,
+                        Asunto = "Notificación Plataforma Servicio de Apoyo Proyectos Especiales GPRO",
                         CuerpoTexto = "Estimado(a) " + usuario.Nombre + ", " + noti.Mensaje + " " + accion,
                         CuerpoHTML = "<p>Estimado(a) " + usuario.Nombre + ", " + noti.Mensaje + " " + accion + "</p>",
                         FechaProgramadaEnvio = noti.FechaPostpuesto.GetValueOrDefault(DateTime.Now),
@@ -53,7 +53,8 @@ namespace DESSAU.ControlGestion.EmisorCorreo
                 }
             }
 
-            IQueryable<Correo> correos = db.Correos.Where(x => x.FechaProgramadaEnvio <= DateTime.Today.AddMinutes(1)
+            IQueryable<Correo> correos = db.Correos
+                .Where(x => x.FechaProgramadaEnvio.GetValueOrDefault(DateTime.Today) <= DateTime.Today.AddMinutes(1)
                 && x.Pendiente == true);
             foreach (Correo correo in correos)
             {
