@@ -19,7 +19,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM)
         {
-            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
+            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db, UsuarioActual);
             if (ModelState.IsValid)
             {
                 if (FORM.IdPlantillaEvaluacion.HasValue)
@@ -28,7 +28,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         .Where(x => x.EstadoUsuarioCategoriaProyecto
                             .IdTipoEstadoUsuarioCategoriaProyecto ==
                             TipoEstadoUsuarioCategoriaProyecto.Creado &&
-                            x.IdCategoria == model.PlantillaEvaluacion.IdCategoria);
+                            x.IdCategoria == model.PlantillaEvaluacion.IdCategoria &&
+                            x.Usuario.UsuarioSupervisors1.Any(y=>y.IdSupervisor == UsuarioActual.IdUsuario));
                     model.PlantillaEvaluacion = db.PlantillaEvaluacions
                         .SingleOrDefault(x => x.IdPlantillaEvaluacion == FORM.IdPlantillaEvaluacion);
                     model.Preguntas = model.PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x => x.Pregunta);
