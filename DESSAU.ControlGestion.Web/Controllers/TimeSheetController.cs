@@ -24,14 +24,24 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (IdTipoTimeSheet.HasValue) FORM.IdTipoTimeSheet = IdTipoTimeSheet;
             if (FORM.IdTipoTimeSheet == TipoTimeSheet.Planificacion) FORM.ClaseBootstrap = "primary";
             else FORM.ClaseBootstrap = "info";
+            int idUsuario;         
 
             VerTimeSheetViewModel model = new VerTimeSheetViewModel(FORM, db);
+            if (FORM.IdUsuario.HasValue)
+            {
+                idUsuario = FORM.IdUsuario.Value;
+                model.EsReporte = true;
+            }
+            else
+            {
+                idUsuario = UsuarioActual.IdUsuario;
+            }
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
-                x.IdUsuario == UsuarioActual.IdUsuario &&
+                x.IdUsuario == idUsuario &&
                 x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente);
 
-            model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, FORM.IdTipoTimeSheet.GetValueOrDefault(1), FORM.Fecha.GetValueOrDefault(DateTime.Now));
+            model.calc = new CalculoHoraMensual(idUsuario, FORM.IdTipoTimeSheet.GetValueOrDefault(1), FORM.Fecha.GetValueOrDefault(DateTime.Now));
             IQueryable<TimeSheet> timeSheets = usuarioCategoriaProyectos.SelectMany(x => x.TimeSheets);
             if (ModelState.IsValid)
             {
