@@ -27,6 +27,17 @@
             <form class="navbar-form navbar-left" role="search" method="get">
                 <div class="row">
                     <div class="col-md-2">
+                        @Html.LabelFor(x => x.FORM.IdProyecto, new { @class = " control-label" })
+                    </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Elija una opción", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-5">
+                        @Html.ValidationMessageFor(x => x.FORM.IdProyecto)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
                     @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = " control-label" })
                     </div>
                     <div class="col-md-5">
@@ -35,7 +46,18 @@
                     <div class="col-md-5">
                     @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(x => x.FORM.IdPlantillaEvaluacion, new { @class = " control-label" })
                     </div>
+                    <div class="col-md-5">
+                        @Html.DropDownListFor(x => x.FORM.IdPlantillaEvaluacion, Model.PlantillaEvaluacions, "Elija una opción", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-5">
+                        @Html.ValidationMessageFor(x => x.FORM.IdPlantillaEvaluacion)
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-2">
                         @Html.LabelFor(x => x.FORM.IdPlantillaEvaluacion, new { @class = "control-label" })
