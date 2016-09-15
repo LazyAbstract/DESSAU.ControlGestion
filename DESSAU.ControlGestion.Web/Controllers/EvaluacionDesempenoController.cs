@@ -13,7 +13,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("EvaluationSheet");
         }
 
         [HttpGet]
