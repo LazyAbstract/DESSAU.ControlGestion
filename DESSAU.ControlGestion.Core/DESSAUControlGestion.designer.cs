@@ -123,12 +123,12 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
     partial void UpdateUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
     partial void DeleteUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
-    partial void InsertProyecto(Proyecto instance);
-    partial void UpdateProyecto(Proyecto instance);
-    partial void DeleteProyecto(Proyecto instance);
     partial void InsertUsuario(Usuario instance);
     partial void UpdateUsuario(Usuario instance);
     partial void DeleteUsuario(Usuario instance);
+    partial void InsertProyecto(Proyecto instance);
+    partial void UpdateProyecto(Proyecto instance);
+    partial void DeleteProyecto(Proyecto instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -409,19 +409,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<Proyecto> Proyectos
-		{
-			get
-			{
-				return this.GetTable<Proyecto>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Usuario> Usuarios
 		{
 			get
 			{
 				return this.GetTable<Usuario>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Proyecto> Proyectos
+		{
+			get
+			{
+				return this.GetTable<Proyecto>();
 			}
 		}
 		
@@ -6295,9 +6295,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntityRef<Categoria> _Categoria;
 		
-		private EntityRef<Proyecto> _Proyecto;
-		
 		private EntityRef<Usuario> _Usuario;
+		
+		private EntityRef<Proyecto> _Proyecto;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6319,8 +6319,8 @@ namespace DESSAU.ControlGestion.Core
 			this._EstadoPlanificacionDeclaracions = new EntitySet<EstadoPlanificacionDeclaracion>(new Action<EstadoPlanificacionDeclaracion>(this.attach_EstadoPlanificacionDeclaracions), new Action<EstadoPlanificacionDeclaracion>(this.detach_EstadoPlanificacionDeclaracions));
 			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
 			this._Categoria = default(EntityRef<Categoria>);
-			this._Proyecto = default(EntityRef<Proyecto>);
 			this._Usuario = default(EntityRef<Usuario>);
+			this._Proyecto = default(EntityRef<Proyecto>);
 			OnCreated();
 		}
 		
@@ -6505,40 +6505,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Proyecto_UsuarioCategoriaProyecto", Storage="_Proyecto", ThisKey="IdProyecto", OtherKey="IdProyecto", IsForeignKey=true)]
-		public Proyecto Proyecto
-		{
-			get
-			{
-				return this._Proyecto.Entity;
-			}
-			set
-			{
-				Proyecto previousValue = this._Proyecto.Entity;
-				if (((previousValue != value) 
-							|| (this._Proyecto.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Proyecto.Entity = null;
-						previousValue.UsuarioCategoriaProyectos.Remove(this);
-					}
-					this._Proyecto.Entity = value;
-					if ((value != null))
-					{
-						value.UsuarioCategoriaProyectos.Add(this);
-						this._IdProyecto = value.IdProyecto;
-					}
-					else
-					{
-						this._IdProyecto = default(int);
-					}
-					this.SendPropertyChanged("Proyecto");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioCategoriaProyecto", Storage="_Usuario", ThisKey="IdUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
 		public Usuario Usuario
 		{
@@ -6569,6 +6535,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdUsuario = default(int);
 					}
 					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Proyecto_UsuarioCategoriaProyecto", Storage="_Proyecto", ThisKey="IdProyecto", OtherKey="IdProyecto", IsForeignKey=true)]
+		public Proyecto Proyecto
+		{
+			get
+			{
+				return this._Proyecto.Entity;
+			}
+			set
+			{
+				Proyecto previousValue = this._Proyecto.Entity;
+				if (((previousValue != value) 
+							|| (this._Proyecto.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Proyecto.Entity = null;
+						previousValue.UsuarioCategoriaProyectos.Remove(this);
+					}
+					this._Proyecto.Entity = value;
+					if ((value != null))
+					{
+						value.UsuarioCategoriaProyectos.Add(this);
+						this._IdProyecto = value.IdProyecto;
+					}
+					else
+					{
+						this._IdProyecto = default(int);
+					}
+					this.SendPropertyChanged("Proyecto");
 				}
 			}
 		}
@@ -6615,298 +6615,6 @@ namespace DESSAU.ControlGestion.Core
 		{
 			this.SendPropertyChanging();
 			entity.UsuarioCategoriaProyecto = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Proyecto")]
-	public partial class Proyecto : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdProyecto;
-		
-		private int _IdContrato;
-		
-		private System.Nullable<int> _IdUsuarioDirector;
-		
-		private string _Nombre;
-		
-		private System.DateTime _FechaIncio;
-		
-		private System.Nullable<System.DateTime> _FechaTermino;
-		
-		private EntitySet<UsuarioCategoriaProyecto> _UsuarioCategoriaProyectos;
-		
-		private EntityRef<Contrato> _Contrato;
-		
-		private EntityRef<Usuario> _Usuario;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdProyectoChanging(int value);
-    partial void OnIdProyectoChanged();
-    partial void OnIdContratoChanging(int value);
-    partial void OnIdContratoChanged();
-    partial void OnIdUsuarioDirectorChanging(System.Nullable<int> value);
-    partial void OnIdUsuarioDirectorChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    partial void OnFechaIncioChanging(System.DateTime value);
-    partial void OnFechaIncioChanged();
-    partial void OnFechaTerminoChanging(System.Nullable<System.DateTime> value);
-    partial void OnFechaTerminoChanged();
-    #endregion
-		
-		public Proyecto()
-		{
-			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
-			this._Contrato = default(EntityRef<Contrato>);
-			this._Usuario = default(EntityRef<Usuario>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdProyecto", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdProyecto
-		{
-			get
-			{
-				return this._IdProyecto;
-			}
-			set
-			{
-				if ((this._IdProyecto != value))
-				{
-					this.OnIdProyectoChanging(value);
-					this.SendPropertyChanging();
-					this._IdProyecto = value;
-					this.SendPropertyChanged("IdProyecto");
-					this.OnIdProyectoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdContrato", DbType="Int NOT NULL")]
-		public int IdContrato
-		{
-			get
-			{
-				return this._IdContrato;
-			}
-			set
-			{
-				if ((this._IdContrato != value))
-				{
-					if (this._Contrato.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdContratoChanging(value);
-					this.SendPropertyChanging();
-					this._IdContrato = value;
-					this.SendPropertyChanged("IdContrato");
-					this.OnIdContratoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioDirector", DbType="Int")]
-		public System.Nullable<int> IdUsuarioDirector
-		{
-			get
-			{
-				return this._IdUsuarioDirector;
-			}
-			set
-			{
-				if ((this._IdUsuarioDirector != value))
-				{
-					if (this._Usuario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdUsuarioDirectorChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuarioDirector = value;
-					this.SendPropertyChanged("IdUsuarioDirector");
-					this.OnIdUsuarioDirectorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaIncio", DbType="Date NOT NULL")]
-		public System.DateTime FechaIncio
-		{
-			get
-			{
-				return this._FechaIncio;
-			}
-			set
-			{
-				if ((this._FechaIncio != value))
-				{
-					this.OnFechaIncioChanging(value);
-					this.SendPropertyChanging();
-					this._FechaIncio = value;
-					this.SendPropertyChanged("FechaIncio");
-					this.OnFechaIncioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaTermino", DbType="Date")]
-		public System.Nullable<System.DateTime> FechaTermino
-		{
-			get
-			{
-				return this._FechaTermino;
-			}
-			set
-			{
-				if ((this._FechaTermino != value))
-				{
-					this.OnFechaTerminoChanging(value);
-					this.SendPropertyChanging();
-					this._FechaTermino = value;
-					this.SendPropertyChanged("FechaTermino");
-					this.OnFechaTerminoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Proyecto_UsuarioCategoriaProyecto", Storage="_UsuarioCategoriaProyectos", ThisKey="IdProyecto", OtherKey="IdProyecto")]
-		public EntitySet<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos
-		{
-			get
-			{
-				return this._UsuarioCategoriaProyectos;
-			}
-			set
-			{
-				this._UsuarioCategoriaProyectos.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contrato_Proyecto", Storage="_Contrato", ThisKey="IdContrato", OtherKey="IdContrato", IsForeignKey=true)]
-		public Contrato Contrato
-		{
-			get
-			{
-				return this._Contrato.Entity;
-			}
-			set
-			{
-				Contrato previousValue = this._Contrato.Entity;
-				if (((previousValue != value) 
-							|| (this._Contrato.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Contrato.Entity = null;
-						previousValue.Proyectos.Remove(this);
-					}
-					this._Contrato.Entity = value;
-					if ((value != null))
-					{
-						value.Proyectos.Add(this);
-						this._IdContrato = value.IdContrato;
-					}
-					else
-					{
-						this._IdContrato = default(int);
-					}
-					this.SendPropertyChanged("Contrato");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Proyecto", Storage="_Usuario", ThisKey="IdUsuarioDirector", OtherKey="IdUsuario", IsForeignKey=true)]
-		public Usuario Usuario
-		{
-			get
-			{
-				return this._Usuario.Entity;
-			}
-			set
-			{
-				Usuario previousValue = this._Usuario.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuario.Entity = null;
-						previousValue.Proyectos.Remove(this);
-					}
-					this._Usuario.Entity = value;
-					if ((value != null))
-					{
-						value.Proyectos.Add(this);
-						this._IdUsuarioDirector = value.IdUsuario;
-					}
-					else
-					{
-						this._IdUsuarioDirector = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Usuario");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
-		{
-			this.SendPropertyChanging();
-			entity.Proyecto = this;
-		}
-		
-		private void detach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
-		{
-			this.SendPropertyChanging();
-			entity.Proyecto = null;
 		}
 	}
 	
@@ -7270,6 +6978,298 @@ namespace DESSAU.ControlGestion.Core
 		{
 			this.SendPropertyChanging();
 			entity.Usuario = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Proyecto")]
+	public partial class Proyecto : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdProyecto;
+		
+		private int _IdContrato;
+		
+		private int _IdUsuarioDirector;
+		
+		private string _Nombre;
+		
+		private System.DateTime _FechaIncio;
+		
+		private System.Nullable<System.DateTime> _FechaTermino;
+		
+		private EntitySet<UsuarioCategoriaProyecto> _UsuarioCategoriaProyectos;
+		
+		private EntityRef<Contrato> _Contrato;
+		
+		private EntityRef<Usuario> _Usuario;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdProyectoChanging(int value);
+    partial void OnIdProyectoChanged();
+    partial void OnIdContratoChanging(int value);
+    partial void OnIdContratoChanged();
+    partial void OnIdUsuarioDirectorChanging(int value);
+    partial void OnIdUsuarioDirectorChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnFechaIncioChanging(System.DateTime value);
+    partial void OnFechaIncioChanged();
+    partial void OnFechaTerminoChanging(System.Nullable<System.DateTime> value);
+    partial void OnFechaTerminoChanged();
+    #endregion
+		
+		public Proyecto()
+		{
+			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
+			this._Contrato = default(EntityRef<Contrato>);
+			this._Usuario = default(EntityRef<Usuario>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdProyecto", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdProyecto
+		{
+			get
+			{
+				return this._IdProyecto;
+			}
+			set
+			{
+				if ((this._IdProyecto != value))
+				{
+					this.OnIdProyectoChanging(value);
+					this.SendPropertyChanging();
+					this._IdProyecto = value;
+					this.SendPropertyChanged("IdProyecto");
+					this.OnIdProyectoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdContrato", DbType="Int NOT NULL")]
+		public int IdContrato
+		{
+			get
+			{
+				return this._IdContrato;
+			}
+			set
+			{
+				if ((this._IdContrato != value))
+				{
+					if (this._Contrato.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdContrato = value;
+					this.SendPropertyChanged("IdContrato");
+					this.OnIdContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioDirector", DbType="Int NOT NULL")]
+		public int IdUsuarioDirector
+		{
+			get
+			{
+				return this._IdUsuarioDirector;
+			}
+			set
+			{
+				if ((this._IdUsuarioDirector != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioDirectorChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioDirector = value;
+					this.SendPropertyChanged("IdUsuarioDirector");
+					this.OnIdUsuarioDirectorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaIncio", DbType="Date NOT NULL")]
+		public System.DateTime FechaIncio
+		{
+			get
+			{
+				return this._FechaIncio;
+			}
+			set
+			{
+				if ((this._FechaIncio != value))
+				{
+					this.OnFechaIncioChanging(value);
+					this.SendPropertyChanging();
+					this._FechaIncio = value;
+					this.SendPropertyChanged("FechaIncio");
+					this.OnFechaIncioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaTermino", DbType="Date")]
+		public System.Nullable<System.DateTime> FechaTermino
+		{
+			get
+			{
+				return this._FechaTermino;
+			}
+			set
+			{
+				if ((this._FechaTermino != value))
+				{
+					this.OnFechaTerminoChanging(value);
+					this.SendPropertyChanging();
+					this._FechaTermino = value;
+					this.SendPropertyChanged("FechaTermino");
+					this.OnFechaTerminoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Proyecto_UsuarioCategoriaProyecto", Storage="_UsuarioCategoriaProyectos", ThisKey="IdProyecto", OtherKey="IdProyecto")]
+		public EntitySet<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos
+		{
+			get
+			{
+				return this._UsuarioCategoriaProyectos;
+			}
+			set
+			{
+				this._UsuarioCategoriaProyectos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contrato_Proyecto", Storage="_Contrato", ThisKey="IdContrato", OtherKey="IdContrato", IsForeignKey=true)]
+		public Contrato Contrato
+		{
+			get
+			{
+				return this._Contrato.Entity;
+			}
+			set
+			{
+				Contrato previousValue = this._Contrato.Entity;
+				if (((previousValue != value) 
+							|| (this._Contrato.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contrato.Entity = null;
+						previousValue.Proyectos.Remove(this);
+					}
+					this._Contrato.Entity = value;
+					if ((value != null))
+					{
+						value.Proyectos.Add(this);
+						this._IdContrato = value.IdContrato;
+					}
+					else
+					{
+						this._IdContrato = default(int);
+					}
+					this.SendPropertyChanged("Contrato");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Proyecto", Storage="_Usuario", ThisKey="IdUsuarioDirector", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
+		{
+			get
+			{
+				return this._Usuario.Entity;
+			}
+			set
+			{
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.Proyectos.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.Proyectos.Add(this);
+						this._IdUsuarioDirector = value.IdUsuario;
+					}
+					else
+					{
+						this._IdUsuarioDirector = default(int);
+					}
+					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Proyecto = this;
+		}
+		
+		private void detach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Proyecto = null;
 		}
 	}
 	

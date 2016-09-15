@@ -26,7 +26,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 filtro = filtro.ToLower();
                 Proy = db.Proyectos
                     .Where(x => x.Nombre.ToLower().Contains(filtro)
-                    || x.Contrato.Nombre.ToLower().Contains(filtro));
+                    || x.Contrato.Nombre.ToLower().Contains(filtro)
+                    || x.Usuario.NombreCompleto.ToLower().Contains(filtro));
             }
             model.OrdenesServicio = Proy.ToPagedList(pagina ?? 1, 10);
             return View(model);
@@ -34,14 +35,16 @@ namespace DESSAU.ControlGestion.Web.Controllers
 
         public ActionResult CrearEditarProyecto(int? IdProyecto)
         {
-            CrearEditarProyectoViewModel model = new CrearEditarProyectoViewModel();
+            CrearEditarProyectoViewModel model = new CrearEditarProyectoViewModel(db, IdProyecto);
             Proyecto proyecto = db.Proyectos.SingleOrDefault(x => x.IdProyecto == IdProyecto);
             if(proyecto != null)
             {
+                model.Form.IdProyecto = proyecto.IdProyecto;
                 model.Form.Nombre = proyecto.Nombre;
                 model.Form.IdContrato = proyecto.IdContrato;
                 model.Form.FechaInicio = proyecto.FechaIncio;
                 model.Form.FechaFin = proyecto.FechaTermino.GetValueOrDefault(DateTime.Now);
+                model.Form.IdUsuarioDirector = proyecto.IdUsuarioDirector;
             }
             return View(model);
         }
@@ -58,6 +61,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     proyecto.IdContrato = Form.IdContrato;
                     proyecto.FechaIncio = Form.FechaInicio;
                     proyecto.FechaTermino = Form.FechaFin;
+                    proyecto.IdUsuarioDirector = Form.IdUsuarioDirector;
 
                     Mensaje = "La Orden de Servicio fue editada exitosamente.";
                 }
@@ -68,7 +72,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         Nombre = Form.Nombre,
                         IdContrato = Form.IdContrato,
                         FechaIncio = Form.FechaInicio,
-                        FechaTermino = Form.FechaFin
+                        FechaTermino = Form.FechaFin,
+                        IdUsuarioDirector = Form.IdUsuarioDirector,
                     };
 
                     db.Proyectos.InsertOnSubmit(proyecto);
@@ -78,7 +83,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 db.SubmitChanges();
                 return RedirectToAction("ListarProyecto");
             }
-            CrearEditarProyectoViewModel model = new CrearEditarProyectoViewModel(Form);
+            CrearEditarProyectoViewModel model = new CrearEditarProyectoViewModel(Form, db, Form.IdProyecto);
             return View(model);
         }
     }

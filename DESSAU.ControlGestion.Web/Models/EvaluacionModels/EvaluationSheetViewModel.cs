@@ -47,9 +47,9 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
                 .Where(x => x.IdSupervisor == usuarioActual.IdUsuario)
                 .SelectMany(x => x.Usuario.UsuarioCategoriaProyectos);
             
-            Categorias = new SelectList(usuarioCategoriaProyectos.Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
-            Proyectos = new SelectList(usuarioCategoriaProyectos.Select(x => x.Proyecto).Distinct(), "IdProyecto", "Nombre");
-            PlantillaEvaluacions = new SelectList(usuarioCategoriaProyectos.Select(x => x.Categoria).Distinct().Select(x=>x.PlantillaEvaluacions).Distinct(), "IdPlantillaEvaluacion", "Nombre");
+            Categorias = new SelectList(db.Categorias, "IdCategoria", "Nombre");
+            Proyectos = new SelectList(db.Proyectos, "IdProyecto", "Nombre");
+            PlantillaEvaluacions = new SelectList(db.PlantillaEvaluacions, "IdPlantillaEvaluacion", "Nombre");
         }
     }
 }

@@ -39,6 +39,7 @@
         {
             col.For(x => x.Nombre).Named("ODS");
             col.For(x => x.Contrato.Nombre).Named("Contrato");
+            col.For(x => x.Usuario.NombreCompleto).Named("Director ODS");
             col.For(x => x.FechaIncio.ToShortDateString()).Named("Fecha de Inicio");
             col.For(x => x.FechaTermino.GetValueOrDefault(DateTime.Now).ToShortDateString()).Named("Fecha Término");
             col.For(x => Html.ButtonIconActionLink("pencil", "Editar Proyecto", "CrearEditarProyecto", null, null, new { IdProyecto = x.IdProyecto }));

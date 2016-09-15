@@ -154,9 +154,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
 
                         db.Usuarios.InsertOnSubmit(_user);
                         db.SubmitChanges();
+                        Mensaje = "El Usuario fue creado exitosamente.";
                     }
                     //AddErrors(result);
-                    Mensaje = "El Usuario fue creado exitosamente.";
                     return RedirectToAction("ListarUsuario");
                 }
             }

@@ -12,6 +12,9 @@ namespace DESSAU.ControlGestion.Web.Models.ProyectoModels
     {
         public int? IdProyecto { get; set; }
         [Required]
+        [DisplayName("Director ODS")]
+        public int IdUsuarioDirector { get; set; }
+        [Required]
         [DisplayName("Contrato")]
         public int IdContrato { get; set; }
         [Required]

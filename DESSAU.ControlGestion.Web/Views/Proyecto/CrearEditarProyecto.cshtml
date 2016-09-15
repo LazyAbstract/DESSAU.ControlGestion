@@ -35,6 +35,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdUsuarioDirector)</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(x => x.Form.IdUsuarioDirector, Model.UsuariosDirectores, "Seleccione un Director", new { @class = "form-control" })
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.IdUsuarioDirector)
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdContrato)</label>
                 <div class="col-md-5">
                     @Html.DropDownListFor(x => x.Form.IdContrato, Model.Contratos, "Seleccione un Contrato", new { @class = "form-control" })
