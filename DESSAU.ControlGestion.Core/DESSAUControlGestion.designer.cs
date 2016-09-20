@@ -48,9 +48,6 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertEstadoUsuarioCategoriaProyectoHistorico(EstadoUsuarioCategoriaProyectoHistorico instance);
     partial void UpdateEstadoUsuarioCategoriaProyectoHistorico(EstadoUsuarioCategoriaProyectoHistorico instance);
     partial void DeleteEstadoUsuarioCategoriaProyectoHistorico(EstadoUsuarioCategoriaProyectoHistorico instance);
-    partial void InsertEvaluacion(Evaluacion instance);
-    partial void UpdateEvaluacion(Evaluacion instance);
-    partial void DeleteEvaluacion(Evaluacion instance);
     partial void InsertEvaluacionPregunta(EvaluacionPregunta instance);
     partial void UpdateEvaluacionPregunta(EvaluacionPregunta instance);
     partial void DeleteEvaluacionPregunta(EvaluacionPregunta instance);
@@ -129,6 +126,9 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertProyecto(Proyecto instance);
     partial void UpdateProyecto(Proyecto instance);
     partial void DeleteProyecto(Proyecto instance);
+    partial void InsertEvaluacion(Evaluacion instance);
+    partial void UpdateEvaluacion(Evaluacion instance);
+    partial void DeleteEvaluacion(Evaluacion instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -206,14 +206,6 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<EstadoUsuarioCategoriaProyectoHistorico>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Evaluacion> Evaluacions
-		{
-			get
-			{
-				return this.GetTable<Evaluacion>();
 			}
 		}
 		
@@ -422,6 +414,14 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<Proyecto>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Evaluacion> Evaluacions
+		{
+			get
+			{
+				return this.GetTable<Evaluacion>();
 			}
 		}
 		
@@ -696,9 +696,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<EstadoEvaluacionHistorico> _EstadoEvaluacionHistoricos;
 		
-		private EntityRef<Evaluacion> _Evaluacion;
-		
 		private EntityRef<TipoEstadoEvaluacion> _TipoEstadoEvaluacion;
+		
+		private EntityRef<Evaluacion> _Evaluacion;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -717,8 +717,8 @@ namespace DESSAU.ControlGestion.Core
 		public EstadoEvaluacion()
 		{
 			this._EstadoEvaluacionHistoricos = new EntitySet<EstadoEvaluacionHistorico>(new Action<EstadoEvaluacionHistorico>(this.attach_EstadoEvaluacionHistoricos), new Action<EstadoEvaluacionHistorico>(this.detach_EstadoEvaluacionHistoricos));
-			this._Evaluacion = default(EntityRef<Evaluacion>);
 			this._TipoEstadoEvaluacion = default(EntityRef<TipoEstadoEvaluacion>);
+			this._Evaluacion = default(EntityRef<Evaluacion>);
 			OnCreated();
 		}
 		
@@ -823,40 +823,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EstadoEvaluacion", Storage="_Evaluacion", ThisKey="IdEstadoEvaluacion", OtherKey="IdEvaluacion", IsForeignKey=true)]
-		public Evaluacion Evaluacion
-		{
-			get
-			{
-				return this._Evaluacion.Entity;
-			}
-			set
-			{
-				Evaluacion previousValue = this._Evaluacion.Entity;
-				if (((previousValue != value) 
-							|| (this._Evaluacion.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Evaluacion.Entity = null;
-						previousValue.EstadoEvaluacion = null;
-					}
-					this._Evaluacion.Entity = value;
-					if ((value != null))
-					{
-						value.EstadoEvaluacion = this;
-						this._IdEstadoEvaluacion = value.IdEvaluacion;
-					}
-					else
-					{
-						this._IdEstadoEvaluacion = default(int);
-					}
-					this.SendPropertyChanged("Evaluacion");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoEstadoEvaluacion_EstadoEvaluacion", Storage="_TipoEstadoEvaluacion", ThisKey="IdTipoEstadoEvaluacion", OtherKey="IdTipoEstadoEvaluacion", IsForeignKey=true)]
 		public TipoEstadoEvaluacion TipoEstadoEvaluacion
 		{
@@ -887,6 +853,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdTipoEstadoEvaluacion = default(int);
 					}
 					this.SendPropertyChanged("TipoEstadoEvaluacion");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EstadoEvaluacion", Storage="_Evaluacion", ThisKey="IdEstadoEvaluacion", OtherKey="IdEvaluacion", IsForeignKey=true)]
+		public Evaluacion Evaluacion
+		{
+			get
+			{
+				return this._Evaluacion.Entity;
+			}
+			set
+			{
+				Evaluacion previousValue = this._Evaluacion.Entity;
+				if (((previousValue != value) 
+							|| (this._Evaluacion.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Evaluacion.Entity = null;
+						previousValue.EstadoEvaluacion = null;
+					}
+					this._Evaluacion.Entity = value;
+					if ((value != null))
+					{
+						value.EstadoEvaluacion = this;
+						this._IdEstadoEvaluacion = value.IdEvaluacion;
+					}
+					else
+					{
+						this._IdEstadoEvaluacion = default(int);
+					}
+					this.SendPropertyChanged("Evaluacion");
 				}
 			}
 		}
@@ -1648,200 +1648,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Evaluacion")]
-	public partial class Evaluacion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdEvaluacion;
-		
-		private int _IdUsuario;
-		
-		private int _IdSupervisor;
-		
-		private System.DateTime _FechaEvaluacion;
-		
-		private EntityRef<EstadoEvaluacion> _EstadoEvaluacion;
-		
-		private EntitySet<EvaluacionPregunta> _EvaluacionPreguntas;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdEvaluacionChanging(int value);
-    partial void OnIdEvaluacionChanged();
-    partial void OnIdUsuarioChanging(int value);
-    partial void OnIdUsuarioChanged();
-    partial void OnIdSupervisorChanging(int value);
-    partial void OnIdSupervisorChanged();
-    partial void OnFechaEvaluacionChanging(System.DateTime value);
-    partial void OnFechaEvaluacionChanged();
-    #endregion
-		
-		public Evaluacion()
-		{
-			this._EstadoEvaluacion = default(EntityRef<EstadoEvaluacion>);
-			this._EvaluacionPreguntas = new EntitySet<EvaluacionPregunta>(new Action<EvaluacionPregunta>(this.attach_EvaluacionPreguntas), new Action<EvaluacionPregunta>(this.detach_EvaluacionPreguntas));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEvaluacion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdEvaluacion
-		{
-			get
-			{
-				return this._IdEvaluacion;
-			}
-			set
-			{
-				if ((this._IdEvaluacion != value))
-				{
-					this.OnIdEvaluacionChanging(value);
-					this.SendPropertyChanging();
-					this._IdEvaluacion = value;
-					this.SendPropertyChanged("IdEvaluacion");
-					this.OnIdEvaluacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
-		public int IdUsuario
-		{
-			get
-			{
-				return this._IdUsuario;
-			}
-			set
-			{
-				if ((this._IdUsuario != value))
-				{
-					this.OnIdUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuario = value;
-					this.SendPropertyChanged("IdUsuario");
-					this.OnIdUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdSupervisor", DbType="Int NOT NULL")]
-		public int IdSupervisor
-		{
-			get
-			{
-				return this._IdSupervisor;
-			}
-			set
-			{
-				if ((this._IdSupervisor != value))
-				{
-					this.OnIdSupervisorChanging(value);
-					this.SendPropertyChanging();
-					this._IdSupervisor = value;
-					this.SendPropertyChanged("IdSupervisor");
-					this.OnIdSupervisorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEvaluacion", DbType="Date NOT NULL")]
-		public System.DateTime FechaEvaluacion
-		{
-			get
-			{
-				return this._FechaEvaluacion;
-			}
-			set
-			{
-				if ((this._FechaEvaluacion != value))
-				{
-					this.OnFechaEvaluacionChanging(value);
-					this.SendPropertyChanging();
-					this._FechaEvaluacion = value;
-					this.SendPropertyChanged("FechaEvaluacion");
-					this.OnFechaEvaluacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EstadoEvaluacion", Storage="_EstadoEvaluacion", ThisKey="IdEvaluacion", OtherKey="IdEstadoEvaluacion", IsUnique=true, IsForeignKey=false)]
-		public EstadoEvaluacion EstadoEvaluacion
-		{
-			get
-			{
-				return this._EstadoEvaluacion.Entity;
-			}
-			set
-			{
-				EstadoEvaluacion previousValue = this._EstadoEvaluacion.Entity;
-				if (((previousValue != value) 
-							|| (this._EstadoEvaluacion.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EstadoEvaluacion.Entity = null;
-						previousValue.Evaluacion = null;
-					}
-					this._EstadoEvaluacion.Entity = value;
-					if ((value != null))
-					{
-						value.Evaluacion = this;
-					}
-					this.SendPropertyChanged("EstadoEvaluacion");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EvaluacionPregunta", Storage="_EvaluacionPreguntas", ThisKey="IdEvaluacion", OtherKey="IdEvaluacion")]
-		public EntitySet<EvaluacionPregunta> EvaluacionPreguntas
-		{
-			get
-			{
-				return this._EvaluacionPreguntas;
-			}
-			set
-			{
-				this._EvaluacionPreguntas.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_EvaluacionPreguntas(EvaluacionPregunta entity)
-		{
-			this.SendPropertyChanging();
-			entity.Evaluacion = this;
-		}
-		
-		private void detach_EvaluacionPreguntas(EvaluacionPregunta entity)
-		{
-			this.SendPropertyChanging();
-			entity.Evaluacion = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EvaluacionPregunta")]
 	public partial class EvaluacionPregunta : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1856,9 +1662,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private int _ValorObtenido;
 		
-		private EntityRef<Evaluacion> _Evaluacion;
-		
 		private EntityRef<Pregunta> _Pregunta;
+		
+		private EntityRef<Evaluacion> _Evaluacion;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1876,8 +1682,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		public EvaluacionPregunta()
 		{
-			this._Evaluacion = default(EntityRef<Evaluacion>);
 			this._Pregunta = default(EntityRef<Pregunta>);
+			this._Evaluacion = default(EntityRef<Evaluacion>);
 			OnCreated();
 		}
 		
@@ -1969,40 +1775,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EvaluacionPregunta", Storage="_Evaluacion", ThisKey="IdEvaluacion", OtherKey="IdEvaluacion", IsForeignKey=true)]
-		public Evaluacion Evaluacion
-		{
-			get
-			{
-				return this._Evaluacion.Entity;
-			}
-			set
-			{
-				Evaluacion previousValue = this._Evaluacion.Entity;
-				if (((previousValue != value) 
-							|| (this._Evaluacion.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Evaluacion.Entity = null;
-						previousValue.EvaluacionPreguntas.Remove(this);
-					}
-					this._Evaluacion.Entity = value;
-					if ((value != null))
-					{
-						value.EvaluacionPreguntas.Add(this);
-						this._IdEvaluacion = value.IdEvaluacion;
-					}
-					else
-					{
-						this._IdEvaluacion = default(int);
-					}
-					this.SendPropertyChanged("Evaluacion");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pregunta_EvaluacionPregunta", Storage="_Pregunta", ThisKey="IdPregunta", OtherKey="IdPregunta", IsForeignKey=true)]
 		public Pregunta Pregunta
 		{
@@ -2033,6 +1805,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdPregunta = default(int);
 					}
 					this.SendPropertyChanged("Pregunta");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EvaluacionPregunta", Storage="_Evaluacion", ThisKey="IdEvaluacion", OtherKey="IdEvaluacion", IsForeignKey=true)]
+		public Evaluacion Evaluacion
+		{
+			get
+			{
+				return this._Evaluacion.Entity;
+			}
+			set
+			{
+				Evaluacion previousValue = this._Evaluacion.Entity;
+				if (((previousValue != value) 
+							|| (this._Evaluacion.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Evaluacion.Entity = null;
+						previousValue.EvaluacionPreguntas.Remove(this);
+					}
+					this._Evaluacion.Entity = value;
+					if ((value != null))
+					{
+						value.EvaluacionPreguntas.Add(this);
+						this._IdEvaluacion = value.IdEvaluacion;
+					}
+					else
+					{
+						this._IdEvaluacion = default(int);
+					}
+					this.SendPropertyChanged("Evaluacion");
 				}
 			}
 		}
@@ -6293,6 +6099,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<TimeSheet> _TimeSheets;
 		
+		private EntitySet<Evaluacion> _Evaluacions;
+		
 		private EntityRef<Categoria> _Categoria;
 		
 		private EntityRef<Usuario> _Usuario;
@@ -6318,6 +6126,7 @@ namespace DESSAU.ControlGestion.Core
 			this._EstadoUsuarioCategoriaProyecto = default(EntityRef<EstadoUsuarioCategoriaProyecto>);
 			this._EstadoPlanificacionDeclaracions = new EntitySet<EstadoPlanificacionDeclaracion>(new Action<EstadoPlanificacionDeclaracion>(this.attach_EstadoPlanificacionDeclaracions), new Action<EstadoPlanificacionDeclaracion>(this.detach_EstadoPlanificacionDeclaracions));
 			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
+			this._Evaluacions = new EntitySet<Evaluacion>(new Action<Evaluacion>(this.attach_Evaluacions), new Action<Evaluacion>(this.detach_Evaluacions));
 			this._Categoria = default(EntityRef<Categoria>);
 			this._Usuario = default(EntityRef<Usuario>);
 			this._Proyecto = default(EntityRef<Proyecto>);
@@ -6471,6 +6280,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_Evaluacion", Storage="_Evaluacions", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto")]
+		public EntitySet<Evaluacion> Evaluacions
+		{
+			get
+			{
+				return this._Evaluacions;
+			}
+			set
+			{
+				this._Evaluacions.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Categoria_UsuarioCategoriaProyecto", Storage="_Categoria", ThisKey="IdCategoria", OtherKey="IdCategoria", IsForeignKey=true)]
 		public Categoria Categoria
 		{
@@ -6616,6 +6438,18 @@ namespace DESSAU.ControlGestion.Core
 			this.SendPropertyChanging();
 			entity.UsuarioCategoriaProyecto = null;
 		}
+		
+		private void attach_Evaluacions(Evaluacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsuarioCategoriaProyecto = this;
+		}
+		
+		private void detach_Evaluacions(Evaluacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.UsuarioCategoriaProyecto = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
@@ -6646,6 +6480,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<Proyecto> _Proyectos;
 		
+		private EntitySet<Evaluacion> _Evaluacions;
+		
 		private EntityRef<TipoUsuario> _TipoUsuario;
 		
     #region Extensibility Method Definitions
@@ -6673,6 +6509,7 @@ namespace DESSAU.ControlGestion.Core
 			this._Notificacions = new EntitySet<Notificacion>(new Action<Notificacion>(this.attach_Notificacions), new Action<Notificacion>(this.detach_Notificacions));
 			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
 			this._Proyectos = new EntitySet<Proyecto>(new Action<Proyecto>(this.attach_Proyectos), new Action<Proyecto>(this.detach_Proyectos));
+			this._Evaluacions = new EntitySet<Evaluacion>(new Action<Evaluacion>(this.attach_Evaluacions), new Action<Evaluacion>(this.detach_Evaluacions));
 			this._TipoUsuario = default(EntityRef<TipoUsuario>);
 			OnCreated();
 		}
@@ -6866,6 +6703,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Evaluacion", Storage="_Evaluacions", ThisKey="IdUsuario", OtherKey="IdUsuarioDirector")]
+		public EntitySet<Evaluacion> Evaluacions
+		{
+			get
+			{
+				return this._Evaluacions;
+			}
+			set
+			{
+				this._Evaluacions.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoUsuario_Usuario", Storage="_TipoUsuario", ThisKey="IdTipoUsuario", OtherKey="IdTipoUsuario", IsForeignKey=true)]
 		public TipoUsuario TipoUsuario
 		{
@@ -6975,6 +6825,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_Proyectos(Proyecto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+		
+		private void attach_Evaluacions(Evaluacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_Evaluacions(Evaluacion entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuario = null;
@@ -7270,6 +7132,282 @@ namespace DESSAU.ControlGestion.Core
 		{
 			this.SendPropertyChanging();
 			entity.Proyecto = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Evaluacion")]
+	public partial class Evaluacion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdEvaluacion;
+		
+		private int _IdUsuarioCategoriaProyecto;
+		
+		private int _IdUsuarioDirector;
+		
+		private System.DateTime _FechaEvaluacion;
+		
+		private EntityRef<EstadoEvaluacion> _EstadoEvaluacion;
+		
+		private EntitySet<EvaluacionPregunta> _EvaluacionPreguntas;
+		
+		private EntityRef<Usuario> _Usuario;
+		
+		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdEvaluacionChanging(int value);
+    partial void OnIdEvaluacionChanged();
+    partial void OnIdUsuarioCategoriaProyectoChanging(int value);
+    partial void OnIdUsuarioCategoriaProyectoChanged();
+    partial void OnIdUsuarioDirectorChanging(int value);
+    partial void OnIdUsuarioDirectorChanged();
+    partial void OnFechaEvaluacionChanging(System.DateTime value);
+    partial void OnFechaEvaluacionChanged();
+    #endregion
+		
+		public Evaluacion()
+		{
+			this._EstadoEvaluacion = default(EntityRef<EstadoEvaluacion>);
+			this._EvaluacionPreguntas = new EntitySet<EvaluacionPregunta>(new Action<EvaluacionPregunta>(this.attach_EvaluacionPreguntas), new Action<EvaluacionPregunta>(this.detach_EvaluacionPreguntas));
+			this._Usuario = default(EntityRef<Usuario>);
+			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEvaluacion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdEvaluacion
+		{
+			get
+			{
+				return this._IdEvaluacion;
+			}
+			set
+			{
+				if ((this._IdEvaluacion != value))
+				{
+					this.OnIdEvaluacionChanging(value);
+					this.SendPropertyChanging();
+					this._IdEvaluacion = value;
+					this.SendPropertyChanged("IdEvaluacion");
+					this.OnIdEvaluacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
+		public int IdUsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._IdUsuarioCategoriaProyecto;
+			}
+			set
+			{
+				if ((this._IdUsuarioCategoriaProyecto != value))
+				{
+					if (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioCategoriaProyectoChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioCategoriaProyecto = value;
+					this.SendPropertyChanged("IdUsuarioCategoriaProyecto");
+					this.OnIdUsuarioCategoriaProyectoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioDirector", DbType="Int NOT NULL")]
+		public int IdUsuarioDirector
+		{
+			get
+			{
+				return this._IdUsuarioDirector;
+			}
+			set
+			{
+				if ((this._IdUsuarioDirector != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioDirectorChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioDirector = value;
+					this.SendPropertyChanged("IdUsuarioDirector");
+					this.OnIdUsuarioDirectorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEvaluacion", DbType="Date NOT NULL")]
+		public System.DateTime FechaEvaluacion
+		{
+			get
+			{
+				return this._FechaEvaluacion;
+			}
+			set
+			{
+				if ((this._FechaEvaluacion != value))
+				{
+					this.OnFechaEvaluacionChanging(value);
+					this.SendPropertyChanging();
+					this._FechaEvaluacion = value;
+					this.SendPropertyChanged("FechaEvaluacion");
+					this.OnFechaEvaluacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EstadoEvaluacion", Storage="_EstadoEvaluacion", ThisKey="IdEvaluacion", OtherKey="IdEstadoEvaluacion", IsUnique=true, IsForeignKey=false)]
+		public EstadoEvaluacion EstadoEvaluacion
+		{
+			get
+			{
+				return this._EstadoEvaluacion.Entity;
+			}
+			set
+			{
+				EstadoEvaluacion previousValue = this._EstadoEvaluacion.Entity;
+				if (((previousValue != value) 
+							|| (this._EstadoEvaluacion.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EstadoEvaluacion.Entity = null;
+						previousValue.Evaluacion = null;
+					}
+					this._EstadoEvaluacion.Entity = value;
+					if ((value != null))
+					{
+						value.Evaluacion = this;
+					}
+					this.SendPropertyChanged("EstadoEvaluacion");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Evaluacion_EvaluacionPregunta", Storage="_EvaluacionPreguntas", ThisKey="IdEvaluacion", OtherKey="IdEvaluacion")]
+		public EntitySet<EvaluacionPregunta> EvaluacionPreguntas
+		{
+			get
+			{
+				return this._EvaluacionPreguntas;
+			}
+			set
+			{
+				this._EvaluacionPreguntas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Evaluacion", Storage="_Usuario", ThisKey="IdUsuarioDirector", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
+		{
+			get
+			{
+				return this._Usuario.Entity;
+			}
+			set
+			{
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.Evaluacions.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.Evaluacions.Add(this);
+						this._IdUsuarioDirector = value.IdUsuario;
+					}
+					else
+					{
+						this._IdUsuarioDirector = default(int);
+					}
+					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_Evaluacion", Storage="_UsuarioCategoriaProyecto", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto", IsForeignKey=true)]
+		public UsuarioCategoriaProyecto UsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._UsuarioCategoriaProyecto.Entity;
+			}
+			set
+			{
+				UsuarioCategoriaProyecto previousValue = this._UsuarioCategoriaProyecto.Entity;
+				if (((previousValue != value) 
+							|| (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UsuarioCategoriaProyecto.Entity = null;
+						previousValue.Evaluacions.Remove(this);
+					}
+					this._UsuarioCategoriaProyecto.Entity = value;
+					if ((value != null))
+					{
+						value.Evaluacions.Add(this);
+						this._IdUsuarioCategoriaProyecto = value.IdUsuarioCategoriaProyecto;
+					}
+					else
+					{
+						this._IdUsuarioCategoriaProyecto = default(int);
+					}
+					this.SendPropertyChanged("UsuarioCategoriaProyecto");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_EvaluacionPreguntas(EvaluacionPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Evaluacion = this;
+		}
+		
+		private void detach_EvaluacionPreguntas(EvaluacionPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Evaluacion = null;
 		}
 	}
 	
