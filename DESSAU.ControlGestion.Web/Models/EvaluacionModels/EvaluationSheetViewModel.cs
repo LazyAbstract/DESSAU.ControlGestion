@@ -15,6 +15,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         public SelectList Categorias { get; set; }
         public SelectList Proyectos{ get; set; }
         public SelectList PlantillaEvaluacions { get; set; }
+
         public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
 
         public PlantillaEvaluacion PlantillaEvaluacion { get; set; }
@@ -39,17 +40,19 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
             UsuarioCategoriaProyectos = new List<UsuarioCategoriaProyecto>();
         }
 
-        public EvaluationSheetViewModel(EvaluationSheetFormModel form, DESSAUControlGestionDataContext db, Usuario usuarioActual) : this()
+        public EvaluationSheetViewModel(EvaluationSheetFormModel form, DESSAUControlGestionDataContext db, Usuario usuarioActual) : this(form,db)
         {
-            FORM = form;
-            UsuarioCategoriaProyectos = new List<UsuarioCategoriaProyecto>();
-            var usuarioCategoriaProyectos = db.UsuarioSupervisors
-                .Where(x => x.IdSupervisor == usuarioActual.IdUsuario)
-                .SelectMany(x => x.Usuario.UsuarioCategoriaProyectos);
-            
-            Categorias = new SelectList(db.Categorias, "IdCategoria", "Nombre");
-            Proyectos = new SelectList(db.Proyectos, "IdProyecto", "Nombre");
-            PlantillaEvaluacions = new SelectList(db.PlantillaEvaluacions, "IdPlantillaEvaluacion", "Nombre");
+            if (form.IdCategoria.HasValue)
+            {
+                PlantillaEvaluacion = db.PlantillaEvaluacions.SingleOrDefault(x => x.IdCategoria == form.IdCategoria.Value);
+                Preguntas = PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x=>x.Pregunta);
+                UsuarioCategoriaProyectos = usuarioActual
+                    .UsuarioSupervisors1
+                    .SelectMany(x => x.Usuario.UsuarioCategoriaProyectos)
+                    .Where(x => x.IdCategoria == form.IdCategoria.Value && 
+                    x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto == TipoEstadoUsuarioCategoriaProyecto.Creado);
+               
+            }
         }
     }
 }

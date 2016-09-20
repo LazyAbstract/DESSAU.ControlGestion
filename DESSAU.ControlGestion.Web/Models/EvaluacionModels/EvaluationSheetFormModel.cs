@@ -12,9 +12,6 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         public int? IdProyecto { get; set; }
         [DisplayName("Categoría")]
         public int? IdCategoria { get; set; }
-        [Required]
-        [DisplayName("Plantilla")]
-        public int? IdPlantillaEvaluacion { get; set; }
 
         [Required]
         [DisplayName("Fecha")]

@@ -49,17 +49,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">
-                        @Html.LabelFor(x => x.FORM.IdPlantillaEvaluacion, new { @class = "control-label" })
-                    </div>
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(x => x.FORM.IdPlantillaEvaluacion, Model.PlantillaEvaluacions, "Elija una opción", new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-5">
-                        @Html.ValidationMessageFor(x => x.FORM.IdPlantillaEvaluacion)
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
                         @Html.LabelFor(x => x.FORM.Fecha, new { @class = "control-label" })
                     </div>
                     <div class="col-md-5">
@@ -111,7 +100,6 @@
         using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
             @Html.Hidden("FORM.Fecha", Model.FORM.Fecha)
-            @Html.Hidden("FORM.IdPlantillaEvaluacion", Model.FORM.IdPlantillaEvaluacion)
             @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
             <div class="col-md-12">
                 <button type="submit" class="btn btn-default">Guardar</button>

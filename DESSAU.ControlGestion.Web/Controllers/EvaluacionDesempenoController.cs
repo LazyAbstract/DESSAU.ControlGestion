@@ -22,20 +22,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
             EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db, UsuarioActual);
             if (ModelState.IsValid)
             {
-                if (FORM.IdPlantillaEvaluacion.HasValue)
+                if (FORM.IdCategoria.HasValue)
                 {
-                    model.UsuarioCategoriaProyectos = db.UsuarioCategoriaProyectos
-                        .Where(x => x.EstadoUsuarioCategoriaProyecto
-                            .IdTipoEstadoUsuarioCategoriaProyecto ==
-                            TipoEstadoUsuarioCategoriaProyecto.Creado &&
-                            x.IdCategoria == model.PlantillaEvaluacion.IdCategoria &&
-                            x.Usuario.UsuarioSupervisors1.Any(y=>y.IdSupervisor == UsuarioActual.IdUsuario));
-                    model.PlantillaEvaluacion = db.PlantillaEvaluacions
-                        .SingleOrDefault(x => x.IdPlantillaEvaluacion == FORM.IdPlantillaEvaluacion);
-                    model.Preguntas = model.PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x => x.Pregunta);
                     IEnumerable<int> usuariosDistintos = model.UsuarioCategoriaProyectos.Select(x => x.Usuario).Select(x=> x.IdUsuario).Distinct();
                     model.EvaluacionFORMs = db.Evaluacions
-                        .Where(x => x.FechaEvaluacion == FORM.Fecha && usuariosDistintos.Contains(x.IdUsuario))
+                        .Where(x => x.FechaEvaluacion == FORM.Fecha && 
+                            usuariosDistintos.Contains(x.IdUsuario) && 
+                            x.IdSupervisor == UsuarioActual.IdUsuario)
                         .Select(x => new EvaluacionFormModel()
                         {
                             IdEvaluacion = x.IdEvaluacion,
@@ -56,18 +49,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpPost]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM, IEnumerable<EvaluacionFormModel> EvaluacionForms)
         {
-            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
+            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db, UsuarioActual);
             if (ModelState.IsValid)
             {
-                model.UsuarioCategoriaProyectos = db.UsuarioCategoriaProyectos
-                    .Where(x => x.EstadoUsuarioCategoriaProyecto
-                        .IdTipoEstadoUsuarioCategoriaProyecto ==
-                        TipoEstadoUsuarioCategoriaProyecto.Creado &&
-                        x.IdCategoria == model.PlantillaEvaluacion.IdCategoria);
-                model.PlantillaEvaluacion = db.PlantillaEvaluacions
-                    .SingleOrDefault(x => x.IdPlantillaEvaluacion == FORM.IdPlantillaEvaluacion);
-                model.Preguntas = model.PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x => x.Pregunta);
-
                 foreach (var item in EvaluacionForms)
                 {
                     Evaluacion evaluacion = db.Evaluacions
@@ -108,7 +92,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 }
                 db.SubmitChanges();
                 Mensaje = "Se han guardado las evaluaciones con éxito.";
-                return RedirectToAction("EvaluationSheet", new { IdPlantillaEvaluacion = model.FORM.IdPlantillaEvaluacion, Fecha= model.FORM.Fecha.Value.ToShortDateString() });
+                return RedirectToAction("EvaluationSheet", new { Fecha= model.FORM.Fecha.Value.ToShortDateString(), IdCategoria = model.FORM.IdCategoria });
             }
             return View(model);
         }
