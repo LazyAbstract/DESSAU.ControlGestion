@@ -4,6 +4,16 @@
     ViewBag.Title = "EvaluationSheet";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#FORM_IdProyecto').change(function () {
+                jQuery('#FORM_IdCategoria').CascadingDropDown('#FORM_IdProyecto', '@Url.Action("getCategoriaFromProyecto")');
+            });
+            jQuery('#FORM_IdProyecto').change();
+        });
+    </script>
+}
 
 <div class="row">
     <div class="col-md-12">
@@ -38,13 +48,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">
-                    @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = " control-label" })
+                        @Html.LabelFor(x => x.FORM.IdCategoria, new { @class = " control-label" })
                     </div>
                     <div class="col-md-5">
-                    @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Elija una opción", new { @class = "form-control" })
                     </div>
                     <div class="col-md-5">
-                    @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
+                        @Html.ValidationMessageFor(x => x.FORM.IdCategoria)
                     </div>
                 </div>
                 <div class="row">
@@ -118,16 +128,16 @@
                             <th></th>
                             @foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
                             {
-                                <th data-toggle="tooltip" data-placement="top" title=@pregunta.FormulacionPregunta>@pregunta</th>
+                                <th data-toggle="tooltip" data-placement="top" title="@pregunta.FormulacionPregunta">@pregunta.FormulacionPregunta</th>
                             }
                         </tr>
                         @{
                             int i = 0;
                             foreach (var usuarioCategoriaProyecto in Model.UsuarioCategoriaProyectos)
                             {
-                                var evaluacionFORM = Model.EvaluacionFORMs.FirstOrDefault(x => x.IdUsuario == usuarioCategoriaProyecto.IdUsuario);
+                                var evaluacionFORM = Model.EvaluacionFORMs.FirstOrDefault(x => x.IdUsuarioCategoriaProyecto == usuarioCategoriaProyecto.IdUsuarioCategoriaProyecto);
                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].Fecha", i), Model.FORM.Fecha)
-                                @Html.Hidden(String.Format("EvaluacionFORMs[{0}].IdUsuario", i), usuarioCategoriaProyecto.IdUsuario)
+                                @Html.Hidden(String.Format("EvaluacionFORMs[{0}].IdUsuarioCategoriaProyecto", i), usuarioCategoriaProyecto.IdUsuarioCategoriaProyecto)
                                 if (evaluacionFORM != null)
                                 {
                                     @Html.Hidden(String.Format("EvaluacionFORMs[{0}].IdEvaluacion", i), evaluacionFORM.IdEvaluacion)

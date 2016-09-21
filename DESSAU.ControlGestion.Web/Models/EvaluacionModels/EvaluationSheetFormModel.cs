@@ -24,7 +24,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
     {
         public int? IdEvaluacion { get; set; }
 
-        public int? IdUsuario { get; set; }
+        public int? IdUsuarioCategoriaProyecto { get; set; }
 
         [Required]
         public DateTime? Fecha {get;set;}
