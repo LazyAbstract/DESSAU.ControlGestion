@@ -24,16 +24,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
             {
                 if (FORM.IdCategoria.HasValue)
                 {
-                    IEnumerable<int> usuariosDistintos = model.UsuarioCategoriaProyectos.Select(x => x.Usuario).Select(x=> x.IdUsuario).Distinct();
+                    IEnumerable<int> usuariosDistintos = 
+                        model.UsuarioCategoriaProyectos
+                        .Select(x => x.IdUsuarioCategoriaProyecto).Distinct();
                     model.EvaluacionFORMs = db.Evaluacions
                         .Where(x => x.FechaEvaluacion == FORM.Fecha && 
-                            usuariosDistintos.Contains(x.IdUsuario) && 
-                            x.IdSupervisor == UsuarioActual.IdUsuario)
+                            usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) && 
+                            x.IdUsuarioDirector == UsuarioActual.IdUsuario)
                         .Select(x => new EvaluacionFormModel()
                         {
                             IdEvaluacion = x.IdEvaluacion,
                             Fecha = x.FechaEvaluacion,
-                            IdUsuario = x.IdUsuario,
+                            IdUsuarioCategoriaProyecto = x.IdUsuarioCategoriaProyecto,
                              EvaluacionPreguntaDTOs = x.EvaluacionPreguntas.Select(y=> new EvaluacionPreguntaDTO()
                              {
                                  IdEvaluacionPregunta = y.IdEvaluacionPregunta,
@@ -61,13 +63,17 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         evaluacion = new Evaluacion()
                         {
                             FechaEvaluacion = item.Fecha.Value,
-                            IdUsuario = item.IdUsuario.Value, IdSupervisor = UsuarioActual.IdUsuario
+                            IdUsuarioCategoriaProyecto = item.IdUsuarioCategoriaProyecto.Value,
+                            IdUsuarioDirector = UsuarioActual.IdUsuario
                         };
+                        
                     }
                     else
                     {
-                        evaluacion.EstadoEvaluacion.IdEstadoEvaluacion = TipoEstadoEvaluacion.Editada;
+                        evaluacion.EstadoEvaluacion.IdTipoEstadoEvaluacion = TipoEstadoEvaluacion.Editada;
+                        evaluacion.EstadoEvaluacion.CreadoPor = User.Identity.Name;
                     }
+                   
                     if (!item.IdEvaluacion.HasValue)
                     {
                         db.Evaluacions.InsertOnSubmit(evaluacion);
@@ -95,6 +101,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 return RedirectToAction("EvaluationSheet", new { Fecha= model.FORM.Fecha.Value.ToShortDateString(), IdCategoria = model.FORM.IdCategoria });
             }
             return View(model);
+        }
+        [HttpGet]
+        public ActionResult getCategoriaFromProyecto(string idProyecto, FormCollection formCollection) {
+            int idProyectoBuffer = 0;
+            SelectList result = null;
+            if (formCollection.AllKeys.Any(x => x == "Form.IdProyecto") && Int32.TryParse(formCollection.Get("Form.IdProyecto"),out idProyectoBuffer))
+            {
+                result = new SelectList(db.UsuarioCategoriaProyectos
+                    .Where(x => x.IdProyecto == idProyectoBuffer)
+                    .Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
