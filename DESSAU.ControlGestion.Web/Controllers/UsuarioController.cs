@@ -175,7 +175,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             string Password = _user.Contrasena;
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
             var result = await UserManager.ResetPasswordAsync(user.Id, code, Password);
-            Mensaje = "La contraseña fue reseteada exitosamente";
+            if(result.Succeeded) Mensaje = "La contraseña fue reseteada exitosamente";
             return RedirectToAction("ListarUsuario");
         }
 
