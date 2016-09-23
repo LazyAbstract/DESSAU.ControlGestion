@@ -13,13 +13,29 @@ namespace DESSAU.ControlGestion.Web.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("EvaluationSheet");
+            int? IdProyecto = null;
+            if(UsuarioActual.IdTipoUsuario == TipoUsuario.DirectorProyecto)
+            {
+                IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
+            }
+            else if(db.Proyectos.Any(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario))
+            {
+                IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
+            }
+            return RedirectToAction("EvaluationSheet", new { IdProyecto  = IdProyecto });
         }
 
         [HttpGet]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM)
         {
-            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db, UsuarioActual);
+            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
+            if (FORM.IdProyecto.HasValue)
+            {
+                model.Categorias = new SelectList(db.UsuarioCategoriaProyectos
+                    .Where(x => x.IdProyecto == FORM.IdProyecto && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                        TipoEstadoUsuarioCategoriaProyecto.NoVigente)
+                        .Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
+            }
             if (ModelState.IsValid)
             {
                 if (FORM.IdCategoria.HasValue)
@@ -28,9 +44,10 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         model.UsuarioCategoriaProyectos
                         .Select(x => x.IdUsuarioCategoriaProyecto).Distinct();
                     model.EvaluacionFORMs = db.Evaluacions
-                        .Where(x => x.FechaEvaluacion == FORM.Fecha && 
-                            usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) && 
-                            x.IdUsuarioDirector == UsuarioActual.IdUsuario)
+                        .Where(x => //x.FechaEvaluacion == FORM.Fecha && 
+                            usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) 
+                            //&& x.IdUsuarioDirector == UsuarioActual.IdUsuario
+                            )
                         .Select(x => new EvaluacionFormModel()
                         {
                             IdEvaluacion = x.IdEvaluacion,
@@ -51,7 +68,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpPost]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM, IEnumerable<EvaluacionFormModel> EvaluacionForms)
         {
-            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db, UsuarioActual);
+            EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
             if (ModelState.IsValid)
             {
                 foreach (var item in EvaluacionForms)
@@ -62,9 +79,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     {
                         evaluacion = new Evaluacion()
                         {
-                            FechaEvaluacion = item.Fecha.Value,
+                            FechaEvaluacion = DateTime.Now,//item.Fecha.Value,
                             IdUsuarioCategoriaProyecto = item.IdUsuarioCategoriaProyecto.Value,
-                            IdUsuarioDirector = UsuarioActual.IdUsuario
+                            IdUsuarioDirector = UsuarioActual.IdUsuario,
                         };
                         
                     }
@@ -98,20 +115,19 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 }
                 db.SubmitChanges();
                 Mensaje = "Se han guardado las evaluaciones con éxito.";
-                return RedirectToAction("EvaluationSheet", new { Fecha= model.FORM.Fecha.Value.ToShortDateString(), IdCategoria = model.FORM.IdCategoria });
+                return RedirectToAction("EvaluationSheet");//, new { Fecha = model.FORM.Fecha.Value.ToShortDateString(), IdCategoria = model.FORM.IdCategoria });
             }
             return View(model);
         }
-        [HttpGet]
-        public ActionResult getCategoriaFromProyecto(string idProyecto, FormCollection formCollection) {
-            int idProyectoBuffer = 0;
+
+        public ActionResult getCategoriaFromProyecto(FormCollection formCollection) {
+            var formValue = formCollection.GetValues(0)[0];
+            int IdProyecto = Int16.Parse(formValue);
             SelectList result = null;
-            if (formCollection.AllKeys.Any(x => x == "Form.IdProyecto") && Int32.TryParse(formCollection.Get("Form.IdProyecto"),out idProyectoBuffer))
-            {
-                result = new SelectList(db.UsuarioCategoriaProyectos
-                    .Where(x => x.IdProyecto == idProyectoBuffer)
+            result = new SelectList(db.UsuarioCategoriaProyectos
+                .Where(x => x.IdProyecto == IdProyecto && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente)
                     .Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
-            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

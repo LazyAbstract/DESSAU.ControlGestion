@@ -6,22 +6,27 @@
 }
 @section scripts{
     <script type="text/javascript">
-        jQuery(document).ready(function () {
+        @*jQuery(document).ready(function () {
             jQuery('#FORM_IdProyecto').change(function () {
-                jQuery('#FORM_IdCategoria').CascadingDropDown('#FORM_IdProyecto', '@Url.Action("getCategoriaFromProyecto")');
+                jQuery('#FORM_IdCategoria').CascadingDropDown('#FORM_IdProyecto', '@Url.Action("getCategoriaFromProyecto", "EvaluacionDesempeno")');
             });
             jQuery('#FORM_IdProyecto').change();
+        });*@
+
+        $(function () {
+            $('#FORM_IdCategoria').CascadingDropDown('#FORM_IdProyecto', $.url('EvaluacionDesempeno/getCategoriaFromProyecto'));
+            $('#FORM_IdCategoria').change();
         });
     </script>
 }
 
 <div class="row">
     <div class="col-md-12">
-        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación de Desempeño {0}", Model.FORM.Fecha.GetValueOrDefault(DateTime.Now.AddMonths(-1)).ToString("MMMM"))</h2>
+        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación de Desempeño {0}", DateTime.Now.AddMonths(-1).ToString("MMMM"))</h2>
     </div>
 </div>
 
-<nav class="navbar navbar-default" role="navigation">
+@*<nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -30,7 +35,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @*<a class="navbar-brand" href="#">Fecha</a>*@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav"></ul>
@@ -77,7 +81,32 @@
             </form>
         </div>
     </div>
+</nav>*@
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Periodo" />
+                    @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Seleccione una ODS", new { @class = "form-control", placeholder = "Proyectos" })
+                    @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control", placeholder = "Categorías" })
+                </div>
+                <button type="submit" id="button-periodo" class="btn btn-default">Buscar</button>
+            </form>
+        </div>
+    </div>
 </nav>
+
 @if (Model.PlantillaEvaluacion != null)
 {
     <div class="row">
@@ -86,7 +115,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">@Model.PlantillaEvaluacion.Nombre</h3>
                 </div>
-                <div class="panel-body">
+                @*<div class="panel-body">
                     <table class="table">
                         <tr>
                             <th>Creado Por:</th>
@@ -101,7 +130,7 @@
                             <th colspan="4">@Model.PlantillaEvaluacion.Descripcion</th>
                         </tr>
                     </table>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -109,13 +138,15 @@
     {
         using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
-            @Html.Hidden("FORM.Fecha", Model.FORM.Fecha)
+            //@Html.Hidden("FORM.Fecha", Model.FORM.Fecha)
             @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
             <div class="col-md-12">
                 <button type="submit" class="btn btn-default">Guardar</button>
             </div>
+            <br/>
+            <br/>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x: scroll;">
                     <table class="table-striped table">
                         @*<tr>
                             <th></th>
@@ -128,7 +159,7 @@
                             <th></th>
                             @foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
                             {
-                                <th data-toggle="tooltip" data-placement="top" title="@pregunta.FormulacionPregunta">@pregunta.FormulacionPregunta</th>
+                                <th data-toggle="tooltip" data-placement="top" title="@pregunta.FormulacionPregunta">@pregunta.Habilidad</th>
                             }
                         </tr>
                         @{
@@ -136,7 +167,7 @@
                             foreach (var usuarioCategoriaProyecto in Model.UsuarioCategoriaProyectos)
                             {
                                 var evaluacionFORM = Model.EvaluacionFORMs.FirstOrDefault(x => x.IdUsuarioCategoriaProyecto == usuarioCategoriaProyecto.IdUsuarioCategoriaProyecto);
-                                @Html.Hidden(String.Format("EvaluacionFORMs[{0}].Fecha", i), Model.FORM.Fecha)
+                                //@Html.Hidden(String.Format("EvaluacionFORMs[{0}].Fecha", i), Model.FORM.Fecha)
                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].IdUsuarioCategoriaProyecto", i), usuarioCategoriaProyecto.IdUsuarioCategoriaProyecto)
                                 if (evaluacionFORM != null)
                                 {
@@ -144,7 +175,7 @@
                                 }
                                 <tr>
                                     <th>
-                                        @String.Format("{0}({1})", usuarioCategoriaProyecto.Usuario.NombreCompleto, usuarioCategoriaProyecto.Proyecto.Nombre)
+                                        @String.Format("{0}", usuarioCategoriaProyecto.Usuario.NombreCompleto)
                                     </th>
                                     @{
                                         int j = 0;

@@ -10,13 +10,15 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
     public class EvaluationSheetFormModel
     {
         public int? IdProyecto { get; set; }
-        [DisplayName("Categoría")]
+        //[DisplayName("Categoría")]
         public int? IdCategoria { get; set; }
 
-        [Required]
-        [DisplayName("Fecha")]
-        public DateTime? Fecha { get; set; }
-        public string ClaseBootstrap { get; set; }
+        //[Required]
+        //[DisplayName("Fecha")]
+        //public DateTime? Fecha { get; set; }
+        //public string ClaseBootstrap { get; set; }
+
+        public string Periodo { get; set; }
 
     }
 
@@ -26,7 +28,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
 
         public int? IdUsuarioCategoriaProyecto { get; set; }
 
-        [Required]
+        //[Required]
         public DateTime? Fecha {get;set;}
 
         public IEnumerable<EvaluacionPreguntaDTO> EvaluacionPreguntaDTOs { get; set; }

@@ -16,6 +16,8 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         public SelectList Proyectos{ get; set; }
         public SelectList PlantillaEvaluacions { get; set; }
 
+        public string Periodo { get; set; }
+
         public IEnumerable<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos { get; set; }
 
         public PlantillaEvaluacion PlantillaEvaluacion { get; set; }
@@ -37,22 +39,32 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         public EvaluationSheetViewModel(EvaluationSheetFormModel form, DESSAUControlGestionDataContext db) :this(db)
         {
             FORM = form;
-            UsuarioCategoriaProyectos = new List<UsuarioCategoriaProyecto>();
-        }
-
-        public EvaluationSheetViewModel(EvaluationSheetFormModel form, DESSAUControlGestionDataContext db, Usuario usuarioActual) : this(form,db)
-        {
-            if (form.IdCategoria.HasValue)
+            UsuarioCategoriaProyectos = new List<UsuarioCategoriaProyecto>();            
+            if (form.IdCategoria.HasValue && form.IdProyecto.HasValue)
             {
+                Proyecto proyecto = db.Proyectos.Single(x => x.IdProyecto == form.IdProyecto);
                 PlantillaEvaluacion = db.PlantillaEvaluacions.SingleOrDefault(x => x.IdCategoria == form.IdCategoria.Value);
-                Preguntas = PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x=>x.Pregunta);
-                UsuarioCategoriaProyectos = usuarioActual
-                    .UsuarioSupervisors1
-                    .SelectMany(x => x.Usuario.UsuarioCategoriaProyectos)
-                    .Where(x => x.IdCategoria == form.IdCategoria.Value && 
+                Preguntas = PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x => x.Pregunta);
+                UsuarioCategoriaProyectos = proyecto.UsuarioCategoriaProyectos
+                    .Where(x => x.IdCategoria == form.IdCategoria.Value &&
                     x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto == TipoEstadoUsuarioCategoriaProyecto.Creado);
-               
+
             }
         }
+
+        //public EvaluationSheetViewModel(EvaluationSheetFormModel form, DESSAUControlGestionDataContext db, int? IdUsuarioDirector) : this(form,db)
+        //{
+        //    Usuario usuarioActual = db.Usuarios.Single(x => x.IdUsuario == IdUsuarioDirector);
+        //    Proyecto proyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == IdUsuarioDirector);
+        //    if (form.IdCategoria.HasValue && IdUsuarioDirector.HasValue)
+        //    {
+        //        PlantillaEvaluacion = db.PlantillaEvaluacions.SingleOrDefault(x => x.IdCategoria == form.IdCategoria.Value);
+        //        Preguntas = PlantillaEvaluacion.PlantillaEvaluacionPreguntas.Select(x=>x.Pregunta);
+        //        UsuarioCategoriaProyectos = proyecto.UsuarioCategoriaProyectos
+        //            .Where(x => x.IdCategoria == form.IdCategoria.Value && 
+        //            x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto == TipoEstadoUsuarioCategoriaProyecto.Creado);
+               
+        //    }
+        //}
     }
 }
