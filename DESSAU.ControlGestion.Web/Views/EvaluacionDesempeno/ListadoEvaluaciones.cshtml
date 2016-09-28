@@ -1,0 +1,27 @@
+﻿@model DESSAU.ControlGestion.Web.Models.EvaluacionModels.ListadoEvaluacionesDesempenoViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación de Desempeño {0}", Model.Periodo)</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @*@Html.PagedListPager(Model.Usuarios, page => Url.Action("ListarUsuario", new
+   {
+       pagina = page,
+       filtro = Model.filtro
+   }))*@
+        @(Html.Grid(Model.Evaluaciones)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre).Named("Profesional");
+            col.For(x => x.UsuarioCategoriaProyecto.Proyecto.Nombre).Named("ODS");
+            col.For(x => x.FechaEvaluacion.Month).Named("Periodo");
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Usuario", "CrearEditarUsuario", null, null, new { IdUsuario = x.IdUsuarioCategoriaProyecto }));
+            col.For(x => Html.ButtonIconActionLink("off", "Resetear Contraseña", "ResetContrasena", null, null, new { IdUsuario = x.IdUsuarioCategoriaProyecto }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+    </div>
+</div>

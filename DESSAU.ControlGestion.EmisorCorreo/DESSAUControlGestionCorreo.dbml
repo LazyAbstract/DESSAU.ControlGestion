@@ -57,4 +57,22 @@
       <Column Name="Pendiente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Function Name="dbo.sp_CargaDedicacionActividad" Method="sp_CargaDedicacionActividad">
+    <Parameter Name="Mes" Parameter="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Ano" Parameter="ano" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_OrchrestraSP" Method="sp_OrchrestraSP">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_OrchrestraSPResult">
+      <Column Name="Remitente" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Destinatario" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Asunto" Type="System.String" DbType="VarChar(44) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoTexto" Type="System.String" DbType="NVarChar(429) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoHTML" Type="System.String" DbType="NVarChar(436) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Pendiente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

@@ -16,15 +16,15 @@ namespace DESSAU.ControlGestion.EmisorCorreo
                 .WithConnectionStringFromConfiguration();
 
             var fecha = DateTime.Now;
-            //if (fecha.DayOfWeek == DayOfWeek.Friday && fecha.Hour < 12)
-            //{
-            //    db.SpAcusete();
-            //}
 
-            //if (fecha.DayOfWeek == DayOfWeek.Monday && fecha.Hour < 12)
-            //{
-            //    db.SpNotificaciones();
-            //}
+            //  carga horas de reporte dedicación actividad
+            db.sp_CargaDedicacionActividad(fecha.Month, fecha.Year);
+
+            //  genera correos masivos            
+            if (fecha.Hour < 12)
+            {
+                db.sp_OrchrestraSP(fecha.Month, fecha.Year);
+            }
 
             //  para cada notificación tipo correo = 2 y estado creda = 1
             foreach (var noti in db.Notificacions.Where(x => x.IdTipoNotificacion == 2 && x.IdTipoEstadoNotificacion == 1))
@@ -55,7 +55,8 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 
             IQueryable<Correo> correos = db.Correos
                 .Where(x => x.FechaProgramadaEnvio.GetValueOrDefault(DateTime.Today) <= DateTime.Today.AddMinutes(1)
-                && x.Pendiente == true);
+                && x.Pendiente == true)
+                .Take(40);
             foreach (Correo correo in correos)
             {
                 EmisorCorreo.EnviarCorreo(correo);

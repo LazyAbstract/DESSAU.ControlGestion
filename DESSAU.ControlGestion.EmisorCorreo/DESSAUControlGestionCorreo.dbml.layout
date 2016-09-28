@@ -27,7 +27,7 @@
         <elementListCompartment Id="529f408d-265c-4cf1-a660-8fe1d177187f" absoluteBounds="6.015, 6.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6 : 5.79890055338542); (5 : 5.79890055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6 : 5.79890055338542); (5 : 5.79890055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionCorreoDataContext/TipoNotificacion/TipoNotificacion_Notificacion" />
       <nodes>
         <classShapeMoniker Id="8242c556-4da6-4a22-83ac-7a59e9a2e85d" />
@@ -40,7 +40,7 @@
         <elementListCompartment Id="d60927fa-79b6-4d7e-922f-cfbfb3b6278b" absoluteBounds="0.515, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 4.73159912109375); (3 : 4.73159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 4.73159912109375); (3 : 4.73159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DESSAUControlGestionCorreoDataContext/Usuario/Usuario_Notificacion" />
       <nodes>
         <classShapeMoniker Id="7fbd20ac-e619-446f-91e4-8ae0bf43aa9f" />

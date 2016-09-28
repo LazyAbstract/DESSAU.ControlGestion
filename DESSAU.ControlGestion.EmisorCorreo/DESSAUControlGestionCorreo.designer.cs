@@ -116,6 +116,20 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 				return this.GetTable<Correo>();
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_CargaDedicacionActividad")]
+		public int sp_CargaDedicacionActividad([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Mes", DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Ano", DbType="Int")] System.Nullable<int> ano)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_OrchrestraSP")]
+		public ISingleResult<sp_OrchrestraSPResult> sp_OrchrestraSP([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano);
+			return ((ISingleResult<sp_OrchrestraSPResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoEstadoNotificacion")]
@@ -1255,6 +1269,140 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	public partial class sp_OrchrestraSPResult
+	{
+		
+		private string _Remitente;
+		
+		private string _Destinatario;
+		
+		private string _Asunto;
+		
+		private string _CuerpoTexto;
+		
+		private string _CuerpoHTML;
+		
+		private System.DateTime _FechaCreacion;
+		
+		private int _Pendiente;
+		
+		public sp_OrchrestraSPResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remitente", DbType="VarChar(25) NOT NULL", CanBeNull=false)]
+		public string Remitente
+		{
+			get
+			{
+				return this._Remitente;
+			}
+			set
+			{
+				if ((this._Remitente != value))
+				{
+					this._Remitente = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Destinatario", DbType="NVarChar(255)")]
+		public string Destinatario
+		{
+			get
+			{
+				return this._Destinatario;
+			}
+			set
+			{
+				if ((this._Destinatario != value))
+				{
+					this._Destinatario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Asunto", DbType="VarChar(44) NOT NULL", CanBeNull=false)]
+		public string Asunto
+		{
+			get
+			{
+				return this._Asunto;
+			}
+			set
+			{
+				if ((this._Asunto != value))
+				{
+					this._Asunto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoTexto", DbType="NVarChar(429) NOT NULL", CanBeNull=false)]
+		public string CuerpoTexto
+		{
+			get
+			{
+				return this._CuerpoTexto;
+			}
+			set
+			{
+				if ((this._CuerpoTexto != value))
+				{
+					this._CuerpoTexto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuerpoHTML", DbType="NVarChar(436) NOT NULL", CanBeNull=false)]
+		public string CuerpoHTML
+		{
+			get
+			{
+				return this._CuerpoHTML;
+			}
+			set
+			{
+				if ((this._CuerpoHTML != value))
+				{
+					this._CuerpoHTML = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCreacion", DbType="DateTime NOT NULL")]
+		public System.DateTime FechaCreacion
+		{
+			get
+			{
+				return this._FechaCreacion;
+			}
+			set
+			{
+				if ((this._FechaCreacion != value))
+				{
+					this._FechaCreacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pendiente", DbType="Int NOT NULL")]
+		public int Pendiente
+		{
+			get
+			{
+				return this._Pendiente;
+			}
+			set
+			{
+				if ((this._Pendiente != value))
+				{
+					this._Pendiente = value;
+				}
 			}
 		}
 	}

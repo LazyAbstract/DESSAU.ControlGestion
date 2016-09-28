@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.Models.EvaluacionModels;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,25 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM)
         {
+            int Mes;
+            int Ano;
             EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
+            if (String.IsNullOrWhiteSpace(FORM.Periodo))
+            {
+                LectorMonthPicker lector = new LectorMonthPicker();
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+                model.FORM.Periodo = lector.GetMonthNameFromInt(fecha.Month)
+                        + " " + fecha.Year.ToString();
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(FORM.Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+            }
+            
             if (FORM.IdProyecto.HasValue)
             {
                 model.Categorias = new SelectList(db.UsuarioCategoriaProyectos
@@ -44,7 +63,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         model.UsuarioCategoriaProyectos
                         .Select(x => x.IdUsuarioCategoriaProyecto).Distinct();
                     model.EvaluacionFORMs = db.Evaluacions
-                        .Where(x => //x.FechaEvaluacion == FORM.Fecha && 
+                        .Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1) && 
                             usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) 
                             //&& x.IdUsuarioDirector == UsuarioActual.IdUsuario
                             )
@@ -68,6 +87,20 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpPost]
         public ActionResult EvaluationSheet(EvaluationSheetFormModel FORM, IEnumerable<EvaluacionFormModel> EvaluacionForms)
         {
+            int Mes;
+            int Ano;
+            if (String.IsNullOrWhiteSpace(FORM.Periodo))
+            {
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(FORM.Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+            }
             EvaluationSheetViewModel model = new EvaluationSheetViewModel(FORM, db);
             if (ModelState.IsValid)
             {
@@ -79,7 +112,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     {
                         evaluacion = new Evaluacion()
                         {
-                            FechaEvaluacion = DateTime.Now,//item.Fecha.Value,
+                            FechaEvaluacion = new DateTime(Ano, Mes, 1),
                             IdUsuarioCategoriaProyecto = item.IdUsuarioCategoriaProyecto.Value,
                             IdUsuarioDirector = UsuarioActual.IdUsuario,
                         };
@@ -129,6 +162,33 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente)
                     .Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListadoEvaluaciones(string Periodo, int? IdProyecto)
+        {
+            int Mes;
+            int Ano;
+            ListadoEvaluacionesDesempenoViewModel model = new ListadoEvaluacionesDesempenoViewModel();
+            if (String.IsNullOrWhiteSpace(Periodo))
+            {
+                LectorMonthPicker lector = new LectorMonthPicker();
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+                model.Periodo = lector.GetMonthNameFromInt(fecha.Month)
+                        + " " + fecha.Year.ToString();
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+            }
+
+            model.Evaluaciones = db.Evaluacions
+                .Where(x => x.FechaEvaluacion == new DateTime(Mes, Ano, 1));
+            
+            return View(model);
         }
     }
 }
