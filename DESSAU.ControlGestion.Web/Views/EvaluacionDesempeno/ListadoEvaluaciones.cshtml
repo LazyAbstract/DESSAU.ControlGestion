@@ -2,26 +2,73 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación de Desempeño {0}", Model.Periodo)</h2>
+        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluaciones de Desempeño {0}", Model.Form.Periodo)</h2>
     </div>
 </div>
 
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Form.Periodo" />
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione una ODS", new { @class = "form-control", placeholder = "Proyectos" })
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(x => x.Form.IdProyecto)
+                    }
+                </div>
+                <button type="submit" id="button-periodo" class="btn btn-info">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <div class="row">
     <div class="col-md-12">
-        @*@Html.PagedListPager(Model.Usuarios, page => Url.Action("ListarUsuario", new
-   {
-       pagina = page,
-       filtro = Model.filtro
-   }))*@
         @(Html.Grid(Model.Evaluaciones)
         .Attributes(@class => "table table-striped")
         .Columns(col =>
         {
             col.For(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre).Named("Profesional");
             col.For(x => x.UsuarioCategoriaProyecto.Proyecto.Nombre).Named("ODS");
-            col.For(x => x.FechaEvaluacion.Month).Named("Periodo");
-            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Usuario", "CrearEditarUsuario", null, null, new { IdUsuario = x.IdUsuarioCategoriaProyecto }));
-            col.For(x => Html.ButtonIconActionLink("off", "Resetear Contraseña", "ResetContrasena", null, null, new { IdUsuario = x.IdUsuarioCategoriaProyecto }));
+            col.For(x => x.Promedio).Named("Promedio");
+            col.For(x => ("0" + x.FechaEvaluacion.Month.ToString()) + "-" + x.FechaEvaluacion.Year.ToString()).Named("Periodo");
+            col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Desempeño", "DetalleEvaluacionDesempeno", null, null, new { IdEvaluacion = x.IdEvaluacion, FechaEvaluacion = x.FechaEvaluacion }));
+            col.For(x => Html.ButtonIconActionLink("download-alt", "Exportar Evaluación Desempeño", "ExportarEvaluacionDesempenoPDF", null, null, new { IdEvaluacion = x.IdEvaluacion, FechaEvaluacion = x.FechaEvaluacion }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2> @String.Format("Profesionales No Evaluados {0}", Model.Form.Periodo)</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        
+        @(Html.Grid(Model.NoEvaluados)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.Usuario.ApellidoNombre).Named("Profesional");
+            col.For(x => x.Proyecto.Nombre).Named("ODS");
+            col.For(x => Html.ButtonIconActionLink("pencil", "Evaluar Desempeño", "EvaluationSheet", null, null, new { IdProyecto = x.IdProyecto, IdCategoria = x.IdCategoria, Periodo = Model.Form.Periodo }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
     </div>
 </div>

@@ -347,11 +347,20 @@
                             <li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
-                            @if (User.IsInRole("Reporte"))
-                            {
+                            @if (User.IsInRole("Evaluación Desempeño"))
+                            {                           
                                 <li>
-                                    <a href="@Url.Action("Index", "EvaluacionDesempeno")"><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación de Desempeño</a>
-                                </li>         
+                                    <a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación de Desempeño<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">                                       
+                                        <li>
+                                            <a href="@Url.Action("Index", "EvaluacionDesempeno")"> Nueva Evaluación</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ListadoEvaluaciones", "EvaluacionDesempeno")"> Ver Evaluaciónes</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
                             }
                             @if (User.IsInRole("Reporte"))
                             {

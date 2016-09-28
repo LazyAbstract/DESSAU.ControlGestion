@@ -148,7 +148,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 }
                 db.SubmitChanges();
                 Mensaje = "Se han guardado las evaluaciones con éxito.";
-                return RedirectToAction("EvaluationSheet");//, new { Fecha = model.FORM.Fecha.Value.ToShortDateString(), IdCategoria = model.FORM.IdCategoria });
+                return RedirectToAction("ListadoEvaluaciones", new { Periodo = FORM.Periodo, IdProyecto = FORM.IdProyecto });
             }
             return View(model);
         }
@@ -164,31 +164,64 @@ namespace DESSAU.ControlGestion.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ListadoEvaluaciones(string Periodo, int? IdProyecto)
+        [HttpGet]
+        public ActionResult ListadoEvaluaciones(ListadoEvaluacionesDesempenoFormModel Form)
         {
             int Mes;
             int Ano;
             ListadoEvaluacionesDesempenoViewModel model = new ListadoEvaluacionesDesempenoViewModel();
-            if (String.IsNullOrWhiteSpace(Periodo))
+            if (String.IsNullOrWhiteSpace(Form.Periodo))
             {
                 LectorMonthPicker lector = new LectorMonthPicker();
-                var fecha = DateTime.Now.AddMonths(-1);
-                Mes = fecha.Month;
-                Ano = fecha.Year;
-                model.Periodo = lector.GetMonthNameFromInt(fecha.Month)
-                        + " " + fecha.Year.ToString();
+                Mes = DateTime.Now.Month;
+                Ano = DateTime.Now.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
+                        + " " + DateTime.Now.Year.ToString();
             }
             else
             {
-                LectorMonthPicker lector = new LectorMonthPicker(Periodo);
+                LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
                 Mes = lector.GetMes;
                 Ano = lector.GetAnno;
             }
-
+            if (UsuarioActual.IdTipoUsuario == TipoUsuario.DirectorProyecto)
+            {
+                Form.IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
+            }
+            //else if (db.Proyectos.Any(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario))
+            //{
+            //    Form.IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
+            //}
             model.Evaluaciones = db.Evaluacions
-                .Where(x => x.FechaEvaluacion == new DateTime(Mes, Ano, 1));
+                .Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1))
+                .OrderBy(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre);
+
+            model.NoEvaluados = db.UsuarioCategoriaProyectos
+                .Where(x => !x.Evaluacions.Any(y => y.FechaEvaluacion == new DateTime(Ano, Mes, 1) 
+                && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                        TipoEstadoUsuarioCategoriaProyecto.NoVigente))
+                        .OrderBy(x => x.Usuario.ApellidoNombre);
+
+            if(Form.IdProyecto.HasValue)
+            {
+                model.Evaluaciones = model.Evaluaciones.Where(x => x.UsuarioCategoriaProyecto.IdProyecto == Form.IdProyecto);
+                model.NoEvaluados = model.NoEvaluados.Where(x => x.IdProyecto == Form.IdProyecto);
+            }
             
             return View(model);
+        }
+
+        public ActionResult DetalleEvaluacionDesempeno(int IdEvaluacion, DateTime FechaEvaluacion)
+        {
+            DetalleEvaluacionDesempenoViewModel model = new DetalleEvaluacionDesempenoViewModel();
+            model.Evaluacion = db.Evaluacions.Single(x => x.IdEvaluacion == IdEvaluacion 
+                && x.FechaEvaluacion == FechaEvaluacion);
+            return View(model);
+        }
+
+        public ActionResult ExportarEvaluacionDesempenoPDF(int IdEvaluacion, DateTime FechaEvaluacion)
+        {
+            throw new NotImplementedException("TODO: Xampi, la magia del PDF plz!");
         }
     }
 }

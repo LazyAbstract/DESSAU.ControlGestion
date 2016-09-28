@@ -7149,6 +7149,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private System.DateTime _FechaEvaluacion;
 		
+		private System.Nullable<double> _Promedio;
+		
 		private EntityRef<EstadoEvaluacion> _EstadoEvaluacion;
 		
 		private EntitySet<EvaluacionPregunta> _EvaluacionPreguntas;
@@ -7169,6 +7171,8 @@ namespace DESSAU.ControlGestion.Core
     partial void OnIdUsuarioDirectorChanged();
     partial void OnFechaEvaluacionChanging(System.DateTime value);
     partial void OnFechaEvaluacionChanged();
+    partial void OnPromedioChanging(System.Nullable<double> value);
+    partial void OnPromedioChanged();
     #endregion
 		
 		public Evaluacion()
@@ -7264,6 +7268,26 @@ namespace DESSAU.ControlGestion.Core
 					this._FechaEvaluacion = value;
 					this.SendPropertyChanged("FechaEvaluacion");
 					this.OnFechaEvaluacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Promedio", DbType="Float")]
+		public System.Nullable<double> Promedio
+		{
+			get
+			{
+				return this._Promedio;
+			}
+			set
+			{
+				if ((this._Promedio != value))
+				{
+					this.OnPromedioChanging(value);
+					this.SendPropertyChanging();
+					this._Promedio = value;
+					this.SendPropertyChanged("Promedio");
+					this.OnPromedioChanged();
 				}
 			}
 		}

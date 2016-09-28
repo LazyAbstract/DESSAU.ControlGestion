@@ -43,7 +43,7 @@
                     }
                     @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control", placeholder = "Categorías" })
                 </div>
-                <button type="submit" id="button-periodo" class="btn btn-default">Buscar</button>
+                <button type="submit" id="button-periodo" class="btn btn-primary">Buscar</button>
             </form>
         </div>
     </div>
@@ -66,7 +66,7 @@
         {
             @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
             <div class="col-md-12">
-                <button type="submit" class="btn btn-default">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
             <br/>
             <br/>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <button type="submit" class="btn btn-default">Guardar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         }
     }
