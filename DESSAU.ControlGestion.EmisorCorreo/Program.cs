@@ -55,8 +55,13 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 
             IQueryable<Correo> correos = db.Correos
                 .Where(x => x.FechaProgramadaEnvio.GetValueOrDefault(DateTime.Today) <= DateTime.Today.AddMinutes(1)
-                && x.Pendiente == true)
-                .Take(40);
+                && x.Pendiente == true);
+
+            if(correos.Count() > 40)
+            {
+                correos = correos.Take(40);
+            }
+
             foreach (Correo correo in correos)
             {
                 EmisorCorreo.EnviarCorreo(correo);
