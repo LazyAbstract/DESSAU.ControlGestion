@@ -10,6 +10,11 @@
             $('#FORM_IdCategoria').CascadingDropDown('#FORM_IdProyecto', $.url('EvaluacionDesempeno/getCategoriaFromProyecto'));
             $('#FORM_IdCategoria').change();
         });
+
+        $(function () {
+            $('#FORM_IdUsuarioCategoriaProyecto').CascadingDropDown('#FORM_IdCategoria', $.url('EvaluacionDesempeno/getProfesionalFromCategoria'));
+            $('#FORM_IdUsuarioCategoriaProyecto').change();
+        });
     </script>
 }
 <div class="row">
@@ -35,13 +40,14 @@
                     <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.FORM.Periodo" />
                     @if (User.IsInRole("Admin"))
                     {
-                        @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Seleccione una ODS", new { @class = "form-control", placeholder = "Proyectos" })
+                        @Html.DropDownListFor(x => x.FORM.IdProyecto, Model.Proyectos, "Seleccione una ODS", new { @class = "form-control" })
                     }
                     else
                     {
                         @Html.HiddenFor(x => x.FORM.IdProyecto)
                     }
-                    @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control", placeholder = "Categorías" })
+                    @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control" })
+                    @*@Html.DropDownListFor(x => x.FORM.IdUsuarioCategoriaProyecto, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })*@
                 </div>
                 <button type="submit" id="button-periodo" class="btn btn-primary">Buscar</button>
             </form>
@@ -49,13 +55,17 @@
     </div>
 </nav>
 
+
 @if (Model.PlantillaEvaluacion != null)
 {
     <div class="row">
         <div class="col-md-12">
-            <div class="panel">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">@Model.PlantillaEvaluacion.Nombre</h3>
+                    <h4 class="panel-title">@Model.PlantillaEvaluacion.Nombre</h4>
+                </div>
+                <div class="panel-body">
+                    <p>Ingrese el valor obtenido en todas las habilidades para cada profesional en las filas del formulario con valores de 1 a 5. Al final de la página puede ver la escala de <i>Valoración de Comportamiento</i>. Tiene la posibilidad de hacer la evaluación para todos los profesionales de la misma categoría (ya que comparten las habilidades a evaluar) o realizarla para un profesional en particular seleccionandolo en los filtros de búsqueda.</p>                   
                 </div>
             </div>
         </div>
@@ -65,21 +75,10 @@
         using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
             @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-            <br/>
-            <br/>
             <div class="row">
                 <div class="col-md-12" style="overflow-x: scroll;">
+                    @Html.ValidationSummary()
                     <table class="table-striped table">
-                        @*<tr>
-                            <th></th>
-                            @foreach (var tipoPregunta in Model.Preguntas.GroupBy(x => x.TipoPregunta.Nombre).OrderBy(x => x.Key))
-                            {
-                            <th colspan="@tipoPregunta.Count()">@tipoPregunta.Key</th>
-                            }
-                            </tr>*@
                         <tr>
                             <th></th>
                             @foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
@@ -115,7 +114,11 @@
                                                     @Html.Hidden(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].IdEvaluacionPregunta", i, j), evaluacionPreguntaDTO.IdEvaluacionPregunta)
                                                 }
                                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].IdPregunta", i, j), pregunta.IdPregunta)
-                                                @Html.TextBox(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(0))
+                                                @Html.TextBox(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(1), new { @class = "form-control", min = "1", max = "5" })
+                                                @*<div class="input-group-btn-vertical">
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                                </div>*@                                          
                                                 @Html.ValidationMessage(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j))
                                             </td>
                                             j++;
@@ -128,6 +131,7 @@
                     </table>
                 </div>
             </div>
+            <br/>
             <div class="col-md-12">
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
@@ -135,3 +139,59 @@
     }
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Valoración de Comportamiento</h5>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        1
+                    </th>
+                    <td>
+                        No alcanza lo mínimo requrido
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        2
+                    </th>
+                    <td>
+                        Inferior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        3
+                    </th>
+                    <td>
+                        Suficiente (lo esperado para el cargo)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        4
+                    </th>
+                    <td>
+                        Superior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        5
+                    </th>
+                    <td>
+                        Supera en forma excepcional lo esperado
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

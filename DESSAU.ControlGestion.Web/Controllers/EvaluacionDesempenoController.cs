@@ -59,12 +59,11 @@ namespace DESSAU.ControlGestion.Web.Controllers
             {
                 if (FORM.IdCategoria.HasValue)
                 {
-                    IEnumerable<int> usuariosDistintos = 
-                        model.UsuarioCategoriaProyectos
+                    IEnumerable<int> usuariosDistintos = model.UsuarioCategoriaProyectos
                         .Select(x => x.IdUsuarioCategoriaProyecto).Distinct();
-                    model.EvaluacionFORMs = db.Evaluacions
-                        .Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1) && 
-                            usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) 
+                    if (FORM.IdUsuarioCategoriaProyecto.HasValue) usuariosDistintos.Where(x => x == FORM.IdUsuarioCategoriaProyecto);
+                    model.EvaluacionFORMs = db.Evaluacions.Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1) 
+                        && usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) 
                             //&& x.IdUsuarioDirector == UsuarioActual.IdUsuario
                             )
                         .Select(x => new EvaluacionFormModel()
@@ -113,6 +112,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         evaluacion = new Evaluacion()
                         {
                             FechaEvaluacion = new DateTime(Ano, Mes, 1),
+                            FechaCreacion = DateTime.Now,
                             IdUsuarioCategoriaProyecto = item.IdUsuarioCategoriaProyecto.Value,
                             IdUsuarioDirector = UsuarioActual.IdUsuario,
                         };
@@ -122,6 +122,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     {
                         evaluacion.EstadoEvaluacion.IdTipoEstadoEvaluacion = TipoEstadoEvaluacion.Editada;
                         evaluacion.EstadoEvaluacion.CreadoPor = User.Identity.Name;
+                        evaluacion.FechaCreacion = DateTime.Now;
                     }
                    
                     if (!item.IdEvaluacion.HasValue)
@@ -145,8 +146,12 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             evaluacion.EvaluacionPreguntas.Add(evaluacionPregunta);
                         }
                     }
+
+                    db.SubmitChanges();
+                    evaluacion.Promedio = evaluacion.EvaluacionPreguntas.Average(X => X.ValorObtenido);
                 }
                 db.SubmitChanges();
+
                 Mensaje = "Se han guardado las evaluaciones con éxito.";
                 return RedirectToAction("ListadoEvaluaciones", new { Periodo = FORM.Periodo, IdProyecto = FORM.IdProyecto });
             }
@@ -161,6 +166,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 .Where(x => x.IdProyecto == IdProyecto && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente)
                     .Select(x => x.Categoria).Distinct(), "IdCategoria", "Nombre");
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getProfesionalFromCategoria(FormCollection formCollection)
+        {
+            var formValue = formCollection.GetValues(0)[0];
+            int IdCategoria = Int16.Parse(formValue);
+            SelectList result = null;
+            result = new SelectList(db.UsuarioCategoriaProyectos
+                .Where(x => x.IdCategoria == IdCategoria && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente)
+                    .Distinct(), "IdUsuarioCategoriaProyecto", "Usuario.ApellidoNombre");
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -194,13 +211,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
             //}
             model.Evaluaciones = db.Evaluacions
                 .Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1))
-                .OrderBy(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre);
+                .OrderBy(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoPaterno);
 
             model.NoEvaluados = db.UsuarioCategoriaProyectos
                 .Where(x => !x.Evaluacions.Any(y => y.FechaEvaluacion == new DateTime(Ano, Mes, 1) 
                 && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                         TipoEstadoUsuarioCategoriaProyecto.NoVigente))
-                        .OrderBy(x => x.Usuario.ApellidoNombre);
+                        .OrderBy(x => x.Usuario.ApellidoPaterno);
 
             if(Form.IdProyecto.HasValue)
             {
@@ -211,15 +228,12 @@ namespace DESSAU.ControlGestion.Web.Controllers
             return View(model);
         }
 
-        public ActionResult DetalleEvaluacionDesempeno(int IdEvaluacion, DateTime FechaEvaluacion)
+        public ActionResult DetalleEvaluacionDesempeno(int IdEvaluacion)
         {
-            DetalleEvaluacionDesempenoViewModel model = new DetalleEvaluacionDesempenoViewModel();
-            model.Evaluacion = db.Evaluacions.Single(x => x.IdEvaluacion == IdEvaluacion 
-                && x.FechaEvaluacion == FechaEvaluacion);
-            return View(model);
+            return View(db.Evaluacions.Single(x => x.IdEvaluacion == IdEvaluacion));
         }
 
-        public ActionResult ExportarEvaluacionDesempenoPDF(int IdEvaluacion, DateTime FechaEvaluacion)
+        public ActionResult ExportarEvaluacionDesempenoPDF(int IdEvaluacion)
         {
             throw new NotImplementedException("TODO: Xampi, la magia del PDF plz!");
         }

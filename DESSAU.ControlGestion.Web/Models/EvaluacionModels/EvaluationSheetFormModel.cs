@@ -19,6 +19,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         //public string ClaseBootstrap { get; set; }
 
         public string Periodo { get; set; }
+        public int? IdUsuarioCategoriaProyecto { get; set; }
 
     }
 

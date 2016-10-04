@@ -1,4 +1,158 @@
-﻿@model DESSAU.ControlGestion.Web.Models.EvaluacionModels.DetalleEvaluacionDesempenoViewModel
+﻿@model DESSAU.ControlGestion.Core.Evaluacion
 
-<p>en construcción!</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación de Desempeño @Html.ActionLink("Exportar PDF", "ExportarEvaluacionDesempenoPDF", new { IdEvaluacion = Model.IdEvaluacion }, new { @class = "btn btn-default" })</h4>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        NOMBRE
+                    </th>
+                    <td>
+                        @Model.UsuarioCategoriaProyecto.Usuario.NombreCompleto
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        SERVICIO
+                    </th>
+                    <td>
+                        @Model.UsuarioCategoriaProyecto.Categoria.Nombre
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        DIRECCIÓN
+                    </th>
+                    <td>
+                        @Model.UsuarioCategoriaProyecto.Proyecto.Nombre
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        PERIODO EVALUACIÓN
+                    </th>
+                    <td>
+                        @String.Format("{0}-{1}", Model.FechaEvaluacion.Month, Model.FechaEvaluacion.Year)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        CONTRATO
+                    </th>
+                    <td>
+                        @Model.UsuarioCategoriaProyecto.Proyecto.Contrato.Nombre
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        PROMEDIO
+                    </th>
+                    <td>
+                        @String.Format("{0:N2}", Model.Promedio)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        APRECIACIÓN GLOBAL
+                    </th>
+                    <td>
+                        @Html.ApreciacionGlobal(Model.Promedio.GetValueOrDefault(0))
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        FECHA EVALUACIÓN
+                    </th>
+                    <td>
+                        @String.Format("{0}", Model.FechaCreacion)
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        @Html.Label("HABILIDADES")
+                    </th>
+                    <th>
+                        @Html.Label("DEFINICION")
+                    </th>
+                    <th>
+                        @Html.Label("VALOR OBTENIDO")
+                    </th>
+                </tr>
+                @{int i = 0;}
+                @foreach (var pregunta in Model.EvaluacionPreguntas.OrderBy(x => x.IdPregunta))
+                {
+                    <tr>
+                        <td>
+                            <p>@pregunta.Pregunta.Habilidad</p>
+                        </td>
+                        <td>
+                            <p>@pregunta.Pregunta.FormulacionPregunta</p>
+                        </td>
+                        <td>
+                            <p class="text-center">@pregunta.ValorObtenido</p>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Valoración de Comportamiento</h5>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        1
+                    </th>
+                    <td>
+                        No alcanza lo mínimo requrido 
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        2
+                    </th>
+                    <td>
+                        Inferior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        3
+                    </th>
+                    <td>
+                        Suficiente (lo esperado para el cargo)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        4
+                    </th>
+                    <td>
+                        Superior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        5
+                    </th>
+                    <td>
+                        Supera en forma excepcional lo esperado
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 

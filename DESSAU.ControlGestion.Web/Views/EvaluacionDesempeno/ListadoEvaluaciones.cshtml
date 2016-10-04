@@ -44,10 +44,10 @@
         {
             col.For(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre).Named("Profesional");
             col.For(x => x.UsuarioCategoriaProyecto.Proyecto.Nombre).Named("ODS");
-            col.For(x => x.Promedio).Named("Promedio");
+            col.For(x => @String.Format("{0:N2}", x.Promedio)).Named("Promedio");
             col.For(x => ("0" + x.FechaEvaluacion.Month.ToString()) + "-" + x.FechaEvaluacion.Year.ToString()).Named("Periodo");
-            col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Desempeño", "DetalleEvaluacionDesempeno", null, null, new { IdEvaluacion = x.IdEvaluacion, FechaEvaluacion = x.FechaEvaluacion }));
-            col.For(x => Html.ButtonIconActionLink("download-alt", "Exportar Evaluación Desempeño", "ExportarEvaluacionDesempenoPDF", null, null, new { IdEvaluacion = x.IdEvaluacion, FechaEvaluacion = x.FechaEvaluacion }));
+            col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Desempeño", "DetalleEvaluacionDesempeno", null, null, new { IdEvaluacion = x.IdEvaluacion }));
+            col.For(x => Html.ButtonIconActionLink("download-alt", "Exportar Evaluación Desempeño", "ExportarEvaluacionDesempenoPDF", null, null, new { IdEvaluacion = x.IdEvaluacion }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
         <hr />
     </div>

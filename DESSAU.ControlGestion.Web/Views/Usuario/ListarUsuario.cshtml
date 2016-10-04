@@ -40,14 +40,17 @@
         @(Html.Grid(Model.Usuarios)
         .Attributes(@class => "table table-striped")
         .Columns(col =>
-            {
-                col.For(x => x.ApellidoPaterno + ", " + x.Nombre).Named("Nombre Completo");
-                col.For(x => x.Correo).Named("Nombre Usuario");
-                col.For(x => x.Contacto).Named("Correo");
-                col.For(x => x.TipoUsuario.Nombre).Named("Tipo Usuario");
-                col.For(x => Html.ButtonIconActionLink("pencil", "Editar Usuario", "CrearEditarUsuario", null, null, new { IdUsuario = x.IdUsuario }));
-                col.For(x => Html.ButtonIconActionLink("off", "Resetear Contraseña", "ResetContrasena", null, null, new { IdUsuario = x.IdUsuario }));
-            }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+        {
+            col.For(x => x.ApellidoPaterno + ", " + x.Nombre).Named("Nombre Completo");
+            col.For(x => x.Correo).Named("Nombre Usuario");
+            col.For(x => x.Contacto).Named("Correo");
+            col.For(x => x.TipoUsuario.Nombre).Named("Tipo Usuario");
+            col.For(x => x.Vigente ? "Vigente" : "No Vigente").Named("Estado");
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Usuario", "CrearEditarUsuario", null, null, new { IdUsuario = x.IdUsuario }));
+            col.For(x => Html.ButtonIconActionLink("off", "Resetear Contraseña", "ResetContrasena", null, null, new { IdUsuario = x.IdUsuario }));
+            col.For(x => x.Vigente ? Html.ButtonIconActionLink("remove", "Dar de Baja Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario })
+                : Html.ButtonIconActionLink("ok", "Dar de Alta Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
     </div>
 </div>
 

@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace DESSAU.ControlGestion.Web.Controllers
 {
-    //[Authorize(Roles = "Usuario")]
+    [Authorize(Roles = "Admin")]
     public class UsuarioController : BaseController
     {
         private ApplicationSignInManager _signInManager;
@@ -66,7 +66,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListarUsuarioViewModel Model = new ListarUsuarioViewModel();
             Model.filtro = filtro;
-            IEnumerable<Usuario> Users = db.Usuarios.OrderBy(x => x.ApellidoPaterno);
+            IEnumerable<Usuario> Users = db.Usuarios.OrderByDescending(x => x.Vigente)
+                .ThenBy(x => x.ApellidoPaterno);
             if (!String.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
@@ -176,6 +177,37 @@ namespace DESSAU.ControlGestion.Web.Controllers
             string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
             var result = await UserManager.ResetPasswordAsync(user.Id, code, Password);
             if(result.Succeeded) Mensaje = "La contraseña fue reseteada exitosamente";
+            return RedirectToAction("ListarUsuario");
+        }
+
+        public ActionResult CambiarEstadoUsuario(int IdUsuario)
+        {
+            Usuario _user = db.Usuarios.Single(x => x.IdUsuario == IdUsuario);
+            _user.Vigente = !_user.Vigente;
+            UsuarioCategoriaProyecto ucp = db.UsuarioCategoriaProyectos
+                .SingleOrDefault(x => x.IdUsuario == IdUsuario 
+                && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            if(ucp != null) ucp.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto = TipoEstadoUsuarioCategoriaProyecto.NoVigente;
+
+            var user = UserManager.FindByName(_user.Correo);
+            if (!_user.Vigente)
+            {                
+                var roles = UserManager.GetRoles(user.Id);
+                foreach (var rol in db.TipoUsuarioPermisos.Where(x => x.IdTipoUsuario == _user.IdTipoUsuario).Select(x => x.Permiso.Nombre))
+                {
+                    UserManager.RemoveFromRole(user.Id, rol);
+                }
+            }
+            else
+            {
+                foreach (var permiso in db.TipoUsuarioPermisos.Where(x => x.IdTipoUsuario == _user.IdTipoUsuario).Select(x => x.Permiso.Nombre))
+                {
+                    var roleresult = UserManager.AddToRole(user.Id, permiso);
+                }
+            }
+            
+            db.SubmitChanges();
+            Mensaje = "El usuario ha cambiado de estado exitosamente";
             return RedirectToAction("ListarUsuario");
         }
 

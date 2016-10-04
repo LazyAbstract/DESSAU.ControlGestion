@@ -24,9 +24,19 @@ namespace DESSAU.ControlGestion.Web.Helpers
             return MvcHtmlString.Create(builder.ToString());
         }
 
-        public static string ImprimeFormatoHoraAufen(this long ticks)
+        //public static string ImprimeFormatoHoraAufen(this long ticks)
+        //{
+        //    return String.Format("{0}:{1}", Math.Floor(TimeSpan.FromTicks(ticks).TotalHours), (Math.Floor(TimeSpan.FromTicks(ticks).TotalMinutes % 60).ToString("00")));
+        //}
+
+        public static string ApreciacionGlobal(this HtmlHelper htmlHelper, double Promedio)
         {
-            return String.Format("{0}:{1}", Math.Floor(TimeSpan.FromTicks(ticks).TotalHours), (Math.Floor(TimeSpan.FromTicks(ticks).TotalMinutes % 60).ToString("00")));
+            string Apreciacion = "Excepcional";
+            if (Promedio < 2) Apreciacion = "Deficiente";
+            else if(Promedio < 2.5) Apreciacion = "Mejorable";
+            else if (Promedio < 3.5) Apreciacion = "Satisfactorio";
+            else if (Promedio < 4.5) Apreciacion = "Notable";
+            return Apreciacion;
         }
     }
 }
