@@ -57,9 +57,9 @@ namespace DESSAU.ControlGestion.EmisorCorreo
                 .Where(x => x.FechaProgramadaEnvio.GetValueOrDefault(DateTime.Today) <= DateTime.Today.AddMinutes(1)
                 && x.Pendiente == true);
 
-            if(correos.Count() > 40)
+            if(correos.Count() > 35)
             {
-                correos = correos.Take(40);
+                correos = correos.Take(35);
             }
 
             foreach (Correo correo in correos)

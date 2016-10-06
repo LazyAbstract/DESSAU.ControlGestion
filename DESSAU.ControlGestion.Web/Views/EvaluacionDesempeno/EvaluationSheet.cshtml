@@ -11,10 +11,10 @@
             $('#FORM_IdCategoria').change();
         });
 
-        $(function () {
-            $('#FORM_IdUsuarioCategoriaProyecto').CascadingDropDown('#FORM_IdCategoria', $.url('EvaluacionDesempeno/getProfesionalFromCategoria'));
-            $('#FORM_IdUsuarioCategoriaProyecto').change();
-        });
+        //$(function () {
+        //    $('#FORM_IdUsuario').CascadingDropDown('#FORM_IdProyecto', $.url('EvaluacionDesempeno/getProfesionalFromProyecto'));
+        //    $('#FORM_IdUsuario').change();
+        //});
     </script>
 }
 <div class="row">
@@ -47,7 +47,7 @@
                         @Html.HiddenFor(x => x.FORM.IdProyecto)
                     }
                     @Html.DropDownListFor(x => x.FORM.IdCategoria, Model.Categorias, "Seleccione una Categoría", new { @class = "form-control" })
-                    @*@Html.DropDownListFor(x => x.FORM.IdUsuarioCategoriaProyecto, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })*@
+                    @*@Html.DropDownListFor(x => x.FORM.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })*@
                 </div>
                 <button type="submit" id="button-periodo" class="btn btn-primary">Buscar</button>
             </form>
@@ -65,7 +65,7 @@
                     <h4 class="panel-title">@Model.PlantillaEvaluacion.Nombre</h4>
                 </div>
                 <div class="panel-body">
-                    <p>Ingrese el valor obtenido en todas las habilidades para cada profesional en las filas del formulario con valores de 1 a 5. Al final de la página puede ver la escala de <i>Valoración de Comportamiento</i>. Tiene la posibilidad de hacer la evaluación para todos los profesionales de la misma categoría (ya que comparten las habilidades a evaluar) o realizarla para un profesional en particular seleccionandolo en los filtros de búsqueda.</p>                   
+                    <p>Ingrese el valor obtenido en todas las habilidades para cada profesional en las filas del formulario con valores de 1 a 5. Al final de la página puede ver la escala de <i>Valoración de Comportamiento</i>. Tiene la posibilidad de hacer la evaluación para todos los profesionales de la misma categoría (ya que comparten las habilidades a evaluar).</p> @*o realizarla para un profesional en particular seleccionandolo en los filtros de búsqueda.</p>*@                   
                 </div>
             </div>
         </div>
@@ -75,6 +75,8 @@
         using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
         {
             @Html.Hidden("FORM.IdCategoria", Model.FORM.IdCategoria)
+            @Html.Hidden("FORM.IdProyecto", Model.FORM.IdProyecto)
+            @Html.Hidden("FORM.Periodo", Model.FORM.Periodo)
             <div class="row">
                 <div class="col-md-12" style="overflow-x: scroll;">
                     @Html.ValidationSummary()

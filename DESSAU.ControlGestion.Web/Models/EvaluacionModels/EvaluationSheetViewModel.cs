@@ -30,10 +30,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         {
             Categorias = new SelectList(db.Categorias, "IdCategoria", "Nombre");
             Proyectos = new SelectList(db.Proyectos, "IdProyecto", "Nombre");
-            Usuarios = new SelectList(db.UsuarioCategoriaProyectos
-                .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
-                    TipoEstadoUsuarioCategoriaProyecto.NoVigente)
-                .OrderBy(x => x.Usuario.ApellidoPaterno), "IdUsuarioCategoriaProyecto", "Usuario.ApellidoNombre");
+            //Usuarios = new SelectList(db.Usuarios.Where(x => x.Vigente).OrderBy(x => x.ApellidoNombre), "IdUsuario", "ApellidoNombre");
             //PlantillaEvaluacions = new SelectList(db.PlantillaEvaluacions, "IdPlantillaEvaluacion", "Nombre");
         }
 

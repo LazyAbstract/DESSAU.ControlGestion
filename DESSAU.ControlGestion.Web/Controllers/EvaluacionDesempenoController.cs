@@ -61,7 +61,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     IEnumerable<int> usuariosDistintos = model.UsuarioCategoriaProyectos
                         .Select(x => x.IdUsuarioCategoriaProyecto).Distinct();
-                    if (FORM.IdUsuarioCategoriaProyecto.HasValue) usuariosDistintos.Where(x => x == FORM.IdUsuarioCategoriaProyecto);
+
+                    //if (FORM.IdUsuario.HasValue) usuariosDistintos.Where(x => x == FORM.IdUsuarioCategoriaProyecto);
+
                     model.EvaluacionFORMs = db.Evaluacions.Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1) 
                         && usuariosDistintos.Contains(x.IdUsuarioCategoriaProyecto) 
                             //&& x.IdUsuarioDirector == UsuarioActual.IdUsuario
@@ -169,15 +171,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult getProfesionalFromCategoria(FormCollection formCollection)
+        public ActionResult getProfesionalFromProyecto(FormCollection formCollection)
         {
             var formValue = formCollection.GetValues(0)[0];
-            int IdCategoria = Int16.Parse(formValue);
+            int IdProyecto = Int16.Parse(formValue);
             SelectList result = null;
             result = new SelectList(db.UsuarioCategoriaProyectos
-                .Where(x => x.IdCategoria == IdCategoria && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                .Where(x => x.IdProyecto == IdProyecto && x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                     TipoEstadoUsuarioCategoriaProyecto.NoVigente)
-                    .Distinct(), "IdUsuarioCategoriaProyecto", "Usuario.ApellidoNombre");
+                    .Distinct().Select(x => x.Usuario), "IdUsuario", "ApellidoNombre");
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -187,6 +189,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             int Mes;
             int Ano;
             ListadoEvaluacionesDesempenoViewModel model = new ListadoEvaluacionesDesempenoViewModel();
+            
             if (String.IsNullOrWhiteSpace(Form.Periodo))
             {
                 LectorMonthPicker lector = new LectorMonthPicker();
@@ -200,11 +203,19 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
                 Mes = lector.GetMes;
                 Ano = lector.GetAnno;
+                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
+                        + " " + DateTime.Now.Year.ToString();
             }
             if (UsuarioActual.IdTipoUsuario == TipoUsuario.DirectorProyecto)
             {
                 Form.IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
             }
+            else
+            {
+                model.Form.IdProyecto = Form.IdProyecto;
+            }
+
+            
             //else if (db.Proyectos.Any(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario))
             //{
             //    Form.IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
