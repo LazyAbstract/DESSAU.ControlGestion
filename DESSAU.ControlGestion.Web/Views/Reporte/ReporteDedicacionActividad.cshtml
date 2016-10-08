@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3 id="title-periodo">Porcentaje Dedicación Actividad @Model.Periodo</h3>
+        <h3 id="title-periodo">Porcentaje Dedicación Actividad @Model.Form.Periodo</h3>
     </div>
 </div>
 
@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav"></ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Periodo" />
+                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Form.Periodo" />
                     @Html.DropDownListFor(x => x.Form.IdProyecto, Model.Proyectos, "Seleccione una ODS", new { @class = "form-control", placeholder = "Proyectos" })
                     @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control", placeholder = "Profesionales" })
                 </div>
@@ -34,7 +34,7 @@
     </div>
 </nav>
 
-<div class="row">
+@*<div class="row">
     <div class="col-lg-6 col-md-6">
         <div class="panel panel-@Model.claseBootstrap">
             <div class="panel-heading">
@@ -43,7 +43,7 @@
                         <i class="fa fa-bullseye fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">@Model.PorcentajeDesviacion.ToString()%</div>
+                        <div class="huge">@String.Format("{0:P2}.", Model.PorcentajeDesviacion)</div>
                         <div>Índice Desviación</div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
             </a>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="row">
     <div class="col-md-12">

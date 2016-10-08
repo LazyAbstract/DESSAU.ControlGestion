@@ -36,17 +36,18 @@
         <h4>Detalle Horas Periodo @Model.Form.Periodo</h4>
     </div>
 </div>
+
 <div class="row">
     <div class="col-lg-3 col-md-6">
-        <div class="panel panel-success">
+        <div class="panel panel-@Model.claseBootstrap">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-calendar fa-5x"></i>
+                        <i class="fa fa-bullseye fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">@Model.calc.CalculoHoraTotal.ToString()</div>
-                        <div>Horas Laborables</div>
+                        <div class="huge">@String.Format("{0:P0}", Model.PorcentajeDesviacion)</div>
+                        <div>Índice Desviación</div>
                     </div>
                 </div>
             </div>

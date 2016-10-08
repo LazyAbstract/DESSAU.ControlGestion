@@ -11,9 +11,9 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels
     public class ReporteDedicacionActividadViewModel
     {
         public ReporteDedicacionActividadFormModel Form { get; set; }
-        public string Periodo { get; set; }
+        //public string Periodo { get; set; }
         public string claseBootstrap { get; set; }
-        public int PorcentajeDesviacion { get; set; }
+        public double PorcentajeDesviacion { get; set; }
         public UsuarioCategoriaProyecto UCP { get; set; }
         public IEnumerable<SelectListItem> Proyectos { get; set; }
         public IEnumerable<SelectListItem> Usuarios { get; set; }

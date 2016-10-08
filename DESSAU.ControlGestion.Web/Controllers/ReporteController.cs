@@ -46,6 +46,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             model.Form.Fecha = new DateTime(Ano, Mes, 1);
             model.calc = new CalculoHoraMensual(UsuarioActual.IdUsuario, TipoTimeSheet.Planificacion, new DateTime(Ano, Mes, 1));
+
+            var indice = db.fn_IndiceDesviacion(Mes, Ano, model.Form.IdProyecto, null).FirstOrDefault();
+            double desviacion = 0;
+            if (indice != null)
+            {
+                desviacion = indice.IndiceDesviacion.GetValueOrDefault(0);
+            }
+
+            model.PorcentajeDesviacion = desviacion;
+            if (model.PorcentajeDesviacion > 0.05) model.claseBootstrap = "warning";
+            if (model.PorcentajeDesviacion > 0.1) model.claseBootstrap = "danger";
+
             IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
                 .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
                 .OrderBy(x => x.Usuario.ApellidoPaterno);
@@ -70,16 +82,36 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     model.Form.IdProyecto = upc.IdProyecto;
                 }                
             }
-            
-            LectorMonthPicker lector = new LectorMonthPicker();
-            model.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month) 
-                + " " + DateTime.Now.Year.ToString();
 
-            var hola = db.fn_HorasPlanificacionDeclaracion(8, 2016, model.Form.IdUsuario, model.Form.IdProyecto);
-            double chao = (100 * hola.Sum(x => x.Desviacion.GetValueOrDefault(0)) / (double)hola.Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)));
-            model.PorcentajeDesviacion = (int)Math.Round(chao);
-            if (model.PorcentajeDesviacion > 5) model.claseBootstrap = "warning";
-            if (model.PorcentajeDesviacion > 10) model.claseBootstrap = "danger";
+            int Mes;
+            int Ano;
+            if (String.IsNullOrWhiteSpace(Form.Periodo))
+            {
+                LectorMonthPicker lector = new LectorMonthPicker();
+                Mes = DateTime.Now.Month;
+                Ano = DateTime.Now.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
+                       + " " + DateTime.Now.Year.ToString();
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+                model.Form.Periodo = lector.GetMonthNameFromInt(Mes)
+                       + " " + Ano.ToString();
+            }
+
+            //var indice = db.fn_IndiceDesviacion(Mes, Ano, model.Form.IdProyecto, model.Form.IdUsuario).FirstOrDefault();
+            //double desviacion = 0;
+            //if(indice != null)
+            //{
+            //    desviacion = indice.IndiceDesviacion.GetValueOrDefault(0);
+            //}
+
+            //model.PorcentajeDesviacion = desviacion;
+            //if (model.PorcentajeDesviacion > 5) model.claseBootstrap = "warning";
+            //if (model.PorcentajeDesviacion > 10) model.claseBootstrap = "danger";
             return View(model);
         }
 

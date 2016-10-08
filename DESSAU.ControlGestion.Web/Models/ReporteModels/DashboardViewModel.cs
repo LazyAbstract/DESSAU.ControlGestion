@@ -18,7 +18,8 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels
         public IEnumerable<SelectListItem> Usuarios { get; set; }
         private ProyectoSelectListProvider pslp = new ProyectoSelectListProvider();
         private UsuarioSelectListProvider uslp = new UsuarioSelectListProvider();
-        //public string Periodo { get; set; }
+        public string claseBootstrap { get; set; }
+        public double PorcentajeDesviacion { get; set; }
 
         public DashboardViewModel()
         {
@@ -31,14 +32,5 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels
         {
             Form = form;
         }
-
-        //public class DashboardViewModelItem
-        //{
-        //    public Usuario Usuario { get; set; }
-        //    public bool PlanificacionOk { get; set; }
-        //    public bool DeclaracionOk { get; set; }
-        //    public int HorasPlanificadas { get; set; }
-        //    public int HorasDeclaras { get; set; }
-        //}
     }
 }

@@ -375,4 +375,16 @@
       <Column Name="Desviacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.fn_IndiceDesviacion" Method="fn_IndiceDesviacion" IsComposable="true">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_IndiceDesviacionResult">
+      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Desviacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IndiceDesviacion" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IndiceDesviacionAbsoluta" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

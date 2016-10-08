@@ -10,8 +10,10 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels
         public int? IdUsuarioCategoriaProyecto { get; set; }
         public int? IdProyecto { get; set; }
         public int? IdUsuario { get; set; }
-        public int? Ano { get; set; }
-        public int? Mes { get; set; }
+        //public int? Ano { get; set; }
+        //public int? Mes { get; set; }
+
+        public string Periodo { get; set; }
         public DateTime? Fecha { get; set; }
     }
 }

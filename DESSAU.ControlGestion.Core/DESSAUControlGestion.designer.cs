@@ -450,6 +450,12 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_HorasPlanificacionDeclaracionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_IndiceDesviacion", IsComposable=true)]
+		public IQueryable<fn_IndiceDesviacionResult> fn_IndiceDesviacion([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdProyecto", DbType="Int")] System.Nullable<int> idProyecto, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
+		{
+			return this.CreateMethodCallQuery<fn_IndiceDesviacionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idProyecto, idUsuario);
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -7672,6 +7678,86 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._Desviacion != value))
 				{
 					this._Desviacion = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_IndiceDesviacionResult
+	{
+		
+		private System.Nullable<int> _HorasPlanificadas;
+		
+		private System.Nullable<int> _Desviacion;
+		
+		private System.Nullable<double> _IndiceDesviacion;
+		
+		private System.Nullable<double> _IndiceDesviacionAbsoluta;
+		
+		public fn_IndiceDesviacionResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasPlanificadas", DbType="Int")]
+		public System.Nullable<int> HorasPlanificadas
+		{
+			get
+			{
+				return this._HorasPlanificadas;
+			}
+			set
+			{
+				if ((this._HorasPlanificadas != value))
+				{
+					this._HorasPlanificadas = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Desviacion", DbType="Int")]
+		public System.Nullable<int> Desviacion
+		{
+			get
+			{
+				return this._Desviacion;
+			}
+			set
+			{
+				if ((this._Desviacion != value))
+				{
+					this._Desviacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndiceDesviacion", DbType="Float")]
+		public System.Nullable<double> IndiceDesviacion
+		{
+			get
+			{
+				return this._IndiceDesviacion;
+			}
+			set
+			{
+				if ((this._IndiceDesviacion != value))
+				{
+					this._IndiceDesviacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndiceDesviacionAbsoluta", DbType="Float")]
+		public System.Nullable<double> IndiceDesviacionAbsoluta
+		{
+			get
+			{
+				return this._IndiceDesviacionAbsoluta;
+			}
+			set
+			{
+				if ((this._IndiceDesviacionAbsoluta != value))
+				{
+					this._IndiceDesviacionAbsoluta = value;
 				}
 			}
 		}
