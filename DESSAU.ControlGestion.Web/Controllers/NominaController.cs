@@ -1,8 +1,10 @@
-﻿using DESSAU.ControlGestion.Core;
+﻿using AutoMapper;
+using DESSAU.ControlGestion.Core;
 using DESSAU.ControlGestion.Web.Models.NominaModels;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -70,6 +72,21 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             CrearEditarNominaViewModel model = new CrearEditarNominaViewModel(Form);
             return View(model);
+        }
+
+        public ActionResult ExportarNominaExcel(int? IdProyecto)
+        {
+            IEnumerable<UsuarioCategoriaProyecto> Nomina = db.UsuarioCategoriaProyectos
+                .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
+                .OrderBy(x => x.Proyecto.Nombre).ThenBy(x => x.Usuario.ApellidoPaterno);
+            if (IdProyecto.HasValue) Nomina = Nomina.Where(x => x.IdProyecto == IdProyecto);
+            IEnumerable<ExportaNominaExcelViewModel> NominaExportar =
+                Mapper.Map<IEnumerable<UsuarioCategoriaProyecto>, IEnumerable<ExportaNominaExcelViewModel>>(Nomina);
+            using (var Lista = new MemoryStream())
+            {
+                ExportadorExcel.GeneraExcel<ExportaNominaExcelViewModel>(NominaExportar, "Lista", Lista, true);
+                return File(Lista.ToArray(), "applications/excel", "Nómina.xls");
+            }
         }
     }
 }

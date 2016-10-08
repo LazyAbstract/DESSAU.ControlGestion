@@ -52,11 +52,15 @@
             col.For(x => Html.ButtonIconActionLink("transfer", "Re Asignar a ODS", "CrearEditarNomina", null, null, new { IdUsuario = x.IdUsuario }));
         }).Empty("No se han encontrado profesionales asignados a este proyecto"))
     </div>
+    <hr />
+    @Html.ActionLink("Exportar Nómina", "ExportarNominaExcel", new { IdProyecto = Model.IdProyecto }, new { @class = "btn btn-success" })
 </div>
+
+
 
 @if (User.IsInRole("Admin"))
 {
-    <hr/>
+    <hr />
     <h3>Profesionales no Asignados</h3>
     <div class="row">
         <div class="col-md-12">

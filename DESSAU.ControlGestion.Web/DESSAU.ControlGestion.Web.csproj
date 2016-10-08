@@ -243,6 +243,7 @@
     <Compile Include="MapperProfiles\DefaultProfileMapper.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionEvaluacionFormModel.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionPreguntaDTOEvaluacionPregunta.cs" />
+    <Compile Include="MapperProfiles\NominaMappers\UsuarioCategoriaProyectoExportaNominaExcelViewModel.cs" />
     <Compile Include="MapperProfiles\TimeSheetMappers\TimeSheetTimeSheetDTO.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\CrearEditarUsuarioFormModelUsuario.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\UsuarioCrearEditarUsuarioFormModel.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NominaModels\ExportaNominaExcelViewModel.cs" />
     <Compile Include="Models\ProyectoModels\CrearEditarProyectoFormModel.cs" />
     <Compile Include="Models\ProyectoModels\CrearEditarProyectoViewModel.cs" />
     <Compile Include="Models\ProyectoModels\ListarProyectoViewModel.cs" />
