@@ -308,20 +308,6 @@
       <Association Name="Usuario_Proyecto" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Evaluacion" Member="Evaluacions">
-    <Type Name="Evaluacion">
-      <Column Name="IdEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Evaluacion_EstadoEvaluacion" Member="EstadoEvaluacion" ThisKey="IdEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacion" Cardinality="One" />
-      <Association Name="Evaluacion_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdEvaluacion" OtherKey="IdEvaluacion" Type="EvaluacionPregunta" />
-      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-      <Association Name="Usuario_Evaluacion" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Usuario" Member="Usuarios">
     <Type Name="Usuario">
       <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -338,6 +324,20 @@
       <Association Name="Usuario_Proyecto" Member="Proyectos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Proyecto" />
       <Association Name="Usuario_Evaluacion" Member="Evaluacions" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Evaluacion" />
       <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Evaluacion" Member="Evaluacions">
+    <Type Name="Evaluacion">
+      <Column Name="IdEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Evaluacion_EstadoEvaluacion" Member="EstadoEvaluacion" ThisKey="IdEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacion" Cardinality="One" />
+      <Association Name="Evaluacion_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdEvaluacion" OtherKey="IdEvaluacion" Type="EvaluacionPregunta" />
+      <Association Name="Usuario_Evaluacion" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">
