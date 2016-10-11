@@ -4,9 +4,11 @@ using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.Models.EvaluacionModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace DESSAU.ControlGestion.Web.Controllers
 {
@@ -246,7 +248,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
 
         public ActionResult ExportarEvaluacionDesempenoPDF(int IdEvaluacion)
         {
-            throw new NotImplementedException("TODO: Xampi, la magia del PDF plz!");
+            Evaluacion evaluacion = db.Evaluacions.SingleOrDefault(x=>x.IdEvaluacion == IdEvaluacion);
+            DetalleEvaluacionPdfGenerator detalleEvaluacion = new DetalleEvaluacionPdfGenerator(evaluacion);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "dessauLogoPdf.jpg");
+            return File(
+                detalleEvaluacion.getDetalleEvaluacionPdf(
+                        db, 
+                        iTextSharp.text.Image.GetInstance(path))
+                , "pdf/application"
+                , string.Format("{0}_{1}.pdf", evaluacion.FechaEvaluacion.ToString("yyyyMM"), evaluacion.UsuarioCategoriaProyecto.Usuario.Correo));
         }
     }
 }
