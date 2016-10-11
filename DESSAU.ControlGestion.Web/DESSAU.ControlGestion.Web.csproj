@@ -60,6 +60,10 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -255,12 +259,14 @@
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaViewModel.cs" />
     <Compile Include="Models\CategoriaModels\ListarCategoriaViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\DetalleEvaluacionDesempenoViewModel.cs" />
+    <Compile Include="Models\EvaluacionModels\DetalleEvaluacionPdfGenerator.cs" />
     <Compile Include="Models\EvaluacionModels\EvaluationSheetFormModel.cs" />
     <Compile Include="Models\EvaluacionModels\EvaluationSheetViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoFormModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoViewModel.cs" />
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LogoDessauEncabezadoPdfEventHandler.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NominaModels\ExportaNominaExcelViewModel.cs" />
     <Compile Include="Models\ProyectoModels\CrearEditarProyectoFormModel.cs" />
@@ -293,6 +299,7 @@
     <Compile Include="Models\NominaModels\CrearEditarNominaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\dessauLogoPdf.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1210,9 +1217,7 @@
     <Content Include="Views\EvaluacionDesempeno\ListadoEvaluaciones.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\DetalleEvaluacionDesempeno.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
