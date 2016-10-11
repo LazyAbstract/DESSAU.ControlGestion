@@ -61,9 +61,11 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
             identificacion.AddCell(getCabeceraCell("Sevicio"));
             identificacion.AddCell(getNormalCell(_evaluacion.UsuarioCategoriaProyecto.Categoria.Nombre));
             identificacion.AddCell(getCabeceraCell("Dirección"));
-            identificacion.AddCell(getNormalCell(_evaluacion.UsuarioCategoriaProyecto.Proyecto.Usuario.NombreCompleto));
+            identificacion.AddCell(getNormalCell(_evaluacion.UsuarioCategoriaProyecto.Proyecto.Nombre));
             identificacion.AddCell(getCabeceraCell("Contrato"));
             identificacion.AddCell(getNormalCell(_evaluacion.UsuarioCategoriaProyecto.Proyecto.Contrato.Nombre));
+            identificacion.AddCell(getCabeceraCell("Período de evaluación"));
+            identificacion.AddCell(getNormalCell(String.Format("{0}-{1}", _evaluacion.FechaEvaluacion.Month, _evaluacion.FechaEvaluacion.Year)));
             doc.Add(identificacion);
         }
 
