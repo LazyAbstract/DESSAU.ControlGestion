@@ -9,4 +9,10 @@
       <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Tmp_PruebasWebJob" Member="Tmp_PruebasWebJobs">
+    <Type Name="Tmp_PruebasWebJob">
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Texto" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

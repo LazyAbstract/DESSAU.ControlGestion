@@ -340,6 +340,12 @@
       <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Tmp_PruebasWebJob" Member="Tmp_PruebasWebJobs">
+    <Type Name="Tmp_PruebasWebJob">
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Texto" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">
     <Parameter Name="mes" Type="System.Int32" DbType="Int" />
     <Parameter Name="ano" Type="System.Int32" DbType="Int" />
