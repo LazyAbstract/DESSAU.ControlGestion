@@ -72,6 +72,14 @@ namespace SandBox
 				return this.GetTable<DiaEspecial>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Tmp_PruebasWebJob> Tmp_PruebasWebJobs
+		{
+			get
+			{
+				return this.GetTable<Tmp_PruebasWebJob>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DiaEspecial")]
@@ -228,6 +236,51 @@ namespace SandBox
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tmp_PruebasWebJob")]
+	public partial class Tmp_PruebasWebJob
+	{
+		
+		private System.DateTime _Fecha;
+		
+		private string _Texto;
+		
+		public Tmp_PruebasWebJob()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="DateTime NOT NULL")]
+		public System.DateTime Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Texto", DbType="NChar(10)")]
+		public string Texto
+		{
+			get
+			{
+				return this._Texto;
+			}
+			set
+			{
+				if ((this._Texto != value))
+				{
+					this._Texto = value;
+				}
 			}
 		}
 	}

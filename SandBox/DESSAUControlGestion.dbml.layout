@@ -8,5 +8,11 @@
         <elementListCompartment Id="837daf9a-b1d1-4518-b83c-a4006b53da1a" absoluteBounds="3.3899999999999997, 2.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="291f21ad-313d-4283-907c-141391fc6f28" absoluteBounds="6.875, 1.875, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/DESSAUControlGestionDataContext/Tmp_PruebasWebJob" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d888b02-fd5a-4816-8cbc-54f3817a8141" absoluteBounds="6.89, 2.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
