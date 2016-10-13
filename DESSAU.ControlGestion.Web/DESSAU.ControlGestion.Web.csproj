@@ -1133,6 +1133,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="App_Data\PlantillaInformeEvaluacionDessau.pdf" />
     <None Include="Properties\PublishProfiles\dessaucontrolhh - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\dessaucontrolhh - Web Deploy.pubxml" />
     <Content Include="Scripts\clndr.min.js" />
