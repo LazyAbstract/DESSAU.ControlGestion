@@ -20,7 +20,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
 
 
 
-        public byte[] getDetalleEvaluacionPdf(DESSAUControlGestionDataContext db, Image imagenLogo)
+        public byte[] getDetalleEvaluacionPdf(DESSAUControlGestionDataContext db, Image imagenLogo, PdfReader plantilla)
         {
             byte[] buffer = null;
             using (MemoryStream ms = new MemoryStream())
@@ -34,6 +34,15 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
                 };
                 writer.PageEvent = e;
                 document.Open();
+                
+                PdfImportedPage pagina1 = writer.GetImportedPage(plantilla, 1);
+                PdfImportedPage pagina2 = writer.GetImportedPage(plantilla, 2);
+                PdfContentByte cb = writer.DirectContent;
+                document.NewPage();
+                cb.AddTemplate(pagina1, 1f, 0, 0, 1f, 0, 0);
+                document.NewPage();
+                cb.AddTemplate(pagina2, 1f, 0, 0, 1f, 0, 0);
+                document.NewPage();
                 generarDetalleEvaluacionPdf(document, db);
                 document.Close();
                 buffer = ms.ToArray();
