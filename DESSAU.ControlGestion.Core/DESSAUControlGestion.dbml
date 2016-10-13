@@ -393,4 +393,31 @@
       <Column Name="IndiceDesviacionAbsoluta" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.fn_GetDiasPendientesDeclaracionByIdUsuario" Method="fn_GetDiasPendientesDeclaracionByIdUsuario" IsComposable="true">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="fn_GetDiasPendientesDeclaracionByIdUsuarioResult">
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_GetDiasPendientesPlanificacionByIdUsuario" Method="fn_GetDiasPendientesPlanificacionByIdUsuario" IsComposable="true">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="fn_GetDiasPendientesPlanificacionByIdUsuarioResult">
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_ReportePorUsuario" Method="fn_ReportePorUsuario" IsComposable="true">
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="fn_ReportePorUsuarioResult">
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
+      <Column Name="Categoria" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ODS" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IndiceDesviacion" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="CantidadPendientesPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantidadPendientesDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>
