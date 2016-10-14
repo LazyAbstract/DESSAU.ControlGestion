@@ -33,10 +33,11 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (String.IsNullOrWhiteSpace(Form.Periodo))
             {
                 LectorMonthPicker lector = new LectorMonthPicker();
-                Mes = DateTime.Now.Month;
-                Ano = DateTime.Now.Year;
-                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
-                        + " " + DateTime.Now.Year.ToString();                
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(fecha.Month)
+                        + " " + fecha.Year.ToString();                
             }
             else
             {
@@ -58,14 +59,29 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (model.PorcentajeDesviacion > 0.05) model.claseBootstrap = "warning";
             if (model.PorcentajeDesviacion > 0.1) model.claseBootstrap = "danger";
 
-            IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
-                .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
-                .OrderBy(x => x.Usuario.ApellidoPaterno);
-            if (Form.IdProyecto.HasValue) Nominas = Nominas
-                    .Where(x => x.IdProyecto == Form.IdProyecto);
-            model.Nominas = Nominas.ToList()
-                .Where(x => !x.PlanificacionOk || !x.DeclaracionOk)
-                .ToPagedList(pagina ?? 1, 100);
+            //IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
+            //    .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
+            //    .OrderBy(x => x.Usuario.ApellidoPaterno);
+            //if (Form.IdProyecto.HasValue) Nominas = Nominas
+            //        .Where(x => x.IdProyecto == Form.IdProyecto);
+
+
+            DateTime FechaConsulta; 
+            if(DateTime.Now.Month <= Mes && DateTime.Now.Year <= Ano)
+            {
+                FechaConsulta = new DateTime(Ano, Mes, DateTime.Now.Day);
+            }
+            else
+            {
+                var buffer = new DateTime(Ano, Mes, 1);
+                buffer = buffer.AddMonths(1);
+                FechaConsulta = buffer.AddDays(-1);
+            }
+
+            IQueryable<fn_ReportePorUsuarioResult> Nominas = db.fn_ReportePorUsuario(Form.IdProyecto, FechaConsulta);
+
+
+            model.Nominas = Nominas.Where(x => x.CantidadPendientesDeclaracion > 0 || x.CantidadPendientesPlanificacion > 0);
             return View(model);
         }
 
@@ -88,10 +104,11 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (String.IsNullOrWhiteSpace(Form.Periodo))
             {
                 LectorMonthPicker lector = new LectorMonthPicker();
-                Mes = DateTime.Now.Month;
-                Ano = DateTime.Now.Year;
-                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
-                       + " " + DateTime.Now.Year.ToString();
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(fecha.Month)
+                       + " " + fecha.Year.ToString();
             }
             else
             {

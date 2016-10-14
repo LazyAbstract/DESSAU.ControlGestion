@@ -411,6 +411,8 @@
     <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
     <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
     <ElementType Name="fn_ReportePorUsuarioResult">
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
       <Column Name="Categoria" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />

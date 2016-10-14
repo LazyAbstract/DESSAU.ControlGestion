@@ -139,15 +139,17 @@
             .Attributes(@class => "table table-striped")
             .Columns(col =>
             {
-                col.For(x => Html.ActionLink("" + x.Usuario.ApellidoNombre, "ReporteDedicacionActividad", new { IdUsuarioCategoriaProyecto = x.IdUsuarioCategoriaProyecto })).Named("Nombre Completo");
-                col.For(x => x.Categoria.Nombre).Named("Categoría");
-                col.For(x => x.Proyecto.Nombre).Named("Orden Servicio");
-                col.For(x => x.PlanificacionOk ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
+                col.For(x => Html.ActionLink("" + x.Nombre + " " + x.ApellidoPaterno, "ReporteDedicacionActividad", new { IdUsuarioCategoriaProyecto = x.IdUsuarioCategoriaProyecto })).Named("Nombre Completo");
+                col.For(x => x.Categoria).Named("Categoría");
+                col.For(x => x.ODS).Named("Orden Servicio");
+                col.For(x => @String.Format("{0:P0}", x.IndiceDesviacion)).Named("Índice Desviación");
+                col.For(x => x.CantidadPendientesPlanificacion == 0 ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
                     : Html.Raw("<i class='fa fa-exclamation-triangle fa-2' aria-hidden='true'></i>"))
                     .Named("Estado Planificación").Encode(false);
-                col.For(x => x.DeclaracionOk ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
+                col.For(x => x.CantidadPendientesDeclaracion == 0 ? Html.Raw("<i class='fa fa-check-square fa-2' aria-hidden='true'></i>")
                     : Html.Raw("<i class='fa fa-exclamation-triangle fa-2' aria-hidden='true'></i>"))
                     .Named("Estado Declaración").Encode(false);
+                
             }).Empty("No se han encontrado profesionales asignados fuera de cumplimiento"))
     </div>
 </div>

@@ -7889,6 +7889,10 @@ namespace DESSAU.ControlGestion.Core
 	public partial class fn_ReportePorUsuarioResult
 	{
 		
+		private int _IdUsuarioCategoriaProyecto;
+		
+		private int _IdProyecto;
+		
 		private string _Nombre;
 		
 		private string _ApellidoPaterno;
@@ -7905,6 +7909,38 @@ namespace DESSAU.ControlGestion.Core
 		
 		public fn_ReportePorUsuarioResult()
 		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
+		public int IdUsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._IdUsuarioCategoriaProyecto;
+			}
+			set
+			{
+				if ((this._IdUsuarioCategoriaProyecto != value))
+				{
+					this._IdUsuarioCategoriaProyecto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdProyecto", DbType="Int NOT NULL")]
+		public int IdProyecto
+		{
+			get
+			{
+				return this._IdProyecto;
+			}
+			set
+			{
+				if ((this._IdProyecto != value))
+				{
+					this._IdProyecto = value;
+				}
+			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]

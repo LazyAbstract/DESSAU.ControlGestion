@@ -13,7 +13,7 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels
     {
         public DashboardFormModel Form { get; set; }
         public IEnumerable<SelectListItem> Proyectos { get; set; }
-        public IPagedList<UsuarioCategoriaProyecto> Nominas { get; set; }
+        public IQueryable<fn_ReportePorUsuarioResult> Nominas { get; set; }
         public CalculoHoraMensual calc { get; set; }
         public IEnumerable<SelectListItem> Usuarios { get; set; }
         private ProyectoSelectListProvider pslp = new ProyectoSelectListProvider();
