@@ -116,7 +116,7 @@
                                                     @Html.Hidden(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].IdEvaluacionPregunta", i, j), evaluacionPreguntaDTO.IdEvaluacionPregunta)
                                                 }
                                                 @Html.Hidden(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].IdPregunta", i, j), pregunta.IdPregunta)
-                                                @Html.TextBox(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(1), new { @class = "form-control", min = "1", max = "5" })
+                                                @Html.TextBox(String.Format("EvaluacionFORMs[{0}].EvaluacionPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(5), new { @class = "form-control", min = "1", max = "5" })
                                                 @*<div class="input-group-btn-vertical">
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
                                                     <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>

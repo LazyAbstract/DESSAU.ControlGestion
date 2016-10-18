@@ -45,9 +45,10 @@
             col.For(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoNombre).Named("Profesional");
             col.For(x => x.UsuarioCategoriaProyecto.Proyecto.Nombre).Named("ODS");
             col.For(x => @String.Format("{0:N2}", x.Promedio)).Named("Promedio");
-            col.For(x => ("0" + x.FechaEvaluacion.Month.ToString()) + "-" + x.FechaEvaluacion.Year.ToString()).Named("Periodo");
+            col.For(x => Html.CalculaPeriodo(x.FechaEvaluacion.Month, x.FechaEvaluacion.Year)).Named("Periodo");
             col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Desempeño", "DetalleEvaluacionDesempeno", null, null, new { IdEvaluacion = x.IdEvaluacion }));
             col.For(x => Html.ButtonIconActionLink("download-alt", "Exportar Evaluación Desempeño", "ExportarEvaluacionDesempenoPDF", null, null, new { IdEvaluacion = x.IdEvaluacion }));
+            col.For(x => Html.ButtonIconActionLink("pencil", "Evaluar Desempeño", "EvaluationSheet", null, null, new { IdProyecto = x.UsuarioCategoriaProyecto.IdProyecto, IdCategoria = x.UsuarioCategoriaProyecto.IdCategoria, Periodo = Model.Form.Periodo }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
         <hr />
     </div>

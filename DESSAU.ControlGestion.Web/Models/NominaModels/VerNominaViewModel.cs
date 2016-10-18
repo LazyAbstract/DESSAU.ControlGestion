@@ -12,7 +12,7 @@ namespace DESSAU.ControlGestion.Web.Models.NominaModels
     public class VerNominaViewModel
     {
         //public VerNominaFormModel Form { get; set; }
-        public IPagedList<UsuarioCategoriaProyecto> Nominas { get; set; }
+        public IPagedList<fn_ReportePorUsuarioResult> Nominas { get; set; }
         public IEnumerable<Usuario> NominaNoAsignados { get; set; }
         public IEnumerable<SelectListItem> Proyectos { get; set; }
         private ProyectoSelectListProvider pslp = new ProyectoSelectListProvider();

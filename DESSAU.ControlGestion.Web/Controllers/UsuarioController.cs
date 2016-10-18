@@ -75,7 +75,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     .Where(x => x.Nombre.ToLower().Contains(filtro)
                         || x.Nombre.ToLower().Contains(filtro)
                         || x.ApellidoPaterno.ToLower().Contains(filtro)
-                        || x.Correo.ToLower().Contains(filtro));
+                        || x.Correo.ToLower().Contains(filtro)
+                        || x.TipoUsuario.Nombre.ToLower().Contains(filtro));
             }
             Model.Usuarios = Users.ToPagedList(pagina ?? 1, 10);
             return View(Model);

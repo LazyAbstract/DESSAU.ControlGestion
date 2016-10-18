@@ -12,8 +12,10 @@ namespace DESSAU.ControlGestion.Web.Models.NominaModels
         public string Apellido { get; set; }
         [DisplayName("Categoría")]
         public string Categoria { get; set; }
-        [DisplayName("Orde de Servicio")]
+        [DisplayName("Orden de Servicio")]
         public string ODS { get; set; }
+        //[DisplayName("Índice Desviación")]
+        //public string IndiceDesviacion { get; set; }
         //[DisplayName("Estado Planificación")]
         //public string EstadoPlanificacion { get; set; }
         //[DisplayName("Estado Declaración")]

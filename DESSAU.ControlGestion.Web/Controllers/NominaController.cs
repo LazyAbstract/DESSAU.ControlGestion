@@ -22,11 +22,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public ActionResult VerNomina(int? pagina, int? IdProyecto)
         {
             VerNominaViewModel model = new VerNominaViewModel();
-            IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
-                .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
-                .OrderBy(x => x.Usuario.ApellidoPaterno);
-            if (IdProyecto.HasValue) Nominas = Nominas
-                    .Where(x => x.IdProyecto == IdProyecto);
+            IQueryable<fn_ReportePorUsuarioResult> Nominas = db.fn_ReportePorUsuario(IdProyecto, DateTime.Now)
+                .OrderBy(x => x.ApellidoPaterno);
             model.Nominas = Nominas.ToPagedList(pagina ?? 1, 10);
             model.NominaNoAsignados = db.Usuarios
                 .Where(x => !x.UsuarioCategoriaProyectos.Any(y => y.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto

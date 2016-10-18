@@ -7897,6 +7897,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private string _ApellidoPaterno;
 		
+		private int _IdUsuario;
+		
 		private string _Categoria;
 		
 		private string _ODS;
@@ -7971,6 +7973,22 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._ApellidoPaterno != value))
 				{
 					this._ApellidoPaterno = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					this._IdUsuario = value;
 				}
 			}
 		}

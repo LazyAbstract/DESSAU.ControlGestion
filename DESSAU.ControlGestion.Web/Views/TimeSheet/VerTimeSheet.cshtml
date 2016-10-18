@@ -37,7 +37,7 @@
                 <div class="form-group">
                     @Html.TextBoxFor(x => x.FORM.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control foco" })
                 </div>
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("Evaluación Desempeño"))
                 {
                     @Html.DropDownListFor(x => x.FORM.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })
                 }
