@@ -34,7 +34,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
                 };
                 writer.PageEvent = e;
                 document.Open();
-                
+                generarDetalleEvaluacionPdf(document, db);
                 PdfImportedPage pagina1 = writer.GetImportedPage(plantilla, 1);
                 PdfImportedPage pagina2 = writer.GetImportedPage(plantilla, 2);
                 PdfContentByte cb = writer.DirectContent;
@@ -43,7 +43,6 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
                 document.NewPage();
                 cb.AddTemplate(pagina2, 1f, 0, 0, 1f, 0, 0);
                 document.NewPage();
-                generarDetalleEvaluacionPdf(document, db);
                 document.Close();
                 buffer = ms.ToArray();
                 ms.Close();

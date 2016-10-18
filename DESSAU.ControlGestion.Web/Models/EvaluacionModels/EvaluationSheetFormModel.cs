@@ -44,6 +44,7 @@ namespace DESSAU.ControlGestion.Web.Models.EvaluacionModels
         public int? IdPregunta { get; set; }
 
         [Required]
+        [Range(1,5,ErrorMessage ="El valor debe ser entre 1 y 5")]
         public int? ValorObtenido { get; set; }
     }
 }
