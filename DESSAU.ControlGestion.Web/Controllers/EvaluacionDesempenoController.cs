@@ -195,10 +195,10 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (String.IsNullOrWhiteSpace(Form.Periodo))
             {
                 LectorMonthPicker lector = new LectorMonthPicker();
-                Mes = DateTime.Now.Month;
-                Ano = DateTime.Now.Year;
-                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.Month)
-                        + " " + DateTime.Now.Year.ToString();
+                Mes = DateTime.Now.AddMonths(-1).Month;
+                Ano = DateTime.Now.AddMonths(-1).Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(DateTime.Now.AddMonths(-1).Month)
+                        + " " + DateTime.Now.AddMonths(-1).Year.ToString();
             }
             else
             {
@@ -217,11 +217,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 model.Form.IdProyecto = Form.IdProyecto;
             }
 
-            
-            //else if (db.Proyectos.Any(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario))
-            //{
-            //    Form.IdProyecto = db.Proyectos.Single(x => x.IdUsuarioDirector == UsuarioActual.IdUsuario).IdProyecto;
-            //}
             model.Evaluaciones = db.Evaluacions
                 .Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1))
                 .OrderBy(x => x.UsuarioCategoriaProyecto.Usuario.ApellidoPaterno);

@@ -464,6 +464,24 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_IndiceDesviacionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idProyecto, idUsuario);
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_GetDiasPendientesDeclaracionByIdUsuario", IsComposable=true)]
+		public IQueryable<fn_GetDiasPendientesDeclaracionByIdUsuarioResult> fn_GetDiasPendientesDeclaracionByIdUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fecha", DbType="DateTime")] System.Nullable<System.DateTime> fecha)
+		{
+			return this.CreateMethodCallQuery<fn_GetDiasPendientesDeclaracionByIdUsuarioResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario, fecha);
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_GetDiasPendientesPlanificacionByIdUsuario", IsComposable=true)]
+		public IQueryable<fn_GetDiasPendientesPlanificacionByIdUsuarioResult> fn_GetDiasPendientesPlanificacionByIdUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fecha", DbType="DateTime")] System.Nullable<System.DateTime> fecha)
+		{
+			return this.CreateMethodCallQuery<fn_GetDiasPendientesPlanificacionByIdUsuarioResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario, fecha);
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_ReportePorUsuario", IsComposable=true)]
+		public IQueryable<fn_ReportePorUsuarioResult> fn_ReportePorUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdProyecto", DbType="Int")] System.Nullable<int> idProyecto, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Fecha", DbType="DateTime")] System.Nullable<System.DateTime> fecha)
+		{
+			return this.CreateMethodCallQuery<fn_ReportePorUsuarioResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idProyecto, fecha);
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -7811,6 +7829,228 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._IndiceDesviacionAbsoluta != value))
 				{
 					this._IndiceDesviacionAbsoluta = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_GetDiasPendientesDeclaracionByIdUsuarioResult
+	{
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		public fn_GetDiasPendientesDeclaracionByIdUsuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_GetDiasPendientesPlanificacionByIdUsuarioResult
+	{
+		
+		private System.Nullable<System.DateTime> _Fecha;
+		
+		public fn_GetDiasPendientesPlanificacionByIdUsuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date")]
+		public System.Nullable<System.DateTime> Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_ReportePorUsuarioResult
+	{
+		
+		private int _IdUsuarioCategoriaProyecto;
+		
+		private int _IdProyecto;
+		
+		private string _Nombre;
+		
+		private string _ApellidoPaterno;
+		
+		private string _Categoria;
+		
+		private string _ODS;
+		
+		private double _IndiceDesviacion;
+		
+		private System.Nullable<int> _CantidadPendientesPlanificacion;
+		
+		private System.Nullable<int> _CantidadPendientesDeclaracion;
+		
+		public fn_ReportePorUsuarioResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
+		public int IdUsuarioCategoriaProyecto
+		{
+			get
+			{
+				return this._IdUsuarioCategoriaProyecto;
+			}
+			set
+			{
+				if ((this._IdUsuarioCategoriaProyecto != value))
+				{
+					this._IdUsuarioCategoriaProyecto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdProyecto", DbType="Int NOT NULL")]
+		public int IdProyecto
+		{
+			get
+			{
+				return this._IdProyecto;
+			}
+			set
+			{
+				if ((this._IdProyecto != value))
+				{
+					this._IdProyecto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoPaterno", DbType="NVarChar(225) NOT NULL", CanBeNull=false)]
+		public string ApellidoPaterno
+		{
+			get
+			{
+				return this._ApellidoPaterno;
+			}
+			set
+			{
+				if ((this._ApellidoPaterno != value))
+				{
+					this._ApellidoPaterno = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Categoria", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Categoria
+		{
+			get
+			{
+				return this._Categoria;
+			}
+			set
+			{
+				if ((this._Categoria != value))
+				{
+					this._Categoria = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ODS", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string ODS
+		{
+			get
+			{
+				return this._ODS;
+			}
+			set
+			{
+				if ((this._ODS != value))
+				{
+					this._ODS = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IndiceDesviacion", DbType="Float NOT NULL")]
+		public double IndiceDesviacion
+		{
+			get
+			{
+				return this._IndiceDesviacion;
+			}
+			set
+			{
+				if ((this._IndiceDesviacion != value))
+				{
+					this._IndiceDesviacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantidadPendientesPlanificacion", DbType="Int")]
+		public System.Nullable<int> CantidadPendientesPlanificacion
+		{
+			get
+			{
+				return this._CantidadPendientesPlanificacion;
+			}
+			set
+			{
+				if ((this._CantidadPendientesPlanificacion != value))
+				{
+					this._CantidadPendientesPlanificacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CantidadPendientesDeclaracion", DbType="Int")]
+		public System.Nullable<int> CantidadPendientesDeclaracion
+		{
+			get
+			{
+				return this._CantidadPendientesDeclaracion;
+			}
+			set
+			{
+				if ((this._CantidadPendientesDeclaracion != value))
+				{
+					this._CantidadPendientesDeclaracion = value;
 				}
 			}
 		}
