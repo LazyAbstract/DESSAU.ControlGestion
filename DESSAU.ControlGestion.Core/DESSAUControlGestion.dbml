@@ -432,4 +432,17 @@
       <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.fn_ReporteDedicacionActividad2" Method="fn_ReporteDedicacionActividad2" IsComposable="true">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_ReporteDedicacionActividad2Result">
+      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalDedicacionPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalDedicacionDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

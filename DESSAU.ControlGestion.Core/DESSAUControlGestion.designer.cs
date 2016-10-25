@@ -488,6 +488,12 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_PromedioEvaluacionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_ReporteDedicacionActividad2", IsComposable=true)]
+		public IQueryable<fn_ReporteDedicacionActividad2Result> fn_ReporteDedicacionActividad2([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdProyecto", DbType="Int")] System.Nullable<int> idProyecto)
+		{
+			return this.CreateMethodCallQuery<fn_ReporteDedicacionActividad2Result>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -8101,6 +8107,104 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._Promedio != value))
 				{
 					this._Promedio = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_ReporteDedicacionActividad2Result
+	{
+		
+		private string _Actividad;
+		
+		private System.Nullable<int> _TotalDedicacionPlanificacion;
+		
+		private System.Nullable<int> _TotalDedicacionDeclaracion;
+		
+		private System.Nullable<double> _PorcentajeDedicacionPlanificacion;
+		
+		private System.Nullable<double> _PorcentajeDedicacionDeclaracion;
+		
+		public fn_ReporteDedicacionActividad2Result()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Actividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Actividad
+		{
+			get
+			{
+				return this._Actividad;
+			}
+			set
+			{
+				if ((this._Actividad != value))
+				{
+					this._Actividad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalDedicacionPlanificacion", DbType="Int")]
+		public System.Nullable<int> TotalDedicacionPlanificacion
+		{
+			get
+			{
+				return this._TotalDedicacionPlanificacion;
+			}
+			set
+			{
+				if ((this._TotalDedicacionPlanificacion != value))
+				{
+					this._TotalDedicacionPlanificacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalDedicacionDeclaracion", DbType="Int")]
+		public System.Nullable<int> TotalDedicacionDeclaracion
+		{
+			get
+			{
+				return this._TotalDedicacionDeclaracion;
+			}
+			set
+			{
+				if ((this._TotalDedicacionDeclaracion != value))
+				{
+					this._TotalDedicacionDeclaracion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PorcentajeDedicacionPlanificacion", DbType="Float")]
+		public System.Nullable<double> PorcentajeDedicacionPlanificacion
+		{
+			get
+			{
+				return this._PorcentajeDedicacionPlanificacion;
+			}
+			set
+			{
+				if ((this._PorcentajeDedicacionPlanificacion != value))
+				{
+					this._PorcentajeDedicacionPlanificacion = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PorcentajeDedicacionDeclaracion", DbType="Float")]
+		public System.Nullable<double> PorcentajeDedicacionDeclaracion
+		{
+			get
+			{
+				return this._PorcentajeDedicacionDeclaracion;
+			}
+			set
+			{
+				if ((this._PorcentajeDedicacionDeclaracion != value))
+				{
+					this._PorcentajeDedicacionDeclaracion = value;
 				}
 			}
 		}

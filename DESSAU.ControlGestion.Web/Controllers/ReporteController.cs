@@ -138,7 +138,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             new { Title = "Actividad", type = "string" },
                             new { Title = "Dedicación Planificada", type = "number" },
                         },
-                        Rows = db.fn_ReporteDedicacionActividad(Mes, Ano, IdUsuario, IdProyecto)
+                        Rows = db.fn_ReporteDedicacionActividad2(Mes, Ano, IdUsuario, IdProyecto)
                             .OrderBy(x => x.Actividad)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
@@ -151,7 +151,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                                 new { Title = "Actividad", type = "string" },
                                 new { Title = "Dedicación Declarada", type = "number" },
                             },
-                        Rows = db.fn_ReporteDedicacionActividad(Mes, Ano, IdUsuario, IdProyecto)
+                        Rows = db.fn_ReporteDedicacionActividad2(Mes, Ano, IdUsuario, IdProyecto)
                             .OrderBy(x => x.Actividad)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
