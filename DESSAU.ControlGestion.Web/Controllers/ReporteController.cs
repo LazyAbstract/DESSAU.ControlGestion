@@ -59,13 +59,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
             if (model.PorcentajeDesviacion > 0.05) model.claseBootstrap = "warning";
             if (model.PorcentajeDesviacion > 0.1) model.claseBootstrap = "danger";
 
-            //IQueryable<UsuarioCategoriaProyecto> Nominas = db.UsuarioCategoriaProyectos
-            //    .Where(x => x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto != TipoEstadoUsuarioCategoriaProyecto.NoVigente)
-            //    .OrderBy(x => x.Usuario.ApellidoPaterno);
-            //if (Form.IdProyecto.HasValue) Nominas = Nominas
-            //        .Where(x => x.IdProyecto == Form.IdProyecto);
-
-
             DateTime FechaConsulta; 
             if(DateTime.Now.Month <= Mes && DateTime.Now.Year <= Ano)
             {
@@ -79,8 +72,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
 
             IQueryable<fn_ReportePorUsuarioResult> Nominas = db.fn_ReportePorUsuario(Form.IdProyecto, FechaConsulta);
-
-
             model.Nominas = Nominas.Where(x => x.CantidadPendientesDeclaracion > 0 || x.CantidadPendientesPlanificacion > 0);
             return View(model);
         }
@@ -119,16 +110,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
                        + " " + Ano.ToString();
             }
 
-            //var indice = db.fn_IndiceDesviacion(Mes, Ano, model.Form.IdProyecto, model.Form.IdUsuario).FirstOrDefault();
-            //double desviacion = 0;
-            //if(indice != null)
-            //{
-            //    desviacion = indice.IndiceDesviacion.GetValueOrDefault(0);
-            //}
-
-            //model.PorcentajeDesviacion = desviacion;
-            //if (model.PorcentajeDesviacion > 5) model.claseBootstrap = "warning";
-            //if (model.PorcentajeDesviacion > 10) model.claseBootstrap = "danger";
             return View(model);
         }
 
@@ -147,7 +128,6 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 Mes = lector.GetMes;
                 Ano = lector.GetAnno;
             }
-            //if (!IdProyecto.HasValue) IdProyecto = 1;
 
             var Data =
                new dynamic[]
@@ -162,7 +142,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             .OrderBy(x => x.Actividad)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
-                                x.PorcentajeDedicacionPlanificacion
+                                x.PorcentajeDedicacionPlanificacion.GetValueOrDefault(0)
                         }).ToArray()
                     },
                     new {
@@ -175,22 +155,42 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             .OrderBy(x => x.Actividad)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
-                                x.PorcentajeDedicacionDeclaracion,
+                                x.PorcentajeDedicacionDeclaracion.GetValueOrDefault(0),
                             }).ToArray()
                     },
                     new {
                         Id = "Data3",
                         Columns = new[] {
                                 new { Title = "Actividad", type = "string" },
-                                new { Title = "Horas Planificacón", type = "number" },
+                                new { Title = "Horas Planificación", type = "number" },
                                 new { Title = "Horas Declaración", type = "number" },
                             },
                         Rows = db.fn_HorasPlanificacionDeclaracion(Mes, Ano, IdUsuario, IdProyecto)
                             .OrderByDescending(x => x.HorasPlanificadas)
                             .Select(x => new dynamic [] {
                                 x.Actividad,
-                                x.HorasPlanificadas,
-                                x.HorasReportadas,
+                                x.HorasPlanificadas.GetValueOrDefault(0),
+                                x.HorasReportadas.GetValueOrDefault(0),
+                            }).ToArray()
+                    },
+                    new {
+                        Id = "Data4",
+                        Columns = new[] {
+                                new { Title = "Desviación", type = "number" },
+                            },
+                        Rows = db.fn_IndiceDesviacion(Mes, Ano, IdProyecto, IdUsuario)
+                            .Select(x => new dynamic [] {
+                                x.IndiceDesviacion.GetValueOrDefault(0)*100
+                            }).ToArray()
+                    },
+                    new {
+                        Id = "Data5",
+                        Columns = new[] {
+                                new { Title = "Desempeño", type = "number" },
+                            },
+                        Rows = db.fn_PromedioEvaluacion(Mes, Ano, IdUsuario, IdProyecto)
+                            .Select(x => new dynamic [] {
+                                x.Promedio*20
                             }).ToArray()
                     }
                };

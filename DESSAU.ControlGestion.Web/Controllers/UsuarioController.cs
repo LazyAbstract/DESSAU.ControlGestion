@@ -76,6 +76,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         || x.Nombre.ToLower().Contains(filtro)
                         || x.ApellidoPaterno.ToLower().Contains(filtro)
                         || x.Correo.ToLower().Contains(filtro)
+                        || x.Contacto.ToLower().Contains(filtro)
                         || x.TipoUsuario.Nombre.ToLower().Contains(filtro));
             }
             Model.Usuarios = Users.ToPagedList(pagina ?? 1, 10);
@@ -111,6 +112,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     _user.ApellidoPaterno = Form.ApellidoPaterno;
                     _user.IdTipoUsuario = Form.IdTipoUsuario;
                     _user.Contacto = Form.Contacto;
+                    _user.Vigente = true;
 
                     if (AntigupoTipoUsuario != Form.IdTipoUsuario)
                     {

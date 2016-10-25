@@ -34,34 +34,35 @@
     </div>
 </nav>
 
-@*<div class="row">
-    <div class="col-lg-6 col-md-6">
-        <div class="panel panel-@Model.claseBootstrap">
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-bullseye fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">@String.Format("{0:P2}.", Model.PorcentajeDesviacion)</div>
-                        <div>Índice Desviación</div>
-                    </div>
-                </div>
+                <h4><i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i> Índice de Desviación</h4>
             </div>
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">Ver Detalles</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
+            <div class="panel-body" id="gauge-container-1">
+                <div id="chart-gauge-1" style="margin: auto;"></div>
+            </div>
         </div>
     </div>
-</div>*@
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación Desempeño</h4>
+            </div>
+            <div class="panel-body" id="gauge-container-2">
+                <div id="chart-gauge-2" style="margin: auto;"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><i class="fa fa-bar-chart" aria-hidden="true"></i> Cantida de Horas por Actividad</h4>
+            </div>
             <div class="panel-body" id="absolute-chart-id">
                 <div id="chart-horas"></div>
             </div>
@@ -96,7 +97,8 @@
 <script type="text/javascript">
 
       // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', { 'packages': ['corechart'] });
+      google.charts.load('current', { 'packages': ['gauge'] });
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.charts.setOnLoadCallback(drawChart);
@@ -122,6 +124,11 @@
           var abs_ancho = $("#chart-horas").width();
           var abs_alto = (3 * ancho) / 5;
 
+          var gauge_ancho = $("#gauge-container-1").width();
+          var gauge_alto = (3 * ancho) / 5;
+          $("#chart-gauge-1").width(gauge_alto);
+          $("#chart-gauge-2").width(gauge_alto);
+
           var chartsOptions = [
             {
                 width: ancho,
@@ -131,29 +138,63 @@
                 uiElement: 'chart-planificacion',
                 dataSourceId: 'Data1',
                 IsPercentage: 1,
-                NoColumns: 1
+                NoColumns: 1,
+                percentageColumn: 1
             },
             {
                 width: ancho,
                 height: alto,
-                //curveType: 'function',
                 legend: { position: 'top' },
                 dataType: 'PieChart',
                 uiElement: 'chart-declaracion',
                 dataSourceId: 'Data2',
                 IsPercentage: 1,
-                NoColumns: 1
+                NoColumns: 1,
+                percentageColumn: 1
             },
             {
                 width: abs_ancho,
                 height: abs_alto,
-                //curveType: 'function',
-                //legend: { position: 'top' },
                 dataType: 'BarChart',
                 uiElement: 'chart-horas',
                 dataSourceId: 'Data3',
                 IsPercentage: 0,
-                NoColumns: 2
+                NoColumns: 2,
+                percentageColumn: null,
+            },
+            {
+                width: gauge_ancho,
+                height: gauge_alto,
+                dataType: 'GaugeChart',
+                uiElement: 'chart-gauge-1',
+                dataSourceId: 'Data4',
+                redFrom: 10,
+                redTo: 50,
+                yellowFrom: 5,
+                yellowTo: 10,
+                greenFrom: 0,
+                greenTo: 5,
+                minorTicks: 20,
+                IsPercentage: 1,
+                NoColumns: 1,
+                percentageColumn: 0,
+            },
+            {
+                width: gauge_ancho,
+                height: gauge_alto,
+                dataType: 'GaugeChart',
+                uiElement: 'chart-gauge-2',
+                dataSourceId: 'Data5',
+                greenFrom: 80,
+                greenTo: 100,
+                redFrom: 40,
+                redTo: 60,
+                yellowFrom: 60,
+                yellowTo: 80,
+                minorTicks: 20,
+                IsPercentage: 1,
+                NoColumns: 1,
+                percentageColumn: 0,
             }];
 
           $.ajax({
@@ -178,6 +219,9 @@
                           case 'ColumnChart':
                               chart = new google.visualization.ColumnChart(uiElement);
                               break;
+                          case 'GaugeChart':
+                              chart = new google.visualization.Gauge(uiElement);
+                              break;
                           default:
                       }
 
@@ -192,8 +236,8 @@
                       }
 
                       if (chartOption.IsPercentage == 1) {
-                          var formatter = new google.visualization.NumberFormat({ pattern: '#%' });
-                          formatter.format(data, 1);
+                          var formatter = new google.visualization.NumberFormat({ suffix: '%', pattern: '#' });
+                          formatter.format(data, chartOption.percentageColumn);
                           if (chartOption.NoColumns == 2) {
                               formatter.format(data, 2);
                           }

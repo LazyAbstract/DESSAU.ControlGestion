@@ -482,6 +482,12 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_ReportePorUsuarioResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idProyecto, fecha);
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_PromedioEvaluacion", IsComposable=true)]
+		public IQueryable<fn_PromedioEvaluacionResult> fn_PromedioEvaluacion([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdProyecto", DbType="Int")] System.Nullable<int> idProyecto)
+		{
+			return this.CreateMethodCallQuery<fn_PromedioEvaluacionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoPregunta")]
@@ -8069,6 +8075,32 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._CantidadPendientesDeclaracion != value))
 				{
 					this._CantidadPendientesDeclaracion = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_PromedioEvaluacionResult
+	{
+		
+		private System.Nullable<double> _Promedio;
+		
+		public fn_PromedioEvaluacionResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Promedio", DbType="Float")]
+		public System.Nullable<double> Promedio
+		{
+			get
+			{
+				return this._Promedio;
+			}
+			set
+			{
+				if ((this._Promedio != value))
+				{
+					this._Promedio = value;
 				}
 			}
 		}
