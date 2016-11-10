@@ -17,14 +17,8 @@ namespace DESSAU.ControlGestion.EmisorCorreo
 
             var fecha = DateTime.Now;
 
-            //  carga horas de reporte dedicación actividad
-            db.sp_CargaDedicacionActividad(fecha.Month, fecha.Year);
-
-            //  genera correos masivos            
-            if (fecha.Hour < 12)
-            {
-                db.sp_OrchrestraSP(fecha.Month, fecha.Year);
-            }
+            //  sp que corre todos los otros sp's
+            db.sp_OrchrestraSP(fecha.Month, fecha.Year);
 
             //  para cada notificación tipo correo = 2 y estado creda = 1
             foreach (var noti in db.Notificacions.Where(x => x.IdTipoNotificacion == 2 && x.IdTipoEstadoNotificacion == 1))
