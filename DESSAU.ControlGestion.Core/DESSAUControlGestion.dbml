@@ -112,6 +112,7 @@
       <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Contrato_Proyecto" Member="Proyectos" ThisKey="IdContrato" OtherKey="IdContrato" Type="Proyecto" />
+      <Association Name="Contrato_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdContrato" OtherKey="IdContrato" Type="EvaluacionContrato" />
       <Association Name="Cliente_Contrato" Member="Cliente" ThisKey="IdCliente" OtherKey="IdCliente" Type="Cliente" IsForeignKey="true" />
     </Type>
   </Table>
@@ -277,6 +278,8 @@
       <Column Name="FormulacionPregunta" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="Pregunta_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionPregunta" />
       <Association Name="Pregunta_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionPregunta" />
+      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionContratoPregunta" />
+      <Association Name="Pregunta_PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionContratoPregunta" />
       <Association Name="TipoPregunta_Pregunta" Member="TipoPregunta" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="TipoPregunta" IsForeignKey="true" />
     </Type>
   </Table>
@@ -323,6 +326,7 @@
       <Association Name="Usuario_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioCategoriaProyecto" />
       <Association Name="Usuario_Proyecto" Member="Proyectos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Proyecto" />
       <Association Name="Usuario_Evaluacion" Member="Evaluacions" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Evaluacion" />
+      <Association Name="Usuario_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirectorContrato" Type="EvaluacionContrato" />
       <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
     </Type>
   </Table>
@@ -344,6 +348,49 @@
     <Type Name="Tmp_PruebasWebJob">
       <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Texto" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EvaluacionContrato" Member="EvaluacionContratos">
+    <Type Name="EvaluacionContrato">
+      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioDirectorContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContratoPregunta" />
+      <Association Name="Contrato_EvaluacionContrato" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
+      <Association Name="Usuario_EvaluacionContrato" Member="Usuario" ThisKey="IdUsuarioDirectorContrato" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas">
+    <Type Name="EvaluacionContratoPregunta">
+      <Column Name="IdEvaluacionContratoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ValorObtenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContrato" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContrato" IsForeignKey="true" />
+      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlantillaEvaluacionContrato" Member="PlantillaEvaluacionContratos">
+    <Type Name="PlantillaEvaluacionContrato">
+      <Column Name="IdPlantillaEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="CreadoPor" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="PlantillaEvaluacionContrato_PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContratoPreguntas" ThisKey="IdPlantillaEvaluacionContrato" OtherKey="IdPlantillaEvaluacionContrato" Type="PlantillaEvaluacionContratoPregunta" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContratoPreguntas">
+    <Type Name="PlantillaEvaluacionContratoPregunta">
+      <Column Name="IdPlantillaEvaluacionContratoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdPlantillaEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PlantillaEvaluacionContrato_PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContrato" ThisKey="IdPlantillaEvaluacionContrato" OtherKey="IdPlantillaEvaluacionContrato" Type="PlantillaEvaluacionContrato" IsForeignKey="true" />
+      <Association Name="Pregunta_PlantillaEvaluacionContratoPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">

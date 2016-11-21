@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DESSAU.ControlGestion.Core;
 using DESSAU.ControlGestion.Web.Helpers;
+using DESSAU.ControlGestion.Web.Models;
 using DESSAU.ControlGestion.Web.Models.EvaluacionModels;
 using System;
 using System.Collections.Generic;
@@ -254,6 +255,151 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         new iTextSharp.text.pdf.PdfReader(pathTemplate))
                 , "pdf/application"
                 , string.Format("{0}_{1}.pdf", evaluacion.FechaEvaluacion.ToString("yyyyMM"), evaluacion.UsuarioCategoriaProyecto.Usuario.Correo));
+        }
+
+        public ActionResult ListadoEvaluacionContrato()
+        {
+            ListadoEvaluacionContratoViewModel model = new ListadoEvaluacionContratoViewModel();
+            model.Evaluaciones = db.EvaluacionContratos.OrderBy(x => x.FechaEvaluacion);
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult CrearEditarEvaluacionContrato(CrearEditarEvaluacionContratoFormModel Form)
+        {
+            int Mes;
+            int Ano;
+            CrearEditarEvaluacionContratoViewModel model = new CrearEditarEvaluacionContratoViewModel(Form);
+            if (String.IsNullOrWhiteSpace(Form.Periodo))
+            {
+                LectorMonthPicker lector = new LectorMonthPicker();
+                var fecha = DateTime.Now.AddMonths(-1);
+                Mes = fecha.Month;
+                Ano = fecha.Year;
+                model.Form.Periodo = lector.GetMonthNameFromInt(fecha.Month)
+                        + " " + fecha.Year.ToString();
+                Mes = 1;
+                Ano = 2000;
+            }
+            else
+            {
+                LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
+                Mes = lector.GetMes;
+                Ano = lector.GetAnno;
+            }
+
+            //   HAAAAAACK deberían ser múltples contratos pero aún no
+            model.Contratos = db.Contratos.Where(x => x.IdContrato == 1);
+            model.EvaluacionContratoFORMs = db.EvaluacionContratos.Where(x => x.IdContrato == 1 
+                && x.FechaEvaluacion == new DateTime(Ano, Mes, 1))
+                .Select(x => new EvaluacionContratoFormModel()
+                {
+                        IdEvaluacionContrato = x.IdEvaluacionContrato,
+                        IdContrato = x.IdContrato,
+                        Fecha = x.FechaEvaluacion,
+                        EvaluacionContratoPreguntaDTOs = x.EvaluacionContratoPreguntas.Select(y => new EvaluacionContratoPreguntaDTO()
+                        {
+                            IdEvaluacionContratoPregunta = y.IdEvaluacionContratoPregunta,
+                            IdPregunta = y.IdPregunta,
+                            ValorObtenido = y.ValorObtenido
+                        })
+                });
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CrearEditarEvaluacionContrato(CrearEditarEvaluacionContratoFormModel Form, IEnumerable<EvaluacionContratoFormModel> EvaluacionContratoForms)
+        {
+            if (ModelState.IsValid)
+            {
+                int Mes;
+                int Ano;
+                if (String.IsNullOrWhiteSpace(Form.Periodo))
+                {
+                    var fecha = DateTime.Now.AddMonths(-1);
+                    Mes = fecha.Month;
+                    Ano = fecha.Year;
+                }
+                else
+                {
+                    LectorMonthPicker lector = new LectorMonthPicker(Form.Periodo);
+                    Mes = lector.GetMes;
+                    Ano = lector.GetAnno;
+                }
+
+                
+
+                foreach(var evaluacion in EvaluacionContratoForms)
+                {
+                    EvaluacionContrato EvaluacionContrato = 
+                        db.EvaluacionContratos.SingleOrDefault(x => x.IdEvaluacionContrato == evaluacion.IdEvaluacionContrato);
+                    if (EvaluacionContrato == null)
+                    {
+                        EvaluacionContrato = new EvaluacionContrato();
+                        EvaluacionContrato.FechaEvaluacion = new DateTime(Ano, Mes, 1);
+                        EvaluacionContrato.FechaCreacion = DateTime.Now;
+                        EvaluacionContrato.Promedio = 0;
+                        EvaluacionContrato.IdUsuarioDirectorContrato = UsuarioActual.IdUsuario;
+                        EvaluacionContrato.IdContrato = evaluacion.IdContrato;
+                        db.EvaluacionContratos.InsertOnSubmit(EvaluacionContrato);
+                        db.SubmitChanges();
+
+                        foreach (var dto in evaluacion.EvaluacionContratoPreguntaDTOs)
+                        {
+                            EvaluacionContratoPregunta ecp = new EvaluacionContratoPregunta();
+                            ecp.IdEvaluacionContrato = EvaluacionContrato.IdEvaluacionContrato;
+                            ecp.IdPregunta = dto.IdPregunta.GetValueOrDefault(0);
+                            ecp.ValorObtenido = dto.ValorObtenido.GetValueOrDefault(5);
+                            db.EvaluacionContratoPreguntas.InsertOnSubmit(ecp);
+                        }
+
+                        var promedioDesempeno = db.Evaluacions.Where(x => x.FechaEvaluacion == new DateTime(Ano, Mes, 1)).Average(x => x.Promedio);
+                        if(promedioDesempeno == null) promedioDesempeno = 0;
+                        var promedioContrato = evaluacion.EvaluacionContratoPreguntaDTOs.Average(x => x.ValorObtenido);
+
+                        EvaluacionContrato.Promedio = 0.7 * promedioDesempeno + 0.3 * promedioContrato;
+                        db.SubmitChanges(); 
+                    }
+                    else
+                    {
+                        foreach (var dto in evaluacion.EvaluacionContratoPreguntaDTOs)
+                        {
+                            EvaluacionContratoPregunta ecp = db.EvaluacionContratoPreguntas.Single(x => x.IdEvaluacionContrato == evaluacion.IdEvaluacionContrato
+                                && x.IdPregunta == dto.IdPregunta);
+                            ecp.IdEvaluacionContrato = evaluacion.IdEvaluacionContrato.GetValueOrDefault(5);
+                            ecp.IdPregunta = dto.IdPregunta.GetValueOrDefault(0);
+                            ecp.ValorObtenido = ecp.ValorObtenido;
+                        }
+
+                        db.SubmitChanges();
+                    }                            
+                }
+                Mensaje = "Se ha gusradado la evaluación con éxito";
+                return RedirectToAction("ListadoEvaluacionContrato");                
+            }
+            CrearEditarEvaluacionContratoViewModel model = new CrearEditarEvaluacionContratoViewModel(Form);
+            return View(model);
+        }
+
+        public ActionResult VerEvaluacionContrato(int IdEvaluacionContrato)
+        {
+            return View(db.EvaluacionContratos.Single(x => x.IdEvaluacionContrato == IdEvaluacionContrato));
+        }
+
+        public ActionResult ExportarEvaluacionContratoPDF(int IdEvaluacionContrato)
+        {
+            EvaluacionContrato evaluacion = db.EvaluacionContratos.SingleOrDefault(x => x.IdEvaluacionContrato == IdEvaluacionContrato);
+            DetalleEvaluacionContratoPdfGenerator detalleEvaluacion = new DetalleEvaluacionContratoPdfGenerator(evaluacion);
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "dessauLogoPdf.jpg");
+            string pathTemplate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "PlantillaInformeEvaluacionDessau.pdf");
+            return File(
+                detalleEvaluacion.getDetalleEvaluacionContratoPdf(
+                        db,
+                        iTextSharp.text.Image.GetInstance(path),
+                        new iTextSharp.text.pdf.PdfReader(pathTemplate))
+                , "pdf/application"
+                , string.Format("{0}_{1}.pdf", evaluacion.FechaEvaluacion.ToString("yyyyMM"), evaluacion.Contrato.Nombre));
         }
     }
 }

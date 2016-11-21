@@ -358,6 +358,12 @@
                                         <li>
                                             <a href="@Url.Action("ListadoEvaluaciones", "EvaluacionDesempeno")"> Ver Evaluaciones</a>
                                         </li>
+                                        @*@if (User.IsInRole("Evaluacion_Contrato"))
+                                        {*@
+                                            <li>
+                                                <a href="@Url.Action("ListadoEvaluacionContrato", "EvaluacionDesempeno")"> Evaluación Contrato</a>
+                                            </li>
+                                        @*}*@
                                     </ul>
                                     <!-- /.nav-second-level -->
                                 </li>

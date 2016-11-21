@@ -1,0 +1,150 @@
+﻿@model DESSAU.ControlGestion.Web.Models.EvaluacionModels.CrearEditarEvaluacionContratoViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fa fa-line-chart" aria-hidden="true"></i> @String.Format("Evaluación Contrato {0}", Model.Form.Periodo)</h2>
+    </div>
+</div>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    <input type="text" id="Form_Periodo" class="form-control monthPicker" placeholder="Periodo" name="Form.Periodo" value="@Model.Form.Periodo" />
+                </div>
+                <button type="submit" id="button-periodo" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+@if (Model.Contratos.Any())
+{
+    using (Html.BeginForm(null, null, FormMethod.Post, new { id = "ts-form" }))
+    {   
+        @Html.Hidden("FORM.Periodo", Model.Form.Periodo)
+        <div class="row">
+            <div class="col-md-12" style="overflow-x: scroll;">
+                @Html.ValidationSummary()
+                <table class="table-striped table">
+                    <tr>
+                        <th></th>
+                        @foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
+                        {
+                            <th data-toggle="tooltip" data-placement="top" title="@pregunta.FormulacionPregunta">@pregunta.Habilidad</th>
+                        }
+                    </tr>
+                    @{
+                        int i = 0;
+                        foreach (var contrato in Model.Contratos)
+                        {
+                            var evaluacionFORM = Model.EvaluacionContratoFORMs.FirstOrDefault(x => x.IdContrato == contrato.IdContrato);
+                            //@Html.Hidden(String.Format("EvaluacionFORMs[{0}].Fecha", i), Model.FORM.Fecha)
+                            @Html.Hidden(String.Format("EvaluacionContratoFORMs[{0}].IdContrato", i), contrato.IdContrato)
+                            if (evaluacionFORM != null)
+                            {
+                                @Html.Hidden(String.Format("EvaluacionContratoFORMs[{0}].IdEvaluacionContrato", i), evaluacionFORM.IdEvaluacionContrato)
+                            }
+                            <tr>
+                                <th>
+                                    @String.Format("{0}", contrato.Nombre)
+                                </th>
+                                @{
+                                    int j = 0;
+                                    foreach (var pregunta in Model.Preguntas.OrderBy(x => x.IdTipoPregunta))
+                                    {
+                                        int? valor = null;
+                                        <td>
+                                            @if (evaluacionFORM != null && evaluacionFORM.EvaluacionContratoPreguntaDTOs.Any(x => x.IdPregunta == pregunta.IdPregunta))
+                                            {
+                                                var evaluacionPreguntaDTO = evaluacionFORM.EvaluacionContratoPreguntaDTOs.SingleOrDefault(x => x.IdPregunta == pregunta.IdPregunta);
+                                                valor = evaluacionPreguntaDTO.ValorObtenido;
+                                                @Html.Hidden(String.Format("EvaluacionContratoFORMs[{0}].EvaluacionContratoPreguntaDTOs[{1}].IdEvaluacionContratoPregunta", i, j), evaluacionPreguntaDTO.IdEvaluacionContratoPregunta)
+                                            }
+                                            @Html.Hidden(String.Format("EvaluacionContratoFORMs[{0}].EvaluacionContratoPreguntaDTOs[{1}].IdPregunta", i, j), pregunta.IdPregunta)
+                                            @Html.TextBox(String.Format("EvaluacionContratoFORMs[{0}].EvaluacionContratoPreguntaDTOs[{1}].ValorObtenido", i, j), valor.GetValueOrDefault(5), new { @class = "form-control", min = "1", max = "5" })
+                                            @*<div class="input-group-btn-vertical">
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                                </div>*@
+                                            @Html.ValidationMessage(String.Format("EvaluacionContratoFORMs[{0}].EvaluacionContratoPreguntaDTOs[{1}].ValorObtenido", i, j))
+                                        </td>
+                                        j++;
+                                    }
+                                }
+                            </tr>
+                                        i++;
+                                    }
+                    }
+                </table>
+            </div>
+        </div>
+        <br />
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    }
+}
+
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Valoración de Comportamiento</h5>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        1
+                    </th>
+                    <td>
+                        No alcanza lo mínimo requrido
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        2
+                    </th>
+                    <td>
+                        Inferior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        3
+                    </th>
+                    <td>
+                        Suficiente (lo esperado para el cargo)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        4
+                    </th>
+                    <td>
+                        Superior a lo esperado
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        5
+                    </th>
+                    <td>
+                        Supera en forma excepcional lo esperado
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

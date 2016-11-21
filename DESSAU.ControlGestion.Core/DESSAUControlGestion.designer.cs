@@ -129,6 +129,18 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertEvaluacion(Evaluacion instance);
     partial void UpdateEvaluacion(Evaluacion instance);
     partial void DeleteEvaluacion(Evaluacion instance);
+    partial void InsertEvaluacionContrato(EvaluacionContrato instance);
+    partial void UpdateEvaluacionContrato(EvaluacionContrato instance);
+    partial void DeleteEvaluacionContrato(EvaluacionContrato instance);
+    partial void InsertEvaluacionContratoPregunta(EvaluacionContratoPregunta instance);
+    partial void UpdateEvaluacionContratoPregunta(EvaluacionContratoPregunta instance);
+    partial void DeleteEvaluacionContratoPregunta(EvaluacionContratoPregunta instance);
+    partial void InsertPlantillaEvaluacionContrato(PlantillaEvaluacionContrato instance);
+    partial void UpdatePlantillaEvaluacionContrato(PlantillaEvaluacionContrato instance);
+    partial void DeletePlantillaEvaluacionContrato(PlantillaEvaluacionContrato instance);
+    partial void InsertPlantillaEvaluacionContratoPregunta(PlantillaEvaluacionContratoPregunta instance);
+    partial void UpdatePlantillaEvaluacionContratoPregunta(PlantillaEvaluacionContratoPregunta instance);
+    partial void DeletePlantillaEvaluacionContratoPregunta(PlantillaEvaluacionContratoPregunta instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -430,6 +442,38 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<Tmp_PruebasWebJob>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EvaluacionContrato> EvaluacionContratos
+		{
+			get
+			{
+				return this.GetTable<EvaluacionContrato>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EvaluacionContratoPregunta> EvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this.GetTable<EvaluacionContratoPregunta>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PlantillaEvaluacionContrato> PlantillaEvaluacionContratos
+		{
+			get
+			{
+				return this.GetTable<PlantillaEvaluacionContrato>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PlantillaEvaluacionContratoPregunta> PlantillaEvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this.GetTable<PlantillaEvaluacionContratoPregunta>();
 			}
 		}
 		
@@ -2699,6 +2743,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<Proyecto> _Proyectos;
 		
+		private EntitySet<EvaluacionContrato> _EvaluacionContratos;
+		
 		private EntityRef<Cliente> _Cliente;
 		
     #region Extensibility Method Definitions
@@ -2716,6 +2762,7 @@ namespace DESSAU.ControlGestion.Core
 		public Contrato()
 		{
 			this._Proyectos = new EntitySet<Proyecto>(new Action<Proyecto>(this.attach_Proyectos), new Action<Proyecto>(this.detach_Proyectos));
+			this._EvaluacionContratos = new EntitySet<EvaluacionContrato>(new Action<EvaluacionContrato>(this.attach_EvaluacionContratos), new Action<EvaluacionContrato>(this.detach_EvaluacionContratos));
 			this._Cliente = default(EntityRef<Cliente>);
 			OnCreated();
 		}
@@ -2797,6 +2844,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contrato_EvaluacionContrato", Storage="_EvaluacionContratos", ThisKey="IdContrato", OtherKey="IdContrato")]
+		public EntitySet<EvaluacionContrato> EvaluacionContratos
+		{
+			get
+			{
+				return this._EvaluacionContratos;
+			}
+			set
+			{
+				this._EvaluacionContratos.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cliente_Contrato", Storage="_Cliente", ThisKey="IdCliente", OtherKey="IdCliente", IsForeignKey=true)]
 		public Cliente Cliente
 		{
@@ -2858,6 +2918,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_Proyectos(Proyecto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contrato = null;
+		}
+		
+		private void attach_EvaluacionContratos(EvaluacionContrato entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contrato = this;
+		}
+		
+		private void detach_EvaluacionContratos(EvaluacionContrato entity)
 		{
 			this.SendPropertyChanging();
 			entity.Contrato = null;
@@ -5910,6 +5982,10 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<PlantillaEvaluacionPregunta> _PlantillaEvaluacionPreguntas;
 		
+		private EntitySet<EvaluacionContratoPregunta> _EvaluacionContratoPreguntas;
+		
+		private EntitySet<PlantillaEvaluacionContratoPregunta> _PlantillaEvaluacionContratoPreguntas;
+		
 		private EntityRef<TipoPregunta> _TipoPregunta;
 		
     #region Extensibility Method Definitions
@@ -5930,6 +6006,8 @@ namespace DESSAU.ControlGestion.Core
 		{
 			this._EvaluacionPreguntas = new EntitySet<EvaluacionPregunta>(new Action<EvaluacionPregunta>(this.attach_EvaluacionPreguntas), new Action<EvaluacionPregunta>(this.detach_EvaluacionPreguntas));
 			this._PlantillaEvaluacionPreguntas = new EntitySet<PlantillaEvaluacionPregunta>(new Action<PlantillaEvaluacionPregunta>(this.attach_PlantillaEvaluacionPreguntas), new Action<PlantillaEvaluacionPregunta>(this.detach_PlantillaEvaluacionPreguntas));
+			this._EvaluacionContratoPreguntas = new EntitySet<EvaluacionContratoPregunta>(new Action<EvaluacionContratoPregunta>(this.attach_EvaluacionContratoPreguntas), new Action<EvaluacionContratoPregunta>(this.detach_EvaluacionContratoPreguntas));
+			this._PlantillaEvaluacionContratoPreguntas = new EntitySet<PlantillaEvaluacionContratoPregunta>(new Action<PlantillaEvaluacionContratoPregunta>(this.attach_PlantillaEvaluacionContratoPreguntas), new Action<PlantillaEvaluacionContratoPregunta>(this.detach_PlantillaEvaluacionContratoPreguntas));
 			this._TipoPregunta = default(EntityRef<TipoPregunta>);
 			OnCreated();
 		}
@@ -6044,6 +6122,32 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pregunta_EvaluacionContratoPregunta", Storage="_EvaluacionContratoPreguntas", ThisKey="IdPregunta", OtherKey="IdPregunta")]
+		public EntitySet<EvaluacionContratoPregunta> EvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this._EvaluacionContratoPreguntas;
+			}
+			set
+			{
+				this._EvaluacionContratoPreguntas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pregunta_PlantillaEvaluacionContratoPregunta", Storage="_PlantillaEvaluacionContratoPreguntas", ThisKey="IdPregunta", OtherKey="IdPregunta")]
+		public EntitySet<PlantillaEvaluacionContratoPregunta> PlantillaEvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this._PlantillaEvaluacionContratoPreguntas;
+			}
+			set
+			{
+				this._PlantillaEvaluacionContratoPreguntas.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoPregunta_Pregunta", Storage="_TipoPregunta", ThisKey="IdTipoPregunta", OtherKey="IdTipoPregunta", IsForeignKey=true)]
 		public TipoPregunta TipoPregunta
 		{
@@ -6117,6 +6221,30 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_PlantillaEvaluacionPreguntas(PlantillaEvaluacionPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pregunta = null;
+		}
+		
+		private void attach_EvaluacionContratoPreguntas(EvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pregunta = this;
+		}
+		
+		private void detach_EvaluacionContratoPreguntas(EvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pregunta = null;
+		}
+		
+		private void attach_PlantillaEvaluacionContratoPreguntas(PlantillaEvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pregunta = this;
+		}
+		
+		private void detach_PlantillaEvaluacionContratoPreguntas(PlantillaEvaluacionContratoPregunta entity)
 		{
 			this.SendPropertyChanging();
 			entity.Pregunta = null;
@@ -6820,6 +6948,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<Evaluacion> _Evaluacions;
 		
+		private EntitySet<EvaluacionContrato> _EvaluacionContratos;
+		
 		private EntityRef<TipoUsuario> _TipoUsuario;
 		
     #region Extensibility Method Definitions
@@ -6850,6 +6980,7 @@ namespace DESSAU.ControlGestion.Core
 			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
 			this._Proyectos = new EntitySet<Proyecto>(new Action<Proyecto>(this.attach_Proyectos), new Action<Proyecto>(this.detach_Proyectos));
 			this._Evaluacions = new EntitySet<Evaluacion>(new Action<Evaluacion>(this.attach_Evaluacions), new Action<Evaluacion>(this.detach_Evaluacions));
+			this._EvaluacionContratos = new EntitySet<EvaluacionContrato>(new Action<EvaluacionContrato>(this.attach_EvaluacionContratos), new Action<EvaluacionContrato>(this.detach_EvaluacionContratos));
 			this._TipoUsuario = default(EntityRef<TipoUsuario>);
 			OnCreated();
 		}
@@ -7076,6 +7207,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_EvaluacionContrato", Storage="_EvaluacionContratos", ThisKey="IdUsuario", OtherKey="IdUsuarioDirectorContrato")]
+		public EntitySet<EvaluacionContrato> EvaluacionContratos
+		{
+			get
+			{
+				return this._EvaluacionContratos;
+			}
+			set
+			{
+				this._EvaluacionContratos.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoUsuario_Usuario", Storage="_TipoUsuario", ThisKey="IdTipoUsuario", OtherKey="IdTipoUsuario", IsForeignKey=true)]
 		public TipoUsuario TipoUsuario
 		{
@@ -7197,6 +7341,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_Evaluacions(Evaluacion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+		
+		private void attach_EvaluacionContratos(EvaluacionContrato entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_EvaluacionContratos(EvaluacionContrato entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuario = null;
@@ -7568,6 +7724,916 @@ namespace DESSAU.ControlGestion.Core
 				{
 					this._Texto = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EvaluacionContrato")]
+	public partial class EvaluacionContrato : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdEvaluacionContrato;
+		
+		private int _IdContrato;
+		
+		private int _IdUsuarioDirectorContrato;
+		
+		private System.DateTime _FechaEvaluacion;
+		
+		private System.DateTime _FechaCreacion;
+		
+		private System.Nullable<double> _Promedio;
+		
+		private EntitySet<EvaluacionContratoPregunta> _EvaluacionContratoPreguntas;
+		
+		private EntityRef<Contrato> _Contrato;
+		
+		private EntityRef<Usuario> _Usuario;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdEvaluacionContratoChanging(int value);
+    partial void OnIdEvaluacionContratoChanged();
+    partial void OnIdContratoChanging(int value);
+    partial void OnIdContratoChanged();
+    partial void OnIdUsuarioDirectorContratoChanging(int value);
+    partial void OnIdUsuarioDirectorContratoChanged();
+    partial void OnFechaEvaluacionChanging(System.DateTime value);
+    partial void OnFechaEvaluacionChanged();
+    partial void OnFechaCreacionChanging(System.DateTime value);
+    partial void OnFechaCreacionChanged();
+    partial void OnPromedioChanging(System.Nullable<double> value);
+    partial void OnPromedioChanged();
+    #endregion
+		
+		public EvaluacionContrato()
+		{
+			this._EvaluacionContratoPreguntas = new EntitySet<EvaluacionContratoPregunta>(new Action<EvaluacionContratoPregunta>(this.attach_EvaluacionContratoPreguntas), new Action<EvaluacionContratoPregunta>(this.detach_EvaluacionContratoPreguntas));
+			this._Contrato = default(EntityRef<Contrato>);
+			this._Usuario = default(EntityRef<Usuario>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEvaluacionContrato", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdEvaluacionContrato
+		{
+			get
+			{
+				return this._IdEvaluacionContrato;
+			}
+			set
+			{
+				if ((this._IdEvaluacionContrato != value))
+				{
+					this.OnIdEvaluacionContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdEvaluacionContrato = value;
+					this.SendPropertyChanged("IdEvaluacionContrato");
+					this.OnIdEvaluacionContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdContrato", DbType="Int NOT NULL")]
+		public int IdContrato
+		{
+			get
+			{
+				return this._IdContrato;
+			}
+			set
+			{
+				if ((this._IdContrato != value))
+				{
+					if (this._Contrato.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdContrato = value;
+					this.SendPropertyChanged("IdContrato");
+					this.OnIdContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioDirectorContrato", DbType="Int NOT NULL")]
+		public int IdUsuarioDirectorContrato
+		{
+			get
+			{
+				return this._IdUsuarioDirectorContrato;
+			}
+			set
+			{
+				if ((this._IdUsuarioDirectorContrato != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioDirectorContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioDirectorContrato = value;
+					this.SendPropertyChanged("IdUsuarioDirectorContrato");
+					this.OnIdUsuarioDirectorContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaEvaluacion", DbType="Date NOT NULL")]
+		public System.DateTime FechaEvaluacion
+		{
+			get
+			{
+				return this._FechaEvaluacion;
+			}
+			set
+			{
+				if ((this._FechaEvaluacion != value))
+				{
+					this.OnFechaEvaluacionChanging(value);
+					this.SendPropertyChanging();
+					this._FechaEvaluacion = value;
+					this.SendPropertyChanged("FechaEvaluacion");
+					this.OnFechaEvaluacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCreacion", DbType="Date NOT NULL")]
+		public System.DateTime FechaCreacion
+		{
+			get
+			{
+				return this._FechaCreacion;
+			}
+			set
+			{
+				if ((this._FechaCreacion != value))
+				{
+					this.OnFechaCreacionChanging(value);
+					this.SendPropertyChanging();
+					this._FechaCreacion = value;
+					this.SendPropertyChanged("FechaCreacion");
+					this.OnFechaCreacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Promedio", DbType="Float")]
+		public System.Nullable<double> Promedio
+		{
+			get
+			{
+				return this._Promedio;
+			}
+			set
+			{
+				if ((this._Promedio != value))
+				{
+					this.OnPromedioChanging(value);
+					this.SendPropertyChanging();
+					this._Promedio = value;
+					this.SendPropertyChanged("Promedio");
+					this.OnPromedioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EvaluacionContrato_EvaluacionContratoPregunta", Storage="_EvaluacionContratoPreguntas", ThisKey="IdEvaluacionContrato", OtherKey="IdEvaluacionContrato")]
+		public EntitySet<EvaluacionContratoPregunta> EvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this._EvaluacionContratoPreguntas;
+			}
+			set
+			{
+				this._EvaluacionContratoPreguntas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contrato_EvaluacionContrato", Storage="_Contrato", ThisKey="IdContrato", OtherKey="IdContrato", IsForeignKey=true)]
+		public Contrato Contrato
+		{
+			get
+			{
+				return this._Contrato.Entity;
+			}
+			set
+			{
+				Contrato previousValue = this._Contrato.Entity;
+				if (((previousValue != value) 
+							|| (this._Contrato.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contrato.Entity = null;
+						previousValue.EvaluacionContratos.Remove(this);
+					}
+					this._Contrato.Entity = value;
+					if ((value != null))
+					{
+						value.EvaluacionContratos.Add(this);
+						this._IdContrato = value.IdContrato;
+					}
+					else
+					{
+						this._IdContrato = default(int);
+					}
+					this.SendPropertyChanged("Contrato");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_EvaluacionContrato", Storage="_Usuario", ThisKey="IdUsuarioDirectorContrato", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
+		{
+			get
+			{
+				return this._Usuario.Entity;
+			}
+			set
+			{
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.EvaluacionContratos.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.EvaluacionContratos.Add(this);
+						this._IdUsuarioDirectorContrato = value.IdUsuario;
+					}
+					else
+					{
+						this._IdUsuarioDirectorContrato = default(int);
+					}
+					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_EvaluacionContratoPreguntas(EvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.EvaluacionContrato = this;
+		}
+		
+		private void detach_EvaluacionContratoPreguntas(EvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.EvaluacionContrato = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EvaluacionContratoPregunta")]
+	public partial class EvaluacionContratoPregunta : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdEvaluacionContratoPregunta;
+		
+		private int _IdEvaluacionContrato;
+		
+		private int _IdPregunta;
+		
+		private int _ValorObtenido;
+		
+		private EntityRef<EvaluacionContrato> _EvaluacionContrato;
+		
+		private EntityRef<Pregunta> _Pregunta;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdEvaluacionContratoPreguntaChanging(int value);
+    partial void OnIdEvaluacionContratoPreguntaChanged();
+    partial void OnIdEvaluacionContratoChanging(int value);
+    partial void OnIdEvaluacionContratoChanged();
+    partial void OnIdPreguntaChanging(int value);
+    partial void OnIdPreguntaChanged();
+    partial void OnValorObtenidoChanging(int value);
+    partial void OnValorObtenidoChanged();
+    #endregion
+		
+		public EvaluacionContratoPregunta()
+		{
+			this._EvaluacionContrato = default(EntityRef<EvaluacionContrato>);
+			this._Pregunta = default(EntityRef<Pregunta>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEvaluacionContratoPregunta", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdEvaluacionContratoPregunta
+		{
+			get
+			{
+				return this._IdEvaluacionContratoPregunta;
+			}
+			set
+			{
+				if ((this._IdEvaluacionContratoPregunta != value))
+				{
+					this.OnIdEvaluacionContratoPreguntaChanging(value);
+					this.SendPropertyChanging();
+					this._IdEvaluacionContratoPregunta = value;
+					this.SendPropertyChanged("IdEvaluacionContratoPregunta");
+					this.OnIdEvaluacionContratoPreguntaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEvaluacionContrato", DbType="Int NOT NULL")]
+		public int IdEvaluacionContrato
+		{
+			get
+			{
+				return this._IdEvaluacionContrato;
+			}
+			set
+			{
+				if ((this._IdEvaluacionContrato != value))
+				{
+					if (this._EvaluacionContrato.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdEvaluacionContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdEvaluacionContrato = value;
+					this.SendPropertyChanged("IdEvaluacionContrato");
+					this.OnIdEvaluacionContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPregunta", DbType="Int NOT NULL")]
+		public int IdPregunta
+		{
+			get
+			{
+				return this._IdPregunta;
+			}
+			set
+			{
+				if ((this._IdPregunta != value))
+				{
+					if (this._Pregunta.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPreguntaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPregunta = value;
+					this.SendPropertyChanged("IdPregunta");
+					this.OnIdPreguntaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValorObtenido", DbType="Int NOT NULL")]
+		public int ValorObtenido
+		{
+			get
+			{
+				return this._ValorObtenido;
+			}
+			set
+			{
+				if ((this._ValorObtenido != value))
+				{
+					this.OnValorObtenidoChanging(value);
+					this.SendPropertyChanging();
+					this._ValorObtenido = value;
+					this.SendPropertyChanged("ValorObtenido");
+					this.OnValorObtenidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EvaluacionContrato_EvaluacionContratoPregunta", Storage="_EvaluacionContrato", ThisKey="IdEvaluacionContrato", OtherKey="IdEvaluacionContrato", IsForeignKey=true)]
+		public EvaluacionContrato EvaluacionContrato
+		{
+			get
+			{
+				return this._EvaluacionContrato.Entity;
+			}
+			set
+			{
+				EvaluacionContrato previousValue = this._EvaluacionContrato.Entity;
+				if (((previousValue != value) 
+							|| (this._EvaluacionContrato.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EvaluacionContrato.Entity = null;
+						previousValue.EvaluacionContratoPreguntas.Remove(this);
+					}
+					this._EvaluacionContrato.Entity = value;
+					if ((value != null))
+					{
+						value.EvaluacionContratoPreguntas.Add(this);
+						this._IdEvaluacionContrato = value.IdEvaluacionContrato;
+					}
+					else
+					{
+						this._IdEvaluacionContrato = default(int);
+					}
+					this.SendPropertyChanged("EvaluacionContrato");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pregunta_EvaluacionContratoPregunta", Storage="_Pregunta", ThisKey="IdPregunta", OtherKey="IdPregunta", IsForeignKey=true)]
+		public Pregunta Pregunta
+		{
+			get
+			{
+				return this._Pregunta.Entity;
+			}
+			set
+			{
+				Pregunta previousValue = this._Pregunta.Entity;
+				if (((previousValue != value) 
+							|| (this._Pregunta.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Pregunta.Entity = null;
+						previousValue.EvaluacionContratoPreguntas.Remove(this);
+					}
+					this._Pregunta.Entity = value;
+					if ((value != null))
+					{
+						value.EvaluacionContratoPreguntas.Add(this);
+						this._IdPregunta = value.IdPregunta;
+					}
+					else
+					{
+						this._IdPregunta = default(int);
+					}
+					this.SendPropertyChanged("Pregunta");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlantillaEvaluacionContrato")]
+	public partial class PlantillaEvaluacionContrato : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdPlantillaEvaluacionContrato;
+		
+		private int _IdContrato;
+		
+		private string _Nombre;
+		
+		private string _Descripcion;
+		
+		private System.DateTime _FechaCreacion;
+		
+		private string _CreadoPor;
+		
+		private EntitySet<PlantillaEvaluacionContratoPregunta> _PlantillaEvaluacionContratoPreguntas;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdPlantillaEvaluacionContratoChanging(int value);
+    partial void OnIdPlantillaEvaluacionContratoChanged();
+    partial void OnIdContratoChanging(int value);
+    partial void OnIdContratoChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnDescripcionChanging(string value);
+    partial void OnDescripcionChanged();
+    partial void OnFechaCreacionChanging(System.DateTime value);
+    partial void OnFechaCreacionChanged();
+    partial void OnCreadoPorChanging(string value);
+    partial void OnCreadoPorChanged();
+    #endregion
+		
+		public PlantillaEvaluacionContrato()
+		{
+			this._PlantillaEvaluacionContratoPreguntas = new EntitySet<PlantillaEvaluacionContratoPregunta>(new Action<PlantillaEvaluacionContratoPregunta>(this.attach_PlantillaEvaluacionContratoPreguntas), new Action<PlantillaEvaluacionContratoPregunta>(this.detach_PlantillaEvaluacionContratoPreguntas));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPlantillaEvaluacionContrato", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdPlantillaEvaluacionContrato
+		{
+			get
+			{
+				return this._IdPlantillaEvaluacionContrato;
+			}
+			set
+			{
+				if ((this._IdPlantillaEvaluacionContrato != value))
+				{
+					this.OnIdPlantillaEvaluacionContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdPlantillaEvaluacionContrato = value;
+					this.SendPropertyChanged("IdPlantillaEvaluacionContrato");
+					this.OnIdPlantillaEvaluacionContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdContrato", DbType="Int NOT NULL")]
+		public int IdContrato
+		{
+			get
+			{
+				return this._IdContrato;
+			}
+			set
+			{
+				if ((this._IdContrato != value))
+				{
+					this.OnIdContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdContrato = value;
+					this.SendPropertyChanged("IdContrato");
+					this.OnIdContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Descripcion", DbType="NVarChar(255)")]
+		public string Descripcion
+		{
+			get
+			{
+				return this._Descripcion;
+			}
+			set
+			{
+				if ((this._Descripcion != value))
+				{
+					this.OnDescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._Descripcion = value;
+					this.SendPropertyChanged("Descripcion");
+					this.OnDescripcionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaCreacion", DbType="Date NOT NULL")]
+		public System.DateTime FechaCreacion
+		{
+			get
+			{
+				return this._FechaCreacion;
+			}
+			set
+			{
+				if ((this._FechaCreacion != value))
+				{
+					this.OnFechaCreacionChanging(value);
+					this.SendPropertyChanging();
+					this._FechaCreacion = value;
+					this.SendPropertyChanged("FechaCreacion");
+					this.OnFechaCreacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreadoPor", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string CreadoPor
+		{
+			get
+			{
+				return this._CreadoPor;
+			}
+			set
+			{
+				if ((this._CreadoPor != value))
+				{
+					this.OnCreadoPorChanging(value);
+					this.SendPropertyChanging();
+					this._CreadoPor = value;
+					this.SendPropertyChanged("CreadoPor");
+					this.OnCreadoPorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantillaEvaluacionContrato_PlantillaEvaluacionContratoPregunta", Storage="_PlantillaEvaluacionContratoPreguntas", ThisKey="IdPlantillaEvaluacionContrato", OtherKey="IdPlantillaEvaluacionContrato")]
+		public EntitySet<PlantillaEvaluacionContratoPregunta> PlantillaEvaluacionContratoPreguntas
+		{
+			get
+			{
+				return this._PlantillaEvaluacionContratoPreguntas;
+			}
+			set
+			{
+				this._PlantillaEvaluacionContratoPreguntas.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PlantillaEvaluacionContratoPreguntas(PlantillaEvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlantillaEvaluacionContrato = this;
+		}
+		
+		private void detach_PlantillaEvaluacionContratoPreguntas(PlantillaEvaluacionContratoPregunta entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlantillaEvaluacionContrato = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlantillaEvaluacionContratoPregunta")]
+	public partial class PlantillaEvaluacionContratoPregunta : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdPlantillaEvaluacionContratoPregunta;
+		
+		private int _IdPlantillaEvaluacionContrato;
+		
+		private int _IdPregunta;
+		
+		private EntityRef<PlantillaEvaluacionContrato> _PlantillaEvaluacionContrato;
+		
+		private EntityRef<Pregunta> _Pregunta;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdPlantillaEvaluacionContratoPreguntaChanging(int value);
+    partial void OnIdPlantillaEvaluacionContratoPreguntaChanged();
+    partial void OnIdPlantillaEvaluacionContratoChanging(int value);
+    partial void OnIdPlantillaEvaluacionContratoChanged();
+    partial void OnIdPreguntaChanging(int value);
+    partial void OnIdPreguntaChanged();
+    #endregion
+		
+		public PlantillaEvaluacionContratoPregunta()
+		{
+			this._PlantillaEvaluacionContrato = default(EntityRef<PlantillaEvaluacionContrato>);
+			this._Pregunta = default(EntityRef<Pregunta>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPlantillaEvaluacionContratoPregunta", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdPlantillaEvaluacionContratoPregunta
+		{
+			get
+			{
+				return this._IdPlantillaEvaluacionContratoPregunta;
+			}
+			set
+			{
+				if ((this._IdPlantillaEvaluacionContratoPregunta != value))
+				{
+					this.OnIdPlantillaEvaluacionContratoPreguntaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPlantillaEvaluacionContratoPregunta = value;
+					this.SendPropertyChanged("IdPlantillaEvaluacionContratoPregunta");
+					this.OnIdPlantillaEvaluacionContratoPreguntaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPlantillaEvaluacionContrato", DbType="Int NOT NULL")]
+		public int IdPlantillaEvaluacionContrato
+		{
+			get
+			{
+				return this._IdPlantillaEvaluacionContrato;
+			}
+			set
+			{
+				if ((this._IdPlantillaEvaluacionContrato != value))
+				{
+					if (this._PlantillaEvaluacionContrato.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPlantillaEvaluacionContratoChanging(value);
+					this.SendPropertyChanging();
+					this._IdPlantillaEvaluacionContrato = value;
+					this.SendPropertyChanged("IdPlantillaEvaluacionContrato");
+					this.OnIdPlantillaEvaluacionContratoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPregunta", DbType="Int NOT NULL")]
+		public int IdPregunta
+		{
+			get
+			{
+				return this._IdPregunta;
+			}
+			set
+			{
+				if ((this._IdPregunta != value))
+				{
+					if (this._Pregunta.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdPreguntaChanging(value);
+					this.SendPropertyChanging();
+					this._IdPregunta = value;
+					this.SendPropertyChanged("IdPregunta");
+					this.OnIdPreguntaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlantillaEvaluacionContrato_PlantillaEvaluacionContratoPregunta", Storage="_PlantillaEvaluacionContrato", ThisKey="IdPlantillaEvaluacionContrato", OtherKey="IdPlantillaEvaluacionContrato", IsForeignKey=true)]
+		public PlantillaEvaluacionContrato PlantillaEvaluacionContrato
+		{
+			get
+			{
+				return this._PlantillaEvaluacionContrato.Entity;
+			}
+			set
+			{
+				PlantillaEvaluacionContrato previousValue = this._PlantillaEvaluacionContrato.Entity;
+				if (((previousValue != value) 
+							|| (this._PlantillaEvaluacionContrato.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PlantillaEvaluacionContrato.Entity = null;
+						previousValue.PlantillaEvaluacionContratoPreguntas.Remove(this);
+					}
+					this._PlantillaEvaluacionContrato.Entity = value;
+					if ((value != null))
+					{
+						value.PlantillaEvaluacionContratoPreguntas.Add(this);
+						this._IdPlantillaEvaluacionContrato = value.IdPlantillaEvaluacionContrato;
+					}
+					else
+					{
+						this._IdPlantillaEvaluacionContrato = default(int);
+					}
+					this.SendPropertyChanged("PlantillaEvaluacionContrato");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pregunta_PlantillaEvaluacionContratoPregunta", Storage="_Pregunta", ThisKey="IdPregunta", OtherKey="IdPregunta", IsForeignKey=true)]
+		public Pregunta Pregunta
+		{
+			get
+			{
+				return this._Pregunta.Entity;
+			}
+			set
+			{
+				Pregunta previousValue = this._Pregunta.Entity;
+				if (((previousValue != value) 
+							|| (this._Pregunta.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Pregunta.Entity = null;
+						previousValue.PlantillaEvaluacionContratoPreguntas.Remove(this);
+					}
+					this._Pregunta.Entity = value;
+					if ((value != null))
+					{
+						value.PlantillaEvaluacionContratoPreguntas.Add(this);
+						this._IdPregunta = value.IdPregunta;
+					}
+					else
+					{
+						this._IdPregunta = default(int);
+					}
+					this.SendPropertyChanged("Pregunta");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

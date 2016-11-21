@@ -1,0 +1,42 @@
+﻿@model DESSAU.ControlGestion.Web.Models.EvaluacionModels.ListadoEvaluacionContratoViewModel
+
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Evaluación Contrato</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            @Html.ActionLink("Agregar", "CrearEditarEvaluacionContrato", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Grid(Model.Evaluaciones)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.Usuario.NombreCompleto).Named("Cliente");
+            col.For(x => x.PromedioDesempeno).Named("Desempeño (70%)");
+            col.For(x => x.PromedioContrato).Named("Promedio (30%)");
+            col.For(x => @String.Format("{0:N2}", x.Promedio)).Named("Total");
+            col.For(x => Html.CalculaPeriodo(x.FechaEvaluacion.Month, x.FechaEvaluacion.Year)).Named("Periodo");
+            col.For(x => x.FechaCreacion.ToShortDateString()).Named("Fecha Evaluación");
+            col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Contrato", "VerEvaluacionContrato", null, null, new { IdEvaluacionContrato = x.IdEvaluacionContrato }));
+            col.For(x => Html.ButtonIconActionLink("download-alt", "Exportar Evaluación Desempeño", "ExportarEvaluacionContratoPDF", null, null, new { IdEvaluacionContrato = x.IdEvaluacionContrato }));
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Evaluación Contrato", "CrearEditarEvaluacionContrato", null, null, new { IdEvaluacionContrato = x.IdEvaluacionContrato, Periodo = Html.CalculaPeriodo(x.FechaEvaluacion.Month, x.FechaEvaluacion.Year) }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+        <hr />
+    </div>
+</div>

@@ -258,10 +258,14 @@
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaFormModel.cs" />
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaViewModel.cs" />
     <Compile Include="Models\CategoriaModels\ListarCategoriaViewModel.cs" />
+    <Compile Include="Models\DetalleEvaluacionContratoPdfGenerator.cs" />
+    <Compile Include="Models\EvaluacionModels\CrearEditarEvaluacionContratoFormModel.cs" />
+    <Compile Include="Models\EvaluacionModels\CrearEditarEvaluacionContratoViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\DetalleEvaluacionDesempenoViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\DetalleEvaluacionPdfGenerator.cs" />
     <Compile Include="Models\EvaluacionModels\EvaluationSheetFormModel.cs" />
     <Compile Include="Models\EvaluacionModels\EvaluationSheetViewModel.cs" />
+    <Compile Include="Models\EvaluacionModels\ListadoEvaluacionContratoViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoFormModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoViewModel.cs" />
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
@@ -1217,6 +1221,9 @@
     <Content Include="Views\EvaluacionDesempeno\EvaluationSheet.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\ListadoEvaluaciones.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\DetalleEvaluacionDesempeno.cshtml" />
+    <Content Include="Views\EvaluacionDesempeno\ListadoEvaluacionContrato.cshtml" />
+    <Content Include="Views\EvaluacionDesempeno\VerEvaluacionContrato.cshtml" />
+    <Content Include="Views\EvaluacionDesempeno\CrearEditarEvaluacionContrato.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
