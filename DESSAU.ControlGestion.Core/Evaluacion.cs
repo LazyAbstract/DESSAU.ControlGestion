@@ -26,5 +26,13 @@ namespace DESSAU.ControlGestion.Core
                 return String.Empty;
             }
         }
+
+        public double PromedioPorcentual
+        {
+            get
+            {
+                return this.Promedio.GetValueOrDefault(0) / 5;
+            }
+        }
     }
 }

@@ -3,7 +3,6 @@
 
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -13,7 +12,6 @@
             </button>
             <a class="navbar-brand" href="#">Evaluación Contrato</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav"></ul>
             @Html.ActionLink("Agregar", "CrearEditarEvaluacionContrato", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
@@ -28,9 +26,10 @@
         .Columns(col =>
         {
             col.For(x => x.Usuario.NombreCompleto).Named("Cliente");
-            col.For(x => x.PromedioDesempeno).Named("Desempeño (70%)");
-            col.For(x => x.PromedioContrato).Named("Promedio (30%)");
-            col.For(x => @String.Format("{0:N2}", x.Promedio)).Named("Total");
+            col.For(x => @String.Format("{0:P2}", x.PromedioDesempeno)).Named("Desempeño (70%)");
+            col.For(x => @String.Format("{0:P2}", x.PromedioContrato)).Named("Promedio (30%)");
+            col.For(x => @String.Format("{0:P2}", x.PromedioPorcentual)).Named("Total (ND)");
+            col.For(x => String.Format("{0:N2}", x.FactorDesempeno)).Named("FD");
             col.For(x => Html.CalculaPeriodo(x.FechaEvaluacion.Month, x.FechaEvaluacion.Year)).Named("Periodo");
             col.For(x => x.FechaCreacion.ToShortDateString()).Named("Fecha Evaluación");
             col.For(x => Html.ButtonIconActionLink("search", "Ver Evaluación Contrato", "VerEvaluacionContrato", null, null, new { IdEvaluacionContrato = x.IdEvaluacionContrato }));
@@ -38,5 +37,150 @@
             col.For(x => Html.ButtonIconActionLink("pencil", "Editar Evaluación Contrato", "CrearEditarEvaluacionContrato", null, null, new { IdEvaluacionContrato = x.IdEvaluacionContrato, Periodo = Html.CalculaPeriodo(x.FechaEvaluacion.Month, x.FechaEvaluacion.Year) }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
         <hr />
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>Evaluación Desempeño @Model.Periodos.Max().Year</h4>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    ODS
+                </th>
+                <th>
+                    Cliente
+                </th>
+                @foreach (var item in Model.Periodos)
+                {
+                    <th>
+                        @Html.CalculaPeriodo(item.Month, item.Year)
+                    </th>
+                }
+            </tr>
+            @foreach (var proyecto in Model.Proyectos)
+            {
+                <tr>
+                    <td>
+                        @proyecto.Nombre
+                    </td>
+                    <td>
+                        @proyecto.Usuario.NombreCompleto
+                    </td>
+                    @foreach (var item in Model.Periodos)
+                    {
+                        <td>
+                            @if (proyecto.UsuarioCategoriaProyectos.SelectMany(x => x.Evaluacions.Where(y => y.FechaEvaluacion == item)).Any())
+                            {
+                                @String.Format("{0:P2}", proyecto.UsuarioCategoriaProyectos.SelectMany(x => x.Evaluacions.Where(y => y.FechaEvaluacion == item)).Average(x => x.PromedioPorcentual))
+                            }
+                            else
+                            {
+                                <span>0</span>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+            <tr>
+                <th colspan="2">
+                    Cumplimiento
+                </th>
+                @foreach (var item in Model.Periodos)
+                {
+                    <th>
+                        @String.Format("{0:P2}", Model.Desempeno.Where(x => x.FechaEvaluacion == item).Average(x => x.PromedioPorcentual))
+                    </th>
+                }
+            </tr>
+        </table>
+        <p><i>*Se consideran sólo las evaluaciones realizadas para el cálculo del promedio</i></p>
+    </div>
+</div>
+<br/>
+<hr/>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Factor Total Desempeño</h5>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>
+                        95 < ND <= 100
+                    </th>
+                    <td>
+                        1,00
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        90 < ND <= 95
+                    </th>
+                    <td>
+                        0,99
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        85 < ND <= 90
+                    </th>
+                    <td>
+                        0,98
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        80 < ND <= 85
+                    </th>
+                    <td>
+                        0,97
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        75 < ND <= 80
+                    </th>
+                    <td>
+                        0,96
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        70 < ND <= 75
+                    </th>
+                    <td>
+                        0,95
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        60 < ND <= 70
+                    </th>
+                    <td>
+                        0,93
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        50 < ND <= 60
+                    </th>
+                    <td>
+                        0,92
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        0 < ND <= 50
+                    </th>
+                    <td>
+                        0,90
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

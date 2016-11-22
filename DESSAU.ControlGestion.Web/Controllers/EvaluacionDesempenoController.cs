@@ -261,6 +261,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListadoEvaluacionContratoViewModel model = new ListadoEvaluacionContratoViewModel();
             model.Evaluaciones = db.EvaluacionContratos.OrderBy(x => x.FechaEvaluacion);
+            model.Desempeno = db.Evaluacions.OrderBy(x => x.FechaEvaluacion);
+            model.Periodos = db.Evaluacions.GroupBy(x => x.FechaEvaluacion).Select(x => x.Key).ToList();
+            model.Proyectos = db.Proyectos.OrderBy(x => x.IdProyecto);
             return View(model);
         }
 

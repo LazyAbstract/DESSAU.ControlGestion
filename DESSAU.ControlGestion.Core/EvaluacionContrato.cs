@@ -14,7 +14,7 @@ namespace DESSAU.ControlGestion.Core
         {
             get
             {
-                return db.Evaluacions.Where(x => x.FechaEvaluacion == this.FechaEvaluacion).Average(x => x.Promedio).GetValueOrDefault(0); ;
+                return db.Evaluacions.Where(x => x.FechaEvaluacion == this.FechaEvaluacion).Average(x => x.Promedio).GetValueOrDefault(0) / 5;
             }
         }
 
@@ -22,7 +22,7 @@ namespace DESSAU.ControlGestion.Core
         {
             get
             {
-                return this.EvaluacionContratoPreguntas.Average(x => x.ValorObtenido);
+                return this.EvaluacionContratoPreguntas.Average(x => x.ValorObtenido) / 5;
             }
         }
 
@@ -42,6 +42,38 @@ namespace DESSAU.ControlGestion.Core
                 else if (Promedio.GetValueOrDefault(0) <= 5)
                     return "Excepcional";
                 return String.Empty;
+            }
+        }
+
+        public double FactorDesempeno
+        {
+            get
+            {
+                if (PromedioPorcentual < 0.5)
+                    return 0.9;
+                else if (PromedioPorcentual < 0.6)
+                    return 0.92;
+                else if (PromedioPorcentual < 0.7)
+                    return 0.93;
+                else if (PromedioPorcentual < 0.75)
+                    return 0.95;
+                else if (PromedioPorcentual < 0.8)
+                    return 0.96;
+                else if (PromedioPorcentual < 0.85)
+                    return 0.97;
+                else if (PromedioPorcentual < 0.9)
+                    return 0.98;
+                else if (PromedioPorcentual < 0.95)
+                    return 0.99;
+                else return 1;
+            }
+        }
+
+        public double PromedioPorcentual
+        {
+            get
+            {
+                return this.PromedioDesempeno * 0.7 + this.PromedioContrato * 0.3;
             }
         }
     }

@@ -133,3 +133,7 @@ a[disabled] {
     left: 3px;
 }
 
+.tabla-detalle tr td:nth-child(1){
+    width:40%;
+}
+
