@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.Models;
 using DESSAU.ControlGestion.Web.Models.UsuarioModels;
 using Microsoft.AspNet.Identity;
@@ -136,7 +137,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 }
                 else
                 {
-                    string Password = Form.ApellidoPaterno.ToLower().Substring(0, 4) + Form.Nombre.ToLower().Substring(0, 2);
+                    string Password = ContrasenaHelper.getContrasena(Form.Nombre, Form.ApellidoPaterno);
                     var user = new ApplicationUser { UserName = Form.Correo, Email = Form.Correo };
                     var result = await UserManager.CreateAsync(user, Password);
                     if (result.Succeeded)
@@ -153,7 +154,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                             Correo = Form.Correo,
                             Nombre = Form.Nombre,
                             ApellidoPaterno = Form.ApellidoPaterno,
-                            Contacto = Form.Contacto
+                            Contacto = Form.Contacto,
+                            Vigente = true,
                         };
 
                         db.Usuarios.InsertOnSubmit(_user);
