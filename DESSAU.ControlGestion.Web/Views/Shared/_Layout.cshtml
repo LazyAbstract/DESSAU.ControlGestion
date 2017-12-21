@@ -347,6 +347,9 @@
                             <li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
+                            <li>
+                                <a href="@Url.Action("CrearEditarTimeSheetEWP", "TimeSheet")"><i class="fa fa-edit fa-fw"></i> Declaración de Avances EWP</a>
+                            </li>
                             @if (User.IsInRole("Evaluación Desempeño"))
                             {                           
                                 <li>
@@ -436,17 +439,7 @@
             @RenderBody()
         </div>
         <!-- /#page-wrapper -->
-        <div class="navbar navbar-default navbar-fixed-bottom">
-            <div class="navbar-inner">
-                <div class="container">
-                    <p class="navbar-text pull-right">
-                        <a class="brand" href="http://www.commonabstract.cl" target="_blank">
-                            <img height="35px" src="@Url.Content("~/Content/images/logo-commonabstract-temporal.PNG")" />
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
+        
 
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/myScripts")

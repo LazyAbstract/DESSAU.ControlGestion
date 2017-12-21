@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels;
 using DESSAU.ControlGestion.Web.Models.TimeSheetModels;
 using System;
 using System.Collections.Generic;
@@ -135,6 +136,166 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             return View(model);
+        }
+
+        //nuevo desarrollo rimesheet EWP
+        [HttpGet]
+        public ActionResult CrearEditarTimeSheetEWP(CrearEditarTimeSheetEWPFormModel Form, DateTime? fecha)
+        {
+            CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel();
+            
+            model.Form.Fecha = Form.Fecha.GetValueOrDefault(DateTime.Today);
+            if (fecha.HasValue) { model.Form.Fecha = fecha; }
+            model.Form.validar = true;
+            int idUsuario = UsuarioActual.IdUsuario;
+            IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
+               x.IdUsuario == idUsuario &&
+               x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                   TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
+            if (!usuarioCategoriaProyectos.Any()) throw new NotImplementedException();
+            model.Form.IdUsuarioCategoriaProyecto = usuarioCategoriaProyectos.First().IdUsuarioCategoriaProyecto;
+            model.Actividades = usuarioCategoriaProyectos.First().Categoria.CategoriaActividads.Select(x => x.Actividad);
+            model.TimeSheetsEWP = db.TimeSheetEWPs.Where(x => x.Fecha == model.Form.Fecha
+              && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto)
+              .OrderByDescending(x => x.Fecha).ThenBy(x => x.SubEWP.Codigo);
+
+            foreach(var actividad in model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+            {
+                int horas = 0;
+                IEnumerable<TimeSheet> timeSheets = db.TimeSheets
+                    .Where(x => x.Fecha == model.Form.Fecha
+                        && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto
+                        && x.IdActividad == actividad.IdActividad);
+                if(timeSheets.Any()) horas = timeSheets
+                    .Sum(x => x.HorasReportadas.GetValueOrDefault(0));
+                model.Form.DTOvalues.Add(horas);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CrearEditarTimeSheetEWP(CrearEditarTimeSheetEWPFormModel Form)
+        {
+            int idUsuario = UsuarioActual.IdUsuario;
+            IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
+                    x.IdUsuario == idUsuario &&
+                    x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
+                    TipoEstadoUsuarioCategoriaProyecto.NoVigente);
+            if (ModelState.IsValid)
+            {
+                if (Form.HorasReportadasEWP > 0)
+                {
+                    TimeSheetEWP tsEWP = db.TimeSheetEWPs.SingleOrDefault(x => 
+                        x.IdUsuarioCategoriaProyecto == Form.IdUsuarioCategoriaProyecto
+                            && x.IdActividad == 130 //Form.HorasReportadasEWP.IdActividad 
+                            && x.Fecha == Form.Fecha.Value
+                            && x.IdSubEWP == Form.IdSubEWP
+                            && x.IdTipoDocumento == Form.IdTipoDocumento
+                            && x.IdRevision == Form.IdRevision
+                            && x.IdNumeroDocumento == Form.IdNumeroDocumento);
+                    if(tsEWP != null)
+                    {
+                        tsEWP.HorasReportadas = Form.HorasReportadasEWP;
+                    }
+                    else
+                    {
+                        TimeSheetEWP timeSheet = new TimeSheetEWP()
+                        {
+                            IdActividad = 130, // Form.IdActividad.GetValueOrDefault(),  ACTIVIDAD EWP
+                            IdUsuarioCategoriaProyecto = Form.IdUsuarioCategoriaProyecto.GetValueOrDefault(),
+                            IdNumeroDocumento = Form.IdNumeroDocumento.GetValueOrDefault(),
+                            IdRevision = Form.IdRevision.GetValueOrDefault(),
+                            IdSubEWP = Form.IdSubEWP.GetValueOrDefault(),
+                            IdTipoDocumento = Form.IdTipoDocumento.GetValueOrDefault(),
+                            HorasReportadas = Form.HorasReportadasEWP,
+                            Fecha = Form.Fecha.Value
+                        };
+
+                        db.TimeSheetEWPs.InsertOnSubmit(timeSheet);
+                    }
+                                        
+                    db.SubmitChanges();
+                }
+
+                if(Form.DTO.Any())
+                {
+                    foreach (var dto in Form.DTO)
+                    {
+                        TimeSheet _ts = db.TimeSheets.SingleOrDefault(x => 
+                            x.IdUsuarioCategoriaProyecto == Form.IdUsuarioCategoriaProyecto 
+                                && x.IdActividad == dto.IdActividad 
+                                && x.Fecha == Form.Fecha.Value);
+                        if (_ts != null)
+                        {
+                            _ts.HorasReportadas = dto.HorasReportadas;
+                        }
+                        else
+                        {
+                            TimeSheet ts = new TimeSheet()
+                            {
+                                IdUsuarioCategoriaProyecto = Form.IdUsuarioCategoriaProyecto.Value,
+                                IdActividad = dto.IdActividad,
+                                HorasReportadas = dto.HorasReportadas,
+                                Fecha = Form.Fecha.Value
+                            };
+                            db.TimeSheets.InsertOnSubmit(ts);
+                        }                        
+                    }
+                    db.SubmitChanges();
+                }
+                var fecha = Form.Fecha;
+                Form = new CrearEditarTimeSheetEWPFormModel();
+                Form.Fecha = fecha;
+            }
+            CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel(Form);
+            model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
+            model.Form.IdUsuarioCategoriaProyecto = usuarioCategoriaProyectos.First().IdUsuarioCategoriaProyecto;
+            model.Actividades = usuarioCategoriaProyectos.First().Categoria.CategoriaActividads.Select(x => x.Actividad);
+
+            foreach (var actividad in model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+            {
+                int horas = 0;
+                IEnumerable<TimeSheet> timeSheets = db.TimeSheets
+                    .Where(x => x.Fecha == model.Form.Fecha
+                        && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto
+                        && x.IdActividad == actividad.IdActividad);
+                if (timeSheets.Any()) horas = timeSheets
+                     .Sum(x => x.HorasReportadas.GetValueOrDefault(0));
+                model.Form.DTOvalues.Add(horas);
+            }
+
+            model.Form.Fecha = Form.Fecha.GetValueOrDefault(DateTime.Today);
+            model.TimeSheetsEWP = db.TimeSheetEWPs.Where(x => x.Fecha == model.Form.Fecha
+               && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto)
+               .OrderByDescending(x => x.Fecha).ThenBy(x => x.SubEWP.Codigo);
+            return View(model);
+        }
+
+        public PartialViewResult VerTimeSheetEWP(int IdUsuarioCategoriaProyecto, DateTime Fecha)
+        {
+            VerTimeSheetEWPViewModel model = new VerTimeSheetEWPViewModel();
+            model.TimeSheets = db.TimeSheetEWPs.Where(x => x.Fecha == Fecha
+                && x.IdUsuarioCategoriaProyecto == IdUsuarioCategoriaProyecto)
+                .OrderByDescending(x => x.Fecha).ThenBy(x => x.SubEWP.Codigo);
+            return PartialView(model);
+        }
+
+        public ActionResult getSubEWPFromEWP(FormCollection formCollection)
+        {
+            var formValue = formCollection.GetValues(0)[0];
+            int IdEWP = Int16.Parse(formValue);
+            SelectList result = null;
+            result = new SelectList(db.SubEWPs.Where(x => x.IdEWP == IdEWP), "IdSubEWP", "Codigo");
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EliminarEWP(int IdTimeSheetEWP, DateTime fecha)
+        {
+            TimeSheetEWP del = db.TimeSheetEWPs.Single(x => x.IdTimeSheetEWP == IdTimeSheetEWP);
+            db.TimeSheetEWPs.DeleteOnSubmit(del);
+            db.SubmitChanges();
+            return RedirectToAction("CrearEditarTimeSheetEWP", new { fecha = fecha.ToShortDateString() });
         }
     }
 }

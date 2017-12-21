@@ -279,6 +279,9 @@
     <Compile Include="Models\ProyectoModels\ListarProyectoViewModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardFormModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardViewModel.cs" />
+    <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPFormModel.cs" />
+    <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPViewModel.cs" />
+    <Compile Include="Models\TimeSheetEWPModels\TimeSheetFormModelEWPDTO.cs" />
     <Compile Include="Models\TimeSheetModels\TimeSheetCagegoriaProyectoDTO.cs" />
     <Compile Include="Models\NominaModels\VerNominaFormModel.cs" />
     <Compile Include="Models\NominaModels\VerNominaViewModel.cs" />
@@ -286,6 +289,7 @@
     <Compile Include="Models\ReporteModels\ReporteDedicacionActividadViewModel.cs" />
     <Compile Include="Models\TimeSheetModels\TimeSheetDTO.cs" />
     <Compile Include="MapperProfiles\TimeSheetMappers\TimeSheetDTOTimeSheet.cs" />
+    <Compile Include="Models\TimeSheetModels\VerTimeSheetEWPViewModel.cs" />
     <Compile Include="Models\TimeSheetModels\VerTimeSheetFormModel.cs" />
     <Compile Include="Models\TimeSheetModels\VerTimeSheetViewModel.cs" />
     <Compile Include="Models\NotificacionModels\GetNotificacionViewModel.cs" />
@@ -1225,6 +1229,8 @@
     <Content Include="Views\EvaluacionDesempeno\ListadoEvaluacionContrato.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\VerEvaluacionContrato.cshtml" />
     <Content Include="Views\EvaluacionDesempeno\CrearEditarEvaluacionContrato.cshtml" />
+    <Content Include="Views\TimeSheet\CrearEditarTimeSheetEWP.cshtml" />
+    <Content Include="Views\TimeSheet\VerTimeSheetEWP.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

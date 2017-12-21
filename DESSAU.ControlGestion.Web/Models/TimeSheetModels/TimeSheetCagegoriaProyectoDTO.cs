@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels;
+using FluentValidation;
 using FluentValidation.Attributes;
 using FluentValidation.Results;
 using System;
@@ -44,4 +45,20 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetModels
             });
         }
     }
+
+    //[Validator(typeof(TimeSheetEWPValidation))]
+
+    //public class TimeSheetEWPValidation : AbstractValidator<CrearEditarTimeSheetEWPFormModel>
+    //{
+    //    public TimeSheetEWPValidation()
+    //    {
+    //        Custom(x => 
+    //        {
+    //            if(db)
+    //            return null;
+    //        });
+    //    }
+    //}
+
+
 }

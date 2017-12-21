@@ -1,0 +1,353 @@
+﻿@model DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels.CrearEditarTimeSheetEWPViewModel
+
+@{
+    ViewBag.Title = "CrearEditarTimeSheetEWP";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fa fa-edit fa-fw"></i>@String.Format("Declaración de Avances {0}", Model.Form.Fecha.GetValueOrDefault().ToString("MMMM"))</h2>
+    </div>
+</div>
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Fecha</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form id="fecha-form" class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Form.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control" })
+                </div>
+                @*@if (User.IsInRole("Admin") || User.IsInRole("Evaluación Desempeño"))
+                    {
+                        @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })
+                    }*@
+                @*<button type="submit" class="btn btn-default">Buscar</button>*@
+                @Html.ButtonIconActionLink("chevron-left", "Día Anterior", null, null, null, new { Fecha = Model.Form.Fecha.Value.AddDays(-1).ToShortDateString() })
+                @Html.ButtonIconActionLink("chevron-right", "Día Siguiente", null, null, null, new { Fecha = Model.Form.Fecha.Value.AddDays(1).ToShortDateString() })
+            </form>
+        </div>
+    </div>
+</nav>
+
+@if (Model.UsuarioCategoriaProyectos.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Model.UsuarioCategoriaProyectos.First().Usuario.NombreCompleto</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Profesional: @Model.UsuarioCategoriaProyectos.First().Proyecto.Nombre</h6>
+                            <h6>Especialidad: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Área: No Aplica</h6>
+                            <h6>Disciplina: No Aplica</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Grid(Model.TimeSheetsEWP)
+            .Attributes(@class => "table table-striped")
+            .Columns(col =>
+            {
+                col.For(x => Html.ButtonIconActionLink("remove", "Eliminar Horas EWP", "EliminarEWP", null, null, new { IdTimeSheetEWP = x.IdTimeSheetEWP, fecha = Model.Form.Fecha.Value.ToShortDateString() })).Attributes(@class => "eliminar-ewp");
+                col.For(x => x.Fecha.ToShortDateString()).Named("Fecha");
+                col.For(x => x.SubEWP.EWP.Nombre).Named("EWP");
+                col.For(x => x.SubEWP.Codigo).Named("SubEWP");
+                col.For(x => x.Revision.Nombre).Named("Revisión");
+                col.For(x => x.TipoDocumento.Nombre).Named("Tipo Documento");
+                col.For(x => x.HorasReportadas).Named("Horas Reportadas").Attributes(@class => "sumas-ewp", align => "right" );
+            }).Empty("No se han encontrado registros de horas EWP reportadas en este día"))
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "tsEWP-form" }))
+    {
+        int i = 0;
+        <div>
+            @Html.HiddenFor(x => x.Form.IdActividadEWP)
+            @Html.HiddenFor(x => x.Form.IdUsuarioCategoriaProyecto)
+            @Html.HiddenFor(x => x.Form.Fecha)
+            @Html.HiddenFor(x => x.Form.validar)
+        </div>
+        <div>
+            @Html.ValidationSummary()
+        </div>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="">
+                    <th class="">
+                        Actividad
+                    </th>   
+                    <th class="">
+                        EWP
+                    </th>
+                    <th class="">
+                        SubEWP
+                    </th>
+                    <th class="">
+                        Tipo Documento
+                    </th>
+                    <th class="">
+                        Revisión
+                    </th>
+                    <th class="">
+                        N° Doc. DESSAU
+                    </th>                  
+                    <th class="center">
+                        Horas
+                    </th>                        
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color:#5cb85c;">
+                    <td>
+                        EWP
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Form.IdEWP, Model.SubEWP, "Seleccione EWP", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Form.IdSubEWP, Model.SubEWP, "Seleccione Sub EWP", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Form.IdTipoDocumento, Model.TipoDocumento, "Seleccione", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Form.IdRevision, Model.Revision, "Seleccione", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.Form.IdNumeroDocumento, Model.NumeroDocumento, "Seleccione", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        <div class="input-group spinner">
+                            <input name="Form.HorasReportadasEWP" type="text" value="0" class="input-timesheet form-control @String.Format("numero_{0}_{1}", 0, 1)" data-dia="1" data-categoria="0" />
+                            <div class="input-group-btn-vertical">
+                                <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>          
+                @foreach (var actividad in Model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+                {    
+                    string style = actividad.IdTipoActividad == 2 ? style = "background-color:cornflowerblue;" : null;
+                    <tr>
+                        <td colspan="6" class="left" style="@style">
+                            @actividad.Nombre
+                        </td>
+                        <td align="right" class="right" style="@style">
+                            <input name="Form.DTO[@i].IdActividad" type="hidden" value="@actividad.IdActividad" />
+                            <div class="input-group spinner">
+                                <input name="Form.DTO[@i].HorasReportadas" value="@Model.Form.DTOvalues[i]" class="form-control input-timesheet @String.Format("numero_{0}_{1}", 0, 1)" type="text" data-dia="1" data-categoria="0"/>
+                                <div class="input-group-btn-vertical">
+                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                                    <button class="btn btn-default btn-xs" type="button"><i class="glyphicon glyphicon-chevron-down"></i></button>
+                                </div>                        
+                            </div>                                
+                        </td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="6">Total Diario</th>
+                    @if (false)//Model.DiaEspecials.Any(x => x.Fecha == dia))
+                    {
+                        <th class="success">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </th>
+                    }
+                    @if (Model.Form.Fecha.GetValueOrDefault(DateTime.Today).DayOfWeek == DayOfWeek.Friday)
+                    {
+                    <th align="right" class="text-right total-viernes">
+                        <span id="@String.Format("total_dia_{0}_{1}", 0, 1)" class="center">
+                            @*@(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")*@
+                            0
+                        </span>
+                    </th>
+                    }
+                    else
+                    {
+                    <th align="right" class="center totales">
+                        <span id="@String.Format("total_dia_{0}_{1}", 0, 1)" class="center">
+                            @*@(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")*@
+                            0
+                        </span>
+                    </th>
+                    }
+                    @*@foreach (var dia in Model.getFechaDesdeHasta)
+                    {
+                        if (Model.DiaEspecials.Any(x => x.Fecha == dia))
+                        {
+                            <th class="success">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </th>
+                        }
+                        else
+                        {
+                            if (dia.DayOfWeek == DayOfWeek.Friday)
+                            {
+                                <th class="center total-viernes">
+                                    <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                        @(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
+                                    </span>
+                                </th>
+                            }
+                            else
+                            {
+                                <th class="center totales">
+                                    <span id="@String.Format("total_dia_{0}_{1}", index_categoriaProyecto, (int)dia.DayOfWeek)" class="center">
+                                        @(usuarioCategoriaProyectos != null ? usuarioCategoriaProyectos.TimeSheetDTOs.Where(x => x.Fecha == dia).Sum(x => x.HorasPlanificadas.GetValueOrDefault(0)).ToString("N0") : "0")
+                                    </span>
+                                </th>
+                            }
+                        }
+                    }*@
+                </tr>
+            </thead>
+        </table>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Guardar</button>
+        </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        (function ($) {
+            $('.input-timesheet').numeric({ decimal: false, negative: false });
+            $('.spinner .btn:first-of-type').on('click', function () {
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                } else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) < 10) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
+
+            });
+            $('.spinner .btn:last-of-type').on('click', function () {
+                if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(0);
+                } else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) > 0) {
+                    $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) - 1);
+                    $(this).closest(".spinner").find('input[type="text"]').change();
+                }
+            });
+
+            $('.input-timesheet').change(function () {
+                suma($(this).data("dia"), $(this).data("categoria"));
+            });
+            $('.input-timesheet').each(function () {
+                pinta($(this));
+            });
+            $('.input-timesheet').change();
+            pintaTotales();
+        })(jQuery);
+
+        function suma(dia, categoria) {
+            var sum = 0;
+            $('.numero_' + categoria + '_' + dia).each(function () {
+                sum += Number($(this).val());
+                pinta($(this));
+            });
+
+            $('.sumas-ewp').each(function () {
+                sum += Number($(this)[0].innerText);
+            });
+
+            $('#total_dia_' + categoria + '_' + dia).html(sum);
+            pintaTotales();
+        }
+
+        function pinta(obj) {
+            if (obj.val() != '0') {
+                obj.css('background-color', '#99FFCC')
+            }
+            else {
+                obj.css('background-color', '#fff')
+            }
+        }
+
+        function pintaTotales() {
+            $('.totales').each(function () {
+                var total = $.trim($(this).children('span').text());
+                if (total == '10' || total == '9' || total == '8' || total == '7' || total == '6' || total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                    $(this).css('background-color', '#99FFCC')
+                }
+                else if (total == '0') {
+                    $(this).css('background-color', '#fff')
+                }
+                else {
+                    $(this).css('background-color', 'Red')
+                }
+            });
+
+            $('.total-viernes').each(function () {
+                var total = $.trim($(this).children('span').text());
+                if (total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                    $(this).css('background-color', '#99FFCC')
+                }
+                else if (total == '0') {
+                    $(this).css('background-color', '#fff')
+                }
+                else {
+                    $(this).css('background-color', 'Red')
+                }
+            });
+        }
+
+        $('#tsEWP-form').submit(function (event) {
+            $('input[type="submit"]').prop('disabled', true);
+        });
+
+        $(function () {
+            $('#Form_IdSubEWP').CascadingDropDown('#Form_IdEWP', $.url('TimeSheet/getSubEWPFromEWP'));
+            $('#Form_IdSubEWP').change();
+        });
+
+        $("#Form_Fecha").datepicker({
+            beforeShowDay: $.datepicker.noWeekends
+        });
+
+        $("#Form_Fecha").change(function () {
+            $("#fecha-form").submit();
+        });
+
+        $(".eliminar-ewp").click(function (event) {
+            if (!confirm("¿Está seguro que desea eliminar este registro?") == true) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    <style type="text/css">
+        .sumas-ewp {
+            padding-right: 20px !important;
+            background-color: #99FFCC;
+            border: 2px solid;
+        }
+    </style>
+}
+

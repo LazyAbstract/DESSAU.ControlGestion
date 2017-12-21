@@ -1,0 +1,15 @@
+﻿@model DESSAU.ControlGestion.Web.Models.TimeSheetModels.VerTimeSheetEWPViewModel
+
+@(Html.Grid(Model.TimeSheets)
+.Attributes(@class => "table table-striped")
+.Columns(col =>
+{
+    col.For(x => x.Fecha.ToShortDateString()).Named("Fecha");
+    col.For(x => x.SubEWP.EWP.Nombre).Named("EWP");
+    col.For(x => x.SubEWP.Codigo).Named("SubEWP");
+    col.For(x => x.Revision.Nombre).Named("Revisión");
+    col.For(x => x.TipoDocumento.Nombre).Named("Tipo Documento");
+    col.For(x => x.HorasReportadas).Named("Horas");
+}).Empty("No se han encontrado registros de horas reportadas en este periodo"))
+
+
