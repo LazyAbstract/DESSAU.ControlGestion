@@ -96,7 +96,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/images/dessau_logo.png")" alt="Home" class="navbar-brand" /></a>
-                <a class="navbar-brand" href="@Url.Action("Index","Home")"> Servicio de Apoyo Proyectos Especiales GPRO</a>               
+                <a class="navbar-brand" href="@Url.Action("Index","Home")"> Servicio Consultor de Ingeniería para Ejecución PNNM</a>               
             </div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
@@ -341,14 +341,14 @@
                             <li>
                                 <a href="@Url.Action("Index","Home")"><i class="fa fa-calendar" aria-hidden="true"></i> Calendario Inicio</a> 
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 1 })"><i class="fa fa-table fa-fw"></i> Planificación</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("VerTimeSheet", "TimeSheet", new { IdTipoTimeSheet = 2 })"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
-                            </li>
+                            </li>*@
                             <li>
-                                <a href="@Url.Action("CrearEditarTimeSheetEWP", "TimeSheet")"><i class="fa fa-edit fa-fw"></i> Declaración de Avances EWP</a>
+                                <a href="@Url.Action("CrearEditarTimeSheetEWP", "TimeSheet")"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
                             @if (User.IsInRole("Evaluación Desempeño"))
                             {                           
@@ -361,14 +361,13 @@
                                         <li>
                                             <a href="@Url.Action("ListadoEvaluaciones", "EvaluacionDesempeno")"> Ver Evaluaciones</a>
                                         </li>
-                                        @*@if (User.IsInRole("Evaluacion_Contrato"))
-                                        {*@
+                                        @if (User.IsInRole("Evaluacion_Contrato"))
+                                        {
                                             <li>
                                                 <a href="@Url.Action("ListadoEvaluacionContrato", "EvaluacionDesempeno")"> Evaluación Contrato</a>
                                             </li>
-                                        @*}*@
+                                        }
                                     </ul>
-                                    <!-- /.nav-second-level -->
                                 </li>
                             }
                             @if (User.IsInRole("Reporte"))

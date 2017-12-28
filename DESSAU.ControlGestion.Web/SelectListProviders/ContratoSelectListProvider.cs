@@ -15,7 +15,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
 
         public SelectList Provide()
         {
-            Contratos = db.Contratos
+            Contratos = db.Contratos.Where(x => x.Vigente)
                 .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {
@@ -27,7 +27,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
 
         public SelectList Provide(object selected)
         {
-            Contratos = db.Contratos
+            Contratos = db.Contratos.Where(x => x.Vigente)
                 .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {

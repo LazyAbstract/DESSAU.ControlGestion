@@ -20,7 +20,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListarProyectoViewModel model = new ListarProyectoViewModel();
             model.filtro = filtro;
-            IEnumerable<Proyecto> Proy = db.Proyectos.OrderBy(x => x.Nombre);
+            IEnumerable<Proyecto> Proy = db.Proyectos
+                .Where(x => x.Contrato.Vigente).OrderBy(x => x.Nombre);
             if (!String.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();

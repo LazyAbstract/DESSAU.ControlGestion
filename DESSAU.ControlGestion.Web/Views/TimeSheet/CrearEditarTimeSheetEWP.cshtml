@@ -50,12 +50,20 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Profesional: @Model.UsuarioCategoriaProyectos.First().Proyecto.Nombre</h6>
-                            <h6>Especialidad: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>
+                            <h6>ODS: @Model.UsuarioCategoriaProyectos.First().Proyecto.Nombre</h6>
+                            @*<h6>Especialidad: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>*@
                         </div>
                         <div class="col-md-6">
-                            <h6>Área: No Aplica</h6>
-                            <h6>Disciplina: No Aplica</h6>
+                            @if (Model.UsuarioCategoriaProyectos.First().UsuarioCategoriaProyectoAreas.Any())
+                            {
+                                <h6>Área: @Model.UsuarioCategoriaProyectos.First().UsuarioCategoriaProyectoAreas.First().Area.Nombre</h6>
+                            }
+                            else
+                            {
+                                <h6>Área: No Aplica</h6>
+                            }
+                           
+                            <h6>Disciplina: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>
                         </div>
                     </div>
                 </div>
@@ -125,10 +133,10 @@
                         EWP
                     </td>
                     <td>
-                        @Html.DropDownListFor(x => x.Form.IdEWP, Model.SubEWP, "Seleccione EWP", new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.Form.IdEWP, Model.EWP, "Seleccione", new { @class = "form-control", style = "width:100%;" })
                     </td>
                     <td>
-                        @Html.DropDownListFor(x => x.Form.IdSubEWP, Model.SubEWP, "Seleccione Sub EWP", new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.Form.IdSubEWP, Model.SubEWP, "Seleccione", new { @class = "form-control" })
                     </td>
                     <td>
                         @Html.DropDownListFor(x => x.Form.IdTipoDocumento, Model.TipoDocumento, "Seleccione", new { @class = "form-control" })
@@ -347,6 +355,34 @@
             padding-right: 20px !important;
             background-color: #99FFCC;
             border: 2px solid;
+        }
+
+        /* Styles for validation helpers*/
+        .field-validation-error
+        {
+            color: #ff0000;
+        }
+        
+        .field-validation-valid
+        {
+            display: none;
+        }
+        
+        .input-validation-error
+        {
+            border: 1px solid #ff0000 !important;
+            background-color: #ffeeee !important;
+        }
+        
+        .validation-summary-errors
+        {
+            font-weight: bold !important;
+            color: #ff0000 !important;
+        }
+        
+        .validation-summary-valid
+        {
+            display: none;
         }
     </style>
 }

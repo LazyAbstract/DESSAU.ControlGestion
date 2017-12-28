@@ -13,12 +13,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
     [Authorize]
     public class TimeSheetController : BaseController
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, int? IdTipoTimeSheet)
         {
             //  pequeño haack pa hacer que valla donde quiero
@@ -70,6 +71,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult VerTimeSheet(VerTimeSheetFormModel FORM, IEnumerable<TimeSheetCategoriaProyectoDTO> TimeSheetFORM)
         {
             // No se porque no me pasa la fecha como hidden :(
@@ -142,8 +144,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult CrearEditarTimeSheetEWP(CrearEditarTimeSheetEWPFormModel Form, DateTime? fecha)
         {
-            CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel();
-            
+            CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel();            
             model.Form.Fecha = Form.Fecha.GetValueOrDefault(DateTime.Today);
             if (fecha.HasValue) { model.Form.Fecha = fecha; }
             model.Form.validar = true;
@@ -216,6 +217,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     }
                                         
                     db.SubmitChanges();
+                    TempData["Mensaje"] = "Se guardaron los cambios exitosamente.";
                 }
 
                 if(Form.DTO.Any())
@@ -230,7 +232,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         {
                             _ts.HorasReportadas = dto.HorasReportadas;
                         }
-                        else
+                        else if(dto.HorasReportadas > 0)
                         {
                             TimeSheet ts = new TimeSheet()
                             {
@@ -240,6 +242,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                                 Fecha = Form.Fecha.Value
                             };
                             db.TimeSheets.InsertOnSubmit(ts);
+                            TempData["Mensaje"] = "Se guardaron los cambios exitosamente.";
                         }                        
                     }
                     db.SubmitChanges();
@@ -295,6 +298,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             TimeSheetEWP del = db.TimeSheetEWPs.Single(x => x.IdTimeSheetEWP == IdTimeSheetEWP);
             db.TimeSheetEWPs.DeleteOnSubmit(del);
             db.SubmitChanges();
+            TempData["Mensaje"] = "El registro fue eliminado exitosamente.";
             return RedirectToAction("CrearEditarTimeSheetEWP", new { fecha = fecha.ToShortDateString() });
         }
     }

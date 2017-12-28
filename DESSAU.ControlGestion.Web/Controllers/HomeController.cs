@@ -12,6 +12,14 @@ namespace DESSAU.ControlGestion.Web.Controllers
     {
         public ActionResult Index()
         {
+            return RedirectToAction("IndexEWP");
+            IndexViewModel model = new IndexViewModel(UsuarioActual.IdUsuario);
+            model.Usuario = UsuarioActual;
+            return View(model);
+        }
+
+        public ActionResult IndexEWP()
+        {
             IndexViewModel model = new IndexViewModel(UsuarioActual.IdUsuario);
             model.Usuario = UsuarioActual;
             return View(model);
