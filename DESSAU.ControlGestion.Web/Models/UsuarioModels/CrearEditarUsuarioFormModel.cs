@@ -8,7 +8,7 @@ using System.Web;
 
 namespace DESSAU.ControlGestion.Web.Models.UsuarioModels
 {
-    public class CrearEditarUsuarioFormModel
+    public class CrearEditarUsuarioFormModel : IDataErrorInfo
     {
         public int? IdUsuario { get; set; }
         [Required]

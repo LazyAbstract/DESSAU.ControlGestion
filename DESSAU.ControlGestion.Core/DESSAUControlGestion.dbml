@@ -395,15 +395,6 @@
       <Association Name="EWP_SubEWP" Member="SubEWPs" ThisKey="IdEWP" OtherKey="IdEWP" Type="SubEWP" />
     </Type>
   </Table>
-  <Table Name="dbo.SubEWP" Member="SubEWPs">
-    <Type Name="SubEWP">
-      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
-      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Revision" Member="Revisions">
     <Type Name="Revision">
       <Column Name="IdRevision" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -450,9 +441,9 @@
       <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Actividad_TimeSheetEWP" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
       <Association Name="Revision_TimeSheetEWP" Member="Revision" ThisKey="IdRevision" OtherKey="IdRevision" Type="Revision" IsForeignKey="true" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
       <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
       <Association Name="TipoDocumento_TimeSheetEWP" Member="TipoDocumento" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
       <Association Name="NumeroDocumento_TimeSheetEWP" Member="NumeroDocumento" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="NumeroDocumento" IsForeignKey="true" />
     </Type>
   </Table>
@@ -461,15 +452,6 @@
       <Column Name="IdTipoDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="TipoDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TimeSheetEWP" />
-    </Type>
-  </Table>
-  <Table Name="dbo.NumeroDocumento" Member="NumeroDocumentos">
-    <Type Name="NumeroDocumento">
-      <Column Name="IdNumeroDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
     </Type>
   </Table>
   <Table Name="dbo.Contrato" Member="Contratos">
@@ -490,6 +472,26 @@
       <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Area_UsuarioCategoriaProyectoArea" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
       <Association Name="UsuarioCategoriaProyecto_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubEWP" Member="SubEWPs">
+    <Type Name="SubEWP">
+      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
+      <Association Name="SubEWP_NumeroDocumento" Member="NumeroDocumentos" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="NumeroDocumento" />
+      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NumeroDocumento" Member="NumeroDocumentos">
+    <Type Name="NumeroDocumento">
+      <Column Name="IdNumeroDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
+      <Association Name="SubEWP_NumeroDocumento" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">

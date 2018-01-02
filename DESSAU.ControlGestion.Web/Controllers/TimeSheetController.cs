@@ -144,6 +144,11 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult CrearEditarTimeSheetEWP(CrearEditarTimeSheetEWPFormModel Form, DateTime? fecha)
         {
+            if (db.DiaEspecials.Any(x => x.Fecha == fecha))
+            {
+                TempData["Mensaje"] = "El día seleccionado está marcado como feriado.";
+                return RedirectToAction("CrearEditarTimeSheetEWP", new { fecha = fecha.Value.AddDays(1).ToShortDateString() });
+            }
             CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel();            
             model.Form.Fecha = Form.Fecha.GetValueOrDefault(DateTime.Today);
             if (fecha.HasValue) { model.Form.Fecha = fecha; }

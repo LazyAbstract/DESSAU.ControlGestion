@@ -350,7 +350,10 @@
                             <li>
                                 <a href="@Url.Action("CrearEditarTimeSheetEWP", "TimeSheet")"><i class="fa fa-edit fa-fw"></i> Declaración de Avances</a>
                             </li>
-                            @if (User.IsInRole("Evaluación Desempeño"))
+                            <li>
+                                <a href="@Url.Action("ListarNumeroDocumento", "NumeroDocumento")"><i class="fa fa-folder-open-o"></i> Diccionario N° Doc. DESSAU</a>
+                            </li>
+                            @if (User.IsInRole("Evaluación_____Desempeño"))
                             {                           
                                 <li>
                                     <a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Evaluación de Desempeño<span class="fa arrow"></span></a>
@@ -409,6 +412,15 @@
                                             <a href="@Url.Action("ListarProyecto", "Proyecto")">Ordenes Servicio</a>
                                         </li>
                                         <li>
+                                            <a href="@Url.Action("ListarEWP", "EWP")">EWP's</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ListarSubEWP", "EWP")">Sub EWP's</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ListarNumeroDocumento", "NumeroDocumento")">Número Documento DESSAU</a>
+                                        </li>
+                                        <li>
                                             <a class="disabled" href="#">Contratos</a>
                                         </li>
                                         <li>
@@ -437,8 +449,7 @@
             <br />
             @RenderBody()
         </div>
-        <!-- /#page-wrapper -->
-        
+        <!-- /#page-wrapper -->        
 
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/myScripts")

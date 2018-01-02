@@ -1,0 +1,58 @@
+﻿@model DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels.CrearEditarNumeroDocumentoViewModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-nuevo-usuario" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @if (Model.Form.IdNumeroDocumento.HasValue)
+            {
+                <h4>Editar Documento</h4>
+            }
+            else
+            {
+                <h4>Agregar Documento</h4>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Form.IdNumeroDocumento)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdSubEWP)</label>
+                <div class="col-md-5">
+                    @Html.DropDownListFor(x => x.Form.IdSubEWP, Model.SubEWPs, "Seleccione", new { @class = "form-control "} )
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.IdSubEWP)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.Codigo)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_Codigo" name="Form.Codigo" placeholder="Nombre" value="@Model.Form.Codigo" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.Codigo)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.Nombre)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_Nombre" name="Form.Nombre" placeholder="Nombre" value="@Model.Form.Nombre" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.Nombre)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+

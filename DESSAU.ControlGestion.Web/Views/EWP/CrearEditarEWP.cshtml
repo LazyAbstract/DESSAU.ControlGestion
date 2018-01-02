@@ -1,0 +1,52 @@
+﻿@model DESSAU.ControlGestion.Web.Models.EWPModels.CrearEditarEWPViewModel
+
+@{
+    ViewBag.Title = "DESSAU";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-nuevo-ewp" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @if (Model.Form.IdEWP.HasValue)
+            {
+                <h4>Editar EWP</h4>
+            }
+            else
+            {
+                <h4>Agregar EWP</h4>
+            }
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ValidationSummary()
+                    @Html.HiddenFor(x => x.Form.IdEWP)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.Codigo)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_Codigo" name="Form.Codigo" placeholder="Codigo" value="@Model.Form.Codigo" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.Codigo)
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.Nombre)</label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="Form_Nombre" name="Form.Nombre" placeholder="Nombre" value="@Model.Form.Nombre" />
+                </div>
+                <div class="col-md-5">
+                    @Html.ValidationMessageFor(x => x.Form.Nombre)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}

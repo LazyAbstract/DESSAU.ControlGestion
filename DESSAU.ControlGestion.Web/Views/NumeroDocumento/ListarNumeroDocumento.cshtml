@@ -1,0 +1,54 @@
+﻿@model DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels.ListarNumeroDocumentoViewModel
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Listado de Documentos</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Búsqueda amplia" name="filtro" id="input-filtro" value="@Model.filtro">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Agregar", "CrearEditarNumeroDocumento", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
+            }            
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.PagedListPager(Model.NumeroDocumentos, page => Url.Action("ListarNumeroDocumento", new
+   {
+       pagina = page,
+       filtro = Model.filtro
+   }))
+        @(Html.Grid(Model.NumeroDocumentos)
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.IdSubEWP.HasValue ? x.SubEWP.Codigo : "No se ha asignado Sub EWP").Named("Sub EWP");
+            col.For(x => x.Codigo).Named("Código");
+            col.For(x => x.Nombre);
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Número Documento", "CrearEditarNumeroDocumento", null, null, new { IdNumeroDocumento = x.IdNumeroDocumento }))
+                .CellCondition(x => User.IsInRole("Admin"));
+            //col.For(x => x.Vigente ? Html.ButtonIconActionLink("remove", "Dar de Baja Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario })
+            //    : Html.ButtonIconActionLink("ok", "Dar de Alta Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+    </div>
+</div>
+
+

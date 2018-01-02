@@ -231,9 +231,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\EvaluacionDesempenoController.cs" />
+    <Compile Include="Controllers\EWPController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NominaController.cs" />
+    <Compile Include="Controllers\NumeroDocumentoController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\TimeSheetController.cs" />
@@ -269,11 +271,20 @@
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionContratoViewModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoFormModel.cs" />
     <Compile Include="Models\EvaluacionModels\ListadoEvaluacionesDesempenoViewModel.cs" />
+    <Compile Include="Models\EWPModels\CrearEditarEWPFormModel.cs" />
+    <Compile Include="Models\EWPModels\CrearEditarEWPViewModel.cs" />
+    <Compile Include="Models\EWPModels\CrearEditarSubEWPFormModel.cs" />
+    <Compile Include="Models\EWPModels\CrearEditarSubEWPViewModel.cs" />
+    <Compile Include="Models\EWPModels\ListarEWPViewModel.cs" />
+    <Compile Include="Models\EWPModels\ListarSubEWPViewModel.cs" />
     <Compile Include="Models\HomeModels\IndexViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LogoDessauEncabezadoPdfEventHandler.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NominaModels\ExportaNominaExcelViewModel.cs" />
+    <Compile Include="Models\NumeroDocumentoModels\CrearEditarNumeroDocumentoFormModel.cs" />
+    <Compile Include="Models\NumeroDocumentoModels\CrearEditarNumeroDocumentoViewModel.cs" />
+    <Compile Include="Models\NumeroDocumentoModels\ListarNumeroDocumentoViewModel.cs" />
     <Compile Include="Models\ProyectoModels\CrearEditarProyectoFormModel.cs" />
     <Compile Include="Models\ProyectoModels\CrearEditarProyectoViewModel.cs" />
     <Compile Include="Models\ProyectoModels\ListarProyectoViewModel.cs" />
@@ -302,6 +313,7 @@
     <Compile Include="SelectListProviders\EWPSelectListProvider.cs" />
     <Compile Include="SelectListProviders\ISelectListProvider.cs" />
     <Compile Include="SelectListProviders\ProyectoSelectListProvider.cs" />
+    <Compile Include="SelectListProviders\SubEWPSelectListProvider.cs" />
     <Compile Include="SelectListProviders\TipoActividadSelectListProvider.cs" />
     <Compile Include="SelectListProviders\UsuarioSelectListProvider.cs" />
     <Compile Include="Startup.cs" />
@@ -1235,6 +1247,12 @@
     <Content Include="Views\TimeSheet\CrearEditarTimeSheetEWP.cshtml" />
     <Content Include="Views\TimeSheet\VerTimeSheetEWP.cshtml" />
     <Content Include="Views\Home\IndexEWP.cshtml" />
+    <Content Include="Views\EWP\ListarEWP.cshtml" />
+    <Content Include="Views\EWP\ListarSubEWP.cshtml" />
+    <Content Include="Views\EWP\CrearEditarEWP.cshtml" />
+    <Content Include="Views\EWP\CrearEditarSubEWP.cshtml" />
+    <Content Include="Views\NumeroDocumento\ListarNumeroDocumento.cshtml" />
+    <Content Include="Views\NumeroDocumento\CrearEditarNumeroDocumento.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

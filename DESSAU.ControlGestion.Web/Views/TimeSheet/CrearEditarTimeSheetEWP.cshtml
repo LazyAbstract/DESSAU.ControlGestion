@@ -181,7 +181,7 @@
             <thead>
                 <tr>
                     <th colspan="6">Total Diario</th>
-                    @if (false)//Model.DiaEspecials.Any(x => x.Fecha == dia))
+                    @if (Model.DiaEspecials.Any(x => x.Fecha == Model.Form.Fecha))
                     {
                         <th class="success">
                             <span class="glyphicon glyphicon-minus"></span>
