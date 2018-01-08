@@ -29,9 +29,9 @@ namespace DESSAU.ControlGestion.EmisorCorreo
                 {
                     Correo Correo = new Correo()
                     {
-                        Remitente = "soporte@metricarts.com",
+                        Remitente = "soporte@commonabstract.cl",
                         Destinatario = String.IsNullOrEmpty(usuario.Contacto) ? usuario.Correo : usuario.Contacto,
-                        Asunto = "Notificación Plataforma Servicio de Apoyo Proyectos Especiales GPRO",
+                        Asunto = "Notificación Plataforma Servicio Consultor de Ingeniería para Ejecución PNNM",
                         CuerpoTexto = "Estimado(a) " + usuario.Nombre + ", " + noti.Mensaje + " " + accion,
                         CuerpoHTML = "<p>Estimado(a) " + usuario.Nombre + ", " + noti.Mensaje + " " + accion + "</p>",
                         FechaProgramadaEnvio = noti.FechaPostpuesto.GetValueOrDefault(DateTime.Now),

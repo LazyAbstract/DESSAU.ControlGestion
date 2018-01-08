@@ -27,11 +27,12 @@
                 <div class="form-group">
                     @Html.TextBoxFor(x => x.Form.Fecha, "{0:dd/MM/yyyy}", new { @class = "fecha form-control" })
                 </div>
-                @*@if (User.IsInRole("Admin") || User.IsInRole("Evaluación Desempeño"))
-                    {
-                        @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })
-                    }*@
-                @*<button type="submit" class="btn btn-default">Buscar</button>*@
+                @if (User.IsInRole("Admin") || User.IsInRole("Evaluación Desempeño"))
+                {
+                    @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione un Profesional", new { @class = "form-control" })
+                    <button type="submit" class="btn btn-default">Buscar</button>
+                }
+               
                 @Html.ButtonIconActionLink("chevron-left", "Día Anterior", null, null, null, new { Fecha = Model.Form.Fecha.Value.AddDays(-1).ToShortDateString() })
                 @Html.ButtonIconActionLink("chevron-right", "Día Siguiente", null, null, null, new { Fecha = Model.Form.Fecha.Value.AddDays(1).ToShortDateString() })
             </form>

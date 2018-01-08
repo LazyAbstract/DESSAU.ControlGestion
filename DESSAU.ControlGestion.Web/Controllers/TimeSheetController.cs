@@ -149,11 +149,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 TempData["Mensaje"] = "El día seleccionado está marcado como feriado.";
                 return RedirectToAction("CrearEditarTimeSheetEWP", new { fecha = fecha.Value.AddDays(1).ToShortDateString() });
             }
+            int idUsuario;
+            if (Form.IdUsuario.HasValue) idUsuario = Form.IdUsuario.Value;
+            else idUsuario = UsuarioActual.IdUsuario;
             CrearEditarTimeSheetEWPViewModel model = new CrearEditarTimeSheetEWPViewModel();            
             model.Form.Fecha = Form.Fecha.GetValueOrDefault(DateTime.Today);
             if (fecha.HasValue) { model.Form.Fecha = fecha; }
             model.Form.validar = true;
-            int idUsuario = UsuarioActual.IdUsuario;
             IQueryable<UsuarioCategoriaProyecto> usuarioCategoriaProyectos = db.UsuarioCategoriaProyectos.Where(x =>
                x.IdUsuario == idUsuario &&
                x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=

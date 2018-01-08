@@ -16,7 +16,8 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide()
         {
             Usuarios = db.Usuarios
-                .OrderBy(x => x.ApellidoPaterno)
+                .Where(x => x.Vigente)
+                .OrderBy(x => x.ApellidoPaterno)                
                 .Select(x => new SelectListItem()
                 {
                     Value = x.IdUsuario.ToString(),
@@ -28,6 +29,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide(object selected)
         {
             Usuarios = db.Usuarios
+                .Where(x => x.Vigente)
                 .OrderBy(x => x.ApellidoPaterno)
                 .Select(x => new SelectListItem()
                 {

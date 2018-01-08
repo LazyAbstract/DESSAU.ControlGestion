@@ -11,6 +11,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
     public class CrearEditarTimeSheetEWPFormModel : IDataErrorInfo
     {
         public int? IdActividadEWP { get; set; }
+        public int? IdUsuario { get; set; }
         public int? IdUsuarioCategoriaProyecto { get; set; }
         [DisplayName("EWP")]
         public int? IdEWP { get; set; }

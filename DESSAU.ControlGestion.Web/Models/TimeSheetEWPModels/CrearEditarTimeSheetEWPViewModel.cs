@@ -23,6 +23,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
         public IEnumerable<TimeSheetEWP> TimeSheetsEWP { get; set; }
         public IEnumerable<DiaEspecial> DiaEspecials { get; set; }
         private EWPSelectListProvider Eslp = new EWPSelectListProvider();
+        public IEnumerable<SelectListItem> Usuarios { get; set; }
+        private UsuarioSelectListProvider uslp = new UsuarioSelectListProvider();
 
         public CrearEditarTimeSheetEWPViewModel()
         {
@@ -34,6 +36,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
             Revision = new SelectList(db.Revisions, "IdRevision", "Nombre");
             NumeroDocumento = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
             DiaEspecials = db.DiaEspecials;
+            Usuarios = uslp.Provide();
         }
 
         public CrearEditarTimeSheetEWPViewModel(CrearEditarTimeSheetEWPFormModel f) : this()
