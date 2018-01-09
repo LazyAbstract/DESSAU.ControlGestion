@@ -250,6 +250,7 @@
     <Compile Include="MapperProfiles\DefaultProfileMapper.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionEvaluacionFormModel.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionPreguntaDTOEvaluacionPregunta.cs" />
+    <Compile Include="MapperProfiles\EWPMAppers\fn_ReporteEWPResultExportaEWP.cs" />
     <Compile Include="MapperProfiles\NominaMappers\UsuarioCategoriaProyectoExportaNominaExcelViewModel.cs" />
     <Compile Include="MapperProfiles\TimeSheetMappers\TimeSheetTimeSheetDTO.cs" />
     <Compile Include="MapperProfiles\UsuarioMappers\CrearEditarUsuarioFormModelUsuario.cs" />
@@ -290,6 +291,9 @@
     <Compile Include="Models\ProyectoModels\ListarProyectoViewModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardFormModel.cs" />
     <Compile Include="Models\ReporteModels\DashboardViewModel.cs" />
+    <Compile Include="Models\ReporteModels\ReporteEWPModels\ExportaEWPViewModel.cs" />
+    <Compile Include="Models\ReporteModels\ReporteEWPModels\VerReporteEWPFormModel.cs" />
+    <Compile Include="Models\ReporteModels\ReporteEWPModels\VerReporteEWPViewModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPFormModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPViewModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\TimeSheetFormModelEWPDTO.cs" />
@@ -1253,6 +1257,7 @@
     <Content Include="Views\EWP\CrearEditarSubEWP.cshtml" />
     <Content Include="Views\NumeroDocumento\ListarNumeroDocumento.cshtml" />
     <Content Include="Views\NumeroDocumento\CrearEditarNumeroDocumento.cshtml" />
+    <Content Include="Views\Reporte\VerReporteEWP.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

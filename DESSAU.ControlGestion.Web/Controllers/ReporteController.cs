@@ -1,9 +1,12 @@
-﻿using DESSAU.ControlGestion.Core;
+﻿using AutoMapper;
+using DESSAU.ControlGestion.Core;
 using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.Models.ReporteModels;
+using DESSAU.ControlGestion.Web.Models.ReporteModels.ReporteEWPModels;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +14,7 @@ using static DESSAU.ControlGestion.Web.Models.ReporteModels.DashboardViewModel;
 
 namespace DESSAU.ControlGestion.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ReporteController : BaseController
     {
         // GET: Reporte
@@ -212,6 +216,43 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     Value = x.IdUsuario.ToString()
                 });
             return Json(items, JsonRequestBehavior.AllowGet);
+        }
+
+        //  reporte EWP
+        [HttpGet]
+        public ActionResult VerReporteEWP(VerReporteEWPFormModel Form)
+        {
+            VerReporteEWPViewModel model = new VerReporteEWPViewModel(Form);
+            model.Resultados = db.fn_ReportePorEWP(Form.FechaDesde, Form.FechaHasta, Form.IdUsuario)
+                .Where(x => x.HorasReportadas > 0)
+                .OrderBy(x => x.Fecha)
+                .ThenBy(x => x.TipoActividad)
+                .ThenBy(x => x.Actividad);
+            model.Total += model.Resultados.Sum(x => x.HorasReportadas);
+            if(Form.IdUsuario.HasValue)
+            {
+                model.Profesional = db.Usuarios.Single(x => x.IdUsuario == Form.IdUsuario).ApellidoNombre;
+            }
+            return View(model);
+        }
+
+        public ActionResult ExportarEWPExcel(DateTime? FechaDesde)
+        {
+            VerReporteEWPViewModel model = new VerReporteEWPViewModel();
+            if (FechaDesde.HasValue) model.Form.FechaDesde = FechaDesde.Value;
+            IEnumerable<fn_ReportePorEWPResult> Exportar = 
+                db.fn_ReportePorEWP(model.Form.FechaDesde, model.Form.FechaHasta, model.Form.IdUsuario)
+                .Where(x => x.HorasReportadas > 0)
+                .OrderBy(x => x.Fecha)
+                .ThenBy(x => x.TipoActividad)
+                .ThenBy(x => x.Actividad);
+            IEnumerable<ExportaEWPViewModel> NominaExportar =
+                Mapper.Map<IEnumerable<fn_ReportePorEWPResult>, IEnumerable<ExportaEWPViewModel>>(Exportar);
+            using (var Lista = new MemoryStream())
+            {
+                ExportadorExcel.GeneraExcel<ExportaEWPViewModel>(NominaExportar, "Lista", Lista, true);
+                return File(Lista.ToArray(), "applications/excel", "ReporteEWP.xls");
+            }
         }
     }
 }

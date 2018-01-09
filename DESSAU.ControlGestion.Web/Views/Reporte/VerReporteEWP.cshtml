@@ -1,0 +1,74 @@
+﻿@model DESSAU.ControlGestion.Web.Models.ReporteModels.ReporteEWPModels.VerReporteEWPViewModel
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 id="title-periodo">Declaración de Avances @Model.Form.FechaDesde.ToShortDateString() hasta @Model.Form.FechaHasta.ToShortDateString()</h3>
+        @if (Model.Form.IdUsuario.HasValue)
+        {
+            <h4>Profesional @Model.Form.IdUsuario.ToString()</h4>
+        }
+    </div>
+</div>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+            <form class="navbar-form navbar-left" role="search" method="get">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.Form.FechaDesde, "{0:dd/MM/yyyy}", new { @class = "fecha form-control" })
+                    @Html.TextBoxFor(x => x.Form.FechaHasta, "{0:dd/MM/yyyy}", new { @class = "fecha form-control" })
+                    @Html.DropDownListFor(x => x.Form.IdUsuario, Model.Usuarios, "Seleccione", new { @class = "form-control", placeholder = "Proyectos" })
+                </div>
+                <button type="submit" id="button-periodo" class="btn btn-default">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Periodo desde @Model.Form.FechaDesde.ToShortDateString() hasta @Model.Form.FechaHasta.ToShortDateString()</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Grid(Model.Resultados)
+            .Attributes(@class => "table table-striped", id => "myTable")
+            .Columns(col =>
+            {
+                col.For(x => x.Fecha.ToShortDateString()).Named("Fecha");
+                col.For(x => x.EWP);
+                col.For(x => x.CodigoEWP);
+                col.For(x => x.CodigoSubEWP);
+                col.For(x => x.Actividad);
+                col.For(x => x.TipoActividad);
+                col.For(x => x.HorasReportadas);
+
+            }).Empty("No se han encontrado registros para el periodo seleccionado."))
+    </div>
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Exportar Reporte", "ExportarEWPExcel", new { FechaDesde = Model.Form.FechaDesde.ToShortDateString() }, new { @class = "btn btn-success" })
+        </div>
+    </div>   
+}
+
+@section Scripts{
+<script type="text/javascript">
+    $('#myTable tr:last').after('<tr class="gridrow success"><td colspan="6">Total</td><td>' + @Model.Total.ToString() + '</td></tr>');
+    </script>
+
+}

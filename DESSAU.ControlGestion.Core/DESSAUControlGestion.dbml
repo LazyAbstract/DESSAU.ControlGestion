@@ -1,10 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DESSAU_ControlGestion" Class="DESSAUControlGestionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=DESSAU_ControlGestion;Integrated Security=True" SettingsObjectName="DESSAU.ControlGestion.Core.Properties.Settings" SettingsPropertyName="DESSAU_ControlGestionConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.TipoPregunta" Member="TipoPreguntas">
-    <Type Name="TipoPregunta">
-      <Column Name="IdTipoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Actividad" Member="Actividads">
+    <Type Name="Actividad">
+      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoPregunta_Pregunta" Member="Preguntas" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="Pregunta" />
+      <Association Name="Actividad_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdActividad" OtherKey="IdActividad" Type="CategoriaActividad" />
+      <Association Name="Actividad_DedicacionActividad" Member="DedicacionActividads" ThisKey="IdActividad" OtherKey="IdActividad" Type="DedicacionActividad" />
+      <Association Name="Actividad_TimeSheet" Member="TimeSheets" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheet" />
+      <Association Name="Actividad_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheetEWP" />
+      <Association Name="TipoActividad_Actividad" Member="TipoActividad" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="TipoActividad" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubEWP" Member="SubEWPs">
+    <Type Name="SubEWP">
+      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="SubEWP_NumeroDocumento" Member="NumeroDocumentos" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="NumeroDocumento" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
+      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Area" Member="Areas">
+    <Type Name="Area">
+      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
+      <Association Name="Area_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdArea" OtherKey="IdArea" Type="UCPDisciplinaArea" />
+      <Association Name="Area_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioAreaDisciplina" />
+      <Association Name="Area_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioCategoriaProyectoArea" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetRoles" Member="AspNetRoles">
+    <Type Name="AspNetRole">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="RoleId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserClaims" Member="AspNetUserClaims">
+    <Type Name="AspNetUserClaim">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ClaimType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ClaimValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserLogins" Member="AspNetUserLogins">
+    <Type Name="AspNetUserLogin">
+      <Column Name="LoginProvider" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProviderKey" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserRoles" Member="AspNetUserRoles">
+    <Type Name="AspNetUserRole">
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetRole" ThisKey="RoleId" OtherKey="Id" Type="AspNetRole" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
+    <Type Name="AspNetUser">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="EmailConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumberConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TwoFactorEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LockoutEndDateUtc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUserClaims" ThisKey="Id" OtherKey="UserId" Type="AspNetUserClaim" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUserLogins" ThisKey="Id" OtherKey="UserId" Type="AspNetUserLogin" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="UserId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Categoria" Member="Categorias">
+    <Type Name="Categoria">
+      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Categoria_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="CategoriaActividad" />
+      <Association Name="Categoria_PlantillaEvaluacion" Member="PlantillaEvaluacions" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="PlantillaEvaluacion" />
+      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="UsuarioCategoriaProyecto" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CategoriaActividad" Member="CategoriaActividads">
+    <Type Name="CategoriaActividad">
+      <Column Name="IdCategoriaActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Actividad_CategoriaActividad" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
+      <Association Name="Categoria_CategoriaActividad" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Cliente" Member="Clientes">
@@ -14,6 +109,67 @@
       <Association Name="Cliente_Contrato" Member="Contratos" ThisKey="IdCliente" OtherKey="IdCliente" Type="Contrato" />
     </Type>
   </Table>
+  <Table Name="dbo.Contrato" Member="Contratos">
+    <Type Name="Contrato">
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Contrato_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdContrato" OtherKey="IdContrato" Type="EvaluacionContrato" />
+      <Association Name="Contrato_Proyecto" Member="Proyectos" ThisKey="IdContrato" OtherKey="IdContrato" Type="Proyecto" />
+      <Association Name="Cliente_Contrato" Member="Cliente" ThisKey="IdCliente" OtherKey="IdCliente" Type="Cliente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Correo" Member="Correos">
+    <Type Name="Correo">
+      <Column Name="IdCorreo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Remitente" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Destinatario" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="BCC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Asunto" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoTexto" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CuerpoHTML" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FechaProgramadaEnvio" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FechaEnvio" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IntentoFallido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pendiente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DedicacionActividad" Member="DedicacionActividads">
+    <Type Name="DedicacionActividad">
+      <Column Name="IdDedicacionActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdActividad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ano" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HorasDeclaradas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Actividad_DedicacionActividad" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
+      <Association Name="Proyecto_DedicacionActividad" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
+      <Association Name="Usuario_DedicacionActividad" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DiaEspecial" Member="DiaEspecials">
+    <Type Name="DiaEspecial">
+      <Column Name="IdDiaEspecial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoDiaEspecial" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Horas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
+      <Association Name="TipoDiaEspecial_DiaEspecial" Member="TipoDiaEspecial" ThisKey="IdTipoDiaEspecial" OtherKey="IdTipoDiaEspecial" Type="TipoDiaEspecial" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Disciplina" Member="Disciplinas">
+    <Type Name="Disciplina">
+      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
+      <Association Name="Disciplina_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="UCPDisciplinaArea" />
+      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="UsuarioAreaDisciplina" />
+    </Type>
+  </Table>
   <Table Name="dbo.EstadoEvaluacion" Member="EstadoEvaluacions">
     <Type Name="EstadoEvaluacion">
       <Column Name="IdEstadoEvaluacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -21,8 +177,8 @@
       <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="CreadoPor" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="EstadoEvaluacion_EstadoEvaluacionHistorico" Member="EstadoEvaluacionHistoricos" ThisKey="IdEstadoEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacionHistorico" />
-      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacion" Member="TipoEstadoEvaluacion" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="TipoEstadoEvaluacion" IsForeignKey="true" />
       <Association Name="Evaluacion_EstadoEvaluacion" Member="Evaluacion" ThisKey="IdEstadoEvaluacion" OtherKey="IdEvaluacion" Type="Evaluacion" IsForeignKey="true" />
+      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacion" Member="TipoEstadoEvaluacion" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="TipoEstadoEvaluacion" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.EstadoEvaluacionHistorico" Member="EstadoEvaluacionHistoricos">
@@ -34,6 +190,17 @@
       <Column Name="CreadoPor" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="EstadoEvaluacion_EstadoEvaluacionHistorico" Member="EstadoEvaluacion" ThisKey="IdEstadoEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacion" IsForeignKey="true" />
       <Association Name="TipoEstadoEvaluacion_EstadoEvaluacionHistorico" Member="TipoEstadoEvaluacion" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="TipoEstadoEvaluacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions">
+    <Type Name="EstadoPlanificacionDeclaracion">
+      <Column Name="IdEstadoPlanificacionDeclaracion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ano" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlanificacionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DeclaracionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyectos">
@@ -58,76 +225,59 @@
       <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyectoHistorico" Member="TipoEstadoUsuarioCategoriaProyecto" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="TipoEstadoUsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Evaluacion" Member="Evaluacions">
+    <Type Name="Evaluacion">
+      <Column Name="IdEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Evaluacion_EstadoEvaluacion" Member="EstadoEvaluacion" ThisKey="IdEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacion" Cardinality="One" />
+      <Association Name="Evaluacion_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdEvaluacion" OtherKey="IdEvaluacion" Type="EvaluacionPregunta" />
+      <Association Name="Usuario_Evaluacion" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EvaluacionContrato" Member="EvaluacionContratos">
+    <Type Name="EvaluacionContrato">
+      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioDirectorContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContratoPregunta" />
+      <Association Name="Contrato_EvaluacionContrato" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
+      <Association Name="Usuario_EvaluacionContrato" Member="Usuario" ThisKey="IdUsuarioDirectorContrato" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas">
+    <Type Name="EvaluacionContratoPregunta">
+      <Column Name="IdEvaluacionContratoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ValorObtenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContrato" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContrato" IsForeignKey="true" />
+      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.EvaluacionPregunta" Member="EvaluacionPreguntas">
     <Type Name="EvaluacionPregunta">
       <Column Name="IdEvaluacionPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdEvaluacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ValorObtenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Pregunta_EvaluacionPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
       <Association Name="Evaluacion_EvaluacionPregunta" Member="Evaluacion" ThisKey="IdEvaluacion" OtherKey="IdEvaluacion" Type="Evaluacion" IsForeignKey="true" />
+      <Association Name="Pregunta_EvaluacionPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PlantillaEvaluacion" Member="PlantillaEvaluacions">
-    <Type Name="PlantillaEvaluacion">
-      <Column Name="IdPlantillaEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
-      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="CreadoPor" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="PlantillaEvaluacion_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas" ThisKey="IdPlantillaEvaluacion" OtherKey="IdPlantillaEvaluacion" Type="PlantillaEvaluacionPregunta" />
-      <Association Name="Categoria_PlantillaEvaluacion" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas">
-    <Type Name="PlantillaEvaluacionPregunta">
-      <Column Name="IdPlantillaEvaluacionPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdPlantillaEvaluacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="PlantillaEvaluacion_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacion" ThisKey="IdPlantillaEvaluacion" OtherKey="IdPlantillaEvaluacion" Type="PlantillaEvaluacion" IsForeignKey="true" />
-      <Association Name="Pregunta_PlantillaEvaluacionPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoEstadoEvaluacion" Member="TipoEstadoEvaluacions">
-    <Type Name="TipoEstadoEvaluacion">
-      <Column Name="IdTipoEstadoEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.EWP" Member="EWPs">
+    <Type Name="EWP">
+      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacion" Member="EstadoEvaluacions" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="EstadoEvaluacion" />
-      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacionHistorico" Member="EstadoEvaluacionHistoricos" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="EstadoEvaluacionHistorico" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsuarioSupervisor" Member="UsuarioSupervisors">
-    <Type Name="UsuarioSupervisor">
-      <Column Name="IdUsuarioSupervisor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdSupervisor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Usuario_UsuarioSupervisor" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-      <Association Name="Usuario_UsuarioSupervisor1" Member="Usuario1" ThisKey="IdSupervisor" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoUsuario" Member="TipoUsuarios">
-    <Type Name="TipoUsuario">
-      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoUsuario_TipoUsuarioPermiso" Member="TipoUsuarioPermisos" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuarioPermiso" />
-      <Association Name="TipoUsuario_Usuario" Member="Usuarios" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="Usuario" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoUsuarioPermiso" Member="TipoUsuarioPermisos">
-    <Type Name="TipoUsuarioPermiso">
-      <Column Name="IdTipoUsuarioPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="TipoUsuario_TipoUsuarioPermiso" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
-      <Association Name="Permiso_TipoUsuarioPermiso" Member="Permiso" ThisKey="IdPermiso" OtherKey="IdPermiso" Type="Permiso" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Permiso" Member="Permisos">
-    <Type Name="Permiso">
-      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Permiso_TipoUsuarioPermiso" Member="TipoUsuarioPermisos" ThisKey="IdPermiso" OtherKey="IdPermiso" Type="TipoUsuarioPermiso" />
+      <Association Name="EWP_SubEWP" Member="SubEWPs" ThisKey="IdEWP" OtherKey="IdEWP" Type="SubEWP" />
     </Type>
   </Table>
   <Table Name="dbo.Notificacion" Member="Notificacions">
@@ -145,226 +295,33 @@
       <Association Name="Usuario_Notificacion" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TipoEstadoNotificacion" Member="TipoEstadoNotificacions">
-    <Type Name="TipoEstadoNotificacion">
-      <Column Name="IdTipoEstadoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.NumeroDocumento" Member="NumeroDocumentos">
+    <Type Name="NumeroDocumento">
+      <Column Name="IdNumeroDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoEstadoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoEstadoNotificacion" OtherKey="IdTipoEstadoNotificacion" Type="Notificacion" />
+      <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
+      <Association Name="SubEWP_NumeroDocumento" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.TipoNotificacion" Member="TipoNotificacions">
-    <Type Name="TipoNotificacion">
-      <Column Name="IdTipoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.Permiso" Member="Permisos">
+    <Type Name="Permiso">
+      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoNotificacion" OtherKey="IdTipoNotificacion" Type="Notificacion" />
+      <Association Name="Permiso_TipoUsuarioPermiso" Member="TipoUsuarioPermisos" ThisKey="IdPermiso" OtherKey="IdPermiso" Type="TipoUsuarioPermiso" />
     </Type>
   </Table>
-  <Table Name="dbo.Correo" Member="Correos">
-    <Type Name="Correo">
-      <Column Name="IdCorreo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Remitente" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Destinatario" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="CC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="BCC" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Asunto" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="CuerpoTexto" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="CuerpoHTML" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FechaCreacion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="FechaProgramadaEnvio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="FechaEnvio" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="IntentoFallido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Pendiente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoEstadoUsuarioCategoriaProyecto" Member="TipoEstadoUsuarioCategoriaProyectos">
-    <Type Name="TipoEstadoUsuarioCategoriaProyecto">
-      <Column Name="IdTipoEstadoUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyectos" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" />
-      <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyectoHistorico" Member="EstadoUsuarioCategoriaProyectoHistoricos" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyectoHistorico" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions">
-    <Type Name="EstadoPlanificacionDeclaracion">
-      <Column Name="IdEstadoPlanificacionDeclaracion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Ano" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Mes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PlanificacionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DeclaracionOk" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CategoriaActividad" Member="CategoriaActividads">
-    <Type Name="CategoriaActividad">
-      <Column Name="IdCategoriaActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+  <Table Name="dbo.PlantillaEvaluacion" Member="PlantillaEvaluacions">
+    <Type Name="PlantillaEvaluacion">
+      <Column Name="IdPlantillaEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Categoria_CategoriaActividad" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
-      <Association Name="Actividad_CategoriaActividad" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.DiaEspecial" Member="DiaEspecials">
-    <Type Name="DiaEspecial">
-      <Column Name="IdDiaEspecial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoDiaEspecial" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Horas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
-      <Association Name="TipoDiaEspecial_DiaEspecial" Member="TipoDiaEspecial" ThisKey="IdTipoDiaEspecial" OtherKey="IdTipoDiaEspecial" Type="TipoDiaEspecial" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoDiaEspecial" Member="TipoDiaEspecials">
-    <Type Name="TipoDiaEspecial">
-      <Column Name="IdTipoDiaEspecial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoDiaEspecial_DiaEspecial" Member="DiaEspecials" ThisKey="IdTipoDiaEspecial" OtherKey="IdTipoDiaEspecial" Type="DiaEspecial" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Categoria" Member="Categorias">
-    <Type Name="Categoria">
-      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Categoria_PlantillaEvaluacion" Member="PlantillaEvaluacions" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="PlantillaEvaluacion" />
-      <Association Name="Categoria_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="CategoriaActividad" />
-      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="UsuarioCategoriaProyecto" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TipoActividad" Member="TipoActividads">
-    <Type Name="TipoActividad">
-      <Column Name="IdTipoActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="TipoActividad_Actividad" Member="Actividads" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="Actividad" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Actividad" Member="Actividads">
-    <Type Name="Actividad">
-      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Actividad_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdActividad" OtherKey="IdActividad" Type="CategoriaActividad" />
-      <Association Name="Actividad_TimeSheet" Member="TimeSheets" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheet" />
-      <Association Name="Actividad_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdActividad" OtherKey="IdActividad" Type="TimeSheetEWP" />
-      <Association Name="TipoActividad_Actividad" Member="TipoActividad" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="TipoActividad" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TimeSheet" Member="TimeSheets">
-    <Type Name="TimeSheet">
-      <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Actividad_TimeSheet" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Pregunta" Member="Preguntas">
-    <Type Name="Pregunta">
-      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Habilidad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FormulacionPregunta" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Association Name="Pregunta_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionPregunta" />
-      <Association Name="Pregunta_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionPregunta" />
-      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionContratoPregunta" />
-      <Association Name="Pregunta_PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionContratoPregunta" />
-      <Association Name="TipoPregunta_Pregunta" Member="TipoPregunta" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="TipoPregunta" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos">
-    <Type Name="UsuarioCategoriaProyecto">
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" Cardinality="One" />
-      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="EstadoPlanificacionDeclaracion" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="TimeSheets" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheet" />
-      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="Evaluacions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="Evaluacion" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheetEWP" />
-      <Association Name="UsuarioCategoriaProyecto_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyectoArea" />
-      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
-      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
-      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Proyecto" Member="Proyectos">
-    <Type Name="Proyecto">
-      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FechaIncio" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="FechaTermino" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="UsuarioCategoriaProyecto" />
-      <Association Name="Usuario_Proyecto" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-      <Association Name="Contrato_Proyecto" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Usuario" Member="Usuarios">
-    <Type Name="Usuario">
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
-      <Column Name="Correo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Contacto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Usuario_UsuarioSupervisor" Member="UsuarioSupervisors" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioSupervisor" />
-      <Association Name="Usuario_UsuarioSupervisor1" Member="UsuarioSupervisors1" ThisKey="IdUsuario" OtherKey="IdSupervisor" Type="UsuarioSupervisor" />
-      <Association Name="Usuario_Notificacion" Member="Notificacions" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Notificacion" />
-      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioCategoriaProyecto" />
-      <Association Name="Usuario_Proyecto" Member="Proyectos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Proyecto" />
-      <Association Name="Usuario_Evaluacion" Member="Evaluacions" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Evaluacion" />
-      <Association Name="Usuario_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirectorContrato" Type="EvaluacionContrato" />
-      <Association Name="Usuario_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioAreaDisciplina" />
-      <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Evaluacion" Member="Evaluacions">
-    <Type Name="Evaluacion">
-      <Column Name="IdEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Evaluacion_EstadoEvaluacion" Member="EstadoEvaluacion" ThisKey="IdEvaluacion" OtherKey="IdEstadoEvaluacion" Type="EstadoEvaluacion" Cardinality="One" />
-      <Association Name="Evaluacion_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdEvaluacion" OtherKey="IdEvaluacion" Type="EvaluacionPregunta" />
-      <Association Name="Usuario_Evaluacion" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Tmp_PruebasWebJob" Member="Tmp_PruebasWebJobs">
-    <Type Name="Tmp_PruebasWebJob">
-      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Texto" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EvaluacionContrato" Member="EvaluacionContratos">
-    <Type Name="EvaluacionContrato">
-      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuarioDirectorContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FechaEvaluacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="FechaCreacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContratoPregunta" />
-      <Association Name="Usuario_EvaluacionContrato" Member="Usuario" ThisKey="IdUsuarioDirectorContrato" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-      <Association Name="Contrato_EvaluacionContrato" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas">
-    <Type Name="EvaluacionContratoPregunta">
-      <Column Name="IdEvaluacionContratoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdEvaluacionContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ValorObtenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="EvaluacionContrato_EvaluacionContratoPregunta" Member="EvaluacionContrato" ThisKey="IdEvaluacionContrato" OtherKey="IdEvaluacionContrato" Type="EvaluacionContrato" IsForeignKey="true" />
-      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
+      <Column Name="CreadoPor" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="PlantillaEvaluacion_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas" ThisKey="IdPlantillaEvaluacion" OtherKey="IdPlantillaEvaluacion" Type="PlantillaEvaluacionPregunta" />
+      <Association Name="Categoria_PlantillaEvaluacion" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PlantillaEvaluacionContrato" Member="PlantillaEvaluacionContratos">
@@ -387,12 +344,40 @@
       <Association Name="Pregunta_PlantillaEvaluacionContratoPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.EWP" Member="EWPs">
-    <Type Name="EWP">
-      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+  <Table Name="dbo.PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas">
+    <Type Name="PlantillaEvaluacionPregunta">
+      <Column Name="IdPlantillaEvaluacionPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdPlantillaEvaluacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PlantillaEvaluacion_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacion" ThisKey="IdPlantillaEvaluacion" OtherKey="IdPlantillaEvaluacion" Type="PlantillaEvaluacion" IsForeignKey="true" />
+      <Association Name="Pregunta_PlantillaEvaluacionPregunta" Member="Pregunta" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="Pregunta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pregunta" Member="Preguntas">
+    <Type Name="Pregunta">
+      <Column Name="IdPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoPregunta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Habilidad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FormulacionPregunta" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Pregunta_EvaluacionContratoPregunta" Member="EvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionContratoPregunta" />
+      <Association Name="Pregunta_EvaluacionPregunta" Member="EvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="EvaluacionPregunta" />
+      <Association Name="Pregunta_PlantillaEvaluacionContratoPregunta" Member="PlantillaEvaluacionContratoPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionContratoPregunta" />
+      <Association Name="Pregunta_PlantillaEvaluacionPregunta" Member="PlantillaEvaluacionPreguntas" ThisKey="IdPregunta" OtherKey="IdPregunta" Type="PlantillaEvaluacionPregunta" />
+      <Association Name="TipoPregunta_Pregunta" Member="TipoPregunta" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="TipoPregunta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Proyecto" Member="Proyectos">
+    <Type Name="Proyecto">
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioDirector" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="EWP_SubEWP" Member="SubEWPs" ThisKey="IdEWP" OtherKey="IdEWP" Type="SubEWP" />
+      <Column Name="FechaIncio" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FechaTermino" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Proyecto_DedicacionActividad" Member="DedicacionActividads" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="DedicacionActividad" />
+      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="UsuarioCategoriaProyecto" />
+      <Association Name="Contrato_Proyecto" Member="Contrato" ThisKey="IdContrato" OtherKey="IdContrato" Type="Contrato" IsForeignKey="true" />
+      <Association Name="Usuario_Proyecto" Member="Usuario" ThisKey="IdUsuarioDirector" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Revision" Member="Revisions">
@@ -402,30 +387,25 @@
       <Association Name="Revision_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdRevision" OtherKey="IdRevision" Type="TimeSheetEWP" />
     </Type>
   </Table>
-  <Table Name="dbo.Area" Member="Areas">
-    <Type Name="Area">
-      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Association Name="Area_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioAreaDisciplina" />
-      <Association Name="Area_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioCategoriaProyectoArea" />
+  <Table Name="dbo.TimeSheet" Member="TimeSheets">
+    <Type Name="TimeSheet">
+      <Column Name="IdTimeSheet" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdActividad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="HorasPlanificadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Actividad_TimeSheet" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Disciplina" Member="Disciplinas">
-    <Type Name="Disciplina">
-      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="UsuarioAreaDisciplina" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas">
-    <Type Name="UsuarioAreaDisciplina">
-      <Column Name="IdUsuarioAreaDisciplina" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Area_UsuarioAreaDisciplina" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
-      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="Disciplina" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="Disciplina" IsForeignKey="true" />
-      <Association Name="Usuario_UsuarioAreaDisciplina" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+  <Table Name="dbo.TipoUsuarioPermiso" Member="TipoUsuarioPermisos">
+    <Type Name="TipoUsuarioPermiso">
+      <Column Name="IdTipoUsuarioPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Permiso_TipoUsuarioPermiso" Member="Permiso" ThisKey="IdPermiso" OtherKey="IdPermiso" Type="Permiso" IsForeignKey="true" />
+      <Association Name="TipoUsuario_TipoUsuarioPermiso" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.TimeSheetEWP" Member="TimeSheetEWPs">
@@ -440,11 +420,25 @@
       <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Actividad_TimeSheetEWP" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
-      <Association Name="Revision_TimeSheetEWP" Member="Revision" ThisKey="IdRevision" OtherKey="IdRevision" Type="Revision" IsForeignKey="true" />
-      <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-      <Association Name="TipoDocumento_TimeSheetEWP" Member="TipoDocumento" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TipoDocumento" IsForeignKey="true" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
       <Association Name="NumeroDocumento_TimeSheetEWP" Member="NumeroDocumento" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="NumeroDocumento" IsForeignKey="true" />
+      <Association Name="Revision_TimeSheetEWP" Member="Revision" ThisKey="IdRevision" OtherKey="IdRevision" Type="Revision" IsForeignKey="true" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
+      <Association Name="TipoDocumento_TimeSheetEWP" Member="TipoDocumento" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoActividad" Member="TipoActividads">
+    <Type Name="TipoActividad">
+      <Column Name="IdTipoActividad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoActividad_Actividad" Member="Actividads" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="Actividad" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoDiaEspecial" Member="TipoDiaEspecials">
+    <Type Name="TipoDiaEspecial">
+      <Column Name="IdTipoDiaEspecial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoDiaEspecial_DiaEspecial" Member="DiaEspecials" ThisKey="IdTipoDiaEspecial" OtherKey="IdTipoDiaEspecial" Type="DiaEspecial" />
     </Type>
   </Table>
   <Table Name="dbo.TipoDocumento" Member="TipoDocumentos">
@@ -454,15 +448,119 @@
       <Association Name="TipoDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TimeSheetEWP" />
     </Type>
   </Table>
-  <Table Name="dbo.Contrato" Member="Contratos">
-    <Type Name="Contrato">
-      <Column Name="IdContrato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdCliente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+  <Table Name="dbo.TipoEstadoEvaluacion" Member="TipoEstadoEvaluacions">
+    <Type Name="TipoEstadoEvaluacion">
+      <Column Name="IdTipoEstadoEvaluacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacion" Member="EstadoEvaluacions" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="EstadoEvaluacion" />
+      <Association Name="TipoEstadoEvaluacion_EstadoEvaluacionHistorico" Member="EstadoEvaluacionHistoricos" ThisKey="IdTipoEstadoEvaluacion" OtherKey="IdTipoEstadoEvaluacion" Type="EstadoEvaluacionHistorico" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoEstadoNotificacion" Member="TipoEstadoNotificacions">
+    <Type Name="TipoEstadoNotificacion">
+      <Column Name="IdTipoEstadoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoEstadoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoEstadoNotificacion" OtherKey="IdTipoEstadoNotificacion" Type="Notificacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoEstadoUsuarioCategoriaProyecto" Member="TipoEstadoUsuarioCategoriaProyectos">
+    <Type Name="TipoEstadoUsuarioCategoriaProyecto">
+      <Column Name="IdTipoEstadoUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyectos" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" />
+      <Association Name="TipoEstadoUsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyectoHistorico" Member="EstadoUsuarioCategoriaProyectoHistoricos" ThisKey="IdTipoEstadoUsuarioCategoriaProyecto" OtherKey="IdTipoEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyectoHistorico" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoNotificacion" Member="TipoNotificacions">
+    <Type Name="TipoNotificacion">
+      <Column Name="IdTipoNotificacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoNotificacion_Notificacion" Member="Notificacions" ThisKey="IdTipoNotificacion" OtherKey="IdTipoNotificacion" Type="Notificacion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoPregunta" Member="TipoPreguntas">
+    <Type Name="TipoPregunta">
+      <Column Name="IdTipoPregunta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoPregunta_Pregunta" Member="Preguntas" ThisKey="IdTipoPregunta" OtherKey="IdTipoPregunta" Type="Pregunta" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoUsuario" Member="TipoUsuarios">
+    <Type Name="TipoUsuario">
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoUsuario_TipoUsuarioPermiso" Member="TipoUsuarioPermisos" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuarioPermiso" />
+      <Association Name="TipoUsuario_Usuario" Member="Usuarios" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UCPDisciplinaArea" Member="UCPDisciplinaAreas">
+    <Type Name="UCPDisciplinaArea">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Area_UCPDisciplinaArea" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
+      <Association Name="Disciplina_UCPDisciplinaArea" Member="Disciplina" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="Disciplina" IsForeignKey="true" />
+      <Association Name="UsuarioCategoriaProyecto_UCPDisciplinaArea" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsuarioSupervisor" Member="UsuarioSupervisors">
+    <Type Name="UsuarioSupervisor">
+      <Column Name="IdUsuarioSupervisor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdSupervisor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Usuario_UsuarioSupervisor" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+      <Association Name="Usuario_UsuarioSupervisor1" Member="Usuario1" ThisKey="IdSupervisor" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuarios">
+    <Type Name="Usuario">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
+      <Column Name="Correo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Contacto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="Vigente" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Contrato_Proyecto" Member="Proyectos" ThisKey="IdContrato" OtherKey="IdContrato" Type="Proyecto" />
-      <Association Name="Contrato_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdContrato" OtherKey="IdContrato" Type="EvaluacionContrato" />
-      <Association Name="Cliente_Contrato" Member="Cliente" ThisKey="IdCliente" OtherKey="IdCliente" Type="Cliente" IsForeignKey="true" />
+      <Association Name="Usuario_DedicacionActividad" Member="DedicacionActividads" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="DedicacionActividad" />
+      <Association Name="Usuario_Evaluacion" Member="Evaluacions" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Evaluacion" />
+      <Association Name="Usuario_EvaluacionContrato" Member="EvaluacionContratos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirectorContrato" Type="EvaluacionContrato" />
+      <Association Name="Usuario_Notificacion" Member="Notificacions" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Notificacion" />
+      <Association Name="Usuario_Proyecto" Member="Proyectos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Proyecto" />
+      <Association Name="Usuario_UsuarioSupervisor" Member="UsuarioSupervisors" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioSupervisor" />
+      <Association Name="Usuario_UsuarioSupervisor1" Member="UsuarioSupervisors1" ThisKey="IdUsuario" OtherKey="IdSupervisor" Type="UsuarioSupervisor" />
+      <Association Name="Usuario_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioAreaDisciplina" />
+      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioCategoriaProyecto" />
+      <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas">
+    <Type Name="UsuarioAreaDisciplina">
+      <Column Name="IdUsuarioAreaDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Area_UsuarioAreaDisciplina" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
+      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="Disciplina" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="Disciplina" IsForeignKey="true" />
+      <Association Name="Usuario_UsuarioAreaDisciplina" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos">
+    <Type Name="UsuarioCategoriaProyecto">
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdCategoria" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoPlanificacionDeclaracion" Member="EstadoPlanificacionDeclaracions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="EstadoPlanificacionDeclaracion" />
+      <Association Name="UsuarioCategoriaProyecto_EstadoUsuarioCategoriaProyecto" Member="EstadoUsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdEstadoUsuarioCategoriaProyecto" Type="EstadoUsuarioCategoriaProyecto" Cardinality="One" />
+      <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="Evaluacions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="Evaluacion" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="TimeSheets" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheet" />
+      <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheetEWP" />
+      <Association Name="UsuarioCategoriaProyecto_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UCPDisciplinaArea" />
+      <Association Name="UsuarioCategoriaProyecto_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyectoArea" />
+      <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
+      <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
+      <Association Name="Usuario_UsuarioCategoriaProyecto" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas">
@@ -474,35 +572,29 @@
       <Association Name="UsuarioCategoriaProyecto_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.SubEWP" Member="SubEWPs">
-    <Type Name="SubEWP">
-      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
-      <Association Name="SubEWP_NumeroDocumento" Member="NumeroDocumentos" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="NumeroDocumento" />
-      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.NumeroDocumento" Member="NumeroDocumentos">
-    <Type Name="NumeroDocumento">
-      <Column Name="IdNumeroDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
-      <Association Name="SubEWP_NumeroDocumento" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">
+  <Function Name="dbo.sp_GetDiasPendientesDeclaracionEWPByIdUsuario" Method="sp_GetDiasPendientesDeclaracionEWPByIdUsuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="sp_GetDiasPendientesDeclaracionEWPByIdUsuarioResult">
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_OrchrestraSP" Method="sp_OrchrestraSP">
     <Parameter Name="mes" Type="System.Int32" DbType="Int" />
     <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+  </Function>
+  <Function Name="dbo.fn_ReportePorEWP" Method="fn_ReportePorEWP" IsComposable="true">
+    <Parameter Name="FechaDesde" Parameter="fechaDesde" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="FechaHasta" Parameter="fechaHasta" Type="System.DateTime" DbType="Date" />
     <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
-    <ElementType Name="fn_ReporteDedicacionActividadResult">
-      <Column Name="Actividad" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
+    <ElementType Name="fn_ReportePorEWPResult">
+      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoSubEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="EWP" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoActividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
   <Function Name="dbo.sp_GetDiasPendientesPlanificacionByIdUsuario" Method="sp_GetDiasPendientesPlanificacionByIdUsuario">
@@ -515,6 +607,46 @@
     <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
     <ElementType Name="sp_GetDiasPendientesDeclaracionByIdUsuarioResult">
       <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_ReportePorUsuario" Method="fn_ReportePorUsuario" IsComposable="true">
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="fn_ReportePorUsuarioResult">
+      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Categoria" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ODS" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IndiceDesviacion" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="CantidadPendientesPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CantidadPendientesDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_ReporteDedicacionActividad2" Method="fn_ReporteDedicacionActividad2" IsComposable="true">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_ReporteDedicacionActividad2Result">
+      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TotalDedicacionPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TotalDedicacionDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_ReporteDedicacionActividad" Method="fn_ReporteDedicacionActividad" IsComposable="true">
+    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_ReporteDedicacionActividadResult">
+      <Column Name="Actividad" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
   <Function Name="dbo.fn_HorasPlanificacionDeclaracion" Method="fn_HorasPlanificacionDeclaracion" IsComposable="true">
@@ -541,36 +673,6 @@
       <Column Name="IndiceDesviacionAbsoluta" Type="System.Double" DbType="Float" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.fn_GetDiasPendientesDeclaracionByIdUsuario" Method="fn_GetDiasPendientesDeclaracionByIdUsuario" IsComposable="true">
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
-    <ElementType Name="fn_GetDiasPendientesDeclaracionByIdUsuarioResult">
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.fn_GetDiasPendientesPlanificacionByIdUsuario" Method="fn_GetDiasPendientesPlanificacionByIdUsuario" IsComposable="true">
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
-    <ElementType Name="fn_GetDiasPendientesPlanificacionByIdUsuarioResult">
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.fn_ReportePorUsuario" Method="fn_ReportePorUsuario" IsComposable="true">
-    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
-    <ElementType Name="fn_ReportePorUsuarioResult">
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(225) NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Categoria" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="ODS" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="IndiceDesviacion" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="CantidadPendientesPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CantidadPendientesDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.fn_PromedioEvaluacion" Method="fn_PromedioEvaluacion" IsComposable="true">
     <Parameter Name="mes" Type="System.Int32" DbType="Int" />
     <Parameter Name="ano" Type="System.Int32" DbType="Int" />
@@ -578,25 +680,6 @@
     <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
     <ElementType Name="fn_PromedioEvaluacionResult">
       <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.fn_ReporteDedicacionActividad2" Method="fn_ReporteDedicacionActividad2" IsComposable="true">
-    <Parameter Name="mes" Type="System.Int32" DbType="Int" />
-    <Parameter Name="ano" Type="System.Int32" DbType="Int" />
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
-    <ElementType Name="fn_ReporteDedicacionActividad2Result">
-      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="TotalDedicacionPlanificacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="TotalDedicacionDeclaracion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PorcentajeDedicacionPlanificacion" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="PorcentajeDedicacionDeclaracion" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.sp_GetDiasPendientesDeclaracionEWPByIdUsuario" Method="sp_GetDiasPendientesDeclaracionEWPByIdUsuario">
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <ElementType Name="sp_GetDiasPendientesDeclaracionEWPByIdUsuarioResult">
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
