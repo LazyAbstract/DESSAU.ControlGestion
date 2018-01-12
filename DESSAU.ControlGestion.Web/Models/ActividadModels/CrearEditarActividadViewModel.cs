@@ -20,7 +20,7 @@ namespace DESSAU.ControlGestion.Web.Models.ActividadModels
         public CrearEditarActividadViewModel()
         {
             Form = new CrearEditarActividadFormModel();
-            Categorias = db.Categorias.OrderBy(x => x.Nombre);
+            Categorias = db.Categorias.Where(x => x.Vigente).OrderBy(x => x.Nombre);
             TipoActividades = taslp.Provide();
         }
 

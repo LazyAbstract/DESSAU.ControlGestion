@@ -21,13 +21,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListarActividadViewModel model = new ListarActividadViewModel();
             model.filtro = filtro;
-            IEnumerable<Actividad> Acts = db.Actividads.OrderBy(x => x.IdTipoActividad)
+            IEnumerable<Actividad> Acts = db.Actividads
+                .Where(x => x.Vigente == true)
+                .OrderBy(x => x.IdTipoActividad)
                 .ThenBy(x => x.Nombre);
             if (!String.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
                 Acts = db.Actividads
-                    .Where(x => x.Nombre.ToLower().Contains(filtro));
+                    .Where(x => x.Vigente == true && x.Nombre.ToLower().Contains(filtro));
             }
             model.Actividades = Acts.ToPagedList(pagina ?? 1, 10);
             return View(model);
@@ -42,7 +44,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 model.Form.NombreActividad = act.Nombre;
                 model.Form.IdActividad = IdActividad;
                 model.Form.IdTipoActividad = act.IdTipoActividad;
-                model.Form.IdCategorias = act.CategoriaActividads.Where(x => x.Vigente == true)
+                model.Form.IdCategorias = act.CategoriaActividads
+                    .Where(x => x.Vigente && x.Categoria.Vigente)
                     .Select(x => x.IdCategoria).ToList();
             }
             return View(model);

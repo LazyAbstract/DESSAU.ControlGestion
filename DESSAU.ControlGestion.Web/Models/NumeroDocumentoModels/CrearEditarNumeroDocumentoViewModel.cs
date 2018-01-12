@@ -1,4 +1,5 @@
-﻿using DESSAU.ControlGestion.Web.SelectListProviders;
+﻿using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.SelectListProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,16 @@ namespace DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels
 {
     public class CrearEditarNumeroDocumentoViewModel
     {
+        DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
+            .WithConnectionStringFromConfiguration();
         public CrearEditarNumeroDocumentoFormModel Form { get; set; }
-        public IEnumerable<SelectListItem> SubEWPs { get; set; }
+        public IEnumerable<SelectListItem> TipoDocumentos { get; set; }
         private SubEWPSelectListProvider sewpslp = new SubEWPSelectListProvider();
 
         public CrearEditarNumeroDocumentoViewModel()
         {
             Form = new CrearEditarNumeroDocumentoFormModel();
-            SubEWPs = sewpslp.Provide();
+            TipoDocumentos = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
         }
 
         public CrearEditarNumeroDocumentoViewModel(CrearEditarNumeroDocumentoFormModel f) : this()

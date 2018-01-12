@@ -35,6 +35,7 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
             TipoDocumento = new SelectList(db.TipoDocumentos, "IdTipoDocumento", "Nombre");
             Revision = new SelectList(db.Revisions, "IdRevision", "Nombre");
             NumeroDocumento = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
+            
             DiaEspecials = db.DiaEspecials;
             Usuarios = uslp.Provide();
         }

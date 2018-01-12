@@ -27,7 +27,7 @@
                 @if (@Model.DiasPendientesDeclaracion.Any())
                 {
                     <p>
-                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesDeclaracion.Count().ToString() días pendientes en su Declaración. Por favor diríjase a este @Html.ActionLink("enlace", "CrearEditarTimeSheetEWP", "TimeSheet") para actualizarlo.
+                        Estimado @Model.Usuario.NombreCompleto, tiene @Model.DiasPendientesDeclaracionEWP.Count().ToString() días pendientes en su Declaración. Por favor diríjase a este @Html.ActionLink("enlace", "CrearEditarTimeSheetEWP", "TimeSheet") para actualizarlo.
                     </p>
                     <div id="mini-clndr-decla" class="mini-clndr"></div>
                     <br />

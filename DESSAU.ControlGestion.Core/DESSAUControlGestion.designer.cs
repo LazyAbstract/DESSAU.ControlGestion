@@ -30,9 +30,6 @@ namespace DESSAU.ControlGestion.Core
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertActividad(Actividad instance);
-    partial void UpdateActividad(Actividad instance);
-    partial void DeleteActividad(Actividad instance);
     partial void InsertSubEWP(SubEWP instance);
     partial void UpdateSubEWP(SubEWP instance);
     partial void DeleteSubEWP(SubEWP instance);
@@ -111,9 +108,6 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertNotificacion(Notificacion instance);
     partial void UpdateNotificacion(Notificacion instance);
     partial void DeleteNotificacion(Notificacion instance);
-    partial void InsertNumeroDocumento(NumeroDocumento instance);
-    partial void UpdateNumeroDocumento(NumeroDocumento instance);
-    partial void DeleteNumeroDocumento(NumeroDocumento instance);
     partial void InsertPermiso(Permiso instance);
     partial void UpdatePermiso(Permiso instance);
     partial void DeletePermiso(Permiso instance);
@@ -147,9 +141,6 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertTimeSheetEWP(TimeSheetEWP instance);
     partial void UpdateTimeSheetEWP(TimeSheetEWP instance);
     partial void DeleteTimeSheetEWP(TimeSheetEWP instance);
-    partial void InsertTipoActividad(TipoActividad instance);
-    partial void UpdateTipoActividad(TipoActividad instance);
-    partial void DeleteTipoActividad(TipoActividad instance);
     partial void InsertTipoDiaEspecial(TipoDiaEspecial instance);
     partial void UpdateTipoDiaEspecial(TipoDiaEspecial instance);
     partial void DeleteTipoDiaEspecial(TipoDiaEspecial instance);
@@ -192,6 +183,15 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertUsuarioCategoriaProyectoArea(UsuarioCategoriaProyectoArea instance);
     partial void UpdateUsuarioCategoriaProyectoArea(UsuarioCategoriaProyectoArea instance);
     partial void DeleteUsuarioCategoriaProyectoArea(UsuarioCategoriaProyectoArea instance);
+    partial void InsertTipoActividad(TipoActividad instance);
+    partial void UpdateTipoActividad(TipoActividad instance);
+    partial void DeleteTipoActividad(TipoActividad instance);
+    partial void InsertActividad(Actividad instance);
+    partial void UpdateActividad(Actividad instance);
+    partial void DeleteActividad(Actividad instance);
+    partial void InsertNumeroDocumento(NumeroDocumento instance);
+    partial void UpdateNumeroDocumento(NumeroDocumento instance);
+    partial void DeleteNumeroDocumento(NumeroDocumento instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -222,14 +222,6 @@ namespace DESSAU.ControlGestion.Core
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<Actividad> Actividads
-		{
-			get
-			{
-				return this.GetTable<Actividad>();
-			}
 		}
 		
 		public System.Data.Linq.Table<SubEWP> SubEWPs
@@ -440,14 +432,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<NumeroDocumento> NumeroDocumentos
-		{
-			get
-			{
-				return this.GetTable<NumeroDocumento>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Permiso> Permisos
 		{
 			get
@@ -533,14 +517,6 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<TimeSheetEWP>();
-			}
-		}
-		
-		public System.Data.Linq.Table<TipoActividad> TipoActividads
-		{
-			get
-			{
-				return this.GetTable<TipoActividad>();
 			}
 		}
 		
@@ -656,6 +632,30 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		public System.Data.Linq.Table<TipoActividad> TipoActividads
+		{
+			get
+			{
+				return this.GetTable<TipoActividad>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Actividad> Actividads
+		{
+			get
+			{
+				return this.GetTable<Actividad>();
+			}
+		}
+		
+		public System.Data.Linq.Table<NumeroDocumento> NumeroDocumentos
+		{
+			get
+			{
+				return this.GetTable<NumeroDocumento>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_GetDiasPendientesDeclaracionEWPByIdUsuario")]
 		public ISingleResult<sp_GetDiasPendientesDeclaracionEWPByIdUsuarioResult> sp_GetDiasPendientesDeclaracionEWPByIdUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
 		{
@@ -663,10 +663,10 @@ namespace DESSAU.ControlGestion.Core
 			return ((ISingleResult<sp_GetDiasPendientesDeclaracionEWPByIdUsuarioResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_OrchrestraSP")]
-		public void sp_OrchrestraSP([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_OrchrestraSP", IsComposable=true)]
+		public object sp_OrchrestraSP([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano)
 		{
-			this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano);
+			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano).ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_ReportePorEWP", IsComposable=true)]
@@ -726,269 +726,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Actividad")]
-	public partial class Actividad : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdActividad;
-		
-		private int _IdTipoActividad;
-		
-		private string _Nombre;
-		
-		private EntitySet<CategoriaActividad> _CategoriaActividads;
-		
-		private EntitySet<DedicacionActividad> _DedicacionActividads;
-		
-		private EntitySet<TimeSheet> _TimeSheets;
-		
-		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
-		
-		private EntityRef<TipoActividad> _TipoActividad;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdActividadChanging(int value);
-    partial void OnIdActividadChanged();
-    partial void OnIdTipoActividadChanging(int value);
-    partial void OnIdTipoActividadChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    #endregion
-		
-		public Actividad()
-		{
-			this._CategoriaActividads = new EntitySet<CategoriaActividad>(new Action<CategoriaActividad>(this.attach_CategoriaActividads), new Action<CategoriaActividad>(this.detach_CategoriaActividads));
-			this._DedicacionActividads = new EntitySet<DedicacionActividad>(new Action<DedicacionActividad>(this.attach_DedicacionActividads), new Action<DedicacionActividad>(this.detach_DedicacionActividads));
-			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
-			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._TipoActividad = default(EntityRef<TipoActividad>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdActividad", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdActividad
-		{
-			get
-			{
-				return this._IdActividad;
-			}
-			set
-			{
-				if ((this._IdActividad != value))
-				{
-					this.OnIdActividadChanging(value);
-					this.SendPropertyChanging();
-					this._IdActividad = value;
-					this.SendPropertyChanged("IdActividad");
-					this.OnIdActividadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoActividad", DbType="Int NOT NULL")]
-		public int IdTipoActividad
-		{
-			get
-			{
-				return this._IdTipoActividad;
-			}
-			set
-			{
-				if ((this._IdTipoActividad != value))
-				{
-					if (this._TipoActividad.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdTipoActividadChanging(value);
-					this.SendPropertyChanging();
-					this._IdTipoActividad = value;
-					this.SendPropertyChanged("IdTipoActividad");
-					this.OnIdTipoActividadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_CategoriaActividad", Storage="_CategoriaActividads", ThisKey="IdActividad", OtherKey="IdActividad")]
-		public EntitySet<CategoriaActividad> CategoriaActividads
-		{
-			get
-			{
-				return this._CategoriaActividads;
-			}
-			set
-			{
-				this._CategoriaActividads.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_DedicacionActividad", Storage="_DedicacionActividads", ThisKey="IdActividad", OtherKey="IdActividad")]
-		public EntitySet<DedicacionActividad> DedicacionActividads
-		{
-			get
-			{
-				return this._DedicacionActividads;
-			}
-			set
-			{
-				this._DedicacionActividads.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_TimeSheets", ThisKey="IdActividad", OtherKey="IdActividad")]
-		public EntitySet<TimeSheet> TimeSheets
-		{
-			get
-			{
-				return this._TimeSheets;
-			}
-			set
-			{
-				this._TimeSheets.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdActividad", OtherKey="IdActividad")]
-		public EntitySet<TimeSheetEWP> TimeSheetEWPs
-		{
-			get
-			{
-				return this._TimeSheetEWPs;
-			}
-			set
-			{
-				this._TimeSheetEWPs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoActividad_Actividad", Storage="_TipoActividad", ThisKey="IdTipoActividad", OtherKey="IdTipoActividad", IsForeignKey=true)]
-		public TipoActividad TipoActividad
-		{
-			get
-			{
-				return this._TipoActividad.Entity;
-			}
-			set
-			{
-				TipoActividad previousValue = this._TipoActividad.Entity;
-				if (((previousValue != value) 
-							|| (this._TipoActividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TipoActividad.Entity = null;
-						previousValue.Actividads.Remove(this);
-					}
-					this._TipoActividad.Entity = value;
-					if ((value != null))
-					{
-						value.Actividads.Add(this);
-						this._IdTipoActividad = value.IdTipoActividad;
-					}
-					else
-					{
-						this._IdTipoActividad = default(int);
-					}
-					this.SendPropertyChanged("TipoActividad");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CategoriaActividads(CategoriaActividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = this;
-		}
-		
-		private void detach_CategoriaActividads(CategoriaActividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = null;
-		}
-		
-		private void attach_DedicacionActividads(DedicacionActividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = this;
-		}
-		
-		private void detach_DedicacionActividads(DedicacionActividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = null;
-		}
-		
-		private void attach_TimeSheets(TimeSheet entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = this;
-		}
-		
-		private void detach_TimeSheets(TimeSheet entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = null;
-		}
-		
-		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = this;
-		}
-		
-		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.Actividad = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SubEWP")]
 	public partial class SubEWP : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1000,8 +737,6 @@ namespace DESSAU.ControlGestion.Core
 		private int _IdEWP;
 		
 		private string _Codigo;
-		
-		private EntitySet<NumeroDocumento> _NumeroDocumentos;
 		
 		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
 		
@@ -1021,7 +756,6 @@ namespace DESSAU.ControlGestion.Core
 		
 		public SubEWP()
 		{
-			this._NumeroDocumentos = new EntitySet<NumeroDocumento>(new Action<NumeroDocumento>(this.attach_NumeroDocumentos), new Action<NumeroDocumento>(this.detach_NumeroDocumentos));
 			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
 			this._EWP = default(EntityRef<EWP>);
 			OnCreated();
@@ -1091,19 +825,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_NumeroDocumento", Storage="_NumeroDocumentos", ThisKey="IdSubEWP", OtherKey="IdSubEWP")]
-		public EntitySet<NumeroDocumento> NumeroDocumentos
-		{
-			get
-			{
-				return this._NumeroDocumentos;
-			}
-			set
-			{
-				this._NumeroDocumentos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdSubEWP", OtherKey="IdSubEWP")]
 		public EntitySet<TimeSheetEWP> TimeSheetEWPs
 		{
@@ -1169,18 +890,6 @@ namespace DESSAU.ControlGestion.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_NumeroDocumentos(NumeroDocumento entity)
-		{
-			this.SendPropertyChanging();
-			entity.SubEWP = this;
-		}
-		
-		private void detach_NumeroDocumentos(NumeroDocumento entity)
-		{
-			this.SendPropertyChanging();
-			entity.SubEWP = null;
 		}
 		
 		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
@@ -2592,9 +2301,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private bool _Vigente;
 		
-		private EntityRef<Actividad> _Actividad;
-		
 		private EntityRef<Categoria> _Categoria;
+		
+		private EntityRef<Actividad> _Actividad;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2612,8 +2321,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		public CategoriaActividad()
 		{
-			this._Actividad = default(EntityRef<Actividad>);
 			this._Categoria = default(EntityRef<Categoria>);
+			this._Actividad = default(EntityRef<Actividad>);
 			OnCreated();
 		}
 		
@@ -2705,40 +2414,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_CategoriaActividad", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
-		public Actividad Actividad
-		{
-			get
-			{
-				return this._Actividad.Entity;
-			}
-			set
-			{
-				Actividad previousValue = this._Actividad.Entity;
-				if (((previousValue != value) 
-							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Actividad.Entity = null;
-						previousValue.CategoriaActividads.Remove(this);
-					}
-					this._Actividad.Entity = value;
-					if ((value != null))
-					{
-						value.CategoriaActividads.Add(this);
-						this._IdActividad = value.IdActividad;
-					}
-					else
-					{
-						this._IdActividad = default(int);
-					}
-					this.SendPropertyChanged("Actividad");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Categoria_CategoriaActividad", Storage="_Categoria", ThisKey="IdCategoria", OtherKey="IdCategoria", IsForeignKey=true)]
 		public Categoria Categoria
 		{
@@ -2769,6 +2444,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdCategoria = default(int);
 					}
 					this.SendPropertyChanged("Categoria");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_CategoriaActividad", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
+		public Actividad Actividad
+		{
+			get
+			{
+				return this._Actividad.Entity;
+			}
+			set
+			{
+				Actividad previousValue = this._Actividad.Entity;
+				if (((previousValue != value) 
+							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Actividad.Entity = null;
+						previousValue.CategoriaActividads.Remove(this);
+					}
+					this._Actividad.Entity = value;
+					if ((value != null))
+					{
+						value.CategoriaActividads.Add(this);
+						this._IdActividad = value.IdActividad;
+					}
+					else
+					{
+						this._IdActividad = default(int);
+					}
+					this.SendPropertyChanged("Actividad");
 				}
 			}
 		}
@@ -3511,11 +3220,11 @@ namespace DESSAU.ControlGestion.Core
 		
 		private int _HorasDeclaradas;
 		
-		private EntityRef<Actividad> _Actividad;
-		
 		private EntityRef<Proyecto> _Proyecto;
 		
 		private EntityRef<Usuario> _Usuario;
+		
+		private EntityRef<Actividad> _Actividad;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3541,9 +3250,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		public DedicacionActividad()
 		{
-			this._Actividad = default(EntityRef<Actividad>);
 			this._Proyecto = default(EntityRef<Proyecto>);
 			this._Usuario = default(EntityRef<Usuario>);
+			this._Actividad = default(EntityRef<Actividad>);
 			OnCreated();
 		}
 		
@@ -3719,40 +3428,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_DedicacionActividad", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
-		public Actividad Actividad
-		{
-			get
-			{
-				return this._Actividad.Entity;
-			}
-			set
-			{
-				Actividad previousValue = this._Actividad.Entity;
-				if (((previousValue != value) 
-							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Actividad.Entity = null;
-						previousValue.DedicacionActividads.Remove(this);
-					}
-					this._Actividad.Entity = value;
-					if ((value != null))
-					{
-						value.DedicacionActividads.Add(this);
-						this._IdActividad = value.IdActividad;
-					}
-					else
-					{
-						this._IdActividad = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Actividad");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Proyecto_DedicacionActividad", Storage="_Proyecto", ThisKey="IdProyecto", OtherKey="IdProyecto", IsForeignKey=true)]
 		public Proyecto Proyecto
 		{
@@ -3817,6 +3492,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdUsuario = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_DedicacionActividad", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
+		public Actividad Actividad
+		{
+			get
+			{
+				return this._Actividad.Entity;
+			}
+			set
+			{
+				Actividad previousValue = this._Actividad.Entity;
+				if (((previousValue != value) 
+							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Actividad.Entity = null;
+						previousValue.DedicacionActividads.Remove(this);
+					}
+					this._Actividad.Entity = value;
+					if ((value != null))
+					{
+						value.DedicacionActividads.Add(this);
+						this._IdActividad = value.IdActividad;
+					}
+					else
+					{
+						this._IdActividad = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Actividad");
 				}
 			}
 		}
@@ -6913,209 +6622,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NumeroDocumento")]
-	public partial class NumeroDocumento : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdNumeroDocumento;
-		
-		private System.Nullable<int> _IdSubEWP;
-		
-		private string _Codigo;
-		
-		private string _Nombre;
-		
-		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
-		
-		private EntityRef<SubEWP> _SubEWP;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdNumeroDocumentoChanging(int value);
-    partial void OnIdNumeroDocumentoChanged();
-    partial void OnIdSubEWPChanging(System.Nullable<int> value);
-    partial void OnIdSubEWPChanged();
-    partial void OnCodigoChanging(string value);
-    partial void OnCodigoChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    #endregion
-		
-		public NumeroDocumento()
-		{
-			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._SubEWP = default(EntityRef<SubEWP>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdNumeroDocumento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdNumeroDocumento
-		{
-			get
-			{
-				return this._IdNumeroDocumento;
-			}
-			set
-			{
-				if ((this._IdNumeroDocumento != value))
-				{
-					this.OnIdNumeroDocumentoChanging(value);
-					this.SendPropertyChanging();
-					this._IdNumeroDocumento = value;
-					this.SendPropertyChanged("IdNumeroDocumento");
-					this.OnIdNumeroDocumentoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdSubEWP", DbType="Int")]
-		public System.Nullable<int> IdSubEWP
-		{
-			get
-			{
-				return this._IdSubEWP;
-			}
-			set
-			{
-				if ((this._IdSubEWP != value))
-				{
-					if (this._SubEWP.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdSubEWPChanging(value);
-					this.SendPropertyChanging();
-					this._IdSubEWP = value;
-					this.SendPropertyChanged("IdSubEWP");
-					this.OnIdSubEWPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Codigo", DbType="NVarChar(63) NOT NULL", CanBeNull=false)]
-		public string Codigo
-		{
-			get
-			{
-				return this._Codigo;
-			}
-			set
-			{
-				if ((this._Codigo != value))
-				{
-					this.OnCodigoChanging(value);
-					this.SendPropertyChanging();
-					this._Codigo = value;
-					this.SendPropertyChanged("Codigo");
-					this.OnCodigoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NumeroDocumento_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdNumeroDocumento", OtherKey="IdNumeroDocumento")]
-		public EntitySet<TimeSheetEWP> TimeSheetEWPs
-		{
-			get
-			{
-				return this._TimeSheetEWPs;
-			}
-			set
-			{
-				this._TimeSheetEWPs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_NumeroDocumento", Storage="_SubEWP", ThisKey="IdSubEWP", OtherKey="IdSubEWP", IsForeignKey=true)]
-		public SubEWP SubEWP
-		{
-			get
-			{
-				return this._SubEWP.Entity;
-			}
-			set
-			{
-				SubEWP previousValue = this._SubEWP.Entity;
-				if (((previousValue != value) 
-							|| (this._SubEWP.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SubEWP.Entity = null;
-						previousValue.NumeroDocumentos.Remove(this);
-					}
-					this._SubEWP.Entity = value;
-					if ((value != null))
-					{
-						value.NumeroDocumentos.Add(this);
-						this._IdSubEWP = value.IdSubEWP;
-					}
-					else
-					{
-						this._IdSubEWP = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("SubEWP");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.NumeroDocumento = this;
-		}
-		
-		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.NumeroDocumento = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Permiso")]
 	public partial class Permiso : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -8814,9 +8320,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private System.Nullable<int> _HorasReportadas;
 		
-		private EntityRef<Actividad> _Actividad;
-		
 		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
+		
+		private EntityRef<Actividad> _Actividad;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8838,8 +8344,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		public TimeSheet()
 		{
-			this._Actividad = default(EntityRef<Actividad>);
 			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
+			this._Actividad = default(EntityRef<Actividad>);
 			OnCreated();
 		}
 		
@@ -8971,40 +8477,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
-		public Actividad Actividad
-		{
-			get
-			{
-				return this._Actividad.Entity;
-			}
-			set
-			{
-				Actividad previousValue = this._Actividad.Entity;
-				if (((previousValue != value) 
-							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Actividad.Entity = null;
-						previousValue.TimeSheets.Remove(this);
-					}
-					this._Actividad.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheets.Add(this);
-						this._IdActividad = value.IdActividad;
-					}
-					else
-					{
-						this._IdActividad = default(int);
-					}
-					this.SendPropertyChanged("Actividad");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_TimeSheet", Storage="_UsuarioCategoriaProyecto", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto", IsForeignKey=true)]
 		public UsuarioCategoriaProyecto UsuarioCategoriaProyecto
 		{
@@ -9035,6 +8507,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdUsuarioCategoriaProyecto = default(int);
 					}
 					this.SendPropertyChanged("UsuarioCategoriaProyecto");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
+		public Actividad Actividad
+		{
+			get
+			{
+				return this._Actividad.Entity;
+			}
+			set
+			{
+				Actividad previousValue = this._Actividad.Entity;
+				if (((previousValue != value) 
+							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Actividad.Entity = null;
+						previousValue.TimeSheets.Remove(this);
+					}
+					this._Actividad.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheets.Add(this);
+						this._IdActividad = value.IdActividad;
+					}
+					else
+					{
+						this._IdActividad = default(int);
+					}
+					this.SendPropertyChanged("Actividad");
 				}
 			}
 		}
@@ -9276,10 +8782,6 @@ namespace DESSAU.ControlGestion.Core
 		
 		private System.Nullable<int> _HorasReportadas;
 		
-		private EntityRef<Actividad> _Actividad;
-		
-		private EntityRef<NumeroDocumento> _NumeroDocumento;
-		
 		private EntityRef<Revision> _Revision;
 		
 		private EntityRef<SubEWP> _SubEWP;
@@ -9287,6 +8789,10 @@ namespace DESSAU.ControlGestion.Core
 		private EntityRef<TipoDocumento> _TipoDocumento;
 		
 		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
+		
+		private EntityRef<Actividad> _Actividad;
+		
+		private EntityRef<NumeroDocumento> _NumeroDocumento;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9314,12 +8820,12 @@ namespace DESSAU.ControlGestion.Core
 		
 		public TimeSheetEWP()
 		{
-			this._Actividad = default(EntityRef<Actividad>);
-			this._NumeroDocumento = default(EntityRef<NumeroDocumento>);
 			this._Revision = default(EntityRef<Revision>);
 			this._SubEWP = default(EntityRef<SubEWP>);
 			this._TipoDocumento = default(EntityRef<TipoDocumento>);
 			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
+			this._Actividad = default(EntityRef<Actividad>);
+			this._NumeroDocumento = default(EntityRef<NumeroDocumento>);
 			OnCreated();
 		}
 		
@@ -9527,74 +9033,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheetEWP", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
-		public Actividad Actividad
-		{
-			get
-			{
-				return this._Actividad.Entity;
-			}
-			set
-			{
-				Actividad previousValue = this._Actividad.Entity;
-				if (((previousValue != value) 
-							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Actividad.Entity = null;
-						previousValue.TimeSheetEWPs.Remove(this);
-					}
-					this._Actividad.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheetEWPs.Add(this);
-						this._IdActividad = value.IdActividad;
-					}
-					else
-					{
-						this._IdActividad = default(int);
-					}
-					this.SendPropertyChanged("Actividad");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NumeroDocumento_TimeSheetEWP", Storage="_NumeroDocumento", ThisKey="IdNumeroDocumento", OtherKey="IdNumeroDocumento", IsForeignKey=true)]
-		public NumeroDocumento NumeroDocumento
-		{
-			get
-			{
-				return this._NumeroDocumento.Entity;
-			}
-			set
-			{
-				NumeroDocumento previousValue = this._NumeroDocumento.Entity;
-				if (((previousValue != value) 
-							|| (this._NumeroDocumento.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._NumeroDocumento.Entity = null;
-						previousValue.TimeSheetEWPs.Remove(this);
-					}
-					this._NumeroDocumento.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheetEWPs.Add(this);
-						this._IdNumeroDocumento = value.IdNumeroDocumento;
-					}
-					else
-					{
-						this._IdNumeroDocumento = default(int);
-					}
-					this.SendPropertyChanged("NumeroDocumento");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Revision_TimeSheetEWP", Storage="_Revision", ThisKey="IdRevision", OtherKey="IdRevision", IsForeignKey=true)]
 		public Revision Revision
 		{
@@ -9731,105 +9169,71 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoActividad")]
-	public partial class TipoActividad : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdTipoActividad;
-		
-		private string _Nombre;
-		
-		private EntitySet<Actividad> _Actividads;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdTipoActividadChanging(int value);
-    partial void OnIdTipoActividadChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    #endregion
-		
-		public TipoActividad()
-		{
-			this._Actividads = new EntitySet<Actividad>(new Action<Actividad>(this.attach_Actividads), new Action<Actividad>(this.detach_Actividads));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoActividad", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdTipoActividad
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheetEWP", Storage="_Actividad", ThisKey="IdActividad", OtherKey="IdActividad", IsForeignKey=true)]
+		public Actividad Actividad
 		{
 			get
 			{
-				return this._IdTipoActividad;
+				return this._Actividad.Entity;
 			}
 			set
 			{
-				if ((this._IdTipoActividad != value))
+				Actividad previousValue = this._Actividad.Entity;
+				if (((previousValue != value) 
+							|| (this._Actividad.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnIdTipoActividadChanging(value);
 					this.SendPropertyChanging();
-					this._IdTipoActividad = value;
-					this.SendPropertyChanged("IdTipoActividad");
-					this.OnIdTipoActividadChanged();
+					if ((previousValue != null))
+					{
+						this._Actividad.Entity = null;
+						previousValue.TimeSheetEWPs.Remove(this);
+					}
+					this._Actividad.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheetEWPs.Add(this);
+						this._IdActividad = value.IdActividad;
+					}
+					else
+					{
+						this._IdActividad = default(int);
+					}
+					this.SendPropertyChanged("Actividad");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Nombre
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NumeroDocumento_TimeSheetEWP", Storage="_NumeroDocumento", ThisKey="IdNumeroDocumento", OtherKey="IdNumeroDocumento", IsForeignKey=true)]
+		public NumeroDocumento NumeroDocumento
 		{
 			get
 			{
-				return this._Nombre;
+				return this._NumeroDocumento.Entity;
 			}
 			set
 			{
-				if ((this._Nombre != value))
+				NumeroDocumento previousValue = this._NumeroDocumento.Entity;
+				if (((previousValue != value) 
+							|| (this._NumeroDocumento.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnNombreChanging(value);
 					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
+					if ((previousValue != null))
+					{
+						this._NumeroDocumento.Entity = null;
+						previousValue.TimeSheetEWPs.Remove(this);
+					}
+					this._NumeroDocumento.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheetEWPs.Add(this);
+						this._IdNumeroDocumento = value.IdNumeroDocumento;
+					}
+					else
+					{
+						this._IdNumeroDocumento = default(int);
+					}
+					this.SendPropertyChanged("NumeroDocumento");
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoActividad_Actividad", Storage="_Actividads", ThisKey="IdTipoActividad", OtherKey="IdTipoActividad")]
-		public EntitySet<Actividad> Actividads
-		{
-			get
-			{
-				return this._Actividads;
-			}
-			set
-			{
-				this._Actividads.Assign(value);
 			}
 		}
 		
@@ -9851,18 +9255,6 @@ namespace DESSAU.ControlGestion.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Actividads(Actividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.TipoActividad = this;
-		}
-		
-		private void detach_Actividads(Actividad entity)
-		{
-			this.SendPropertyChanging();
-			entity.TipoActividad = null;
 		}
 	}
 	
@@ -9992,6 +9384,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
 		
+		private EntitySet<NumeroDocumento> _NumeroDocumentos;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -10005,6 +9399,7 @@ namespace DESSAU.ControlGestion.Core
 		public TipoDocumento()
 		{
 			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
+			this._NumeroDocumentos = new EntitySet<NumeroDocumento>(new Action<NumeroDocumento>(this.attach_NumeroDocumentos), new Action<NumeroDocumento>(this.detach_NumeroDocumentos));
 			OnCreated();
 		}
 		
@@ -10061,6 +9456,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDocumento_NumeroDocumento", Storage="_NumeroDocumentos", ThisKey="IdTipoDocumento", OtherKey="IdTipoDocumento")]
+		public EntitySet<NumeroDocumento> NumeroDocumentos
+		{
+			get
+			{
+				return this._NumeroDocumentos;
+			}
+			set
+			{
+				this._NumeroDocumentos.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -10088,6 +9496,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoDocumento = null;
+		}
+		
+		private void attach_NumeroDocumentos(NumeroDocumento entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoDocumento = this;
+		}
+		
+		private void detach_NumeroDocumentos(NumeroDocumento entity)
 		{
 			this.SendPropertyChanging();
 			entity.TipoDocumento = null;
@@ -12713,6 +12133,634 @@ namespace DESSAU.ControlGestion.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoActividad")]
+	public partial class TipoActividad : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdTipoActividad;
+		
+		private string _Nombre;
+		
+		private System.Nullable<int> _Orden;
+		
+		private EntitySet<Actividad> _Actividads;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdTipoActividadChanging(int value);
+    partial void OnIdTipoActividadChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnOrdenChanging(System.Nullable<int> value);
+    partial void OnOrdenChanged();
+    #endregion
+		
+		public TipoActividad()
+		{
+			this._Actividads = new EntitySet<Actividad>(new Action<Actividad>(this.attach_Actividads), new Action<Actividad>(this.detach_Actividads));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoActividad", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdTipoActividad
+		{
+			get
+			{
+				return this._IdTipoActividad;
+			}
+			set
+			{
+				if ((this._IdTipoActividad != value))
+				{
+					this.OnIdTipoActividadChanging(value);
+					this.SendPropertyChanging();
+					this._IdTipoActividad = value;
+					this.SendPropertyChanged("IdTipoActividad");
+					this.OnIdTipoActividadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Orden", DbType="Int")]
+		public System.Nullable<int> Orden
+		{
+			get
+			{
+				return this._Orden;
+			}
+			set
+			{
+				if ((this._Orden != value))
+				{
+					this.OnOrdenChanging(value);
+					this.SendPropertyChanging();
+					this._Orden = value;
+					this.SendPropertyChanged("Orden");
+					this.OnOrdenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoActividad_Actividad", Storage="_Actividads", ThisKey="IdTipoActividad", OtherKey="IdTipoActividad")]
+		public EntitySet<Actividad> Actividads
+		{
+			get
+			{
+				return this._Actividads;
+			}
+			set
+			{
+				this._Actividads.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Actividads(Actividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoActividad = this;
+		}
+		
+		private void detach_Actividads(Actividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoActividad = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Actividad")]
+	public partial class Actividad : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdActividad;
+		
+		private int _IdTipoActividad;
+		
+		private string _Nombre;
+		
+		private bool _Vigente;
+		
+		private EntitySet<CategoriaActividad> _CategoriaActividads;
+		
+		private EntitySet<DedicacionActividad> _DedicacionActividads;
+		
+		private EntitySet<TimeSheet> _TimeSheets;
+		
+		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
+		
+		private EntityRef<TipoActividad> _TipoActividad;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdActividadChanging(int value);
+    partial void OnIdActividadChanged();
+    partial void OnIdTipoActividadChanging(int value);
+    partial void OnIdTipoActividadChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnVigenteChanging(bool value);
+    partial void OnVigenteChanged();
+    #endregion
+		
+		public Actividad()
+		{
+			this._CategoriaActividads = new EntitySet<CategoriaActividad>(new Action<CategoriaActividad>(this.attach_CategoriaActividads), new Action<CategoriaActividad>(this.detach_CategoriaActividads));
+			this._DedicacionActividads = new EntitySet<DedicacionActividad>(new Action<DedicacionActividad>(this.attach_DedicacionActividads), new Action<DedicacionActividad>(this.detach_DedicacionActividads));
+			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
+			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
+			this._TipoActividad = default(EntityRef<TipoActividad>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdActividad", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdActividad
+		{
+			get
+			{
+				return this._IdActividad;
+			}
+			set
+			{
+				if ((this._IdActividad != value))
+				{
+					this.OnIdActividadChanging(value);
+					this.SendPropertyChanging();
+					this._IdActividad = value;
+					this.SendPropertyChanged("IdActividad");
+					this.OnIdActividadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoActividad", DbType="Int NOT NULL")]
+		public int IdTipoActividad
+		{
+			get
+			{
+				return this._IdTipoActividad;
+			}
+			set
+			{
+				if ((this._IdTipoActividad != value))
+				{
+					if (this._TipoActividad.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdTipoActividadChanging(value);
+					this.SendPropertyChanging();
+					this._IdTipoActividad = value;
+					this.SendPropertyChanged("IdTipoActividad");
+					this.OnIdTipoActividadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vigente", DbType="Bit NOT NULL")]
+		public bool Vigente
+		{
+			get
+			{
+				return this._Vigente;
+			}
+			set
+			{
+				if ((this._Vigente != value))
+				{
+					this.OnVigenteChanging(value);
+					this.SendPropertyChanging();
+					this._Vigente = value;
+					this.SendPropertyChanged("Vigente");
+					this.OnVigenteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_CategoriaActividad", Storage="_CategoriaActividads", ThisKey="IdActividad", OtherKey="IdActividad")]
+		public EntitySet<CategoriaActividad> CategoriaActividads
+		{
+			get
+			{
+				return this._CategoriaActividads;
+			}
+			set
+			{
+				this._CategoriaActividads.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_DedicacionActividad", Storage="_DedicacionActividads", ThisKey="IdActividad", OtherKey="IdActividad")]
+		public EntitySet<DedicacionActividad> DedicacionActividads
+		{
+			get
+			{
+				return this._DedicacionActividads;
+			}
+			set
+			{
+				this._DedicacionActividads.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheet", Storage="_TimeSheets", ThisKey="IdActividad", OtherKey="IdActividad")]
+		public EntitySet<TimeSheet> TimeSheets
+		{
+			get
+			{
+				return this._TimeSheets;
+			}
+			set
+			{
+				this._TimeSheets.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Actividad_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdActividad", OtherKey="IdActividad")]
+		public EntitySet<TimeSheetEWP> TimeSheetEWPs
+		{
+			get
+			{
+				return this._TimeSheetEWPs;
+			}
+			set
+			{
+				this._TimeSheetEWPs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoActividad_Actividad", Storage="_TipoActividad", ThisKey="IdTipoActividad", OtherKey="IdTipoActividad", IsForeignKey=true)]
+		public TipoActividad TipoActividad
+		{
+			get
+			{
+				return this._TipoActividad.Entity;
+			}
+			set
+			{
+				TipoActividad previousValue = this._TipoActividad.Entity;
+				if (((previousValue != value) 
+							|| (this._TipoActividad.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TipoActividad.Entity = null;
+						previousValue.Actividads.Remove(this);
+					}
+					this._TipoActividad.Entity = value;
+					if ((value != null))
+					{
+						value.Actividads.Add(this);
+						this._IdTipoActividad = value.IdTipoActividad;
+					}
+					else
+					{
+						this._IdTipoActividad = default(int);
+					}
+					this.SendPropertyChanged("TipoActividad");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CategoriaActividads(CategoriaActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = this;
+		}
+		
+		private void detach_CategoriaActividads(CategoriaActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = null;
+		}
+		
+		private void attach_DedicacionActividads(DedicacionActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = this;
+		}
+		
+		private void detach_DedicacionActividads(DedicacionActividad entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = null;
+		}
+		
+		private void attach_TimeSheets(TimeSheet entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = this;
+		}
+		
+		private void detach_TimeSheets(TimeSheet entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = null;
+		}
+		
+		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = this;
+		}
+		
+		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.Actividad = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NumeroDocumento")]
+	public partial class NumeroDocumento : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdNumeroDocumento;
+		
+		private System.Nullable<int> _IdTipoDocumento;
+		
+		private string _Codigo;
+		
+		private string _Nombre;
+		
+		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
+		
+		private EntityRef<TipoDocumento> _TipoDocumento;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdNumeroDocumentoChanging(int value);
+    partial void OnIdNumeroDocumentoChanged();
+    partial void OnIdTipoDocumentoChanging(System.Nullable<int> value);
+    partial void OnIdTipoDocumentoChanged();
+    partial void OnCodigoChanging(string value);
+    partial void OnCodigoChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    #endregion
+		
+		public NumeroDocumento()
+		{
+			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
+			this._TipoDocumento = default(EntityRef<TipoDocumento>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdNumeroDocumento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdNumeroDocumento
+		{
+			get
+			{
+				return this._IdNumeroDocumento;
+			}
+			set
+			{
+				if ((this._IdNumeroDocumento != value))
+				{
+					this.OnIdNumeroDocumentoChanging(value);
+					this.SendPropertyChanging();
+					this._IdNumeroDocumento = value;
+					this.SendPropertyChanged("IdNumeroDocumento");
+					this.OnIdNumeroDocumentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoDocumento", DbType="Int")]
+		public System.Nullable<int> IdTipoDocumento
+		{
+			get
+			{
+				return this._IdTipoDocumento;
+			}
+			set
+			{
+				if ((this._IdTipoDocumento != value))
+				{
+					if (this._TipoDocumento.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdTipoDocumentoChanging(value);
+					this.SendPropertyChanging();
+					this._IdTipoDocumento = value;
+					this.SendPropertyChanged("IdTipoDocumento");
+					this.OnIdTipoDocumentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Codigo", DbType="NVarChar(63) NOT NULL", CanBeNull=false)]
+		public string Codigo
+		{
+			get
+			{
+				return this._Codigo;
+			}
+			set
+			{
+				if ((this._Codigo != value))
+				{
+					this.OnCodigoChanging(value);
+					this.SendPropertyChanging();
+					this._Codigo = value;
+					this.SendPropertyChanged("Codigo");
+					this.OnCodigoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="NumeroDocumento_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdNumeroDocumento", OtherKey="IdNumeroDocumento")]
+		public EntitySet<TimeSheetEWP> TimeSheetEWPs
+		{
+			get
+			{
+				return this._TimeSheetEWPs;
+			}
+			set
+			{
+				this._TimeSheetEWPs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDocumento_NumeroDocumento", Storage="_TipoDocumento", ThisKey="IdTipoDocumento", OtherKey="IdTipoDocumento", IsForeignKey=true)]
+		public TipoDocumento TipoDocumento
+		{
+			get
+			{
+				return this._TipoDocumento.Entity;
+			}
+			set
+			{
+				TipoDocumento previousValue = this._TipoDocumento.Entity;
+				if (((previousValue != value) 
+							|| (this._TipoDocumento.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TipoDocumento.Entity = null;
+						previousValue.NumeroDocumentos.Remove(this);
+					}
+					this._TipoDocumento.Entity = value;
+					if ((value != null))
+					{
+						value.NumeroDocumentos.Add(this);
+						this._IdTipoDocumento = value.IdTipoDocumento;
+					}
+					else
+					{
+						this._IdTipoDocumento = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("TipoDocumento");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.NumeroDocumento = this;
+		}
+		
+		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.NumeroDocumento = null;
 		}
 	}
 	

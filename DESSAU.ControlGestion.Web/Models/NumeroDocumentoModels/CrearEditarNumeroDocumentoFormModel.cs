@@ -12,8 +12,8 @@ namespace DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels
     {
         public int? IdNumeroDocumento { get; set; }
         [Required]
-        [DisplayName("Sub EWP")]
-        public int? IdSubEWP { get; set; }
+        [DisplayName("Tipo Documento")]
+        public int? IdTipoDocumento { get; set; }
         [Required]
         [DisplayName("Código")]
         [StringLength(63, ErrorMessage = "El código debe tener cómo máximo 63 caractéres y 2 caractéres cómo mínimo.", MinimumLength = 2)]

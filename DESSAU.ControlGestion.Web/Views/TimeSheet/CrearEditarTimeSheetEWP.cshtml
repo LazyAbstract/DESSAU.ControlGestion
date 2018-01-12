@@ -158,7 +158,7 @@
                         </div>
                     </td>
                 </tr>          
-                @foreach (var actividad in Model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+                @foreach (var actividad in Model.Actividades.OrderBy(x => x.TipoActividad.Orden).ThenBy(x => x.Nombre))
                 {    
                     string style = actividad.IdTipoActividad == 2 ? style = "background-color:cornflowerblue;" : null;
                     <tr>

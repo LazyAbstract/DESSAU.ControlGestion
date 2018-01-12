@@ -40,7 +40,7 @@
         .Attributes(@class => "table table-striped")
         .Columns(col =>
         {
-            col.For(x => x.IdSubEWP.HasValue ? x.SubEWP.Codigo : "No se ha asignado Sub EWP").Named("Sub EWP");
+            col.For(x => x.TipoDocumento.Nombre).Named("Tipo Documento");
             col.For(x => x.Codigo).Named("Código");
             col.For(x => x.Nombre);
             col.For(x => Html.ButtonIconActionLink("pencil", "Editar Número Documento", "CrearEditarNumeroDocumento", null, null, new { IdNumeroDocumento = x.IdNumeroDocumento }))

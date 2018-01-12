@@ -21,12 +21,14 @@ namespace DESSAU.ControlGestion.Web.Controllers
         {
             ListarCategoriaViewModel model = new ListarCategoriaViewModel();
             model.filtro = filtro;
-            IEnumerable<Categoria> Cats = db.Categorias.OrderBy(x => x.Nombre);
+            IEnumerable<Categoria> Cats = db.Categorias
+                .Where(x => x.Vigente)
+                .OrderBy(x => x.Nombre);
             if (!String.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
                 Cats = db.Categorias
-                    .Where(x => x.Nombre.ToLower().Contains(filtro));
+                    .Where(x => x.Vigente && x.Nombre.ToLower().Contains(filtro));
             }
             model.Categorias= Cats.ToPagedList(pagina ?? 1, 10);
             return View(model);

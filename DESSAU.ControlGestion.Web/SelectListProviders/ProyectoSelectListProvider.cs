@@ -16,6 +16,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide()
         {
             Proyectos = db.Proyectos
+                .Where(x => x.FechaTermino >= DateTime.Today)
                 .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {
@@ -28,6 +29,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         public SelectList Provide(object selected)
         {
             Proyectos = db.Proyectos
+               .Where(x => x.FechaTermino >= DateTime.Today)
                .OrderBy(x => x.Nombre)
                .Select(x => new SelectListItem()
                {

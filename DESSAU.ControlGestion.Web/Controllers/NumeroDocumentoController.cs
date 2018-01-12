@@ -35,7 +35,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 NumeroDocumento numDoc = db.NumeroDocumentos
                     .Single(x => x.IdNumeroDocumento == IdNumeroDocumento);
                 model.Form.IdNumeroDocumento = numDoc.IdNumeroDocumento;
-                model.Form.IdSubEWP = numDoc.IdSubEWP;
+                model.Form.IdTipoDocumento = numDoc.IdTipoDocumento;
                 model.Form.Codigo = numDoc.Codigo;
                 model.Form.Nombre = numDoc.Nombre;
             }
@@ -52,7 +52,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     NumeroDocumento numDoc = db.NumeroDocumentos
                         .Single(x => x.IdNumeroDocumento == Form.IdNumeroDocumento);
-                    numDoc.IdSubEWP = Form.IdSubEWP;
+                    numDoc.IdTipoDocumento = Form.IdTipoDocumento;
                     numDoc.Codigo = Form.Codigo;
                     numDoc.Nombre = Form.Nombre;
                 }
@@ -60,7 +60,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     NumeroDocumento numDoc = new NumeroDocumento()
                     {
-                        IdSubEWP = Form.IdSubEWP,
+                        IdTipoDocumento = Form.IdTipoDocumento,
                         Codigo = Form.Codigo,
                         Nombre = Form.Nombre
                     };
