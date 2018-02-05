@@ -15,5 +15,6 @@ namespace DESSAU.ControlGestion.Web.Models.ReporteModels.ReporteEWPModels
         public string TipoActividad { get; set; }
         public string Actividad { get; set; }
         public int HorasDeclaradas { get; set; }
+        public string NumeroDocumento { get; set; }
     }
 }

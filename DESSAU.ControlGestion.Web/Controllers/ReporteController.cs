@@ -229,7 +229,23 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 .ThenBy(x => x.TipoActividad)
                 .ThenBy(x => x.Actividad);
             model.Total += model.Resultados.Sum(x => x.HorasReportadas);
-            if(Form.IdUsuario.HasValue)
+            if (Form.IdUsuario.HasValue)
+            {
+                model.Profesional = db.Usuarios.Single(x => x.IdUsuario == Form.IdUsuario).ApellidoNombre;
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult VerReporteNumeroDessau(VerReporteEWPFormModel Form)
+        {
+            VerReporteEWPViewModel model = new VerReporteEWPViewModel(Form);
+            model.Resultados = db.fn_ReportePorEWP(Form.FechaDesde, Form.FechaHasta, Form.IdUsuario)
+                .Where(x => x.HorasReportadas > 0 && x.CodigoEWP != "No Aplica")
+                .OrderBy(x => x.Fecha)
+                .ThenBy(x => x.Actividad);
+            model.Total += model.Resultados.Sum(x => x.HorasReportadas);
+            if (Form.IdUsuario.HasValue)
             {
                 model.Profesional = db.Usuarios.Single(x => x.IdUsuario == Form.IdUsuario).ApellidoNombre;
             }
@@ -239,9 +255,10 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public ActionResult ExportarEWPExcel(DateTime? FechaDesde)
         {
             VerReporteEWPViewModel model = new VerReporteEWPViewModel();
-            if (FechaDesde.HasValue) model.Form.FechaDesde = FechaDesde.Value;
+            if (FechaDesde.HasValue) model.Form.FechaDesde = FechaDesde.Value;          
+            
             IEnumerable<fn_ReportePorEWPResult> Exportar = 
-                db.fn_ReportePorEWP(model.Form.FechaDesde, model.Form.FechaHasta, model.Form.IdUsuario)
+                db.fn_ReportePorEWP(new DateTime(2017, 12, 1), DateTime.Today.AddDays(1), model.Form.IdUsuario)
                 .Where(x => x.HorasReportadas > 0)
                 .OrderBy(x => x.Fecha)
                 .ThenBy(x => x.TipoActividad)

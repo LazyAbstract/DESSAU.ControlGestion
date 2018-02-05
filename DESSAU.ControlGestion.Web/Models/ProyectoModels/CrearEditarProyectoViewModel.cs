@@ -22,8 +22,7 @@ namespace DESSAU.ControlGestion.Web.Models.ProyectoModels
             Form.FechaInicio = DateTime.Now;
             Form.FechaFin = DateTime.Now;
             Contratos = cslp.Provide();
-            UsuariosDirectores = new SelectList(db.Usuarios.Where(x => x.IdTipoUsuario == TipoUsuario.DirectorProyecto
-                && !x.Proyectos.Any(y => y.IdProyecto != IdProyecto.GetValueOrDefault(0))), "IdUsuario", "ApellidoNombre");
+            UsuariosDirectores = new SelectList(db.Usuarios, "IdUsuario", "ApellidoNombre");
         }
 
         public CrearEditarProyectoViewModel(CrearEditarProyectoFormModel form, DESSAUControlGestionDataContext db, int? IdProyecto) : this(db, IdProyecto)

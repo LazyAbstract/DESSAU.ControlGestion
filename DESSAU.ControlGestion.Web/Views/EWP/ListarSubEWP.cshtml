@@ -37,9 +37,10 @@
         .Attributes(@class => "table table-striped")
         .Columns(col =>
         {
-            col.For(x => x.Codigo).Named("Código SubEWP");
-            col.For(x => x.EWP.Codigo).Named("EWP");
-            col.For(x => x.EWP.Nombre).Named("");
+            col.For(x => x.EWP.Codigo).Named("Código EWP");
+            col.For(x => x.EWP.Nombre).Named("Nombre EWP");
+            col.For(x => x.Codigo).Named("Código");
+            col.For(x => x.Nombre).Named("Nombre");
             col.For(x => Html.ButtonIconActionLink("pencil", "Editar SubEWP", "CrearEditarSubEWP", null, null, new { IdSubEWP = x.IdSubEWP }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
     </div>

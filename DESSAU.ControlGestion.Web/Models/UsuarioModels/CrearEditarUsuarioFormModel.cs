@@ -12,13 +12,22 @@ namespace DESSAU.ControlGestion.Web.Models.UsuarioModels
     {
         public int? IdUsuario { get; set; }
         [Required]
+        [DisplayName("ODS")]
+        public int IdProyecto { get; set; }
+        [Required]
+        [DisplayName("Disciplina")]
+        public int IdCategoria { get; set; }
+        [Required]
+        [DisplayName("Área")]
+        public int IdArea { get; set; }
+        [Required]
         public string Nombre { get; set; }
         [Required]
         [DisplayName("Apellido Paterno")]
         public string ApellidoPaterno { get; set; }
-        [Required]
-        [DisplayName("Nombre Usuario")]
-        public string Correo { get; set; }
+        //[Required]
+        //[DisplayName("Nombre Usuario")]
+        //public string Correo { get; set; }
         [Required]
         [DisplayName("Correo Electrónico")]
         [EmailAddress(ErrorMessage = "Correo Inválido")]
@@ -35,11 +44,15 @@ namespace DESSAU.ControlGestion.Web.Models.UsuarioModels
             {
                 DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
                     .WithConnectionStringFromConfiguration();
-                if (db.Usuarios.Any(x => x.Nombre == Correo && CreacionUsuario))
+                if (db.Usuarios.Any(x => x.Correo == Contacto && CreacionUsuario))
                 {
                     return "El Correo ingresado ya está en uso como nombre de usuario.";
                 }
-                if (String.IsNullOrEmpty(Correo))
+                if (db.Usuarios.Any(x => x.Contacto == Contacto && CreacionUsuario))
+                {
+                    return "El Correo ingresado ya está en uso como nombre de usuario.";
+                }
+                if (String.IsNullOrEmpty(Contacto))
                 {
                     return "El Correo no puede ser vacío";
                 }

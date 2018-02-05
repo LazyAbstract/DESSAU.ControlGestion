@@ -6,15 +6,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DESSAU.ControlGestion.Web.Models.CategoriaModels
+namespace DESSAU.ControlGestion.Web.Models.RevisionModels
 {
-    public class CrearEditarCategoriaFormModel : IDataErrorInfo
+    public class CrearEditarRevisionFormModel : IDataErrorInfo
     {
-        public int? IdCategoria { get; set; }
+        public int? IdRevision { get; set; }
         [Required]
-        [DisplayName("Nombre Categoría")]
-        [MaxLength(255, ErrorMessage = "El nombre de la Categoría no puede superar los 255 caracteres.")]
-        public string NombreCategoria { get; set; }
+        [DisplayName("Nombre Revisión")]
+        [StringLength(63, ErrorMessage = "El Nombre de la Revión debe tener cómo máximo 63 caractéres y 2 caractéres cómo mínimo.", MinimumLength = 2)]
+        public string Nombre { get; set; }
 
         #region IDataErrorInfo Members
 
@@ -24,9 +24,9 @@ namespace DESSAU.ControlGestion.Web.Models.CategoriaModels
             {
                 DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
                     .WithConnectionStringFromConfiguration();
-                if (db.Categorias.Any(x => x.Nombre == NombreCategoria && x.Vigente) && !IdCategoria.HasValue)
+                if (db.Revisions.Any(x => x.Nombre == Nombre && !IdRevision.HasValue))
                 {
-                    return "El nombre de la Categoría ya está en uso.";
+                    return "El nombre ingresado ya está en uso.";
                 }
                 return string.Empty;
             }

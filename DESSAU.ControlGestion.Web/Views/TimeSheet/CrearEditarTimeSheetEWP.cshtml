@@ -337,6 +337,11 @@
             $('#Form_IdSubEWP').change();
         });
 
+        $(function () {
+            $('#Form_IdNumeroDocumento').CascadingDropDown('#Form_IdEWP', $.url('TimeSheet/getNumeroDocumentoFromEWP'));
+            $('#Form_IdNumeroDocumento').change();
+        });
+
         $("#Form_Fecha").datepicker({
             beforeShowDay: $.datepicker.noWeekends
         });

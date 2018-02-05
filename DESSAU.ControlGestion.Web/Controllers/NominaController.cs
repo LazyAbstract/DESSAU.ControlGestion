@@ -27,7 +27,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
             model.Nominas = Nominas.ToPagedList(pagina ?? 1, 10);
             model.NominaNoAsignados = db.Usuarios
                 .Where(x => !x.UsuarioCategoriaProyectos.Any(y => y.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto
-                    != TipoEstadoUsuarioCategoriaProyecto.NoVigente)).OrderBy(x => x.ApellidoPaterno);
+                    != TipoEstadoUsuarioCategoriaProyecto.NoVigente
+                    ) && x.Vigente).OrderBy(x => x.ApellidoPaterno);
             model.IdProyecto = IdProyecto;
             return View(model);
         }

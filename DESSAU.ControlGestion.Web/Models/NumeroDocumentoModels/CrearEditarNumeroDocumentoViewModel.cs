@@ -13,13 +13,13 @@ namespace DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels
         DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
             .WithConnectionStringFromConfiguration();
         public CrearEditarNumeroDocumentoFormModel Form { get; set; }
-        public IEnumerable<SelectListItem> TipoDocumentos { get; set; }
-        private SubEWPSelectListProvider sewpslp = new SubEWPSelectListProvider();
+        public IEnumerable<SelectListItem> EWPs { get; set; }
+        //private SubEWPSelectListProvider sewpslp = new SubEWPSelectListProvider();
 
         public CrearEditarNumeroDocumentoViewModel()
         {
             Form = new CrearEditarNumeroDocumentoFormModel();
-            TipoDocumentos = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
+            EWPs = new SelectList(db.EWPs, "IdEWP", "Codigo");
         }
 
         public CrearEditarNumeroDocumentoViewModel(CrearEditarNumeroDocumentoFormModel f) : this()

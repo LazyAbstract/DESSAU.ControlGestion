@@ -55,17 +55,26 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 {
                     Categoria Cat = db.Categorias.Single(x => x.IdCategoria == Form.IdCategoria);
                     Cat.Nombre = Form.NombreCategoria;
+                    Cat.Vigente = true;
                     db.SubmitChanges();
                     Mensaje = "La Categoría fue creada exitosamente.";
                     return RedirectToAction("ListarCategoria");
                 }
                 else
                 {
-                    Categoria Cat = new Categoria()
+                    if(db.Categorias.Any(x => x.Nombre == Form.NombreCategoria && !x.Vigente))
                     {
-                        Nombre = Form.NombreCategoria,
-                    };
-                    db.Categorias.InsertOnSubmit(Cat);
+                        Categoria cat2 = db.Categorias.Single(x => x.Nombre == Form.NombreCategoria && !x.Vigente);
+                        cat2.Vigente = true;
+                    }
+                    else
+                    {
+                        Categoria Cat = new Categoria()
+                        {
+                            Nombre = Form.NombreCategoria,
+                        };
+                        db.Categorias.InsertOnSubmit(Cat);
+                    }                    
                     db.SubmitChanges();
                     Mensaje = "La Categoría fue editada exitosamente.";
                     return RedirectToAction("ListarCategoria");

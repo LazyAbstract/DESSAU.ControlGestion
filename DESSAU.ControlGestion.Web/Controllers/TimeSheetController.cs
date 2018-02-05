@@ -161,14 +161,14 @@ namespace DESSAU.ControlGestion.Web.Controllers
                x.EstadoUsuarioCategoriaProyecto.IdTipoEstadoUsuarioCategoriaProyecto !=
                    TipoEstadoUsuarioCategoriaProyecto.NoVigente);
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
-            if (!usuarioCategoriaProyectos.Any()) throw new NotImplementedException();
+            if (!usuarioCategoriaProyectos.Any()) return View("SinAsignacionODS");
             model.Form.IdUsuarioCategoriaProyecto = usuarioCategoriaProyectos.First().IdUsuarioCategoriaProyecto;
             model.Actividades = usuarioCategoriaProyectos.First().Categoria.CategoriaActividads.Select(x => x.Actividad);
             model.TimeSheetsEWP = db.TimeSheetEWPs.Where(x => x.Fecha == model.Form.Fecha
               && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto)
               .OrderByDescending(x => x.Fecha).ThenBy(x => x.SubEWP.Codigo);
 
-            foreach(var actividad in model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+            foreach(var actividad in model.Actividades.OrderBy(x => x.TipoActividad.Orden).ThenBy(x => x.Nombre))
             {
                 int horas = 0;
                 IEnumerable<TimeSheet> timeSheets = db.TimeSheets
@@ -262,8 +262,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             model.Form.IdUsuarioCategoriaProyecto = usuarioCategoriaProyectos.First().IdUsuarioCategoriaProyecto;
             model.Actividades = usuarioCategoriaProyectos.First().Categoria.CategoriaActividads.Select(x => x.Actividad);
-
-            foreach (var actividad in model.Actividades.OrderBy(x => x.IdTipoActividad).ThenBy(x => x.Nombre))
+            
+            foreach (var actividad in model.Actividades.OrderBy(x => x.TipoActividad.Orden).ThenBy(x => x.Nombre))
             {
                 int horas = 0;
                 IEnumerable<TimeSheet> timeSheets = db.TimeSheets
@@ -297,6 +297,23 @@ namespace DESSAU.ControlGestion.Web.Controllers
             int IdEWP = Int16.Parse(formValue);
             SelectList result = null;
             result = new SelectList(db.SubEWPs.Where(x => x.IdEWP == IdEWP), "IdSubEWP", "Codigo");
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getNumeroDocumentoFromEWP(FormCollection formCollection)
+        {
+            var formValue = formCollection.GetValues(0)[0];
+            int IdEWP = Int16.Parse(formValue);
+            SelectList result = null;
+            if(db.NumeroDocumentos.Where(x => x.IdEWP == IdEWP).Any())
+            {
+                result = new SelectList(db.NumeroDocumentos.Where(x => x.IdEWP == IdEWP), "IdNumeroDocumento", "Codigo");
+            }
+            else
+            {
+                result = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
+            }
+            
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

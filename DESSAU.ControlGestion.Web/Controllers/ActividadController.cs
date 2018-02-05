@@ -66,17 +66,18 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     {
                         Nombre = Form.NombreActividad,
                         IdTipoActividad = Form.IdTipoActividad,
+                        Vigente = true
                     };
 
                     db.Actividads.InsertOnSubmit(act);
                     db.SubmitChanges();
 
-                    foreach (var IdCategoria in Form.IdCategorias)
+                    foreach (var idCategoria in Form.IdCategorias)
                     {
                         CategoriaActividad catAct = new CategoriaActividad()
                         {
                             IdActividad = act.IdActividad,
-                            IdCategoria = IdCategoria,
+                            IdCategoria = idCategoria,
                             Vigente = true
                         };
 

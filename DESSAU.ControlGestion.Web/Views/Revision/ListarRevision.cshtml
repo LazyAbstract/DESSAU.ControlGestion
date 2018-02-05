@@ -1,4 +1,8 @@
-﻿@model DESSAU.ControlGestion.Web.Models.NumeroDocumentoModels.ListarNumeroDocumentoViewModel
+﻿@model DESSAU.ControlGestion.Web.Models.RevisionModels.ListarRevisionViewModel
+
+@{
+    ViewBag.Title = "ListarRevision";
+}
 
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -10,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Listado de Documentos</a>
+            <a class="navbar-brand" href="#">Listado de Revisiones</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -21,35 +25,24 @@
                 </div>
                 <button type="submit" class="btn btn-default">Buscar</button>
             </form>
-            @if (User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Agregar", "CrearEditarNumeroDocumento", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
-            }            
+            @Html.ActionLink("Agregar", "CrearEditarRevision", null, new { @class = "btn btn-primary navbar-btn navbar-right" })
         </div>
     </div>
 </nav>
 
 <div class="row">
     <div class="col-md-12">
-        @Html.PagedListPager(Model.NumeroDocumentos, page => Url.Action("ListarNumeroDocumento", new
+        @Html.PagedListPager(Model.Revisiones, page => Url.Action("ListarRevision", new
    {
        pagina = page,
        filtro = Model.filtro
    }))
-        @(Html.Grid(Model.NumeroDocumentos)
+        @(Html.Grid(Model.Revisiones)
         .Attributes(@class => "table table-striped")
         .Columns(col =>
         {
-            col.For(x => x.IdEWP.HasValue ? x.EWP.Codigo : "S/I").Named("EWP");
-            col.For(x => x.IdEWP.HasValue ? x.EWP.Nombre : "S/I").Named("");
-            col.For(x => x.Codigo).Named("Código");
             col.For(x => x.Nombre);
-            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Número Documento", "CrearEditarNumeroDocumento", null, null, new { IdNumeroDocumento = x.IdNumeroDocumento }))
-                .CellCondition(x => User.IsInRole("Admin"));
-            //col.For(x => x.Vigente ? Html.ButtonIconActionLink("remove", "Dar de Baja Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario })
-            //    : Html.ButtonIconActionLink("ok", "Dar de Alta Usuario", "CambiarEstadoUsuario", null, null, new { IdUsuario = x.IdUsuario }));
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Revisión", "CrearEditarRevision", null, null, new { IdRevision = x.IdRevision }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
     </div>
 </div>
-
-

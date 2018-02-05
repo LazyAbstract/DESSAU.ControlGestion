@@ -131,6 +131,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         }
                     }
 
+                    //  aqui deberá poder cambiar a un tipo de disciplina (categoria) o ods (proyecto) pero tengo un redundcia 
+                    //  con una tabla disciplina que no debería utilizar y quedarme sólo con la ctegoria
+
                     db.SubmitChanges();
                     Mensaje = "El usuario fue editado exitosamente";
                     return RedirectToAction("ListarUsuario");
@@ -138,7 +141,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 else
                 {
                     string Password = ContrasenaHelper.getContrasena(Form.Nombre, Form.ApellidoPaterno);
-                    var user = new ApplicationUser { UserName = Form.Correo, Email = Form.Correo };
+                    var user = new ApplicationUser { UserName = Form.Contacto, Email = Form.Contacto };
                     var result = await UserManager.CreateAsync(user, Password);
                     if (result.Succeeded)
                     {
@@ -151,18 +154,42 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         Usuario _user = new Usuario()
                         {
                             IdTipoUsuario = Form.IdTipoUsuario,
-                            Correo = Form.Correo,
+                            Correo = Form.Contacto,
                             Nombre = Form.Nombre,
                             ApellidoPaterno = Form.ApellidoPaterno,
                             Contacto = Form.Contacto,
                             Vigente = true,
                         };
-
                         db.Usuarios.InsertOnSubmit(_user);
                         db.SubmitChanges();
-                        Mensaje = "El Usuario fue creado exitosamente.";
+
+                        var discliplina = db.Categorias.Single(x => x.IdCategoria == Form.IdCategoria).Nombre;
+                        var idDiciplina = db.Disciplinas.Single(x => x.Nombre == discliplina).IdDisciplina;
+
+                        UsuarioAreaDisciplina uad = new UsuarioAreaDisciplina()
+                        {
+                            IdArea = Form.IdArea,
+                            IdDisciplina = idDiciplina,
+                            IdUsuario = _user.IdUsuario
+                        };
+                        db.UsuarioAreaDisciplinas.InsertOnSubmit(uad);
+
+                        UsuarioCategoriaProyecto ucp = new UsuarioCategoriaProyecto()
+                        {
+                            IdUsuario = _user.IdUsuario,
+                            IdCategoria = Form.IdCategoria,
+                            IdProyecto = Form.IdProyecto
+                        };
+                        db.UsuarioCategoriaProyectos.InsertOnSubmit(ucp);
+
+                        db.SubmitChanges();
+                        TempData["Mensaje"] = "El Usuario fue creado exitosamente.";
                     }
-                    //AddErrors(result);
+                    else
+                    {
+                        TempData["Mensaje"] = "Hubo un error creando el ususario. Es probable que el nombre de usuario ya esté en uso.";
+                    }
+                    
                     return RedirectToAction("ListarUsuario");
                 }
             }

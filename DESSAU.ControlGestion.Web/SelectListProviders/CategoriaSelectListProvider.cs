@@ -17,6 +17,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         {
             Categorias = db.Categorias
                 .OrderBy(x => x.Nombre)
+                .Where(x => x.Vigente)
                 .Select(x => new SelectListItem()
                 {
                     Value = x.IdCategoria.ToString(),
@@ -29,6 +30,7 @@ namespace DESSAU.ControlGestion.Web.SelectListProviders
         {
             Categorias = db.Categorias
                 .OrderBy(x => x.Nombre)
+                .Where(x => x.Vigente)
                 .Select(x => new SelectListItem()
                 {
                     Value = x.IdCategoria.ToString(),

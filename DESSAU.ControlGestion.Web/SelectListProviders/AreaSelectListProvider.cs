@@ -7,34 +7,34 @@ using System.Web.Mvc;
 
 namespace DESSAU.ControlGestion.Web.SelectListProviders
 {
-    public class ContratoSelectListProvider : ISelectListProvider
+    public class AreaSelectListProvider : ISelectListProvider
     {
         DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
-               .WithConnectionStringFromConfiguration();
-        private IEnumerable<SelectListItem> Contratos;
+              .WithConnectionStringFromConfiguration();
+        private IEnumerable<SelectListItem> Areas;
 
         public SelectList Provide()
         {
-            Contratos = db.Contratos.Where(x => x.Vigente)
+            Areas = db.Areas
                 .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {
-                    Value = x.IdContrato.ToString(),
+                    Value = x.IdArea.ToString(),
                     Text = x.Nombre
                 });
-            return new SelectList(Contratos, "Value", "Text");
+            return new SelectList(Areas, "Value", "Text");
         }
 
         public SelectList Provide(object selected)
         {
-            Contratos = db.Contratos.Where(x => x.Vigente)
+            Areas = db.Areas
                 .OrderBy(x => x.Nombre)
                 .Select(x => new SelectListItem()
                 {
-                    Value = x.IdContrato.ToString(),
+                    Value = x.IdArea.ToString(),
                     Text = x.Nombre
                 });
-            return new SelectList(Contratos, "Value", "Text", selected);
+            return new SelectList(Areas, "Value", "Text", selected);
         }
     }
 }

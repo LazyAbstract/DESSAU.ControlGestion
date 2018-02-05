@@ -1,5 +1,9 @@
 ﻿@model DESSAU.ControlGestion.Web.Models.ReporteModels.ReporteEWPModels.VerReporteEWPViewModel
 
+@{
+    ViewBag.Title = "VerReporteNumeroDessau";
+}
+
 
 <div class="row">
     <div class="col-md-12">
@@ -54,13 +58,12 @@
             .Attributes(@class => "table table-striped", id => "myTable")
             .Columns(col =>
             {
+                col.For(x => x.NumeroDocumento);
                 col.For(x => x.Fecha.ToShortDateString()).Named("Fecha");
                 col.For(x => x.EWP);
                 col.For(x => x.CodigoEWP);
                 col.For(x => x.CodigoSubEWP);
                 col.For(x => x.Actividad);
-                col.For(x => x.TipoActividad);
-                col.For(x => x.NumeroDocumento);
                 col.For(x => x.HorasReportadas);
 
             }).Empty("No se han encontrado registros para el periodo seleccionado."))
@@ -73,12 +76,13 @@
         <div class="col-md-12">
             @Html.ActionLink("Exportar Reporte", "ExportarEWPExcel", new { FechaDesde = Model.Form.FechaDesde.ToShortDateString() }, new { @class = "btn btn-success" })
         </div>
-    </div>   
+    </div>
 }
 
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
     $('#myTable tr:last').after('<tr class="gridrow success"><td colspan="6">Total</td><td>' + @Model.Total.ToString() + '</td></tr>');
     </script>
 
 }
+

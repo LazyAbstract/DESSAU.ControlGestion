@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DESSAU_ControlGestion" Class="DESSAUControlGestionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=DESSAU_ControlGestion;Integrated Security=True" SettingsObjectName="DESSAU.ControlGestion.Core.Properties.Settings" SettingsPropertyName="DESSAU_ControlGestionConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.SubEWP" Member="SubEWPs">
-    <Type Name="SubEWP">
-      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
-      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Area" Member="Areas">
     <Type Name="Area">
       <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -265,6 +256,7 @@
       <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="EWP_SubEWP" Member="SubEWPs" ThisKey="IdEWP" OtherKey="IdEWP" Type="SubEWP" />
+      <Association Name="EWP_NumeroDocumento" Member="NumeroDocumentos" ThisKey="IdEWP" OtherKey="IdEWP" Type="NumeroDocumento" />
     </Type>
   </Table>
   <Table Name="dbo.Notificacion" Member="Notificacions">
@@ -397,10 +389,10 @@
       <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="HorasReportadas" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Revision_TimeSheetEWP" Member="Revision" ThisKey="IdRevision" OtherKey="IdRevision" Type="Revision" IsForeignKey="true" />
-      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
       <Association Name="TipoDocumento_TimeSheetEWP" Member="TipoDocumento" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TipoDocumento" IsForeignKey="true" />
       <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
       <Association Name="Actividad_TimeSheetEWP" Member="Actividad" ThisKey="IdActividad" OtherKey="IdActividad" Type="Actividad" IsForeignKey="true" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="SubEWP" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="SubEWP" IsForeignKey="true" />
       <Association Name="NumeroDocumento_TimeSheetEWP" Member="NumeroDocumento" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="NumeroDocumento" IsForeignKey="true" />
     </Type>
   </Table>
@@ -416,7 +408,6 @@
       <Column Name="IdTipoDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="TipoDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TimeSheetEWP" />
-      <Association Name="TipoDocumento_NumeroDocumento" Member="NumeroDocumentos" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="NumeroDocumento" />
     </Type>
   </Table>
   <Table Name="dbo.TipoEstadoEvaluacion" Member="TipoEstadoEvaluacions">
@@ -564,14 +555,24 @@
       <Association Name="TipoActividad_Actividad" Member="TipoActividad" ThisKey="IdTipoActividad" OtherKey="IdTipoActividad" Type="TipoActividad" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.SubEWP" Member="SubEWPs">
+    <Type Name="SubEWP">
+      <Column Name="IdSubEWP" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdEWP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Codigo" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="SubEWP_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdSubEWP" OtherKey="IdSubEWP" Type="TimeSheetEWP" />
+      <Association Name="EWP_SubEWP" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.NumeroDocumento" Member="NumeroDocumentos">
     <Type Name="NumeroDocumento">
       <Column Name="IdNumeroDocumento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdTipoDocumento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdEWP" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Codigo" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
-      <Association Name="TipoDocumento_NumeroDocumento" Member="TipoDocumento" ThisKey="IdTipoDocumento" OtherKey="IdTipoDocumento" Type="TipoDocumento" IsForeignKey="true" />
+      <Association Name="EWP_NumeroDocumento" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_GetDiasPendientesDeclaracionEWPByIdUsuario" Method="sp_GetDiasPendientesDeclaracionEWPByIdUsuario">
@@ -584,21 +585,6 @@
     <Parameter Name="mes" Type="System.Int32" DbType="Int" />
     <Parameter Name="ano" Type="System.Int32" DbType="Int" />
     <Return Type="object" />
-  </Function>
-  <Function Name="dbo.fn_ReportePorEWP" Method="fn_ReportePorEWP" IsComposable="true">
-    <Parameter Name="FechaDesde" Parameter="fechaDesde" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="FechaHasta" Parameter="fechaHasta" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <ElementType Name="fn_ReportePorEWPResult">
-      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CodigoSubEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="EWP" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="CodigoEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="TipoActividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
   </Function>
   <Function Name="dbo.sp_GetDiasPendientesPlanificacionByIdUsuario" Method="sp_GetDiasPendientesPlanificacionByIdUsuario">
     <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
@@ -683,6 +669,22 @@
     <Parameter Name="IdProyecto" Parameter="idProyecto" Type="System.Int32" DbType="Int" />
     <ElementType Name="fn_PromedioEvaluacionResult">
       <Column Name="Promedio" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_ReportePorEWP" Method="fn_ReportePorEWP" IsComposable="true">
+    <Parameter Name="FechaDesde" Parameter="fechaDesde" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="FechaHasta" Parameter="fechaHasta" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_ReportePorEWPResult">
+      <Column Name="HorasReportadas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoSubEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="EWP" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoEWP" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Actividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TipoActividad" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NumeroDocumento" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

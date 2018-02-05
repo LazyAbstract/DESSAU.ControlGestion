@@ -30,9 +30,6 @@ namespace DESSAU.ControlGestion.Core
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertSubEWP(SubEWP instance);
-    partial void UpdateSubEWP(SubEWP instance);
-    partial void DeleteSubEWP(SubEWP instance);
     partial void InsertArea(Area instance);
     partial void UpdateArea(Area instance);
     partial void DeleteArea(Area instance);
@@ -189,6 +186,9 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertActividad(Actividad instance);
     partial void UpdateActividad(Actividad instance);
     partial void DeleteActividad(Actividad instance);
+    partial void InsertSubEWP(SubEWP instance);
+    partial void UpdateSubEWP(SubEWP instance);
+    partial void DeleteSubEWP(SubEWP instance);
     partial void InsertNumeroDocumento(NumeroDocumento instance);
     partial void UpdateNumeroDocumento(NumeroDocumento instance);
     partial void DeleteNumeroDocumento(NumeroDocumento instance);
@@ -222,14 +222,6 @@ namespace DESSAU.ControlGestion.Core
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<SubEWP> SubEWPs
-		{
-			get
-			{
-				return this.GetTable<SubEWP>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Area> Areas
@@ -648,6 +640,14 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		public System.Data.Linq.Table<SubEWP> SubEWPs
+		{
+			get
+			{
+				return this.GetTable<SubEWP>();
+			}
+		}
+		
 		public System.Data.Linq.Table<NumeroDocumento> NumeroDocumentos
 		{
 			get
@@ -667,12 +667,6 @@ namespace DESSAU.ControlGestion.Core
 		public object sp_OrchrestraSP([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> mes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> ano)
 		{
 			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano).ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_ReportePorEWP", IsComposable=true)]
-		public IQueryable<fn_ReportePorEWPResult> fn_ReportePorEWP([global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaDesde", DbType="Date")] System.Nullable<System.DateTime> fechaDesde, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaHasta", DbType="Date")] System.Nullable<System.DateTime> fechaHasta, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
-		{
-			return this.CreateMethodCallQuery<fn_ReportePorEWPResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fechaDesde, fechaHasta, idUsuario);
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_GetDiasPendientesPlanificacionByIdUsuario")]
@@ -724,184 +718,11 @@ namespace DESSAU.ControlGestion.Core
 		{
 			return this.CreateMethodCallQuery<fn_PromedioEvaluacionResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), mes, ano, idUsuario, idProyecto);
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SubEWP")]
-	public partial class SubEWP : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdSubEWP;
-		
-		private int _IdEWP;
-		
-		private string _Codigo;
-		
-		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
-		
-		private EntityRef<EWP> _EWP;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdSubEWPChanging(int value);
-    partial void OnIdSubEWPChanged();
-    partial void OnIdEWPChanging(int value);
-    partial void OnIdEWPChanged();
-    partial void OnCodigoChanging(string value);
-    partial void OnCodigoChanged();
-    #endregion
-		
-		public SubEWP()
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.fn_ReportePorEWP", IsComposable=true)]
+		public IQueryable<fn_ReportePorEWPResult> fn_ReportePorEWP([global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaDesde", DbType="Date")] System.Nullable<System.DateTime> fechaDesde, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="FechaHasta", DbType="Date")] System.Nullable<System.DateTime> fechaHasta, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
 		{
-			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._EWP = default(EntityRef<EWP>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdSubEWP", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdSubEWP
-		{
-			get
-			{
-				return this._IdSubEWP;
-			}
-			set
-			{
-				if ((this._IdSubEWP != value))
-				{
-					this.OnIdSubEWPChanging(value);
-					this.SendPropertyChanging();
-					this._IdSubEWP = value;
-					this.SendPropertyChanged("IdSubEWP");
-					this.OnIdSubEWPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEWP", DbType="Int NOT NULL")]
-		public int IdEWP
-		{
-			get
-			{
-				return this._IdEWP;
-			}
-			set
-			{
-				if ((this._IdEWP != value))
-				{
-					if (this._EWP.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdEWPChanging(value);
-					this.SendPropertyChanging();
-					this._IdEWP = value;
-					this.SendPropertyChanged("IdEWP");
-					this.OnIdEWPChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Codigo", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
-		public string Codigo
-		{
-			get
-			{
-				return this._Codigo;
-			}
-			set
-			{
-				if ((this._Codigo != value))
-				{
-					this.OnCodigoChanging(value);
-					this.SendPropertyChanging();
-					this._Codigo = value;
-					this.SendPropertyChanged("Codigo");
-					this.OnCodigoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdSubEWP", OtherKey="IdSubEWP")]
-		public EntitySet<TimeSheetEWP> TimeSheetEWPs
-		{
-			get
-			{
-				return this._TimeSheetEWPs;
-			}
-			set
-			{
-				this._TimeSheetEWPs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EWP_SubEWP", Storage="_EWP", ThisKey="IdEWP", OtherKey="IdEWP", IsForeignKey=true)]
-		public EWP EWP
-		{
-			get
-			{
-				return this._EWP.Entity;
-			}
-			set
-			{
-				EWP previousValue = this._EWP.Entity;
-				if (((previousValue != value) 
-							|| (this._EWP.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EWP.Entity = null;
-						previousValue.SubEWPs.Remove(this);
-					}
-					this._EWP.Entity = value;
-					if ((value != null))
-					{
-						value.SubEWPs.Add(this);
-						this._IdEWP = value.IdEWP;
-					}
-					else
-					{
-						this._IdEWP = default(int);
-					}
-					this.SendPropertyChanged("EWP");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.SubEWP = this;
-		}
-		
-		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.SubEWP = null;
+			return this.CreateMethodCallQuery<fn_ReportePorEWPResult>(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fechaDesde, fechaHasta, idUsuario);
 		}
 	}
 	
@@ -6145,6 +5966,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<SubEWP> _SubEWPs;
 		
+		private EntitySet<NumeroDocumento> _NumeroDocumentos;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -6160,6 +5983,7 @@ namespace DESSAU.ControlGestion.Core
 		public EWP()
 		{
 			this._SubEWPs = new EntitySet<SubEWP>(new Action<SubEWP>(this.attach_SubEWPs), new Action<SubEWP>(this.detach_SubEWPs));
+			this._NumeroDocumentos = new EntitySet<NumeroDocumento>(new Action<NumeroDocumento>(this.attach_NumeroDocumentos), new Action<NumeroDocumento>(this.detach_NumeroDocumentos));
 			OnCreated();
 		}
 		
@@ -6236,6 +6060,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EWP_NumeroDocumento", Storage="_NumeroDocumentos", ThisKey="IdEWP", OtherKey="IdEWP")]
+		public EntitySet<NumeroDocumento> NumeroDocumentos
+		{
+			get
+			{
+				return this._NumeroDocumentos;
+			}
+			set
+			{
+				this._NumeroDocumentos.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6263,6 +6100,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_SubEWPs(SubEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.EWP = null;
+		}
+		
+		private void attach_NumeroDocumentos(NumeroDocumento entity)
+		{
+			this.SendPropertyChanging();
+			entity.EWP = this;
+		}
+		
+		private void detach_NumeroDocumentos(NumeroDocumento entity)
 		{
 			this.SendPropertyChanging();
 			entity.EWP = null;
@@ -8784,13 +8633,13 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntityRef<Revision> _Revision;
 		
-		private EntityRef<SubEWP> _SubEWP;
-		
 		private EntityRef<TipoDocumento> _TipoDocumento;
 		
 		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
 		
 		private EntityRef<Actividad> _Actividad;
+		
+		private EntityRef<SubEWP> _SubEWP;
 		
 		private EntityRef<NumeroDocumento> _NumeroDocumento;
 		
@@ -8821,10 +8670,10 @@ namespace DESSAU.ControlGestion.Core
 		public TimeSheetEWP()
 		{
 			this._Revision = default(EntityRef<Revision>);
-			this._SubEWP = default(EntityRef<SubEWP>);
 			this._TipoDocumento = default(EntityRef<TipoDocumento>);
 			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
 			this._Actividad = default(EntityRef<Actividad>);
+			this._SubEWP = default(EntityRef<SubEWP>);
 			this._NumeroDocumento = default(EntityRef<NumeroDocumento>);
 			OnCreated();
 		}
@@ -9067,40 +8916,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_TimeSheetEWP", Storage="_SubEWP", ThisKey="IdSubEWP", OtherKey="IdSubEWP", IsForeignKey=true)]
-		public SubEWP SubEWP
-		{
-			get
-			{
-				return this._SubEWP.Entity;
-			}
-			set
-			{
-				SubEWP previousValue = this._SubEWP.Entity;
-				if (((previousValue != value) 
-							|| (this._SubEWP.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._SubEWP.Entity = null;
-						previousValue.TimeSheetEWPs.Remove(this);
-					}
-					this._SubEWP.Entity = value;
-					if ((value != null))
-					{
-						value.TimeSheetEWPs.Add(this);
-						this._IdSubEWP = value.IdSubEWP;
-					}
-					else
-					{
-						this._IdSubEWP = default(int);
-					}
-					this.SendPropertyChanged("SubEWP");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDocumento_TimeSheetEWP", Storage="_TipoDocumento", ThisKey="IdTipoDocumento", OtherKey="IdTipoDocumento", IsForeignKey=true)]
 		public TipoDocumento TipoDocumento
 		{
@@ -9199,6 +9014,40 @@ namespace DESSAU.ControlGestion.Core
 						this._IdActividad = default(int);
 					}
 					this.SendPropertyChanged("Actividad");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_TimeSheetEWP", Storage="_SubEWP", ThisKey="IdSubEWP", OtherKey="IdSubEWP", IsForeignKey=true)]
+		public SubEWP SubEWP
+		{
+			get
+			{
+				return this._SubEWP.Entity;
+			}
+			set
+			{
+				SubEWP previousValue = this._SubEWP.Entity;
+				if (((previousValue != value) 
+							|| (this._SubEWP.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SubEWP.Entity = null;
+						previousValue.TimeSheetEWPs.Remove(this);
+					}
+					this._SubEWP.Entity = value;
+					if ((value != null))
+					{
+						value.TimeSheetEWPs.Add(this);
+						this._IdSubEWP = value.IdSubEWP;
+					}
+					else
+					{
+						this._IdSubEWP = default(int);
+					}
+					this.SendPropertyChanged("SubEWP");
 				}
 			}
 		}
@@ -9384,8 +9233,6 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
 		
-		private EntitySet<NumeroDocumento> _NumeroDocumentos;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -9399,7 +9246,6 @@ namespace DESSAU.ControlGestion.Core
 		public TipoDocumento()
 		{
 			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._NumeroDocumentos = new EntitySet<NumeroDocumento>(new Action<NumeroDocumento>(this.attach_NumeroDocumentos), new Action<NumeroDocumento>(this.detach_NumeroDocumentos));
 			OnCreated();
 		}
 		
@@ -9456,19 +9302,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDocumento_NumeroDocumento", Storage="_NumeroDocumentos", ThisKey="IdTipoDocumento", OtherKey="IdTipoDocumento")]
-		public EntitySet<NumeroDocumento> NumeroDocumentos
-		{
-			get
-			{
-				return this._NumeroDocumentos;
-			}
-			set
-			{
-				this._NumeroDocumentos.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -9496,18 +9329,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.TipoDocumento = null;
-		}
-		
-		private void attach_NumeroDocumentos(NumeroDocumento entity)
-		{
-			this.SendPropertyChanging();
-			entity.TipoDocumento = this;
-		}
-		
-		private void detach_NumeroDocumentos(NumeroDocumento entity)
 		{
 			this.SendPropertyChanging();
 			entity.TipoDocumento = null;
@@ -12561,6 +12382,209 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SubEWP")]
+	public partial class SubEWP : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdSubEWP;
+		
+		private int _IdEWP;
+		
+		private string _Codigo;
+		
+		private string _Nombre;
+		
+		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
+		
+		private EntityRef<EWP> _EWP;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdSubEWPChanging(int value);
+    partial void OnIdSubEWPChanged();
+    partial void OnIdEWPChanging(int value);
+    partial void OnIdEWPChanged();
+    partial void OnCodigoChanging(string value);
+    partial void OnCodigoChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    #endregion
+		
+		public SubEWP()
+		{
+			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
+			this._EWP = default(EntityRef<EWP>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdSubEWP", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdSubEWP
+		{
+			get
+			{
+				return this._IdSubEWP;
+			}
+			set
+			{
+				if ((this._IdSubEWP != value))
+				{
+					this.OnIdSubEWPChanging(value);
+					this.SendPropertyChanging();
+					this._IdSubEWP = value;
+					this.SendPropertyChanged("IdSubEWP");
+					this.OnIdSubEWPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEWP", DbType="Int NOT NULL")]
+		public int IdEWP
+		{
+			get
+			{
+				return this._IdEWP;
+			}
+			set
+			{
+				if ((this._IdEWP != value))
+				{
+					if (this._EWP.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdEWPChanging(value);
+					this.SendPropertyChanging();
+					this._IdEWP = value;
+					this.SendPropertyChanged("IdEWP");
+					this.OnIdEWPChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Codigo", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string Codigo
+		{
+			get
+			{
+				return this._Codigo;
+			}
+			set
+			{
+				if ((this._Codigo != value))
+				{
+					this.OnCodigoChanging(value);
+					this.SendPropertyChanging();
+					this._Codigo = value;
+					this.SendPropertyChanged("Codigo");
+					this.OnCodigoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SubEWP_TimeSheetEWP", Storage="_TimeSheetEWPs", ThisKey="IdSubEWP", OtherKey="IdSubEWP")]
+		public EntitySet<TimeSheetEWP> TimeSheetEWPs
+		{
+			get
+			{
+				return this._TimeSheetEWPs;
+			}
+			set
+			{
+				this._TimeSheetEWPs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EWP_SubEWP", Storage="_EWP", ThisKey="IdEWP", OtherKey="IdEWP", IsForeignKey=true)]
+		public EWP EWP
+		{
+			get
+			{
+				return this._EWP.Entity;
+			}
+			set
+			{
+				EWP previousValue = this._EWP.Entity;
+				if (((previousValue != value) 
+							|| (this._EWP.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EWP.Entity = null;
+						previousValue.SubEWPs.Remove(this);
+					}
+					this._EWP.Entity = value;
+					if ((value != null))
+					{
+						value.SubEWPs.Add(this);
+						this._IdEWP = value.IdEWP;
+					}
+					else
+					{
+						this._IdEWP = default(int);
+					}
+					this.SendPropertyChanged("EWP");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.SubEWP = this;
+		}
+		
+		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
+		{
+			this.SendPropertyChanging();
+			entity.SubEWP = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NumeroDocumento")]
 	public partial class NumeroDocumento : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -12569,7 +12593,7 @@ namespace DESSAU.ControlGestion.Core
 		
 		private int _IdNumeroDocumento;
 		
-		private System.Nullable<int> _IdTipoDocumento;
+		private System.Nullable<int> _IdEWP;
 		
 		private string _Codigo;
 		
@@ -12577,7 +12601,7 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
 		
-		private EntityRef<TipoDocumento> _TipoDocumento;
+		private EntityRef<EWP> _EWP;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12585,8 +12609,8 @@ namespace DESSAU.ControlGestion.Core
     partial void OnCreated();
     partial void OnIdNumeroDocumentoChanging(int value);
     partial void OnIdNumeroDocumentoChanged();
-    partial void OnIdTipoDocumentoChanging(System.Nullable<int> value);
-    partial void OnIdTipoDocumentoChanged();
+    partial void OnIdEWPChanging(System.Nullable<int> value);
+    partial void OnIdEWPChanged();
     partial void OnCodigoChanging(string value);
     partial void OnCodigoChanged();
     partial void OnNombreChanging(string value);
@@ -12596,7 +12620,7 @@ namespace DESSAU.ControlGestion.Core
 		public NumeroDocumento()
 		{
 			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._TipoDocumento = default(EntityRef<TipoDocumento>);
+			this._EWP = default(EntityRef<EWP>);
 			OnCreated();
 		}
 		
@@ -12620,26 +12644,26 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdTipoDocumento", DbType="Int")]
-		public System.Nullable<int> IdTipoDocumento
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdEWP", DbType="Int")]
+		public System.Nullable<int> IdEWP
 		{
 			get
 			{
-				return this._IdTipoDocumento;
+				return this._IdEWP;
 			}
 			set
 			{
-				if ((this._IdTipoDocumento != value))
+				if ((this._IdEWP != value))
 				{
-					if (this._TipoDocumento.HasLoadedOrAssignedValue)
+					if (this._EWP.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnIdTipoDocumentoChanging(value);
+					this.OnIdEWPChanging(value);
 					this.SendPropertyChanging();
-					this._IdTipoDocumento = value;
-					this.SendPropertyChanged("IdTipoDocumento");
-					this.OnIdTipoDocumentoChanged();
+					this._IdEWP = value;
+					this.SendPropertyChanged("IdEWP");
+					this.OnIdEWPChanged();
 				}
 			}
 		}
@@ -12697,36 +12721,36 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDocumento_NumeroDocumento", Storage="_TipoDocumento", ThisKey="IdTipoDocumento", OtherKey="IdTipoDocumento", IsForeignKey=true)]
-		public TipoDocumento TipoDocumento
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EWP_NumeroDocumento", Storage="_EWP", ThisKey="IdEWP", OtherKey="IdEWP", IsForeignKey=true)]
+		public EWP EWP
 		{
 			get
 			{
-				return this._TipoDocumento.Entity;
+				return this._EWP.Entity;
 			}
 			set
 			{
-				TipoDocumento previousValue = this._TipoDocumento.Entity;
+				EWP previousValue = this._EWP.Entity;
 				if (((previousValue != value) 
-							|| (this._TipoDocumento.HasLoadedOrAssignedValue == false)))
+							|| (this._EWP.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._TipoDocumento.Entity = null;
+						this._EWP.Entity = null;
 						previousValue.NumeroDocumentos.Remove(this);
 					}
-					this._TipoDocumento.Entity = value;
+					this._EWP.Entity = value;
 					if ((value != null))
 					{
 						value.NumeroDocumentos.Add(this);
-						this._IdTipoDocumento = value.IdTipoDocumento;
+						this._IdEWP = value.IdEWP;
 					}
 					else
 					{
-						this._IdTipoDocumento = default(Nullable<int>);
+						this._IdEWP = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("TipoDocumento");
+					this.SendPropertyChanged("EWP");
 				}
 			}
 		}
@@ -12785,158 +12809,6 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._Fecha != value))
 				{
 					this._Fecha = value;
-				}
-			}
-		}
-	}
-	
-	public partial class fn_ReportePorEWPResult
-	{
-		
-		private int _HorasReportadas;
-		
-		private string _CodigoSubEWP;
-		
-		private string _EWP;
-		
-		private string _CodigoEWP;
-		
-		private System.DateTime _Fecha;
-		
-		private string _Actividad;
-		
-		private string _TipoActividad;
-		
-		private int _IdUsuario;
-		
-		public fn_ReportePorEWPResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasReportadas", DbType="Int NOT NULL")]
-		public int HorasReportadas
-		{
-			get
-			{
-				return this._HorasReportadas;
-			}
-			set
-			{
-				if ((this._HorasReportadas != value))
-				{
-					this._HorasReportadas = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodigoSubEWP", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
-		public string CodigoSubEWP
-		{
-			get
-			{
-				return this._CodigoSubEWP;
-			}
-			set
-			{
-				if ((this._CodigoSubEWP != value))
-				{
-					this._CodigoSubEWP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWP", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string EWP
-		{
-			get
-			{
-				return this._EWP;
-			}
-			set
-			{
-				if ((this._EWP != value))
-				{
-					this._EWP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodigoEWP", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
-		public string CodigoEWP
-		{
-			get
-			{
-				return this._CodigoEWP;
-			}
-			set
-			{
-				if ((this._CodigoEWP != value))
-				{
-					this._CodigoEWP = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date NOT NULL")]
-		public System.DateTime Fecha
-		{
-			get
-			{
-				return this._Fecha;
-			}
-			set
-			{
-				if ((this._Fecha != value))
-				{
-					this._Fecha = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Actividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string Actividad
-		{
-			get
-			{
-				return this._Actividad;
-			}
-			set
-			{
-				if ((this._Actividad != value))
-				{
-					this._Actividad = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoActividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string TipoActividad
-		{
-			get
-			{
-				return this._TipoActividad;
-			}
-			set
-			{
-				if ((this._TipoActividad != value))
-				{
-					this._TipoActividad = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
-		public int IdUsuario
-		{
-			get
-			{
-				return this._IdUsuario;
-			}
-			set
-			{
-				if ((this._IdUsuario != value))
-				{
-					this._IdUsuario = value;
 				}
 			}
 		}
@@ -13523,6 +13395,176 @@ namespace DESSAU.ControlGestion.Core
 				if ((this._Promedio != value))
 				{
 					this._Promedio = value;
+				}
+			}
+		}
+	}
+	
+	public partial class fn_ReportePorEWPResult
+	{
+		
+		private int _HorasReportadas;
+		
+		private string _CodigoSubEWP;
+		
+		private string _EWP;
+		
+		private string _CodigoEWP;
+		
+		private System.DateTime _Fecha;
+		
+		private string _Actividad;
+		
+		private string _TipoActividad;
+		
+		private int _IdUsuario;
+		
+		private string _NumeroDocumento;
+		
+		public fn_ReportePorEWPResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HorasReportadas", DbType="Int NOT NULL")]
+		public int HorasReportadas
+		{
+			get
+			{
+				return this._HorasReportadas;
+			}
+			set
+			{
+				if ((this._HorasReportadas != value))
+				{
+					this._HorasReportadas = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodigoSubEWP", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CodigoSubEWP
+		{
+			get
+			{
+				return this._CodigoSubEWP;
+			}
+			set
+			{
+				if ((this._CodigoSubEWP != value))
+				{
+					this._CodigoSubEWP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWP", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string EWP
+		{
+			get
+			{
+				return this._EWP;
+			}
+			set
+			{
+				if ((this._EWP != value))
+				{
+					this._EWP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CodigoEWP", DbType="NVarChar(15) NOT NULL", CanBeNull=false)]
+		public string CodigoEWP
+		{
+			get
+			{
+				return this._CodigoEWP;
+			}
+			set
+			{
+				if ((this._CodigoEWP != value))
+				{
+					this._CodigoEWP = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fecha", DbType="Date NOT NULL")]
+		public System.DateTime Fecha
+		{
+			get
+			{
+				return this._Fecha;
+			}
+			set
+			{
+				if ((this._Fecha != value))
+				{
+					this._Fecha = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Actividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Actividad
+		{
+			get
+			{
+				return this._Actividad;
+			}
+			set
+			{
+				if ((this._Actividad != value))
+				{
+					this._Actividad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoActividad", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string TipoActividad
+		{
+			get
+			{
+				return this._TipoActividad;
+			}
+			set
+			{
+				if ((this._TipoActividad != value))
+				{
+					this._TipoActividad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					this._IdUsuario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumeroDocumento", DbType="NVarChar(63) NOT NULL", CanBeNull=false)]
+		public string NumeroDocumento
+		{
+			get
+			{
+				return this._NumeroDocumento;
+			}
+			set
+			{
+				if ((this._NumeroDocumento != value))
+				{
+					this._NumeroDocumento = value;
 				}
 			}
 		}

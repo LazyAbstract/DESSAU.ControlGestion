@@ -106,13 +106,15 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     SubEWP subewp = db.SubEWPs.Single(x => x.IdSubEWP == Form.IdSubEWP);
                     subewp.Codigo = Form.Codigo;
                     subewp.IdEWP = Form.IdEWP;
+                    subewp.Nombre = Form.Nombre;
                 }
                 else
                 {
                     SubEWP subewp = new SubEWP()
                     {
                         Codigo = Form.Codigo,
-                        IdEWP = Form.IdEWP
+                        IdEWP = Form.IdEWP,
+                        Nombre = Form.Nombre
                     };
                     db.SubEWPs.InsertOnSubmit(subewp);
                 }

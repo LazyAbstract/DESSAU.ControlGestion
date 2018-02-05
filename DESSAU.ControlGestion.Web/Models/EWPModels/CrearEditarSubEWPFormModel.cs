@@ -19,6 +19,10 @@ namespace DESSAU.ControlGestion.Web.Models.EWPModels
         [StringLength(15, ErrorMessage = "El código de la Sub EWP debe tener como máximo 255 carcateres.", MinimumLength = 2)]
         public string Codigo { get; set; }
 
+        [Required]
+        [StringLength(15, ErrorMessage = "El Nombre de la Sub EWP debe tener como máximo 255 carcateres.", MinimumLength = 2)]
+        public string Nombre { get; set; }
+
         #region IDataErrorInfo Members
 
         public string Error
@@ -28,6 +32,11 @@ namespace DESSAU.ControlGestion.Web.Models.EWPModels
                 DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
                     .WithConnectionStringFromConfiguration();
                 if (db.SubEWPs.Any(x => x.Codigo == Codigo && !IdSubEWP.HasValue))
+                {
+                    return "El Código ingresado ya está en uso.";
+                }
+
+                if (db.SubEWPs.Any(x => x.Nombre == Nombre && !IdSubEWP.HasValue))
                 {
                     return "El Código ingresado ya está en uso.";
                 }

@@ -238,6 +238,7 @@
     <Compile Include="Controllers\NumeroDocumentoController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\RevisionController.cs" />
     <Compile Include="Controllers\TimeSheetController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -294,6 +295,9 @@
     <Compile Include="Models\ReporteModels\ReporteEWPModels\ExportaEWPViewModel.cs" />
     <Compile Include="Models\ReporteModels\ReporteEWPModels\VerReporteEWPFormModel.cs" />
     <Compile Include="Models\ReporteModels\ReporteEWPModels\VerReporteEWPViewModel.cs" />
+    <Compile Include="Models\RevisionModels\CrearEditarRevisionFormModel.cs" />
+    <Compile Include="Models\RevisionModels\CrearEditarRevisionViewModel.cs" />
+    <Compile Include="Models\RevisionModels\ListarRevisionViewModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPFormModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\CrearEditarTimeSheetEWPViewModel.cs" />
     <Compile Include="Models\TimeSheetEWPModels\TimeSheetFormModelEWPDTO.cs" />
@@ -312,6 +316,7 @@
     <Compile Include="Models\UsuarioModels\CrearEditarUsuarioViewModel.cs" />
     <Compile Include="Models\UsuarioModels\ListarUsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectListProviders\AreaSelectListProvider.cs" />
     <Compile Include="SelectListProviders\CategoriaSelectListProvider.cs" />
     <Compile Include="SelectListProviders\ContratoSelectListProvider.cs" />
     <Compile Include="SelectListProviders\EWPSelectListProvider.cs" />
@@ -1258,6 +1263,10 @@
     <Content Include="Views\NumeroDocumento\ListarNumeroDocumento.cshtml" />
     <Content Include="Views\NumeroDocumento\CrearEditarNumeroDocumento.cshtml" />
     <Content Include="Views\Reporte\VerReporteEWP.cshtml" />
+    <Content Include="Views\Revision\ListarRevision.cshtml" />
+    <Content Include="Views\Revision\CrearEditarRevision.cshtml" />
+    <Content Include="Views\Shared\SinAsignacionODS.cshtml" />
+    <Content Include="Views\Reporte\VerReporteNumeroDessau.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
