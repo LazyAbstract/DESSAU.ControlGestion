@@ -18,13 +18,13 @@ namespace DESSAU.ControlGestion.Web.Models.ActividadModels
         [Required]
         [DisplayName("Tipo Actividad")]
         public int IdTipoActividad { get; set; }
-        [Required(ErrorMessage = "Debe elegir al menos una Categoría.")]        
-        public List<int> IdCategorias { get; set; }
+        //[Required(ErrorMessage = "Debe elegir al menos una Categoría.")]        
+        //public List<int> IdCategorias { get; set; }
 
-        public CrearEditarActividadFormModel()
-        {
-            IdCategorias = new List<int>();
-        }
+        //public CrearEditarActividadFormModel()
+        //{
+        //    IdCategorias = new List<int>();
+        //}
 
         #region IDataErrorInfo Members
 

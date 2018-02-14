@@ -44,9 +44,9 @@ namespace DESSAU.ControlGestion.Web.Controllers
                 model.Form.NombreActividad = act.Nombre;
                 model.Form.IdActividad = IdActividad;
                 model.Form.IdTipoActividad = act.IdTipoActividad;
-                model.Form.IdCategorias = act.CategoriaActividads
-                    .Where(x => x.Vigente && x.Categoria.Vigente)
-                    .Select(x => x.IdCategoria).ToList();
+                //model.Form.IdCategorias = act.CategoriaActividads
+                //    .Where(x => x.Vigente && x.Categoria.Vigente)
+                //    .Select(x => x.IdCategoria).ToList();
             }
             return View(model);
         }
@@ -54,10 +54,10 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpPost]
         public ActionResult CrearEditarActividad(CrearEditarActividadFormModel Form)
         {
-            if(!Form.IdCategorias.Any())
-            {
-                ModelState.AddModelError("", "Debe seleccionar al menos una Categoría.");
-            }
+            //if(!Form.IdCategorias.Any())
+            //{
+            //    ModelState.AddModelError("", "Debe seleccionar al menos una Categoría.");
+            //}
             if(ModelState.IsValid)
             {
                 if (!Form.IdActividad.HasValue)
@@ -70,22 +70,22 @@ namespace DESSAU.ControlGestion.Web.Controllers
                     };
 
                     db.Actividads.InsertOnSubmit(act);
+                    //db.SubmitChanges();
+
+                    //foreach (var idCategoria in Form.IdCategorias)
+                    //{
+                    //    CategoriaActividad catAct = new CategoriaActividad()
+                    //    {
+                    //        IdActividad = act.IdActividad,
+                    //        IdCategoria = idCategoria,
+                    //        Vigente = true
+                    //    };
+
+                    //    db.CategoriaActividads.InsertOnSubmit(catAct);
+                    //}
+
                     db.SubmitChanges();
-
-                    foreach (var idCategoria in Form.IdCategorias)
-                    {
-                        CategoriaActividad catAct = new CategoriaActividad()
-                        {
-                            IdActividad = act.IdActividad,
-                            IdCategoria = idCategoria,
-                            Vigente = true
-                        };
-
-                        db.CategoriaActividads.InsertOnSubmit(catAct);
-                    }
-
-                    db.SubmitChanges();
-                    Mensaje = "La Actividad fue creada exitosamente.";
+                    TempData["Mensaje"] = "La Actividad fue creada exitosamente. Recuerde asociar la Actividad a alguna Disciplina";
                     return RedirectToAction("ListarActividad");
                 }
                 else
@@ -99,30 +99,30 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         item.Vigente = false;
                     }
 
-                    foreach (var IdCategoria in Form.IdCategorias)
-                    {
-                        var hola = db.CategoriaActividads
-                            .SingleOrDefault(x => x.IdActividad == act.IdActividad 
-                            && x.IdCategoria == IdCategoria);
-                        if (hola != null)
-                        {
-                            hola.Vigente = true;
-                        }
-                        else
-                        {
-                            CategoriaActividad catAct = new CategoriaActividad()
-                            {
-                                IdActividad = act.IdActividad,
-                                IdCategoria = IdCategoria,
-                                Vigente = true,
-                            };
+                    //foreach (var IdCategoria in Form.IdCategorias)
+                    //{
+                    //    var hola = db.CategoriaActividads
+                    //        .SingleOrDefault(x => x.IdActividad == act.IdActividad 
+                    //        && x.IdCategoria == IdCategoria);
+                    //    if (hola != null)
+                    //    {
+                    //        hola.Vigente = true;
+                    //    }
+                    //    else
+                    //    {
+                    //        CategoriaActividad catAct = new CategoriaActividad()
+                    //        {
+                    //            IdActividad = act.IdActividad,
+                    //            IdCategoria = IdCategoria,
+                    //            Vigente = true,
+                    //        };
 
-                            db.CategoriaActividads.InsertOnSubmit(catAct);
-                        }           
-                    }
+                    //        db.CategoriaActividads.InsertOnSubmit(catAct);
+                    //    }           
+                    //}
 
                     db.SubmitChanges();
-                    Mensaje = "La Actividad fue editada exitosamente.";
+                    TempData["Mensaje"] = "La Actividad fue editada exitosamente. Recuerde asociar la Actividad a alguna Disciplina.";
                     return RedirectToAction("ListarActividad");
                 }
             }

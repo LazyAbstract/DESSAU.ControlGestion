@@ -1,0 +1,66 @@
+﻿@model DESSAU.ControlGestion.Web.Models.CategoriaModels.AgregarActividadCategoriaViewModel
+
+@{
+    ViewBag.Title = "AgregarActividadCategoria";
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Asignar Actividad a Disciplina @Model.Categoria.Nombre</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.ValidationSummary()
+                            @Html.HiddenFor(x => x.Form.IdCategoria)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ApellidoPaterno" class="col-md-2 control-label">@Html.LabelFor(x => x.Form.IdActividad)</label>
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(x => x.Form.IdActividad, Model.Actividades, "Seleccione una Actividad", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5">
+                            @Html.ValidationMessageFor(x => x.Form.IdActividad)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Actividades Asignadas a la Disciplina @Model.Categoria.Nombre</h3>
+        @(Html.Grid(Model.Categoria.CategoriaActividads.Where(x => x.Vigente).OrderBy(x => x.Actividad.Nombre))
+        .Attributes(@class => "table table-striped")
+        .Columns(col =>
+        {
+            col.For(x => x.Actividad.Nombre).Named("Actividad");
+            col.For(x => x.Actividad.TipoActividad.Nombre).Named("Tipo Actividad");
+            col.For(x => Html.ButtonIconActionLink("remove", "Eliminar Actividad", "AliminarActividadCategoria", null, new { @class = "eliminar-act" }, new { IdCategoriaActividad = x.IdCategoriaActividad }));
+        }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(".eliminar-act").click(function (event) {
+            if (!confirm("¿Está seguro que desea desasociar la actividad a la Disciplina?") == true) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    }

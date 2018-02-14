@@ -42,7 +42,8 @@
         .Columns(col =>
         {
             col.For(x => x.Nombre);
-            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Categoría", "CrearEditarCategoria", null, null, new { IdCategoria = x.IdCategoria }));
+            col.For(x => Html.ButtonIconActionLink("pencil", "Editar Disciplina", "CrearEditarCategoria", null, null, new { IdCategoria = x.IdCategoria }));
+            col.For(x => Html.ButtonIconActionLink("plus", "Agregar Actividad", "AgregarActividadCategoria", null, null, new { IdCategoria = x.IdCategoria }));
         }).Empty("No se han encontrado registros asociados a los filtros seleccionados"))
     </div>
 </div>

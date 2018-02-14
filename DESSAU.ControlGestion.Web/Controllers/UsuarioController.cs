@@ -163,13 +163,10 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         db.Usuarios.InsertOnSubmit(_user);
                         db.SubmitChanges();
 
-                        var discliplina = db.Categorias.Single(x => x.IdCategoria == Form.IdCategoria).Nombre;
-                        var idDiciplina = db.Disciplinas.Single(x => x.Nombre == discliplina).IdDisciplina;
-
                         UsuarioAreaDisciplina uad = new UsuarioAreaDisciplina()
                         {
                             IdArea = Form.IdArea,
-                            IdDisciplina = idDiciplina,
+                            IdCategoria = Form.IdCategoria,
                             IdUsuario = _user.IdUsuario
                         };
                         db.UsuarioAreaDisciplinas.InsertOnSubmit(uad);

@@ -69,9 +69,6 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertDiaEspecial(DiaEspecial instance);
     partial void UpdateDiaEspecial(DiaEspecial instance);
     partial void DeleteDiaEspecial(DiaEspecial instance);
-    partial void InsertDisciplina(Disciplina instance);
-    partial void UpdateDisciplina(Disciplina instance);
-    partial void DeleteDisciplina(Disciplina instance);
     partial void InsertEstadoEvaluacion(EstadoEvaluacion instance);
     partial void UpdateEstadoEvaluacion(EstadoEvaluacion instance);
     partial void DeleteEstadoEvaluacion(EstadoEvaluacion instance);
@@ -162,18 +159,12 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertTipoUsuario(TipoUsuario instance);
     partial void UpdateTipoUsuario(TipoUsuario instance);
     partial void DeleteTipoUsuario(TipoUsuario instance);
-    partial void InsertUCPDisciplinaArea(UCPDisciplinaArea instance);
-    partial void UpdateUCPDisciplinaArea(UCPDisciplinaArea instance);
-    partial void DeleteUCPDisciplinaArea(UCPDisciplinaArea instance);
     partial void InsertUsuarioSupervisor(UsuarioSupervisor instance);
     partial void UpdateUsuarioSupervisor(UsuarioSupervisor instance);
     partial void DeleteUsuarioSupervisor(UsuarioSupervisor instance);
     partial void InsertUsuario(Usuario instance);
     partial void UpdateUsuario(Usuario instance);
     partial void DeleteUsuario(Usuario instance);
-    partial void InsertUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
-    partial void UpdateUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
-    partial void DeleteUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
     partial void InsertUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
     partial void UpdateUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
     partial void DeleteUsuarioCategoriaProyecto(UsuarioCategoriaProyecto instance);
@@ -192,6 +183,9 @@ namespace DESSAU.ControlGestion.Core
     partial void InsertNumeroDocumento(NumeroDocumento instance);
     partial void UpdateNumeroDocumento(NumeroDocumento instance);
     partial void DeleteNumeroDocumento(NumeroDocumento instance);
+    partial void InsertUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
+    partial void UpdateUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
+    partial void DeleteUsuarioAreaDisciplina(UsuarioAreaDisciplina instance);
     #endregion
 		
 		public DESSAUControlGestionDataContext() : 
@@ -325,14 +319,6 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<DiaEspecial>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Disciplina> Disciplinas
-		{
-			get
-			{
-				return this.GetTable<Disciplina>();
 			}
 		}
 		
@@ -576,14 +562,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		public System.Data.Linq.Table<UCPDisciplinaArea> UCPDisciplinaAreas
-		{
-			get
-			{
-				return this.GetTable<UCPDisciplinaArea>();
-			}
-		}
-		
 		public System.Data.Linq.Table<UsuarioSupervisor> UsuarioSupervisors
 		{
 			get
@@ -597,14 +575,6 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<Usuario>();
-			}
-		}
-		
-		public System.Data.Linq.Table<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
-		{
-			get
-			{
-				return this.GetTable<UsuarioAreaDisciplina>();
 			}
 		}
 		
@@ -653,6 +623,14 @@ namespace DESSAU.ControlGestion.Core
 			get
 			{
 				return this.GetTable<NumeroDocumento>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
+		{
+			get
+			{
+				return this.GetTable<UsuarioAreaDisciplina>();
 			}
 		}
 		
@@ -736,11 +714,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private string _Nombre;
 		
-		private EntitySet<UCPDisciplinaArea> _UCPDisciplinaAreas;
+		private EntitySet<UsuarioCategoriaProyectoArea> _UsuarioCategoriaProyectoAreas;
 		
 		private EntitySet<UsuarioAreaDisciplina> _UsuarioAreaDisciplinas;
-		
-		private EntitySet<UsuarioCategoriaProyectoArea> _UsuarioCategoriaProyectoAreas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -754,9 +730,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		public Area()
 		{
-			this._UCPDisciplinaAreas = new EntitySet<UCPDisciplinaArea>(new Action<UCPDisciplinaArea>(this.attach_UCPDisciplinaAreas), new Action<UCPDisciplinaArea>(this.detach_UCPDisciplinaAreas));
-			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
 			this._UsuarioCategoriaProyectoAreas = new EntitySet<UsuarioCategoriaProyectoArea>(new Action<UsuarioCategoriaProyectoArea>(this.attach_UsuarioCategoriaProyectoAreas), new Action<UsuarioCategoriaProyectoArea>(this.detach_UsuarioCategoriaProyectoAreas));
+			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
 			OnCreated();
 		}
 		
@@ -800,16 +775,16 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UCPDisciplinaArea", Storage="_UCPDisciplinaAreas", ThisKey="IdArea", OtherKey="IdArea")]
-		public EntitySet<UCPDisciplinaArea> UCPDisciplinaAreas
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UsuarioCategoriaProyectoArea", Storage="_UsuarioCategoriaProyectoAreas", ThisKey="IdArea", OtherKey="IdArea")]
+		public EntitySet<UsuarioCategoriaProyectoArea> UsuarioCategoriaProyectoAreas
 		{
 			get
 			{
-				return this._UCPDisciplinaAreas;
+				return this._UsuarioCategoriaProyectoAreas;
 			}
 			set
 			{
-				this._UCPDisciplinaAreas.Assign(value);
+				this._UsuarioCategoriaProyectoAreas.Assign(value);
 			}
 		}
 		
@@ -823,19 +798,6 @@ namespace DESSAU.ControlGestion.Core
 			set
 			{
 				this._UsuarioAreaDisciplinas.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UsuarioCategoriaProyectoArea", Storage="_UsuarioCategoriaProyectoAreas", ThisKey="IdArea", OtherKey="IdArea")]
-		public EntitySet<UsuarioCategoriaProyectoArea> UsuarioCategoriaProyectoAreas
-		{
-			get
-			{
-				return this._UsuarioCategoriaProyectoAreas;
-			}
-			set
-			{
-				this._UsuarioCategoriaProyectoAreas.Assign(value);
 			}
 		}
 		
@@ -859,13 +821,13 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		private void attach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
+		private void attach_UsuarioCategoriaProyectoAreas(UsuarioCategoriaProyectoArea entity)
 		{
 			this.SendPropertyChanging();
 			entity.Area = this;
 		}
 		
-		private void detach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
+		private void detach_UsuarioCategoriaProyectoAreas(UsuarioCategoriaProyectoArea entity)
 		{
 			this.SendPropertyChanging();
 			entity.Area = null;
@@ -878,18 +840,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
-		{
-			this.SendPropertyChanging();
-			entity.Area = null;
-		}
-		
-		private void attach_UsuarioCategoriaProyectoAreas(UsuarioCategoriaProyectoArea entity)
-		{
-			this.SendPropertyChanging();
-			entity.Area = this;
-		}
-		
-		private void detach_UsuarioCategoriaProyectoAreas(UsuarioCategoriaProyectoArea entity)
 		{
 			this.SendPropertyChanging();
 			entity.Area = null;
@@ -1932,6 +1882,8 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<UsuarioCategoriaProyecto> _UsuarioCategoriaProyectos;
 		
+		private EntitySet<UsuarioAreaDisciplina> _UsuarioAreaDisciplinas;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1949,6 +1901,7 @@ namespace DESSAU.ControlGestion.Core
 			this._CategoriaActividads = new EntitySet<CategoriaActividad>(new Action<CategoriaActividad>(this.attach_CategoriaActividads), new Action<CategoriaActividad>(this.detach_CategoriaActividads));
 			this._PlantillaEvaluacions = new EntitySet<PlantillaEvaluacion>(new Action<PlantillaEvaluacion>(this.attach_PlantillaEvaluacions), new Action<PlantillaEvaluacion>(this.detach_PlantillaEvaluacions));
 			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
+			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
 			OnCreated();
 		}
 		
@@ -2051,6 +2004,19 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Categoria_UsuarioAreaDisciplina", Storage="_UsuarioAreaDisciplinas", ThisKey="IdCategoria", OtherKey="IdCategoria")]
+		public EntitySet<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
+		{
+			get
+			{
+				return this._UsuarioAreaDisciplinas;
+			}
+			set
+			{
+				this._UsuarioAreaDisciplinas.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2102,6 +2068,18 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
+		{
+			this.SendPropertyChanging();
+			entity.Categoria = null;
+		}
+		
+		private void attach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
+		{
+			this.SendPropertyChanging();
+			entity.Categoria = this;
+		}
+		
+		private void detach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
 		{
 			this.SendPropertyChanging();
 			entity.Categoria = null;
@@ -3568,148 +3546,6 @@ namespace DESSAU.ControlGestion.Core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Disciplina")]
-	public partial class Disciplina : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdDisciplina;
-		
-		private string _Nombre;
-		
-		private EntitySet<UCPDisciplinaArea> _UCPDisciplinaAreas;
-		
-		private EntitySet<UsuarioAreaDisciplina> _UsuarioAreaDisciplinas;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdDisciplinaChanging(int value);
-    partial void OnIdDisciplinaChanged();
-    partial void OnNombreChanging(string value);
-    partial void OnNombreChanged();
-    #endregion
-		
-		public Disciplina()
-		{
-			this._UCPDisciplinaAreas = new EntitySet<UCPDisciplinaArea>(new Action<UCPDisciplinaArea>(this.attach_UCPDisciplinaAreas), new Action<UCPDisciplinaArea>(this.detach_UCPDisciplinaAreas));
-			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdDisciplina", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdDisciplina
-		{
-			get
-			{
-				return this._IdDisciplina;
-			}
-			set
-			{
-				if ((this._IdDisciplina != value))
-				{
-					this.OnIdDisciplinaChanging(value);
-					this.SendPropertyChanging();
-					this._IdDisciplina = value;
-					this.SendPropertyChanged("IdDisciplina");
-					this.OnIdDisciplinaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(63) NOT NULL", CanBeNull=false)]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this.OnNombreChanging(value);
-					this.SendPropertyChanging();
-					this._Nombre = value;
-					this.SendPropertyChanged("Nombre");
-					this.OnNombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Disciplina_UCPDisciplinaArea", Storage="_UCPDisciplinaAreas", ThisKey="IdDisciplina", OtherKey="IdDisciplina")]
-		public EntitySet<UCPDisciplinaArea> UCPDisciplinaAreas
-		{
-			get
-			{
-				return this._UCPDisciplinaAreas;
-			}
-			set
-			{
-				this._UCPDisciplinaAreas.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Disciplina_UsuarioAreaDisciplina", Storage="_UsuarioAreaDisciplinas", ThisKey="IdDisciplina", OtherKey="IdDisciplina")]
-		public EntitySet<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
-		{
-			get
-			{
-				return this._UsuarioAreaDisciplinas;
-			}
-			set
-			{
-				this._UsuarioAreaDisciplinas.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
-		{
-			this.SendPropertyChanging();
-			entity.Disciplina = this;
-		}
-		
-		private void detach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
-		{
-			this.SendPropertyChanging();
-			entity.Disciplina = null;
-		}
-		
-		private void attach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
-		{
-			this.SendPropertyChanging();
-			entity.Disciplina = this;
-		}
-		
-		private void detach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
-		{
-			this.SendPropertyChanging();
-			entity.Disciplina = null;
 		}
 	}
 	
@@ -10103,263 +9939,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UCPDisciplinaArea")]
-	public partial class UCPDisciplinaArea : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private int _IdUsuarioCategoriaProyecto;
-		
-		private int _IdDisciplina;
-		
-		private int _IdArea;
-		
-		private EntityRef<Area> _Area;
-		
-		private EntityRef<Disciplina> _Disciplina;
-		
-		private EntityRef<UsuarioCategoriaProyecto> _UsuarioCategoriaProyecto;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnIdUsuarioCategoriaProyectoChanging(int value);
-    partial void OnIdUsuarioCategoriaProyectoChanged();
-    partial void OnIdDisciplinaChanging(int value);
-    partial void OnIdDisciplinaChanged();
-    partial void OnIdAreaChanging(int value);
-    partial void OnIdAreaChanged();
-    #endregion
-		
-		public UCPDisciplinaArea()
-		{
-			this._Area = default(EntityRef<Area>);
-			this._Disciplina = default(EntityRef<Disciplina>);
-			this._UsuarioCategoriaProyecto = default(EntityRef<UsuarioCategoriaProyecto>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioCategoriaProyecto", DbType="Int NOT NULL")]
-		public int IdUsuarioCategoriaProyecto
-		{
-			get
-			{
-				return this._IdUsuarioCategoriaProyecto;
-			}
-			set
-			{
-				if ((this._IdUsuarioCategoriaProyecto != value))
-				{
-					if (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdUsuarioCategoriaProyectoChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuarioCategoriaProyecto = value;
-					this.SendPropertyChanged("IdUsuarioCategoriaProyecto");
-					this.OnIdUsuarioCategoriaProyectoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdDisciplina", DbType="Int NOT NULL")]
-		public int IdDisciplina
-		{
-			get
-			{
-				return this._IdDisciplina;
-			}
-			set
-			{
-				if ((this._IdDisciplina != value))
-				{
-					if (this._Disciplina.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdDisciplinaChanging(value);
-					this.SendPropertyChanging();
-					this._IdDisciplina = value;
-					this.SendPropertyChanged("IdDisciplina");
-					this.OnIdDisciplinaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdArea", DbType="Int NOT NULL")]
-		public int IdArea
-		{
-			get
-			{
-				return this._IdArea;
-			}
-			set
-			{
-				if ((this._IdArea != value))
-				{
-					if (this._Area.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdAreaChanging(value);
-					this.SendPropertyChanging();
-					this._IdArea = value;
-					this.SendPropertyChanged("IdArea");
-					this.OnIdAreaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UCPDisciplinaArea", Storage="_Area", ThisKey="IdArea", OtherKey="IdArea", IsForeignKey=true)]
-		public Area Area
-		{
-			get
-			{
-				return this._Area.Entity;
-			}
-			set
-			{
-				Area previousValue = this._Area.Entity;
-				if (((previousValue != value) 
-							|| (this._Area.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Area.Entity = null;
-						previousValue.UCPDisciplinaAreas.Remove(this);
-					}
-					this._Area.Entity = value;
-					if ((value != null))
-					{
-						value.UCPDisciplinaAreas.Add(this);
-						this._IdArea = value.IdArea;
-					}
-					else
-					{
-						this._IdArea = default(int);
-					}
-					this.SendPropertyChanged("Area");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Disciplina_UCPDisciplinaArea", Storage="_Disciplina", ThisKey="IdDisciplina", OtherKey="IdDisciplina", IsForeignKey=true)]
-		public Disciplina Disciplina
-		{
-			get
-			{
-				return this._Disciplina.Entity;
-			}
-			set
-			{
-				Disciplina previousValue = this._Disciplina.Entity;
-				if (((previousValue != value) 
-							|| (this._Disciplina.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Disciplina.Entity = null;
-						previousValue.UCPDisciplinaAreas.Remove(this);
-					}
-					this._Disciplina.Entity = value;
-					if ((value != null))
-					{
-						value.UCPDisciplinaAreas.Add(this);
-						this._IdDisciplina = value.IdDisciplina;
-					}
-					else
-					{
-						this._IdDisciplina = default(int);
-					}
-					this.SendPropertyChanged("Disciplina");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_UCPDisciplinaArea", Storage="_UsuarioCategoriaProyecto", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto", IsForeignKey=true)]
-		public UsuarioCategoriaProyecto UsuarioCategoriaProyecto
-		{
-			get
-			{
-				return this._UsuarioCategoriaProyecto.Entity;
-			}
-			set
-			{
-				UsuarioCategoriaProyecto previousValue = this._UsuarioCategoriaProyecto.Entity;
-				if (((previousValue != value) 
-							|| (this._UsuarioCategoriaProyecto.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._UsuarioCategoriaProyecto.Entity = null;
-						previousValue.UCPDisciplinaAreas.Remove(this);
-					}
-					this._UsuarioCategoriaProyecto.Entity = value;
-					if ((value != null))
-					{
-						value.UCPDisciplinaAreas.Add(this);
-						this._IdUsuarioCategoriaProyecto = value.IdUsuarioCategoriaProyecto;
-					}
-					else
-					{
-						this._IdUsuarioCategoriaProyecto = default(int);
-					}
-					this.SendPropertyChanged("UsuarioCategoriaProyecto");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsuarioSupervisor")]
 	public partial class UsuarioSupervisor : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -10586,9 +10165,9 @@ namespace DESSAU.ControlGestion.Core
 		
 		private EntitySet<UsuarioSupervisor> _UsuarioSupervisors1;
 		
-		private EntitySet<UsuarioAreaDisciplina> _UsuarioAreaDisciplinas;
-		
 		private EntitySet<UsuarioCategoriaProyecto> _UsuarioCategoriaProyectos;
+		
+		private EntitySet<UsuarioAreaDisciplina> _UsuarioAreaDisciplinas;
 		
 		private EntityRef<TipoUsuario> _TipoUsuario;
 		
@@ -10621,8 +10200,8 @@ namespace DESSAU.ControlGestion.Core
 			this._Proyectos = new EntitySet<Proyecto>(new Action<Proyecto>(this.attach_Proyectos), new Action<Proyecto>(this.detach_Proyectos));
 			this._UsuarioSupervisors = new EntitySet<UsuarioSupervisor>(new Action<UsuarioSupervisor>(this.attach_UsuarioSupervisors), new Action<UsuarioSupervisor>(this.detach_UsuarioSupervisors));
 			this._UsuarioSupervisors1 = new EntitySet<UsuarioSupervisor>(new Action<UsuarioSupervisor>(this.attach_UsuarioSupervisors1), new Action<UsuarioSupervisor>(this.detach_UsuarioSupervisors1));
-			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
 			this._UsuarioCategoriaProyectos = new EntitySet<UsuarioCategoriaProyecto>(new Action<UsuarioCategoriaProyecto>(this.attach_UsuarioCategoriaProyectos), new Action<UsuarioCategoriaProyecto>(this.detach_UsuarioCategoriaProyectos));
+			this._UsuarioAreaDisciplinas = new EntitySet<UsuarioAreaDisciplina>(new Action<UsuarioAreaDisciplina>(this.attach_UsuarioAreaDisciplinas), new Action<UsuarioAreaDisciplina>(this.detach_UsuarioAreaDisciplinas));
 			this._TipoUsuario = default(EntityRef<TipoUsuario>);
 			OnCreated();
 		}
@@ -10862,19 +10441,6 @@ namespace DESSAU.ControlGestion.Core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioAreaDisciplina", Storage="_UsuarioAreaDisciplinas", ThisKey="IdUsuario", OtherKey="IdUsuario")]
-		public EntitySet<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
-		{
-			get
-			{
-				return this._UsuarioAreaDisciplinas;
-			}
-			set
-			{
-				this._UsuarioAreaDisciplinas.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioCategoriaProyecto", Storage="_UsuarioCategoriaProyectos", ThisKey="IdUsuario", OtherKey="IdUsuario")]
 		public EntitySet<UsuarioCategoriaProyecto> UsuarioCategoriaProyectos
 		{
@@ -10885,6 +10451,19 @@ namespace DESSAU.ControlGestion.Core
 			set
 			{
 				this._UsuarioCategoriaProyectos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioAreaDisciplina", Storage="_UsuarioAreaDisciplinas", ThisKey="IdUsuario", OtherKey="IdUsuario")]
+		public EntitySet<UsuarioAreaDisciplina> UsuarioAreaDisciplinas
+		{
+			get
+			{
+				return this._UsuarioAreaDisciplinas;
+			}
+			set
+			{
+				this._UsuarioAreaDisciplinas.Assign(value);
 			}
 		}
 		
@@ -11026,18 +10605,6 @@ namespace DESSAU.ControlGestion.Core
 			entity.Usuario1 = null;
 		}
 		
-		private void attach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
-		}
-		
 		private void attach_UsuarioCategoriaProyectos(UsuarioCategoriaProyecto entity)
 		{
 			this.SendPropertyChanging();
@@ -11049,262 +10616,17 @@ namespace DESSAU.ControlGestion.Core
 			this.SendPropertyChanging();
 			entity.Usuario = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsuarioAreaDisciplina")]
-	public partial class UsuarioAreaDisciplina : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdUsuarioAreaDisciplina;
-		
-		private int _IdUsuario;
-		
-		private int _IdArea;
-		
-		private int _IdDisciplina;
-		
-		private EntityRef<Area> _Area;
-		
-		private EntityRef<Disciplina> _Disciplina;
-		
-		private EntityRef<Usuario> _Usuario;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdUsuarioAreaDisciplinaChanging(int value);
-    partial void OnIdUsuarioAreaDisciplinaChanged();
-    partial void OnIdUsuarioChanging(int value);
-    partial void OnIdUsuarioChanged();
-    partial void OnIdAreaChanging(int value);
-    partial void OnIdAreaChanged();
-    partial void OnIdDisciplinaChanging(int value);
-    partial void OnIdDisciplinaChanged();
-    #endregion
-		
-		public UsuarioAreaDisciplina()
+		private void attach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
 		{
-			this._Area = default(EntityRef<Area>);
-			this._Disciplina = default(EntityRef<Disciplina>);
-			this._Usuario = default(EntityRef<Usuario>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Usuario = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioAreaDisciplina", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdUsuarioAreaDisciplina
+		private void detach_UsuarioAreaDisciplinas(UsuarioAreaDisciplina entity)
 		{
-			get
-			{
-				return this._IdUsuarioAreaDisciplina;
-			}
-			set
-			{
-				if ((this._IdUsuarioAreaDisciplina != value))
-				{
-					this.OnIdUsuarioAreaDisciplinaChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuarioAreaDisciplina = value;
-					this.SendPropertyChanged("IdUsuarioAreaDisciplina");
-					this.OnIdUsuarioAreaDisciplinaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
-		public int IdUsuario
-		{
-			get
-			{
-				return this._IdUsuario;
-			}
-			set
-			{
-				if ((this._IdUsuario != value))
-				{
-					if (this._Usuario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuario = value;
-					this.SendPropertyChanged("IdUsuario");
-					this.OnIdUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdArea", DbType="Int NOT NULL")]
-		public int IdArea
-		{
-			get
-			{
-				return this._IdArea;
-			}
-			set
-			{
-				if ((this._IdArea != value))
-				{
-					if (this._Area.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdAreaChanging(value);
-					this.SendPropertyChanging();
-					this._IdArea = value;
-					this.SendPropertyChanged("IdArea");
-					this.OnIdAreaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdDisciplina", DbType="Int NOT NULL")]
-		public int IdDisciplina
-		{
-			get
-			{
-				return this._IdDisciplina;
-			}
-			set
-			{
-				if ((this._IdDisciplina != value))
-				{
-					if (this._Disciplina.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdDisciplinaChanging(value);
-					this.SendPropertyChanging();
-					this._IdDisciplina = value;
-					this.SendPropertyChanged("IdDisciplina");
-					this.OnIdDisciplinaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UsuarioAreaDisciplina", Storage="_Area", ThisKey="IdArea", OtherKey="IdArea", IsForeignKey=true)]
-		public Area Area
-		{
-			get
-			{
-				return this._Area.Entity;
-			}
-			set
-			{
-				Area previousValue = this._Area.Entity;
-				if (((previousValue != value) 
-							|| (this._Area.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Area.Entity = null;
-						previousValue.UsuarioAreaDisciplinas.Remove(this);
-					}
-					this._Area.Entity = value;
-					if ((value != null))
-					{
-						value.UsuarioAreaDisciplinas.Add(this);
-						this._IdArea = value.IdArea;
-					}
-					else
-					{
-						this._IdArea = default(int);
-					}
-					this.SendPropertyChanged("Area");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Disciplina_UsuarioAreaDisciplina", Storage="_Disciplina", ThisKey="IdDisciplina", OtherKey="IdDisciplina", IsForeignKey=true)]
-		public Disciplina Disciplina
-		{
-			get
-			{
-				return this._Disciplina.Entity;
-			}
-			set
-			{
-				Disciplina previousValue = this._Disciplina.Entity;
-				if (((previousValue != value) 
-							|| (this._Disciplina.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Disciplina.Entity = null;
-						previousValue.UsuarioAreaDisciplinas.Remove(this);
-					}
-					this._Disciplina.Entity = value;
-					if ((value != null))
-					{
-						value.UsuarioAreaDisciplinas.Add(this);
-						this._IdDisciplina = value.IdDisciplina;
-					}
-					else
-					{
-						this._IdDisciplina = default(int);
-					}
-					this.SendPropertyChanged("Disciplina");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioAreaDisciplina", Storage="_Usuario", ThisKey="IdUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
-		public Usuario Usuario
-		{
-			get
-			{
-				return this._Usuario.Entity;
-			}
-			set
-			{
-				Usuario previousValue = this._Usuario.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuario.Entity = null;
-						previousValue.UsuarioAreaDisciplinas.Remove(this);
-					}
-					this._Usuario.Entity = value;
-					if ((value != null))
-					{
-						value.UsuarioAreaDisciplinas.Add(this);
-						this._IdUsuario = value.IdUsuario;
-					}
-					else
-					{
-						this._IdUsuario = default(int);
-					}
-					this.SendPropertyChanged("Usuario");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Usuario = null;
 		}
 	}
 	
@@ -11331,8 +10653,6 @@ namespace DESSAU.ControlGestion.Core
 		private EntitySet<TimeSheet> _TimeSheets;
 		
 		private EntitySet<TimeSheetEWP> _TimeSheetEWPs;
-		
-		private EntitySet<UCPDisciplinaArea> _UCPDisciplinaAreas;
 		
 		private EntitySet<UsuarioCategoriaProyectoArea> _UsuarioCategoriaProyectoAreas;
 		
@@ -11363,7 +10683,6 @@ namespace DESSAU.ControlGestion.Core
 			this._Evaluacions = new EntitySet<Evaluacion>(new Action<Evaluacion>(this.attach_Evaluacions), new Action<Evaluacion>(this.detach_Evaluacions));
 			this._TimeSheets = new EntitySet<TimeSheet>(new Action<TimeSheet>(this.attach_TimeSheets), new Action<TimeSheet>(this.detach_TimeSheets));
 			this._TimeSheetEWPs = new EntitySet<TimeSheetEWP>(new Action<TimeSheetEWP>(this.attach_TimeSheetEWPs), new Action<TimeSheetEWP>(this.detach_TimeSheetEWPs));
-			this._UCPDisciplinaAreas = new EntitySet<UCPDisciplinaArea>(new Action<UCPDisciplinaArea>(this.attach_UCPDisciplinaAreas), new Action<UCPDisciplinaArea>(this.detach_UCPDisciplinaAreas));
 			this._UsuarioCategoriaProyectoAreas = new EntitySet<UsuarioCategoriaProyectoArea>(new Action<UsuarioCategoriaProyectoArea>(this.attach_UsuarioCategoriaProyectoAreas), new Action<UsuarioCategoriaProyectoArea>(this.detach_UsuarioCategoriaProyectoAreas));
 			this._Categoria = default(EntityRef<Categoria>);
 			this._Proyecto = default(EntityRef<Proyecto>);
@@ -11541,19 +10860,6 @@ namespace DESSAU.ControlGestion.Core
 			set
 			{
 				this._TimeSheetEWPs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UsuarioCategoriaProyecto_UCPDisciplinaArea", Storage="_UCPDisciplinaAreas", ThisKey="IdUsuarioCategoriaProyecto", OtherKey="IdUsuarioCategoriaProyecto")]
-		public EntitySet<UCPDisciplinaArea> UCPDisciplinaAreas
-		{
-			get
-			{
-				return this._UCPDisciplinaAreas;
-			}
-			set
-			{
-				this._UCPDisciplinaAreas.Assign(value);
 			}
 		}
 		
@@ -11735,18 +11041,6 @@ namespace DESSAU.ControlGestion.Core
 		}
 		
 		private void detach_TimeSheetEWPs(TimeSheetEWP entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsuarioCategoriaProyecto = null;
-		}
-		
-		private void attach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
-		{
-			this.SendPropertyChanging();
-			entity.UsuarioCategoriaProyecto = this;
-		}
-		
-		private void detach_UCPDisciplinaAreas(UCPDisciplinaArea entity)
 		{
 			this.SendPropertyChanging();
 			entity.UsuarioCategoriaProyecto = null;
@@ -12785,6 +12079,263 @@ namespace DESSAU.ControlGestion.Core
 		{
 			this.SendPropertyChanging();
 			entity.NumeroDocumento = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UsuarioAreaDisciplina")]
+	public partial class UsuarioAreaDisciplina : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdUsuarioAreaDisciplina;
+		
+		private int _IdUsuario;
+		
+		private int _IdArea;
+		
+		private int _IdCategoria;
+		
+		private EntityRef<Area> _Area;
+		
+		private EntityRef<Categoria> _Categoria;
+		
+		private EntityRef<Usuario> _Usuario;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdUsuarioAreaDisciplinaChanging(int value);
+    partial void OnIdUsuarioAreaDisciplinaChanged();
+    partial void OnIdUsuarioChanging(int value);
+    partial void OnIdUsuarioChanged();
+    partial void OnIdAreaChanging(int value);
+    partial void OnIdAreaChanged();
+    partial void OnIdCategoriaChanging(int value);
+    partial void OnIdCategoriaChanged();
+    #endregion
+		
+		public UsuarioAreaDisciplina()
+		{
+			this._Area = default(EntityRef<Area>);
+			this._Categoria = default(EntityRef<Categoria>);
+			this._Usuario = default(EntityRef<Usuario>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuarioAreaDisciplina", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdUsuarioAreaDisciplina
+		{
+			get
+			{
+				return this._IdUsuarioAreaDisciplina;
+			}
+			set
+			{
+				if ((this._IdUsuarioAreaDisciplina != value))
+				{
+					this.OnIdUsuarioAreaDisciplinaChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuarioAreaDisciplina = value;
+					this.SendPropertyChanged("IdUsuarioAreaDisciplina");
+					this.OnIdUsuarioAreaDisciplinaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int NOT NULL")]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuario = value;
+					this.SendPropertyChanged("IdUsuario");
+					this.OnIdUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdArea", DbType="Int NOT NULL")]
+		public int IdArea
+		{
+			get
+			{
+				return this._IdArea;
+			}
+			set
+			{
+				if ((this._IdArea != value))
+				{
+					if (this._Area.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdAreaChanging(value);
+					this.SendPropertyChanging();
+					this._IdArea = value;
+					this.SendPropertyChanged("IdArea");
+					this.OnIdAreaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdCategoria", DbType="Int")]
+		public int IdCategoria
+		{
+			get
+			{
+				return this._IdCategoria;
+			}
+			set
+			{
+				if ((this._IdCategoria != value))
+				{
+					if (this._Categoria.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIdCategoriaChanging(value);
+					this.SendPropertyChanging();
+					this._IdCategoria = value;
+					this.SendPropertyChanged("IdCategoria");
+					this.OnIdCategoriaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_UsuarioAreaDisciplina", Storage="_Area", ThisKey="IdArea", OtherKey="IdArea", IsForeignKey=true)]
+		public Area Area
+		{
+			get
+			{
+				return this._Area.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area.Entity;
+				if (((previousValue != value) 
+							|| (this._Area.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area.Entity = null;
+						previousValue.UsuarioAreaDisciplinas.Remove(this);
+					}
+					this._Area.Entity = value;
+					if ((value != null))
+					{
+						value.UsuarioAreaDisciplinas.Add(this);
+						this._IdArea = value.IdArea;
+					}
+					else
+					{
+						this._IdArea = default(int);
+					}
+					this.SendPropertyChanged("Area");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Categoria_UsuarioAreaDisciplina", Storage="_Categoria", ThisKey="IdCategoria", OtherKey="IdCategoria", IsForeignKey=true)]
+		public Categoria Categoria
+		{
+			get
+			{
+				return this._Categoria.Entity;
+			}
+			set
+			{
+				Categoria previousValue = this._Categoria.Entity;
+				if (((previousValue != value) 
+							|| (this._Categoria.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Categoria.Entity = null;
+						previousValue.UsuarioAreaDisciplinas.Remove(this);
+					}
+					this._Categoria.Entity = value;
+					if ((value != null))
+					{
+						value.UsuarioAreaDisciplinas.Add(this);
+						this._IdCategoria = value.IdCategoria;
+					}
+					else
+					{
+						this._IdCategoria = default(int);
+					}
+					this.SendPropertyChanged("Categoria");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_UsuarioAreaDisciplina", Storage="_Usuario", ThisKey="IdUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
+		{
+			get
+			{
+				return this._Usuario.Entity;
+			}
+			set
+			{
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.UsuarioAreaDisciplinas.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.UsuarioAreaDisciplinas.Add(this);
+						this._IdUsuario = value.IdUsuario;
+					}
+					else
+					{
+						this._IdUsuario = default(int);
+					}
+					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

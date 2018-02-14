@@ -55,14 +55,14 @@
                             @*<h6>Especialidad: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>*@
                         </div>
                         <div class="col-md-6">
-                            @if (Model.UsuarioCategoriaProyectos.First().UsuarioCategoriaProyectoAreas.Any())
+                            @*@if (Model.UsuarioCategoriaProyectos.First().UsuarioCategoriaProyectoAreas.Any())
                             {
                                 <h6>Área: @Model.UsuarioCategoriaProyectos.First().UsuarioCategoriaProyectoAreas.First().Area.Nombre</h6>
                             }
                             else
                             {
                                 <h6>Área: No Aplica</h6>
-                            }
+                            }*@
                            
                             <h6>Disciplina: @Model.UsuarioCategoriaProyectos.First().Categoria.Nombre</h6>
                         </div>
@@ -84,6 +84,7 @@
                 col.For(x => x.SubEWP.Codigo).Named("SubEWP");
                 col.For(x => x.Revision.Nombre).Named("Revisión");
                 col.For(x => x.TipoDocumento.Nombre).Named("Tipo Documento");
+                col.For(x => x.NumeroDocumento.Codigo).Named("Número Documento");
                 col.For(x => x.HorasReportadas).Named("Horas Reportadas").Attributes(@class => "sumas-ewp", align => "right" );
             }).Empty("No se han encontrado registros de horas EWP reportadas en este día"))
     </div>

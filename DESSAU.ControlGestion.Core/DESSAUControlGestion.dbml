@@ -4,9 +4,8 @@
     <Type Name="Area">
       <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Association Name="Area_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdArea" OtherKey="IdArea" Type="UCPDisciplinaArea" />
-      <Association Name="Area_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioAreaDisciplina" />
       <Association Name="Area_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioCategoriaProyectoArea" />
+      <Association Name="Area_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdArea" OtherKey="IdArea" Type="UsuarioAreaDisciplina" />
     </Type>
   </Table>
   <Table Name="dbo.AspNetRoles" Member="AspNetRoles">
@@ -68,6 +67,7 @@
       <Association Name="Categoria_CategoriaActividad" Member="CategoriaActividads" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="CategoriaActividad" />
       <Association Name="Categoria_PlantillaEvaluacion" Member="PlantillaEvaluacions" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="PlantillaEvaluacion" />
       <Association Name="Categoria_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="UsuarioCategoriaProyecto" />
+      <Association Name="Categoria_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="UsuarioAreaDisciplina" />
     </Type>
   </Table>
   <Table Name="dbo.CategoriaActividad" Member="CategoriaActividads">
@@ -138,14 +138,6 @@
       <Column Name="Horas" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Descripcion" Type="System.String" DbType="NVarChar(1023)" CanBeNull="true" />
       <Association Name="TipoDiaEspecial_DiaEspecial" Member="TipoDiaEspecial" ThisKey="IdTipoDiaEspecial" OtherKey="IdTipoDiaEspecial" Type="TipoDiaEspecial" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Disciplina" Member="Disciplinas">
-    <Type Name="Disciplina">
-      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="NVarChar(63) NOT NULL" CanBeNull="false" />
-      <Association Name="Disciplina_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="UCPDisciplinaArea" />
-      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="UsuarioAreaDisciplina" />
     </Type>
   </Table>
   <Table Name="dbo.EstadoEvaluacion" Member="EstadoEvaluacions">
@@ -455,17 +447,6 @@
       <Association Name="TipoUsuario_Usuario" Member="Usuarios" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="Usuario" />
     </Type>
   </Table>
-  <Table Name="dbo.UCPDisciplinaArea" Member="UCPDisciplinaAreas">
-    <Type Name="UCPDisciplinaArea">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuarioCategoriaProyecto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Area_UCPDisciplinaArea" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
-      <Association Name="Disciplina_UCPDisciplinaArea" Member="Disciplina" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="Disciplina" IsForeignKey="true" />
-      <Association Name="UsuarioCategoriaProyecto_UCPDisciplinaArea" Member="UsuarioCategoriaProyecto" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyecto" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.UsuarioSupervisor" Member="UsuarioSupervisors">
     <Type Name="UsuarioSupervisor">
       <Column Name="IdUsuarioSupervisor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -491,20 +472,9 @@
       <Association Name="Usuario_Proyecto" Member="Proyectos" ThisKey="IdUsuario" OtherKey="IdUsuarioDirector" Type="Proyecto" />
       <Association Name="Usuario_UsuarioSupervisor" Member="UsuarioSupervisors" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioSupervisor" />
       <Association Name="Usuario_UsuarioSupervisor1" Member="UsuarioSupervisors1" ThisKey="IdUsuario" OtherKey="IdSupervisor" Type="UsuarioSupervisor" />
-      <Association Name="Usuario_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioAreaDisciplina" />
       <Association Name="Usuario_UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioCategoriaProyecto" />
+      <Association Name="Usuario_UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="UsuarioAreaDisciplina" />
       <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas">
-    <Type Name="UsuarioAreaDisciplina">
-      <Column Name="IdUsuarioAreaDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IdDisciplina" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Area_UsuarioAreaDisciplina" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
-      <Association Name="Disciplina_UsuarioAreaDisciplina" Member="Disciplina" ThisKey="IdDisciplina" OtherKey="IdDisciplina" Type="Disciplina" IsForeignKey="true" />
-      <Association Name="Usuario_UsuarioAreaDisciplina" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.UsuarioCategoriaProyecto" Member="UsuarioCategoriaProyectos">
@@ -518,7 +488,6 @@
       <Association Name="UsuarioCategoriaProyecto_Evaluacion" Member="Evaluacions" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="Evaluacion" />
       <Association Name="UsuarioCategoriaProyecto_TimeSheet" Member="TimeSheets" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheet" />
       <Association Name="UsuarioCategoriaProyecto_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="TimeSheetEWP" />
-      <Association Name="UsuarioCategoriaProyecto_UCPDisciplinaArea" Member="UCPDisciplinaAreas" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UCPDisciplinaArea" />
       <Association Name="UsuarioCategoriaProyecto_UsuarioCategoriaProyectoArea" Member="UsuarioCategoriaProyectoAreas" ThisKey="IdUsuarioCategoriaProyecto" OtherKey="IdUsuarioCategoriaProyecto" Type="UsuarioCategoriaProyectoArea" />
       <Association Name="Categoria_UsuarioCategoriaProyecto" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
       <Association Name="Proyecto_UsuarioCategoriaProyecto" Member="Proyecto" ThisKey="IdProyecto" OtherKey="IdProyecto" Type="Proyecto" IsForeignKey="true" />
@@ -573,6 +542,17 @@
       <Column Name="Nombre" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="NumeroDocumento_TimeSheetEWP" Member="TimeSheetEWPs" ThisKey="IdNumeroDocumento" OtherKey="IdNumeroDocumento" Type="TimeSheetEWP" />
       <Association Name="EWP_NumeroDocumento" Member="EWP" ThisKey="IdEWP" OtherKey="IdEWP" Type="EWP" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UsuarioAreaDisciplina" Member="UsuarioAreaDisciplinas">
+    <Type Name="UsuarioAreaDisciplina">
+      <Column Name="IdUsuarioAreaDisciplina" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdCategoria" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Association Name="Area_UsuarioAreaDisciplina" Member="Area" ThisKey="IdArea" OtherKey="IdArea" Type="Area" IsForeignKey="true" />
+      <Association Name="Categoria_UsuarioAreaDisciplina" Member="Categoria" ThisKey="IdCategoria" OtherKey="IdCategoria" Type="Categoria" IsForeignKey="true" />
+      <Association Name="Usuario_UsuarioAreaDisciplina" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_GetDiasPendientesDeclaracionEWPByIdUsuario" Method="sp_GetDiasPendientesDeclaracionEWPByIdUsuario">

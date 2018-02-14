@@ -72,6 +72,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
                         Categoria Cat = new Categoria()
                         {
                             Nombre = Form.NombreCategoria,
+                            Vigente = true,
                         };
                         db.Categorias.InsertOnSubmit(Cat);
                     }                    
@@ -85,6 +86,53 @@ namespace DESSAU.ControlGestion.Web.Controllers
             return View(model);
         }
 
+        public ActionResult AgregarActividadCategoria(int IdCategoria)
+        {
+            AgregarActividadCategoriaViewModel model = new AgregarActividadCategoriaViewModel();
+            model.Form.IdCategoria = IdCategoria;
+            model.Categoria = db.Categorias.Single(x => x.IdCategoria == IdCategoria);
+            return View(model);
+        }
 
+        [HttpPost]
+        public ActionResult AgregarActividadCategoria(AgregarActividadCategoriaFormModel Form)
+        {
+            if (ModelState.IsValid)
+            {
+                if(db.CategoriaActividads.Any(x => x.IdCategoria == Form.IdCategoria && x.IdActividad == Form.IdActividad && !x.Vigente))
+                {
+                    var hola = db.CategoriaActividads.Single(x => x.IdCategoria == Form.IdCategoria && x.IdActividad == Form.IdActividad && !x.Vigente);
+                    hola.Vigente = false;
+                }
+                else
+                {
+                    CategoriaActividad cata = new CategoriaActividad()
+                    {
+                        IdCategoria = Form.IdCategoria,
+                        IdActividad = Form.IdActividad,
+                        Vigente = true,
+                    };
+
+                    db.CategoriaActividads.InsertOnSubmit(cata);
+                }
+                
+                db.SubmitChanges();
+
+                TempData["Mensaje"] = "Se ha agregado la actividad con éxito a la Disciplina";
+                return RedirectToAction("ListarCategoria");
+            }
+            AgregarActividadCategoriaViewModel model = new AgregarActividadCategoriaViewModel(Form);
+            model.Categoria = db.Categorias.Single(x => x.IdCategoria == Form.IdCategoria);
+            return View(model);
+        }
+
+        public ActionResult AliminarActividadCategoria(int IdCategoriaActividad)
+        {
+            CategoriaActividad cata = db.CategoriaActividads.Single(x => x.IdCategoriaActividad == IdCategoriaActividad);
+            cata.Vigente = false;
+            db.SubmitChanges();
+            TempData["Mesaje"] = "La Actividad fue desasociada a la Disciplina.";
+            return RedirectToAction("AgregarActividadCategoria", new { IdCategoria = cata.IdCategoria });
+        }
     }
 }

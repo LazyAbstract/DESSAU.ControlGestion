@@ -260,6 +260,8 @@
     <Compile Include="Models\ActividadModels\CrearEditarActividadFormModel.cs" />
     <Compile Include="Models\ActividadModels\CrearEditarActividadViewModel.cs" />
     <Compile Include="Models\ActividadModels\ListarActividadViewModel.cs" />
+    <Compile Include="Models\CategoriaModels\AgregarActividadCategoriaFormModel.cs" />
+    <Compile Include="Models\CategoriaModels\AgregarActividadCategoriaViewModel.cs" />
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaFormModel.cs" />
     <Compile Include="Models\CategoriaModels\CrearEditarCategoriaViewModel.cs" />
     <Compile Include="Models\CategoriaModels\ListarCategoriaViewModel.cs" />
@@ -316,6 +318,7 @@
     <Compile Include="Models\UsuarioModels\CrearEditarUsuarioViewModel.cs" />
     <Compile Include="Models\UsuarioModels\ListarUsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectListProviders\ActividadSelectListProvider.cs" />
     <Compile Include="SelectListProviders\AreaSelectListProvider.cs" />
     <Compile Include="SelectListProviders\CategoriaSelectListProvider.cs" />
     <Compile Include="SelectListProviders\ContratoSelectListProvider.cs" />
@@ -1267,8 +1270,11 @@
     <Content Include="Views\Revision\CrearEditarRevision.cshtml" />
     <Content Include="Views\Shared\SinAsignacionODS.cshtml" />
     <Content Include="Views\Reporte\VerReporteNumeroDessau.cshtml" />
+    <Content Include="Views\Categoria\AgregarActividadCategoria.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
