@@ -248,6 +248,7 @@
     <Compile Include="Helpers\DateTimeHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\LectorMonthPicker.cs" />
+    <Compile Include="Helpers\TurnoHorarioHelper.cs" />
     <Compile Include="MapperProfiles\DefaultProfileMapper.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionEvaluacionFormModel.cs" />
     <Compile Include="MapperProfiles\EvaluacionMapper\EvaluacionPreguntaDTOEvaluacionPregunta.cs" />

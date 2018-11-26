@@ -144,11 +144,13 @@ namespace DESSAU.ControlGestion.Web.Controllers
         [HttpGet]
         public ActionResult CrearEditarTimeSheetEWP(CrearEditarTimeSheetEWPFormModel Form, DateTime? fecha)
         {
+            //  esto está muy al lote...
             if (db.DiaEspecials.Any(x => x.Fecha == fecha))
             {
                 TempData["Mensaje"] = "El día seleccionado está marcado como feriado.";
                 return RedirectToAction("CrearEditarTimeSheetEWP", new { fecha = fecha.Value.AddDays(1).ToShortDateString() });
             }
+
             int idUsuario;
             if (Form.IdUsuario.HasValue) idUsuario = Form.IdUsuario.Value;
             else idUsuario = UsuarioActual.IdUsuario;
@@ -163,6 +165,16 @@ namespace DESSAU.ControlGestion.Web.Controllers
             model.UsuarioCategoriaProyectos = usuarioCategoriaProyectos;
             if (!usuarioCategoriaProyectos.Any()) return View("SinAsignacionODS");
             model.Form.IdUsuarioCategoriaProyecto = usuarioCategoriaProyectos.First().IdUsuarioCategoriaProyecto;
+            if(db.Turnos.Any(x => x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto))
+            {
+                model.turnoHelper.HorasLaborablesSemana = 12;
+                model.turnoHelper.HorasLaborablesViernes = 12;
+                model.turnoHelper.TrabajaFinesDeSemana = true;
+            }
+
+            model.Form.HorasSemana = model.turnoHelper.HorasLaborablesSemana;
+            model.Form.HorasViernes = model.turnoHelper.HorasLaborablesViernes;
+
             model.Actividades = usuarioCategoriaProyectos.First().Categoria.CategoriaActividads.Select(x => x.Actividad);
             model.TimeSheetsEWP = db.TimeSheetEWPs.Where(x => x.Fecha == model.Form.Fecha
               && x.IdUsuarioCategoriaProyecto == model.Form.IdUsuarioCategoriaProyecto)
@@ -307,11 +319,11 @@ namespace DESSAU.ControlGestion.Web.Controllers
             SelectList result = null;
             if(db.NumeroDocumentos.Where(x => x.IdEWP == IdEWP).Any())
             {
-                result = new SelectList(db.NumeroDocumentos.Where(x => x.IdEWP == IdEWP), "IdNumeroDocumento", "Codigo");
+                result = new SelectList(db.NumeroDocumentos.Where(x => x.IdEWP == IdEWP && x.Vigente), "IdNumeroDocumento", "Codigo");
             }
             else
             {
-                result = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
+                result = new SelectList(db.NumeroDocumentos.Where(x => x.Vigente), "IdNumeroDocumento", "Codigo");
             }
             
             return Json(result, JsonRequestBehavior.AllowGet);

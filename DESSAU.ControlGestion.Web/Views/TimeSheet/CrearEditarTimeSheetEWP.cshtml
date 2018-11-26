@@ -99,6 +99,8 @@
             @Html.HiddenFor(x => x.Form.IdUsuarioCategoriaProyecto)
             @Html.HiddenFor(x => x.Form.Fecha)
             @Html.HiddenFor(x => x.Form.validar)
+            @Html.HiddenFor(x => x.Form.HorasSemana)
+            @Html.HiddenFor(x => x.Form.HorasViernes)
         </div>
         <div>
             @Html.ValidationSummary()
@@ -239,7 +241,7 @@
             </thead>
         </table>
         <div class="form-group">
-            <button type="submit" class="btn btn-default">Guardar</button>
+            <button id="tsEWP-form" type="submit" class="btn btn-default">Guardar</button>
         </div>
         }
     </div>
@@ -252,7 +254,7 @@
             $('.spinner .btn:first-of-type').on('click', function () {
                 if (isNaN(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10))) {
                     $(this).closest(".spinner").find('input[type="text"]').val(0);
-                } else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) < 10) {
+                } else if (parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) < @Model.turnoHelper.HorasLaborablesSemana) {
                     $(this).closest(".spinner").find('input[type="text"]').val(parseInt($(this).closest(".spinner").find('input[type="text"]').val(), 10) + 1);
                     $(this).closest(".spinner").find('input[type="text"]').change();
                 }
@@ -274,6 +276,7 @@
                 pinta($(this));
             });
             $('.input-timesheet').change();
+
             pintaTotales();
         })(jQuery);
 
@@ -304,7 +307,10 @@
         function pintaTotales() {
             $('.totales').each(function () {
                 var total = $.trim($(this).children('span').text());
-                if (total == '10' || total == '9' || total == '8' || total == '7' || total == '6' || total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                //if (total == '10' || total == '9' || total == '8' || total == '7' || total == '6' || total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                //    $(this).css('background-color', '#99FFCC')
+                //}
+                if (parseInt(total, 10) <= @Model.turnoHelper.HorasLaborablesSemana) {
                     $(this).css('background-color', '#99FFCC')
                 }
                 else if (total == '0') {
@@ -317,7 +323,10 @@
 
             $('.total-viernes').each(function () {
                 var total = $.trim($(this).children('span').text());
-                if (total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                //if (total == '5' || total == '4' || total == '3' || total == '2' || total == '1') {
+                //    $(this).css('background-color', '#99FFCC')
+                //}
+                if (parseInt(total, 10) <= @Model.turnoHelper.HorasLaborablesViernes) {
                     $(this).css('background-color', '#99FFCC')
                 }
                 else if (total == '0') {
@@ -342,10 +351,7 @@
             $('#Form_IdNumeroDocumento').CascadingDropDown('#Form_IdEWP', $.url('TimeSheet/getNumeroDocumentoFromEWP'));
             $('#Form_IdNumeroDocumento').change();
         });
-
-        $("#Form_Fecha").datepicker({
-            beforeShowDay: $.datepicker.noWeekends
-        });
+        
 
         $("#Form_Fecha").change(function () {
             $("#fecha-form").submit();
@@ -357,6 +363,14 @@
             }
         });
     </script>
+@{ if (!Model.turnoHelper.TrabajaFinesDeSemana)
+    {
+        <script type="text/javascript">
+            $("#Form_Fecha").datepicker({
+                beforeShowDay: $.datepicker.noWeekends
+            });
+        </script>
+    }}
     <style type="text/css">
         .sumas-ewp {
             padding-right: 20px !important;
@@ -369,24 +383,24 @@
         {
             color: #ff0000;
         }
-        
+
         .field-validation-valid
         {
             display: none;
         }
-        
+
         .input-validation-error
         {
             border: 1px solid #ff0000 !important;
             background-color: #ffeeee !important;
         }
-        
+
         .validation-summary-errors
         {
             font-weight: bold !important;
             color: #ff0000 !important;
         }
-        
+
         .validation-summary-valid
         {
             display: none;

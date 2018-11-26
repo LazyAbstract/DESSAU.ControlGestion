@@ -1,4 +1,5 @@
 ﻿using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,11 +29,19 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
         public IEnumerable<TimeSheetFormModelEWPDTO> DTO { get; set; }
         public List<int> DTOvalues { get; set; }
         public bool validar { get; set; }
+        public int HorasSemana { get; set; }
+        public int HorasViernes { get; set; }
         public CrearEditarTimeSheetEWPFormModel()
         {
             validar = false;
             DTOvalues = new List<int>();
         }
+
+        //public CrearEditarTimeSheetEWPFormModel(TurnoHorarioHelper helper) : this()
+        //{
+        //    HorasSemana = helper.HorasLaborablesSemana;
+        //    HorasViernes = helper.HorasLaborablesViernes;
+        //}
 
         #region IDataErrorInfo Members
 
@@ -45,8 +54,8 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
                     DESSAUControlGestionDataContext db = new DESSAUControlGestionDataContext()
                         .WithConnectionStringFromConfiguration();
 
-                    if (Fecha.Value.DayOfWeek == DayOfWeek.Saturday || Fecha.Value.DayOfWeek == DayOfWeek.Sunday)
-                        return "No se pueden reportar horas trabajadas durante el fin de semana";
+                    //if (Fecha.Value.DayOfWeek == DayOfWeek.Saturday || Fecha.Value.DayOfWeek == DayOfWeek.Sunday)
+                    //    return "No se pueden reportar horas trabajadas durante el fin de semana";
 
                     if (HorasReportadasEWP == 0 && DTO.Sum(x => x.HorasReportadas) == 0) return "Las Horas a reportar no pueden ser igual a 0.";
                     if (HorasReportadasEWP > 0)
@@ -62,8 +71,6 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
 
                     var timeSheetsEWP = db.TimeSheetEWPs
                         .Where(x => x.IdUsuarioCategoriaProyecto == IdUsuarioCategoriaProyecto && x.Fecha == Fecha.Value);
-                    //var timeSheets = db.TimeSheets
-                    //    .Where(x => x.IdUsuarioCategoriaProyecto == IdUsuarioCategoriaProyecto && x.Fecha == Fecha.Value);
 
                     int sumaEWP = 0;
                     if (timeSheetsEWP.Any())
@@ -71,29 +78,21 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
                         sumaEWP = timeSheetsEWP.Sum(x => x.HorasReportadas.GetValueOrDefault(0));
                     }
 
-                    //int suma = 0;
-                    //if (timeSheets.Any())
-                    //{
-                    //    suma = timeSheets.Sum(x => x.HorasReportadas.GetValueOrDefault(0));
-                    //}
-
                     int HorasReportadasDTO = 0;
                     if(DTO.Any())
                     {
                         HorasReportadasDTO = DTO.Sum(x => x.HorasReportadas);
                     }
 
-                    //if(HorasReportadasDTO > 0)
-
-                    if ((Fecha.Value.DayOfWeek != DayOfWeek.Friday) && (sumaEWP + HorasReportadasEWP + HorasReportadasDTO) > 10)
+                    if ((Fecha.Value.DayOfWeek != DayOfWeek.Friday) && (sumaEWP + HorasReportadasEWP + HorasReportadasDTO) > HorasSemana)
                     {
                         return "Está reportando " + (sumaEWP + HorasReportadasDTO + HorasReportadasEWP).ToString() + " horas trabajadas para el día "
-                            + Fecha.Value.ToShortDateString() + ". El máximo es de 10 horas para los días de lunes a jueves.";
+                            + Fecha.Value.ToShortDateString() + ". El máximo es de " + HorasSemana.ToString() + " horas para este día.";
                     }
-                    else if (Fecha.Value.DayOfWeek == DayOfWeek.Friday && sumaEWP + HorasReportadasEWP + HorasReportadasDTO > 5)
+                    else if (Fecha.Value.DayOfWeek == DayOfWeek.Friday && sumaEWP + HorasReportadasEWP + HorasReportadasDTO > HorasViernes)
                     {
                         return "Está reportando " + (sumaEWP + HorasReportadasDTO + HorasReportadasEWP).ToString() + " horas trabajadas para el día "
-                            + Fecha.Value.ToShortDateString() + ". El máximo es de 5 horas para el día viernes.";
+                            + Fecha.Value.ToShortDateString() + ". El máximo es de " + HorasViernes.ToString() + " horas para este día.";
                     }
                 }
                 return string.Empty;

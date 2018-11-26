@@ -15,7 +15,8 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public ActionResult ListarNumeroDocumento(int? pagina, string filtro)
         {
             ListarNumeroDocumentoViewModel model = new ListarNumeroDocumentoViewModel();
-            IQueryable<NumeroDocumento> items = db.NumeroDocumentos;
+            IQueryable<NumeroDocumento> items = db.NumeroDocumentos.OrderBy(x => x.EWP.Codigo)
+                .ThenByDescending(x => x.Vigente);
             if (!String.IsNullOrEmpty(filtro))
             {
                 items = items.Where(x => x.Codigo.Contains(filtro)
@@ -72,6 +73,16 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
             CrearEditarNumeroDocumentoViewModel model = new CrearEditarNumeroDocumentoViewModel(Form);
             return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CambiarEstadoNumeroDocumento(int IdNumeroDocumento)
+        {
+            NumeroDocumento NumDoc = db.NumeroDocumentos.Single(x => x.IdNumeroDocumento == IdNumeroDocumento);
+            NumDoc.Vigente = !NumDoc.Vigente;
+            db.SubmitChanges();
+            TempData["Mensaje"] = "El Documento ha cambiado de estado correctamente.";
+            return RedirectToAction("ListarNumeroDocumento");
         }
     }
 }

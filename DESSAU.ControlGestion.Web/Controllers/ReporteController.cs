@@ -76,7 +76,7 @@ namespace DESSAU.ControlGestion.Web.Controllers
             }
 
             IQueryable<fn_ReportePorUsuarioResult> Nominas = db.fn_ReportePorUsuario(Form.IdProyecto, FechaConsulta);
-            model.Nominas = Nominas.Where(x => x.CantidadPendientesDeclaracion > 0 || x.CantidadPendientesPlanificacion > 0);
+            //model.Nominas = Nominas.Where(x => x.CantidadPendientesDeclaracion > 0 || x.CantidadPendientesPlanificacion > 0);
             return View(model);
         }
 
@@ -255,10 +255,12 @@ namespace DESSAU.ControlGestion.Web.Controllers
         public ActionResult ExportarEWPExcel(DateTime? FechaDesde)
         {
             VerReporteEWPViewModel model = new VerReporteEWPViewModel();
-            if (FechaDesde.HasValue) model.Form.FechaDesde = FechaDesde.Value;          
-            
+            if (FechaDesde.HasValue) model.Form.FechaDesde = FechaDesde.Value;
+            else model.Form.FechaDesde = DateTime.Today.AddMonths(-3);
+
+
             IEnumerable<fn_ReportePorEWPResult> Exportar = 
-                db.fn_ReportePorEWP(new DateTime(2017, 12, 1), DateTime.Today.AddDays(1), model.Form.IdUsuario)
+                db.fn_ReportePorEWP(model.Form.FechaDesde, DateTime.Today.AddDays(1), model.Form.IdUsuario)
                 .Where(x => x.HorasReportadas > 0)
                 .OrderBy(x => x.Fecha)
                 .ThenBy(x => x.TipoActividad)

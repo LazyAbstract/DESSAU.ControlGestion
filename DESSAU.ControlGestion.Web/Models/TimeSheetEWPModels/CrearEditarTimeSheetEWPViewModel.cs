@@ -1,4 +1,5 @@
 ﻿using DESSAU.ControlGestion.Core;
+using DESSAU.ControlGestion.Web.Helpers;
 using DESSAU.ControlGestion.Web.SelectListProviders;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,17 @@ namespace DESSAU.ControlGestion.Web.Models.TimeSheetEWPModels
         private EWPSelectListProvider Eslp = new EWPSelectListProvider();
         public IEnumerable<SelectListItem> Usuarios { get; set; }
         private UsuarioSelectListProvider uslp = new UsuarioSelectListProvider();
+        public TurnoHorarioHelper turnoHelper { get; set; }
 
         public CrearEditarTimeSheetEWPViewModel()
         {
             Form = new CrearEditarTimeSheetEWPFormModel();
-
+            turnoHelper = new TurnoHorarioHelper();
             EWP = Eslp.Provide();
             SubEWP = new SelectList(db.SubEWPs, "IdSubEWP", "Codigo");
             TipoDocumento = new SelectList(db.TipoDocumentos, "IdTipoDocumento", "Nombre");
             Revision = new SelectList(db.Revisions, "IdRevision", "Nombre");
-            NumeroDocumento = new SelectList(db.NumeroDocumentos, "IdNumeroDocumento", "Codigo");
+            NumeroDocumento = new SelectList(db.NumeroDocumentos.Where(x => x.Vigente), "IdNumeroDocumento", "Codigo");
             
             DiaEspecials = db.DiaEspecials;
             Usuarios = uslp.Provide();
